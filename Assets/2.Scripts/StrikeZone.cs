@@ -9,7 +9,7 @@ public class StrikeZone : MonoBehaviour
     private Vector3 size;
     float sizeNorm;
     private BoxCollider boxCollider;
-    public GameObject smallCubePrefab; // 작은 큐브의 Prefab
+   
 
     void Start()
     {
@@ -27,8 +27,7 @@ public class StrikeZone : MonoBehaviour
             var localDetectedPos = boxCollider.transform.InverseTransformPoint(other.transform.position); // World position을 Local position으로 변환
 
 
-            // 작은 큐브를 생성합니다.
-            Instantiate(smallCubePrefab, other.transform.position, Quaternion.identity);
+
         }
     }
 

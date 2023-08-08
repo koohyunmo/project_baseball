@@ -13,6 +13,7 @@ public class ThrowBall : MonoBehaviour
     // Random precision radius around the strike zone
     public float randomPrecision = 0.5f;  // 예: 0.5 미터 반경
 
+    public GameObject smallCubePrefab; // 작은 큐브의 Prefab
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space)) // If the Spacebar key is pressed...
@@ -50,6 +51,29 @@ public class ThrowBall : MonoBehaviour
 
         // Draw a Debug Ray in the direction of the throw
         Debug.DrawRay(ball.transform.position, direction * 60f, Color.magenta, 5f);  // Green ray with a length of 10 units, lasts for 2 seconds
+
+        // Ray 시작 위치와 방향 정의
+        Ray ray = new Ray(ball.transform.position, direction);
+
+        
+
+        // Ray에 충돌한 오브젝트의 정보를 저장할 변수
+        RaycastHit hit;
+
+        // Raycast 발사
+        if (Physics.Raycast(ray, out hit, 1000f)) // 100f는 Ray의 최대 거리
+        {
+            Debug.DrawLine(ray.origin, hit.collider.transform.position, Color.yellow);
+            // Ray가 StrikeZone과 충돌했는지 확인
+            if (hit.collider.CompareTag("StrikeZone"))
+            {
+                // Ray가 어떤 오브젝트와 충돌했는지 확인
+                Debug.Log(hit.collider.name);
+                // 작은 큐브를 생성합니다.
+                var go  = Instantiate(smallCubePrefab, hit.point, Quaternion.identity);
+                Destroy(go, 1.0f);
+            }
+        }
 
         // Add force towards the random point near the strikeZone
         var rigid = ball.GetComponent<Rigidbody>();
