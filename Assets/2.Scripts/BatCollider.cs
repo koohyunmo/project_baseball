@@ -18,7 +18,7 @@ public class BatCollider : MonoBehaviour
         if (other.gameObject.CompareTag("Ball"))
         {
             Debug.Log("Hit");
-            bat.Swing(transform);
+            bat.Swing();
 
 
             // 날려 보내기

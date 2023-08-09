@@ -14,11 +14,27 @@ public class ThrowBall : MonoBehaviour
     public float randomPrecision = 0.5f;  // 예: 0.5 미터 반경
 
     public GameObject smallCubePrefab; // 작은 큐브의 Prefab
+
+    private void Start()
+    {
+        StartCoroutine(co_ThrowBall());
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space)) // If the Spacebar key is pressed...
         {
             Throw();
+        }
+    }
+
+   IEnumerator co_ThrowBall()
+    {
+
+        while (true)
+        {
+            yield return new WaitForSeconds(1.0f);
+            Throw();
+
         }
     }
 
