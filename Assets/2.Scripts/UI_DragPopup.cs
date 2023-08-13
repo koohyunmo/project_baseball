@@ -26,7 +26,7 @@ public class UI_DragPopup : MonoBehaviour, IPointerClickHandler, IPointerDownHan
     Vector2 _touchPosition;
     Vector2 _moveDir;
     float _joystickRadius = 0.0f;
-    float _speed = 5.0f;
+    float _speed = 2.5f;
 
 
     private void Start()

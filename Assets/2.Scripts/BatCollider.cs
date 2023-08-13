@@ -25,10 +25,11 @@ public class BatCollider : MonoBehaviour
             Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                float forceAmount = 5f;
-                Vector3 forceDirection = transform.parent.forward + transform.parent.up;
+                float forceAmount = 20f;
+                Vector3 forceDirection = transform.parent.forward * UnityEngine.Random.Range(1, 3) + transform.parent.up;
                 rb.velocity = forceDirection;
                 rb.AddForce(forceDirection * forceAmount, ForceMode.Impulse);
+                rb.useGravity=  true;
 
                 // 레이 그리기
                 float rayLength = 5f; // 원하는 레이의 길이
