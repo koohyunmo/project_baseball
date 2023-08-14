@@ -38,8 +38,6 @@ public class ThrowBall : MonoBehaviour
         ThrowChangeupPlus,
         ThrowSinkerPlus
 
-
-
     }
 
     private void Start()
@@ -130,8 +128,9 @@ public class ThrowBall : MonoBehaviour
                 // Ray가 어떤 오브젝트와 충돌했는지 확인
                 Debug.Log(hit.collider.name);
                 // 작은 큐브를 생성합니다.
-                var go  = Instantiate(smallCubePrefab, hit.point, Quaternion.identity);
-                Destroy(go, 1.0f);
+                // var go  = Instantiate(smallCubePrefab, hit.point, Quaternion.identity);
+                // Destroy(go, 1.0f);
+                smallCubePrefab.transform.position = hit.point;
             }
         }
 

@@ -20,14 +20,11 @@ public class StrikeZone : MonoBehaviour
         sizeNorm = Vector3.Dot(size, size);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Ball"))
+        if (other != null && other.CompareTag("Ball"))
         {
-            var localDetectedPos = boxCollider.transform.InverseTransformPoint(other.transform.position); // World position을 Local position으로 변환
-
-
-
+            Debug.Log("Strike");
         }
     }
 

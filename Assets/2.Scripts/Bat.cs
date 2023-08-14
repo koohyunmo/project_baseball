@@ -60,7 +60,6 @@ public class Bat : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         SwingAndBack();
         ClampToCameraView(); 
     }
@@ -124,51 +123,6 @@ public class Bat : MonoBehaviour
             }
         }
     }
-
-    private void CurveSwing()
-    {
-        if (isSwinging)
-        {
-            lerpTimer += Time.deltaTime * lerpSpeed;
-
-            float curveValue = swingCurve.Evaluate(lerpTimer);  // 0과 1 사이의 lerpTime 값을 기반으로 곡선 값 추출
-
-            // 회전 및 위치 보간
-            model.transform.position = Vector3.Lerp(originalBatPos, endBat.position, curveValue);
-            model.transform.rotation = Quaternion.Lerp(originalBatRot, endBat.rotation, curveValue);
-
-            if (lerpTimer >= maxTime)
-            {
-                lerpTimer = 0;
-                model.transform.position = originalBatPos;
-                model.transform.rotation = originalBatRot;
-                isSwinging = false;
-            }
-        }
-
-    }
-
-    private void LinearSwing()
-    {
-        lerpTimer += Time.deltaTime * lerpSpeed;
-
-        // 회전 및 위치 보간
-        model.transform.position = Vector3.Lerp(originalBatPos, endBat.position, lerpTimer);
-        model.transform.rotation = Quaternion.Lerp(originalBatRot, endBat.rotation, lerpTimer);
-
-
-        if (lerpTimer >= maxTime)
-        {
-            lerpTimer = 0;
-
-            model.transform.position = originalBatPos;
-            model.transform.rotation = originalBatRot;
-
-
-            isSwinging = false;
-        }
-    }
-
 
     public void Swing()
     {

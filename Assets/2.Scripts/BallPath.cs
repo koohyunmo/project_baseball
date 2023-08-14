@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class BallPath : MonoBehaviour
@@ -12,16 +13,87 @@ public class BallPath : MonoBehaviour
     public LineRenderer pathRenderer; // 경로를 표시하는 라인 렌더러
     private List<Vector3> pathPoints = new List<Vector3>(); // 경로의 모든 포인트
     private int currentPointIndex = 0; // 현재 목표 포인트
-    public float speed = 5.0f; // 공의 움직임 속도
+    float speed = 0.0f; // 공의 움직임 속도
+    [SerializeField]float originalSpeed = 15.0f; // 공의 움직임 속도
     private List<BallMovement> balls = new List<BallMovement>();
     private Vector3 initialControlPointPosition; // 제어점의 초기 위치
     public GameObject cubePrefab; // 큐브 객체
+    [SerializeField] private bool _hEyes = false;
+    [SerializeField] private float _ballerDistance = 0.0f;
+
+    [SerializeField] private ThrowType _throwType;
+
+    enum ThrowType
+    {
+        FastBall,
+        Curve,
+        Slider,
+        ChangUp,
+        Sinker,
+        ExCurve,
+        NormalCurve,
+        Knuckleball,
+        TwoSeamFastball,
+        Splitter,
+        COUNT
+    }
 
     void Start()
     {
         initialControlPointPosition = controlPoint.position;
         pathRenderer = GetComponent<LineRenderer>();
         originPath = startPoint;
+
+        StartCoroutine(c_Baller());
+    }
+
+    IEnumerator c_Baller()
+    {
+        while (true)
+        {
+
+            yield return new WaitForSeconds(2f);
+            _throwType = (ThrowType)Random.RandomRange(0, (int)ThrowType.COUNT-1);
+
+            Debug.Log($"Throw Type {_throwType}");
+
+            switch (_throwType)
+            {
+                case ThrowType.FastBall:
+                    ThrowBall(ThrowFastBall);
+                    break;
+                case ThrowType.Curve:
+                    ThrowBall(ThrowCurve);
+                    break;
+                case ThrowType.Slider:
+                    ThrowBall(ThrowSlider);
+                    break;
+                case ThrowType.ChangUp:
+                    ThrowBall(ThrowChangeUp);
+                    break;
+                case ThrowType.Sinker:
+                    ThrowBall(ThrowSinker);
+                    break;
+                case ThrowType.ExCurve:
+                    ThrowBall(ThrowExaggeratedCurveball);
+                    break;
+                case ThrowType.NormalCurve:
+                    ThrowBall(ThrowNormalCurveball);
+                    break;
+                case ThrowType.Knuckleball:
+                    ThrowBall(ThrowKnuckleball);
+                    break;
+                case ThrowType.TwoSeamFastball:
+                    ThrowBall(ThrowTwoSeamFastball);
+                    break;
+                case ThrowType.Splitter:
+                    ThrowBall(ThrowSplitter);
+                    break;
+            }
+
+
+
+        }
     }
 
     void Update()
@@ -42,7 +114,6 @@ public class BallPath : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.U))
         {
-
             ThrowBall(ThrowChangeUp);
         }
         else if (Input.GetKeyDown(KeyCode.I))
@@ -111,6 +182,41 @@ public class BallPath : MonoBehaviour
 
     void ThrowBall(System.Action generatePathMethod)
     {
+
+        switch (_throwType)
+        {
+            case ThrowType.FastBall:
+                speed = originalSpeed * 1.0f;
+                break;
+            case ThrowType.Curve:
+                speed = originalSpeed * 0.83f;
+                break;
+            case ThrowType.Slider:
+                speed = originalSpeed * 0.92f;
+                break;
+            case ThrowType.ChangUp:
+                speed = originalSpeed * 0.87f;
+                break;
+            case ThrowType.Sinker:
+                speed = originalSpeed * 0.98f;
+                break;
+            case ThrowType.ExCurve:
+                speed = originalSpeed * 0.65f;
+                break;
+            case ThrowType.NormalCurve:
+                speed = originalSpeed * 0.75f;
+                break;
+            case ThrowType.Knuckleball:
+                speed = originalSpeed * 0.72f;
+                break;
+            case ThrowType.TwoSeamFastball:
+                speed = originalSpeed * 0.98f;
+                break;
+            case ThrowType.Splitter:
+                speed = originalSpeed * 0.92f;
+                break;
+        }
+
         controlPoint.position = initialControlPointPosition; // 제어점을 초기 위치로 재설정
 
         //var pathEnd = new Vector3(endPoint.position.x, endPoint.position.y, endPoint.position.z - 0.5f);
@@ -122,6 +228,8 @@ public class BallPath : MonoBehaviour
         ballMovement.endPoint = endPoint;
         ballMovement.controlPoint = controlPoint;
         ballMovement.pathRenderer = pathRenderer;
+
+
 
         generatePathMethod.Invoke();
 
@@ -140,9 +248,7 @@ public class BallPath : MonoBehaviour
         // Ray가 스트라이크 존에 닿았는지 확인
         if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("StrikeZone"))
         {
-            // 스트라이크 존에 닿았다면 큐브 생성
-            var ballAim = Instantiate(cubePrefab, hit.point, Quaternion.identity);
-
+            Debug.Log("스트라이크TODO");
         }
     }
 
@@ -196,6 +302,27 @@ public class BallPath : MonoBehaviour
         GeneratePath();
     }
 
+    public void ThrowKnuckleball()
+    {
+        ResetPath();
+        controlPoint.position += new Vector3(Random.Range(-1.5f, 1.5f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)); // 크게 무작위 위치 변화
+        GeneratePath();
+    }
+
+    public void ThrowTwoSeamFastball()
+    {
+        ResetPath();
+        controlPoint.position += new Vector3(Random.Range(-0.5f, 0), 0, 0); // 약간 왼쪽으로 이동 (오른손잡이 투수 기준)
+        GeneratePath();
+    }
+
+    public void ThrowSplitter()
+    {
+        ResetPath();
+        controlPoint.position += new Vector3(0, Random.Range(-1.5f, -0.5f), 0); // 아래로 더 떨어짐
+        GeneratePath();
+    }
+
     #endregion
     // 기존의 GenerateCurvePath 함수를 GeneratePath로 이름 변경
     void GeneratePath()
@@ -203,10 +330,21 @@ public class BallPath : MonoBehaviour
         int resolution = 20; // 경로의 해상도
         pathRenderer.positionCount = resolution;
 
+
+
+        
+
+        var randomPoint = endPoint.position + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), -0.37f);
+
+        if(_hEyes == true)
+            cubePrefab.transform.position = randomPoint + new Vector3(0, 0, +0.37f);
+        else
+            cubePrefab.transform.position = randomPoint + new Vector3(999, 999, 999);
+
         for (int i = 0; i < resolution; i++)
         {
             float t = i / (float)(resolution - 1);
-            Vector3 position = CalculateBezierPoint(t, startPoint.position, controlPoint.position, endPoint.position);
+            Vector3 position = CalculateBezierPoint(t, startPoint.position + new Vector3(0,0, _ballerDistance), controlPoint.position, randomPoint);
             pathRenderer.SetPosition(i, position);
             pathPoints.Add(position);
         }
