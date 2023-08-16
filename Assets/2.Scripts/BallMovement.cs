@@ -1,13 +1,18 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BallMovement : MonoBehaviour
 {
+    public int ballId;
     public Transform startPoint;
     public Transform endPoint;
     public Transform controlPoint;
     public LineRenderer pathRenderer;
     public float speed;
+    private bool _strike;
+    private bool _hit;
+    public Action<int> ballClearAction;
 
     private List<Vector3> pathPoints = new List<Vector3>();
     private int currentPointIndex = 0;
@@ -23,14 +28,45 @@ public class BallMovement : MonoBehaviour
 
     public void MoveAlongPath()
     {
-        if (currentPointIndex < pathPoints.Count)
+        if(_strike)
         {
-            transform.position = Vector3.MoveTowards(transform.position, pathPoints[currentPointIndex], speed * Time.deltaTime);
-
-            if (transform.position == pathPoints[currentPointIndex])
-            {
-                currentPointIndex++;
-            }
+            ballClearAction?.Invoke(ballId);
         }
+        else if(_hit)
+        {
+            return;
+        }
+        else
+        {
+            if (currentPointIndex < pathPoints.Count)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, pathPoints[currentPointIndex], speed * Time.deltaTime);
+
+                if (transform.position == pathPoints[currentPointIndex])
+                {
+                    currentPointIndex++;
+                }
+            }
+
+        }
+
+
+    }
+
+    public void SetHit()
+    {
+        _hit = true;
+    }
+
+    private void LateUpdate()
+    {
+        if (transform.position.z <= -8.45 && _strike == false)
+        {
+            _strike = true;
+            gameObject.SetActive(false);
+        }
+            
+        else
+            return;
     }
 }

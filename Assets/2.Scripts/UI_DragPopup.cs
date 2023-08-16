@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class UI_DragPopup : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IDragHandler
+public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     enum Images
     {

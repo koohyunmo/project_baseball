@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BallPath : MonoBehaviour
@@ -14,14 +15,18 @@ public class BallPath : MonoBehaviour
     private List<Vector3> pathPoints = new List<Vector3>(); // 경로의 모든 포인트
     private int currentPointIndex = 0; // 현재 목표 포인트
     float speed = 0.0f; // 공의 움직임 속도
-    [SerializeField]float originalSpeed = 15.0f; // 공의 움직임 속도
-    private List<BallMovement> balls = new List<BallMovement>();
+    [SerializeField]float originalSpeed = 41.67f; // 150 km/h to m/s
+    private Dictionary<int,BallMovement> ballDict = new Dictionary<int, BallMovement>();
     private Vector3 initialControlPointPosition; // 제어점의 초기 위치
     public GameObject cubePrefab; // 큐브 객체
     [SerializeField] private bool _hEyes = false;
     [SerializeField] private float _ballerDistance = 0.0f;
 
     [SerializeField] private ThrowType _throwType;
+    [SerializeField] private League _league = League.Major;
+
+
+    static int _ballerCount = 0;
 
     enum ThrowType
     {
@@ -36,6 +41,15 @@ public class BallPath : MonoBehaviour
         TwoSeamFastball,
         Splitter,
         COUNT
+    }
+
+
+    enum League
+    {
+        Major,
+        Mainor,
+        Amateur,
+        SemiPro,
     }
 
     void Start()
@@ -91,44 +105,15 @@ public class BallPath : MonoBehaviour
                     break;
             }
 
-
-
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        // 각 키에 따라 구종을 던집니다.
-        if (Input.GetKeyDown(KeyCode.F))
-        {
+        if (ballDict.Count <= 0)
+            return;
 
-           ThrowBall(ThrowFastBall);
-        }
-        else if (Input.GetKeyDown(KeyCode.C))
-        {
-            ThrowBall(ThrowCurve);
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            ThrowBall(ThrowSlider);
-        }
-        else if (Input.GetKeyDown(KeyCode.U))
-        {
-            ThrowBall(ThrowChangeUp);
-        }
-        else if (Input.GetKeyDown(KeyCode.I))
-        {
-            ThrowBall(ThrowSinker);
-        }
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
-            ThrowBall(ThrowExaggeratedCurveball);
-        }
-        else if (Input.GetKeyDown(KeyCode.N))
-        {
-            ThrowBall(ThrowNormalCurveball);
-        }
-
+        var balls = new List<BallMovement>(ballDict.Values);
         foreach (var ball in balls)
         {
             ball.MoveAlongPath();
@@ -180,7 +165,26 @@ public class BallPath : MonoBehaviour
         return p;
     }
 
-    void ThrowBall(System.Action generatePathMethod)
+    private void SetLeagueSpeed()
+    {
+        // 난이도별 구속
+        switch (_league)
+        {
+            case League.Major:
+                originalSpeed = Random.Range(41.67f, 44.44f);
+                break;
+            case League.Mainor:
+                originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.9f, 0.95f);
+                break;
+            case League.Amateur:
+                originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.8f, 0.88f);
+                break;
+            case League.SemiPro:
+                originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.7f, 0.82f);
+                break;
+        }
+    }
+    private void SetThrowTypeSpeed()
     {
 
         switch (_throwType)
@@ -216,6 +220,13 @@ public class BallPath : MonoBehaviour
                 speed = originalSpeed * 0.92f;
                 break;
         }
+    }
+    void ThrowBall(System.Action generatePathMethod)
+    {
+
+        SetLeagueSpeed();
+        SetThrowTypeSpeed();
+
 
         controlPoint.position = initialControlPointPosition; // 제어점을 초기 위치로 재설정
 
@@ -228,13 +239,21 @@ public class BallPath : MonoBehaviour
         ballMovement.endPoint = endPoint;
         ballMovement.controlPoint = controlPoint;
         ballMovement.pathRenderer = pathRenderer;
+        ballMovement.ballId = _ballerCount;
+        ballMovement.ballClearAction = ((int id) =>
+        {
+            ballDict.Remove(id);
+
+        });
 
 
 
         generatePathMethod.Invoke();
 
         ballMovement.SetPath(pathRenderer);
-        balls.Add(ballMovement);
+        //balls.Add(ballMovement);
+        _ballerCount++;
+        ballDict.Add(_ballerCount, ballMovement);
 
         CheckStrikeZone(startPoint, endPoint);
     }
@@ -330,16 +349,15 @@ public class BallPath : MonoBehaviour
         int resolution = 20; // 경로의 해상도
         pathRenderer.positionCount = resolution;
 
-
-
-        
-
-        var randomPoint = endPoint.position + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), -0.37f);
+        var randomPoint = endPoint.position + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), -2f);
 
         if(_hEyes == true)
-            cubePrefab.transform.position = randomPoint + new Vector3(0, 0, +0.37f);
+            cubePrefab.transform.position = randomPoint + new Vector3(0, 0, +2f);
         else
             cubePrefab.transform.position = randomPoint + new Vector3(999, 999, 999);
+
+        var posu = Instantiate(cubePrefab, randomPoint, Quaternion.identity);
+        Destroy(posu, 2);
 
         for (int i = 0; i < resolution; i++)
         {

@@ -39,8 +39,10 @@ public class BatCollider : MonoBehaviour
 
             // 날려 보내기
             Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
+
             if (rb != null)
             {
+                other.gameObject.GetComponent<BallMovement>().SetHit();
                 var hitPoint = other.gameObject.transform.position;
 
                 HitPointCheck(hitPoint,rb);
@@ -52,6 +54,8 @@ public class BatCollider : MonoBehaviour
 
     private void HitPointCheck(Vector3 hitPoint,Rigidbody rb)
     {
+        
+
         var topCheck = (_top.transform.position - hitPoint).sqrMagnitude;
         var midCheck = (_mid.transform.position - hitPoint).sqrMagnitude;
         var bottomCheck = (_bottom.transform.position - hitPoint).sqrMagnitude;
@@ -93,14 +97,15 @@ public class BatCollider : MonoBehaviour
     }
 
 
+
     private Vector3 GetDirection(float topDist, float midDist,float midRowDist, float bottomDist, ref Color hitColor)
     {
         Vector3 forceDirection = Vector3.zero;
 
         Vector3 topDir = transform.parent.forward + transform.parent.up * 2f;
         Vector3 midDir = transform.parent.forward + transform.parent.up;
-        Vector3 midRowDir = transform.parent.forward + transform.parent.up * 0.9f;
-        Vector3 bottomDir = transform.parent.forward + transform.parent.up * 0.5f;
+        Vector3 midRowDir = transform.parent.forward + transform.parent.up * 0.75f;
+        Vector3 bottomDir = transform.parent.forward + transform.parent.up * 0.25f;
 
         Color topColor = Color.yellow;
         Color midColor = Color.green;
