@@ -20,8 +20,7 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
     public Image _handler;
     public Image _icon;
     public Image _touchBG;
-    public GameObject batObj;
-    public AiBat bat;
+    public Bat bat;
 
     Vector2 _touchPosition;
     Vector2 _moveDir;
@@ -33,7 +32,9 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
     {
         _joystickRadius = _background.gameObject.GetComponent<RectTransform>().sizeDelta.y / 2f;
 
-        bat = batObj.GetComponent<AiBat>();
+        bat = Managers.Game.Bat;
+
+        Managers.Game.SetDragPopup(this);
     }
 
     public void OnPointerClick(UnityEngine.EventSystems.PointerEventData eventData)
@@ -83,6 +84,6 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
         Vector3 newDir = new Vector3(_moveDir.x, _moveDir.y, 0);
 
         Vector3 dir = newDir * _speed * Time.deltaTime;
-        batObj.transform.localPosition += dir;
+        bat.transform.localPosition += dir;
     }
 }

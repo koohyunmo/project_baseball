@@ -58,15 +58,24 @@ public class BallMovement : MonoBehaviour
         _hit = true;
     }
 
+    private void Update()
+    {
+        if(Managers.Game.GameState != Define.GameState.InGround)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
     private void LateUpdate()
     {
+        if (_strike)
+            return;
+
         if (transform.position.z <= -8.45 && _strike == false)
         {
             _strike = true;
-            gameObject.SetActive(false);
+            gameObject.SetActive(true);
+            Managers.Game.GameEnd();
         }
-            
-        else
-            return;
     }
 }

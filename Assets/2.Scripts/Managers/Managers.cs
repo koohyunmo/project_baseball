@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static Define;
 
@@ -12,10 +13,13 @@ public class Managers : MonoBehaviour
     public static UIManager UI { get { return Instance?._ui; } }
     public static PoolManager Pool { get { return Instance?._pool; } }
     public static ResourceManager Resource { get { return Instance?._resource; } }
+    public static GameManager Game { get { return Instance?._game; } }
 
     UIManager _ui = new UIManager();
     PoolManager _pool = new PoolManager();
     ResourceManager _resource = new ResourceManager();
+    GameManager _game = new GameManager();
+
 
     public static Managers Instance
     {

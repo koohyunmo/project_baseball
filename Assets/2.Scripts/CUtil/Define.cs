@@ -15,6 +15,14 @@ public static class Define
 		EndDrag,
 	}
 
+	public enum GameState
+	{
+		Home,
+		Ready,
+		InGround,
+		End,
+	}
+
 	public enum Scene
 	{
 		Unknown,
@@ -28,42 +36,36 @@ public static class Define
 		Effect,
 	}
 
-	public enum ObjectType
-	{
-		Player,
-		Monster,
-		Projectile,
-		Env
-	}
-
-	public enum SkillType
-	{
-		None,
-		Sequence,
-		Repeat,
-	}
-
-	public enum StageType
-	{
-		Normal,
-		Boss,
-	}
-
 	public enum CreatureState
 	{
 		Idle,
-		Moving,
-		Skill,
-		Dead
+		Swing,
+		Out
 	}
 
-	public const int GOBLIN_ID = 1;
-	public const int SNAKE_ID = 2;
-	public const int BOSS_ID = 3;
+    public enum ThrowType
+    {
+        FastBall,
+        Curve,
+        Slider,
+        ChangUp,
+        Sinker,
+        ExCurve,
+        NormalCurve,
+        Knuckleball,
+        TwoSeamFastball,
+        Splitter,
+        COUNT
+    }
 
-	public const int PLAYER_DATA_ID = 1;
-	public const string EXP_GEM_PREFAB = "EXPGem.prefab";
 
-	public const int EGO_SWORD_ID = 10;
-	public const int FIREBALL_ID = 20;
+    public enum League
+    {
+        Major,
+        Mainor,
+        Amateur,
+        SemiPro,
+    }
+
+
 }

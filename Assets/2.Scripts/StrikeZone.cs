@@ -20,13 +20,5 @@ public class StrikeZone : MonoBehaviour
         sizeNorm = Vector3.Dot(size, size);
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other != null && other.CompareTag("Ball"))
-        {
-            Debug.Log("Strike");
-        }
-    }
-
 
 }

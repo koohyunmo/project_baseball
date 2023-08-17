@@ -349,7 +349,6 @@ MonoBehaviour:
   _handler: {fileID: 117433568788457147}
   _icon: {fileID: 117433568282304031}
   _touchBG: {fileID: 117433568265951435}
-  batObj: {fileID: 0}
   bat: {fileID: 0}
 --- !u!1 &117433568788457145
 GameObject:

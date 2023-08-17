@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Define;
 
 public class BallPath : MonoBehaviour
 {
+
+    Define.GameState GameState { get { return Managers.Game.GameState; } }
     public GameObject ballPrefab; // 공 객체
     public Transform startPoint; // 공의 시작 위치
     private Transform originPath; // 공의 시작 위치
@@ -23,35 +26,12 @@ public class BallPath : MonoBehaviour
     [SerializeField] private float _ballerDistance = 0.0f;
 
     [SerializeField] private ThrowType _throwType;
-    [SerializeField] private League _league = League.Major;
+    [SerializeField] private League League { get { return Managers.Game.League; } }
 
 
     static int _ballerCount = 0;
     private bool _stopBaller = false;
 
-    enum ThrowType
-    {
-        FastBall,
-        Curve,
-        Slider,
-        ChangUp,
-        Sinker,
-        ExCurve,
-        NormalCurve,
-        Knuckleball,
-        TwoSeamFastball,
-        Splitter,
-        COUNT
-    }
-
-
-    enum League
-    {
-        Major,
-        Mainor,
-        Amateur,
-        SemiPro,
-    }
 
     void Start()
     {
@@ -66,59 +46,72 @@ public class BallPath : MonoBehaviour
     {
         while (true)
         {
-
-            yield return new WaitForSeconds(2f);
-            _throwType = (ThrowType)Random.RandomRange(0, (int)ThrowType.COUNT-1);
-
-            Debug.Log($"Throw Type {_throwType}");
-
-            switch (_throwType)
+            switch (GameState)
             {
-                case ThrowType.FastBall:
-                    ThrowBall(ThrowFastBall);
+                case Define.GameState.Home:
+                    _stopBaller = false;
+                    yield return null;
                     break;
-                case ThrowType.Curve:
-                    ThrowBall(ThrowCurve);
+                case Define.GameState.Ready:
+                    yield return null;
                     break;
-                case ThrowType.Slider:
-                    ThrowBall(ThrowSlider);
+                case Define.GameState.InGround:
+                    yield return new WaitForSeconds(1.5f);
+                    Thorw();
                     break;
-                case ThrowType.ChangUp:
-                    ThrowBall(ThrowChangeUp);
-                    break;
-                case ThrowType.Sinker:
-                    ThrowBall(ThrowSinker);
-                    break;
-                case ThrowType.ExCurve:
-                    ThrowBall(ThrowExaggeratedCurveball);
-                    break;
-                case ThrowType.NormalCurve:
-                    ThrowBall(ThrowNormalCurveball);
-                    break;
-                case ThrowType.Knuckleball:
-                    ThrowBall(ThrowKnuckleball);
-                    break;
-                case ThrowType.TwoSeamFastball:
-                    ThrowBall(ThrowTwoSeamFastball);
-                    break;
-                case ThrowType.Splitter:
-                    ThrowBall(ThrowSplitter);
+                case Define.GameState.End:
+                    if(_stopBaller == false)
+                        cubePrefab.transform.position = new Vector3(999, 999, 999);
+
+                    _stopBaller = true;
+                    
+                    yield return null;
                     break;
             }
 
         }
     }
 
-    private void Update()
+    private void Thorw()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        _throwType = (ThrowType)Random.RandomRange(0, (int)ThrowType.COUNT - 1);
+
+        switch (_throwType)
         {
-            if (_stopBaller)
-                _stopBaller = false;
-            else
-                _stopBaller = true;
+            case ThrowType.FastBall:
+                ThrowBall(ThrowFastBall);
+                break;
+            case ThrowType.Curve:
+                ThrowBall(ThrowCurve);
+                break;
+            case ThrowType.Slider:
+                ThrowBall(ThrowSlider);
+                break;
+            case ThrowType.ChangUp:
+                ThrowBall(ThrowChangeUp);
+                break;
+            case ThrowType.Sinker:
+                ThrowBall(ThrowSinker);
+                break;
+            case ThrowType.ExCurve:
+                ThrowBall(ThrowExaggeratedCurveball);
+                break;
+            case ThrowType.NormalCurve:
+                ThrowBall(ThrowNormalCurveball);
+                break;
+            case ThrowType.Knuckleball:
+                ThrowBall(ThrowKnuckleball);
+                break;
+            case ThrowType.TwoSeamFastball:
+                ThrowBall(ThrowTwoSeamFastball);
+                break;
+            case ThrowType.Splitter:
+                ThrowBall(ThrowSplitter);
+                break;
         }
     }
+        
+
 
     void FixedUpdate()
     {
@@ -194,7 +187,7 @@ public class BallPath : MonoBehaviour
     private void SetLeagueSpeed()
     {
         // 난이도별 구속
-        switch (_league)
+        switch (League)
         {
             case League.Major:
                 originalSpeed = Random.Range(41.67f, 44.44f);
@@ -254,6 +247,8 @@ public class BallPath : MonoBehaviour
         SetThrowTypeSpeed();
 
 
+        Managers.Game.SetBallInfo(speed, _throwType);
+
         controlPoint.position = initialControlPointPosition; // 제어점을 초기 위치로 재설정
 
         //var pathEnd = new Vector3(endPoint.position.x, endPoint.position.y, endPoint.position.z - 0.5f);
@@ -282,6 +277,8 @@ public class BallPath : MonoBehaviour
         ballDict.Add(_ballerCount, ballMovement);
 
         CheckStrikeZone(startPoint, endPoint);
+
+        Managers.Game.ThorwBall();
     }
 
     void CheckStrikeZone(Transform sp, Transform ep)
@@ -293,6 +290,7 @@ public class BallPath : MonoBehaviour
         // Ray가 스트라이크 존에 닿았는지 확인
         if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("StrikeZone"))
         {
+            Debug.DrawRay(ray.origin, ray.direction);
             Debug.Log("스트라이크TODO");
         }
     }
@@ -382,8 +380,8 @@ public class BallPath : MonoBehaviour
         else
             cubePrefab.transform.position = randomPoint + new Vector3(999, 999, 999);
 
-        var posu = Instantiate(cubePrefab, randomPoint, Quaternion.identity);
-        Destroy(posu, 2);
+        // var posu = Instantiate(cubePrefab, randomPoint, Quaternion.identity);
+        // Destroy(posu, 2);
 
         for (int i = 0; i < resolution; i++)
         {

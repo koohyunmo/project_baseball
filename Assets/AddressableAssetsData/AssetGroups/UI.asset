@@ -28,25 +28,41 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
-    - Prefabs
   - m_GUID: d61180407f7d769418ab610e26ba2654
     m_Address: UI_SkinPopup
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
-    - Prefabs
   - m_GUID: 6c690d1dc1cf64645a02eb3ed30e350c
     m_Address: UI_DragPopup
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
-    - Prefabs
   - m_GUID: 7aab6d8c1a11b354eb532ee7a1c0d4ee
     m_Address: UI_MainScene2
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
-    - Prefabs
+  - m_GUID: c3afb90bac5aedb4d93361eb7221d791
+    m_Address: UI_Timer
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+  - m_GUID: b9ce3fbf55ae5f64888b029f20b75d1e
+    m_Address: UI_EndPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+  - m_GUID: 235f41a193368794dba50ac3e1de18fa
+    m_Address: UI_MainTest
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+  - m_GUID: 600d801894650bc42b4edf55396079d1
+    m_Address: UI_GameInfoPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9c2d91b0a86c0bb4b9bbf0d47449c95f, type: 2}
   m_SchemaSet:

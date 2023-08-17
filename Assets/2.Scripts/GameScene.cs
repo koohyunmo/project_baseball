@@ -31,6 +31,8 @@ public class GameScene : MonoBehaviour
         if (obj == null)
             Managers.Resource.Instantiate("EventSystem").name = "@EventSystem";
 
+        Managers.Game.Init();
+
         //var ui_Main = Managers.UI.ShowSceneUI<UI_MainScene>();
         //var ui_Drag = Managers.UI.ShowPopupUI<UI_DragPopup>();
 

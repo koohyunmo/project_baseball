@@ -8,6 +8,8 @@ using static UnityEngine.UI.Image;
 
 public class Bat : MonoBehaviour
 {
+    Define.GameState GameState { get { return Managers.Game.GameState; } }
+
     public BoxCollider batCollider;
     public GameObject model;
 
@@ -18,7 +20,7 @@ public class Bat : MonoBehaviour
     public Transform endBat;
 
     bool isSwinging;
-    [SerializeField]float lerpTimer;
+    [SerializeField] float lerpTimer;
     float maxTime = 0.3f;
 
     Vector3 originalBatPos;
@@ -37,10 +39,12 @@ public class Bat : MonoBehaviour
     private float returnLerpSpeed = 1f; // 원래 위치로 돌아갈 때의 lerp 속도
 
 
+
+
+
     void Start()
     {
         First();
-
     }
 
     private void First()
@@ -56,12 +60,49 @@ public class Bat : MonoBehaviour
         mainCamera = Camera.main;
 
         anim = model.GetComponent<Animator>();
+
+        Managers.Game.SetBat(this);
+    }
+
+
+    private void Update()
+    {
+        switch (GameState)
+        {
+            case Define.GameState.Home:
+                BatOff();
+                break;
+            case Define.GameState.Ready:
+                break;
+            case Define.GameState.InGround:
+                BatOn();
+                break;
+            case Define.GameState.End:
+                break;
+        }
+    }
+
+
+    private void BatOff()
+    {
+        if (batCollider.gameObject.activeSelf == true)
+        {
+            batCollider.gameObject.SetActive(false);
+        }
+    }
+
+    private void BatOn()
+    {
+        if (batCollider.gameObject.activeSelf == false)
+        {
+            batCollider.gameObject.SetActive(true);
+        }
     }
 
     private void FixedUpdate()
     {
         SwingAndBack();
-        ClampToCameraView(); 
+        ClampToCameraView();
     }
 
     private void ClampToCameraView()
@@ -98,7 +139,7 @@ public class Bat : MonoBehaviour
                 anim.Play("Bat_Idle");
             }
         }
-        
+
 
         if (isReturning)
         {
@@ -159,4 +200,3 @@ public class Bat : MonoBehaviour
     }
 
 }
-
