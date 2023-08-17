@@ -1,0 +1,31 @@
+Thank you for purchasing the Sports Pack - Baseball Bats Bundle. All sets are included in this package including the bonus set as listed below:
+
+Sports Pack - Baseball Bats Set 1 which contains bats with select solid color bats and striped bats with grips.
+
+Sports Pack - Baseball Bats Set 2 which contains some neon lit flame and neon designed baseball bats.
+
+Sports Pack - Baseball Bats Set 3 which contains 5 wood bats with designs, 3 metal (aluminum) bats with designs, 2 metal industrial bats.
+
+Bonus set:
+Aluminum USA bat design.
+Aluminum Japan bat design.
+Aluminum South Korea bat design.
+Wooden Canada bat design.
+
+File structure below:
+
+Assets
+     Sports Pack - Baseball Bats Bundle
+	Materials
+	Mesh
+	   bat.fbx
+	Prefabs
+	Scene
+	Textures
+	   (Size: 2048)
+	   (Type: PNG)
+
+If you have any questions, suggestions or have any requests for Unity assets please do not hesitate to contact me at moffafa@gmail.com.
+
+Moffafa
+3D Modeler/Texture Artist

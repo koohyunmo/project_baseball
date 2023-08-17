@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UI
+  m_EditorClassIdentifier: 
+  m_GroupName: UI
+  m_Data:
+    m_SerializedData: []
+  m_GUID: a4fe28c07426d3a4aa1f6af8448582d1
+  m_SerializeEntries:
+  - m_GUID: 105314e8b53f38c4eac8823522f871f9
+    m_Address: EventSystem
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Prefabs
+  - m_GUID: 47fc2464387184b4884299d833c7013c
+    m_Address: UI_MainScene
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Prefabs
+  - m_GUID: d61180407f7d769418ab610e26ba2654
+    m_Address: UI_SkinPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Prefabs
+  - m_GUID: 6c690d1dc1cf64645a02eb3ed30e350c
+    m_Address: UI_DragPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Prefabs
+  - m_GUID: 7aab6d8c1a11b354eb532ee7a1c0d4ee
+    m_Address: UI_MainScene2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Prefabs
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 9c2d91b0a86c0bb4b9bbf0d47449c95f, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 2756b99f9737d8d43a016b0e824dfee6, type: 2}
+    - {fileID: 11400000, guid: 0f650856e8880f945ac135318e6b650a, type: 2}

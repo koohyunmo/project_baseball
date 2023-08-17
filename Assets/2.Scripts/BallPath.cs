@@ -27,6 +27,7 @@ public class BallPath : MonoBehaviour
 
 
     static int _ballerCount = 0;
+    private bool _stopBaller = false;
 
     enum ThrowType
     {
@@ -108,8 +109,33 @@ public class BallPath : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            if (_stopBaller)
+                _stopBaller = false;
+            else
+                _stopBaller = true;
+        }
+    }
+
     void FixedUpdate()
     {
+        if (_stopBaller == true)
+        {
+            if (ballDict.Count > 0)
+            {
+                foreach (var item in ballDict.Values)
+                {
+                    Destroy(item.gameObject);
+                }
+                ballDict.Clear();
+            }
+            else
+                return;
+        }
+
         if (ballDict.Count <= 0)
             return;
 
