@@ -34,6 +34,8 @@ public class BatCollider : MonoBehaviour
         if (other.gameObject.CompareTag("Ball"))
         {
             Debug.Log("Hit");
+
+            
             bat.Swing();
 
 
@@ -42,11 +44,14 @@ public class BatCollider : MonoBehaviour
 
             if (rb != null)
             {
-                other.gameObject.GetComponent<BallMovement>().SetHit();
+                if(Managers.Game.GameState == Define.GameState.InGround)
+                {
+                    other.gameObject.GetComponent<BallMovement>().SetHit();
+
+                }
+
                 var hitPoint = other.gameObject.transform.position;
-
-                HitPointCheck(hitPoint,rb);
-
+                HitPointCheck(hitPoint, rb);
             }
 
         }
@@ -54,7 +59,8 @@ public class BatCollider : MonoBehaviour
 
     private void HitPointCheck(Vector3 hitPoint,Rigidbody rb)
     {
-        
+        if (Managers.Game.GameState != Define.GameState.InGround)
+            return;
 
         var topCheck = (_top.transform.position - hitPoint).sqrMagnitude;
         var midCheck = (_mid.transform.position - hitPoint).sqrMagnitude;

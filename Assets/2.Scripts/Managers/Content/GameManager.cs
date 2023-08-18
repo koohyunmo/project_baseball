@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using static Define;
+using static EPOOutline.TargetStateListener;
 
 public class GameManager
 {
@@ -22,13 +24,22 @@ public class GameManager
     public float _speed = 0;
 
     public ThrowType ThrowType { get; private set; }
+    public LineRenderer StrikePath { get; private set; }
 
     
     public delegate void UIDelegate();
     public UIDelegate UiEvents;
+    public Action hutSwingCallBack;
+    public Action hitCallBack;
+    public Action moveBat;
+    public Action<LineRenderer> makeReplayEvent;
+    public bool isReplay = false;
+
 
     public League League { get { return _league; } private set { _league = value; } }
     private League _league = League.SemiPro;
+
+    public CameraManager MainCam { get; private set; }
 
 
 
@@ -48,7 +59,7 @@ public class GameManager
         GameState = GameState.Ready;
 
         callBack?.Invoke();
-        StateChangEvent();
+        StateChangeEvent();
     }
 
 
@@ -60,7 +71,7 @@ public class GameManager
         GameState = GameState.InGround;
 
         callBack?.Invoke();
-        StateChangEvent();
+        StateChangeEvent();
     }
 
     public void GameEnd(Action callBack = null)
@@ -71,7 +82,7 @@ public class GameManager
         GameState = GameState.End;
 
         callBack?.Invoke();
-        StateChangEvent();
+        StateChangeEvent();
     }
 
     public void GoHome(Action callBack = null)
@@ -82,14 +93,14 @@ public class GameManager
         GameState = GameState.Home;
 
         callBack?.Invoke();
-        StateChangEvent();
-
+        StateChangeEvent();
     }
-    private void StateChangEvent()
+    private void StateChangeEvent()
     {
         switch (GameState)
         {
             case GameState.Home:
+                MainCam.MoveOriginaPos();
                 Managers.UI.ShowPopupUI<UI_MainTest>();
                 break;
             case GameState.Ready:
@@ -108,14 +119,28 @@ public class GameManager
 
     }
 
-    public void ThorwBall()
+    public void ThorwBallEvent()
     {
         UiEvents?.Invoke();
     }
 
-    public void SetLeague(League lg)
+    public void StrikeEvent()
     {
-        _league = lg;
+        hutSwingCallBack?.Invoke();
+    }
+
+    public void HitEvent()
+    {
+        hitCallBack?.Invoke();
+    }
+
+    public void Replay()
+    {
+        if (isReplay)
+            return;
+        isReplay = true;
+        //moveBat?.Invoke();
+        makeReplayEvent?.Invoke(StrikePath);
     }
 
     #region 오브젝트 바인딩
@@ -129,6 +154,10 @@ public class GameManager
         dragPopup = popup;
     }
 
+    public void SetLeague(League lg)
+    {
+        _league = lg;
+    }
     public void SetBallInfo(float speed, ThrowType throwType)
     {
         _speed = speed;
@@ -141,6 +170,40 @@ public class GameManager
         UiEvents += uiEvent;
     }
 
+    public void SetStrikeCallBack(Action callback)
+    {
+        hutSwingCallBack -= callback;
+        hutSwingCallBack += callback;
+    }
+
+    public void SetHitCallBack(Action callback)
+    {
+        hitCallBack -= callback;
+        hitCallBack += callback;
+    }
+
+    public void SerStrikePath(LineRenderer pathRenderer)
+    {
+       StrikePath = pathRenderer;
+    }
+
+
+    public void SetReplayGame(Action<LineRenderer> replayAc)
+    {
+        makeReplayEvent -= replayAc;
+        makeReplayEvent += replayAc;
+    }
+
+    public void SetMainCamera(CameraManager mainCam)
+    {
+        MainCam = mainCam;
+    }
+
+    public void SetMoveBat(Action ac)
+    {
+        moveBat -= ac;
+        moveBat += ac;
+    }
     #endregion
 
 }

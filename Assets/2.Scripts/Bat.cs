@@ -10,7 +10,10 @@ public class Bat : MonoBehaviour
 {
     Define.GameState GameState { get { return Managers.Game.GameState; } }
 
-    public BoxCollider batCollider;
+    public Transform HitColider { get { return batBoxCollider.transform; } }
+
+    public BoxCollider batBoxCollider;
+    private MeshCollider batMeshCollider;
     public GameObject model;
 
     public float lerpSpeed = 2.5f;
@@ -23,7 +26,7 @@ public class Bat : MonoBehaviour
     [SerializeField] float lerpTimer;
     float maxTime = 0.3f;
 
-    Vector3 originalBatPos;
+    Vector3 originalBatPos = Vector3.zero;
     Quaternion originalBatRot;
     Vector3 originalCamPosition;
     Animator anim;
@@ -45,11 +48,13 @@ public class Bat : MonoBehaviour
     void Start()
     {
         First();
+
     }
 
     private void First()
     {
-        batCollider = GetComponentInChildren<BoxCollider>();
+        batBoxCollider = GetComponentInChildren<BoxCollider>();
+        batMeshCollider = GetComponentInChildren<MeshCollider>();
 
 
         originalBatPos = model.transform.position;
@@ -62,6 +67,14 @@ public class Bat : MonoBehaviour
         anim = model.GetComponent<Animator>();
 
         Managers.Game.SetBat(this);
+        Managers.Game.SetStrikeCallBack(HutSwing);
+        Managers.Game.SetMoveBat(OnltMoveModel);
+    }
+
+    private void OnltMoveModel()
+    {
+        model.transform.position = originalBatPos;
+        model.transform.rotation = originalBatRot;
     }
 
 
@@ -73,11 +86,13 @@ public class Bat : MonoBehaviour
                 BatOff();
                 break;
             case Define.GameState.Ready:
+                ColiderOn();
                 break;
             case Define.GameState.InGround:
                 BatOn();
                 break;
             case Define.GameState.End:
+                ColiderOff();
                 break;
         }
     }
@@ -85,17 +100,35 @@ public class Bat : MonoBehaviour
 
     private void BatOff()
     {
-        if (batCollider.gameObject.activeSelf == true)
+        if (batBoxCollider != null && batBoxCollider.gameObject.activeSelf == true)
         {
-            batCollider.gameObject.SetActive(false);
+            batBoxCollider.gameObject.SetActive(false);
         }
     }
 
     private void BatOn()
     {
-        if (batCollider.gameObject.activeSelf == false)
+        if (batBoxCollider != null &&  batBoxCollider.gameObject.activeSelf == false)
         {
-            batCollider.gameObject.SetActive(true);
+            batBoxCollider.gameObject.SetActive(true);
+        }
+    }
+
+    private void ColiderOff()
+    {
+        if (batBoxCollider != null && batMeshCollider.enabled == true)
+        {
+            batMeshCollider.enabled = false;
+            batBoxCollider.enabled = false;
+        }
+    }
+
+    private void ColiderOn()
+    {
+        if (batBoxCollider != null && batMeshCollider.enabled == false)
+        {
+            batMeshCollider.enabled = true;
+            batBoxCollider.enabled = true;
         }
     }
 
@@ -108,6 +141,7 @@ public class Bat : MonoBehaviour
     private void ClampToCameraView()
     {
         if (mainCamera == null) return; // 카메라가 할당되지 않았다면 함수 종료
+        if (GameState != Define.GameState.InGround) return; // 게임중이 아니라면 함수 종료
 
         Vector3 viewportPosition = mainCamera.WorldToViewportPoint(model.transform.position);
 
@@ -121,9 +155,23 @@ public class Bat : MonoBehaviour
 
     private void SwingAndBack()
     {
+        float slowSpeed = 1f;
+
         if (isSwinging)
         {
-            lerpTimer += Time.deltaTime * lerpSpeed;
+            if (GameState != Define.GameState.InGround && Managers.Game.isReplay)
+            {
+                slowSpeed = 0.5f;
+                anim.speed = 0.5f;
+            }
+            else
+            {
+                anim.speed = 1f;
+            }
+                
+
+            lerpTimer += Time.deltaTime * lerpSpeed * slowSpeed;
+            
 
             float curveValue = swingCurve.Evaluate(lerpTimer);  // 0과 1 사이의 lerpTime 값을 기반으로 곡선 값 추출
 
@@ -138,7 +186,9 @@ public class Bat : MonoBehaviour
                 isReturning = true;
                 anim.Play("Bat_Idle");
             }
+                
         }
+
 
 
         if (isReturning)
@@ -165,15 +215,38 @@ public class Bat : MonoBehaviour
         }
     }
 
+    private void SwingAnim()
+    {
+        if (GameState == Define.GameState.End)
+        {
+            string animationName = "Bat_Swing"; // 애니메이션 클립 이름
+            isSwinging = false;
+            float stopAt = 0.2f; // 애니메이션의 중간에서 멈추려면 0.5 (0은 시작, 1은 끝)
+
+            // 애니메이션의 정확한 시점에서 멈추기
+            anim.Play(animationName, 0, stopAt);
+            anim.speed = 0;
+        }
+    }
+
     public void Swing()
     {
         if (!isSwinging) // 스윙 중이 아닐 때만 스윙 시작
         {
+            Managers.Game.HitEvent();
             isSwinging = true;
         }
 
         // 카메라 효과를 추가합니다.
         StartCoroutine(CameraShake());
+    }
+
+    public void HutSwing()
+    {
+        if (!isSwinging) // 스윙 중이 아닐 때만 스윙 시작
+        {
+            isSwinging = true;
+        }
     }
 
     IEnumerator CameraShake()

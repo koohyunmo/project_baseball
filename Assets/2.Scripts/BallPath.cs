@@ -4,6 +4,7 @@ using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using static Define;
+using static UnityEngine.ParticleSystem;
 
 public class BallPath : MonoBehaviour
 {
@@ -21,16 +22,20 @@ public class BallPath : MonoBehaviour
     [SerializeField]float originalSpeed = 41.67f; // 150 km/h to m/s
     private Dictionary<int,BallMovement> ballDict = new Dictionary<int, BallMovement>();
     private Vector3 initialControlPointPosition; // 제어점의 초기 위치
-    public GameObject cubePrefab; // 큐브 객체
+    public GameObject ballAimPrefab; // 큐브 객체
     [SerializeField] private bool _hEyes = false;
     [SerializeField] private float _ballerDistance = 0.0f;
 
     [SerializeField] private ThrowType _throwType;
     [SerializeField] private League League { get { return Managers.Game.League; } }
 
+    [SerializeField] private List<GameObject> ballAims = new List<GameObject>();
+
 
     static int _ballerCount = 0;
     private bool _stopBaller = false;
+
+    private bool first;
 
 
     void Start()
@@ -40,31 +45,43 @@ public class BallPath : MonoBehaviour
         originPath = startPoint;
 
         StartCoroutine(c_Baller());
+
+        Managers.Game.SetHitCallBack(Thrw);
+        Managers.Game.SetReplayGame(RePlay);
     }
 
     IEnumerator c_Baller()
     {
+
         while (true)
         {
             switch (GameState)
             {
                 case Define.GameState.Home:
                     _stopBaller = false;
+                    pathRenderer.enabled = false;
+                    first = false;
                     yield return null;
                     break;
                 case Define.GameState.Ready:
                     yield return null;
                     break;
                 case Define.GameState.InGround:
-                    yield return new WaitForSeconds(1.5f);
-                    Thorw();
+                    if (first == false)
+                    {
+                        pathRenderer.enabled = true;
+                       yield return new WaitForSeconds(1.5f);
+                        first = true;
+                        Thrw();
+                    }
+                    yield return null;
                     break;
                 case Define.GameState.End:
-                    if(_stopBaller == false)
-                        cubePrefab.transform.position = new Vector3(999, 999, 999);
-
-                    _stopBaller = true;
-                    
+                    if (_stopBaller == false)
+                    {
+                        _stopBaller = true;
+                        ObjectClear();
+                    }
                     yield return null;
                     break;
             }
@@ -72,8 +89,32 @@ public class BallPath : MonoBehaviour
         }
     }
 
-    private void Thorw()
+    private void ObjectClear()
     {
+        ClearLine();
+        //StartCoroutine(co_Clear());
+    }
+    private void ClearLine()
+    {
+        //pathRenderer.positionCount = 0;
+    }
+
+
+    IEnumerator co_Clear()
+    {
+        foreach (var item in ballAims)
+        {
+            Managers.Resource.Destroy(item);
+            yield return null;
+        }
+
+        ballAims.Clear();
+    }
+    private void Thrw()
+    {
+        if (GameState != Define.GameState.InGround)
+            return;
+
         _throwType = (ThrowType)Random.RandomRange(0, (int)ThrowType.COUNT - 1);
 
         switch (_throwType)
@@ -240,8 +281,11 @@ public class BallPath : MonoBehaviour
                 break;
         }
     }
+
+    private Transform ball = null;
     void ThrowBall(System.Action generatePathMethod)
     {
+        ball = null;
 
         SetLeagueSpeed();
         SetThrowTypeSpeed();
@@ -268,7 +312,7 @@ public class BallPath : MonoBehaviour
         });
 
 
-
+        ball = ballInstance.transform;
         generatePathMethod.Invoke();
 
         ballMovement.SetPath(pathRenderer);
@@ -278,7 +322,8 @@ public class BallPath : MonoBehaviour
 
         CheckStrikeZone(startPoint, endPoint);
 
-        Managers.Game.ThorwBall();
+        Managers.Game.ThorwBallEvent();
+        Managers.Game.SerStrikePath(pathRenderer);
     }
 
     void CheckStrikeZone(Transform sp, Transform ep)
@@ -375,11 +420,16 @@ public class BallPath : MonoBehaviour
 
         var randomPoint = endPoint.position + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), -2f);
 
-        if(_hEyes == true)
-            cubePrefab.transform.position = randomPoint + new Vector3(0, 0, +2f);
-        else
-            cubePrefab.transform.position = randomPoint + new Vector3(999, 999, 999);
+        
 
+        if(_hEyes == true)
+        {
+            var aimPoint = randomPoint + new Vector3(0, 0, +2.25f);
+            var go = Instantiate(ballAimPrefab, aimPoint, Quaternion.identity);
+            go.GetOrAddComponent<BallAim>().DataInit(aimPoint, ball);
+            ballAims.Add(go);
+        }
+            
         // var posu = Instantiate(cubePrefab, randomPoint, Quaternion.identity);
         // Destroy(posu, 2);
 
@@ -391,4 +441,84 @@ public class BallPath : MonoBehaviour
             pathPoints.Add(position);
         }
     }
+
+    private void RePlay(LineRenderer renderer)
+    {
+        List<GameObject> balls = new List<GameObject>();
+
+        //for (int i = 0; i < renderer.positionCount; i++)
+        //{
+        //    GameObject go = Instantiate(ballPrefab, renderer.GetPosition(i), Quaternion.identity);
+        //    balls.Add(go);
+        //}
+
+        StartCoroutine(FollowPath());
+
+        foreach (var item in balls)
+        {
+            Destroy(item, 3.0f);
+        }
+
+        
+    }
+
+
+    /// <summary>
+    /// 리플레이 함수
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator FollowPath()
+    {
+        // 카메라 위치는
+        // 투수, 포수, 항공뷰 ,옆 4개
+        var cam = Camera.main;
+
+        var replayBall = Instantiate(ballPrefab);
+        replayBall.transform.position = pathRenderer.GetPosition(0);
+        //cam.transform.rotation = Quaternion.Euler(0, 180, 0);
+        cam.transform.rotation = Quaternion.Euler(0, -90, 0);
+
+        for (int i = 0; i < pathRenderer.positionCount; i++)
+        {
+            Vector3 targetPosition = pathRenderer.GetPosition(i); // 현재 반복의 위치로 설정
+
+            while (Vector3.Distance(replayBall.transform.position, targetPosition) > 0.05f)
+            {
+                if (GameState == GameState.Home)
+                {
+                    Managers.Game.isReplay = false;
+                    yield break;
+                }
+
+                float step = 20f * Time.deltaTime;
+                Vector3 moveDirection = (targetPosition - replayBall.transform.position).normalized;
+                replayBall.transform.position += moveDirection * step;
+                cam.transform.position = replayBall.transform.position + new Vector3(10f, 0, 0);
+                yield return null;
+            }
+
+            if (i == pathRenderer.positionCount - 2)
+            {
+                Managers.Game.StrikeEvent();
+            }
+
+            if (GameState == GameState.Home)
+            {
+                Managers.Game.isReplay = false;
+                yield break;
+            }
+                
+
+
+            // 다음 점으로 넘어가기 전에 잠시 기다림
+            yield return null;
+        }
+
+        Managers.Game.isReplay = false;
+
+
+
+    }
+
+
 }

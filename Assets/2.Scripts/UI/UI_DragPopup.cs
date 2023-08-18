@@ -84,6 +84,6 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
         Vector3 newDir = new Vector3(_moveDir.x, _moveDir.y, 0);
 
         Vector3 dir = newDir * _speed * Time.deltaTime;
-        bat.transform.localPosition += dir;
+        bat.HitColider.localPosition += dir;
     }
 }

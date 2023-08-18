@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Apple.ReplayKit;
 
 public class BallMovement : MonoBehaviour
 {
@@ -73,9 +75,14 @@ public class BallMovement : MonoBehaviour
 
         if (transform.position.z <= -8.45 && _strike == false)
         {
+            //Relplay()
+            //pathRenderer
+            Managers.Game.StrikeEvent();
             _strike = true;
             gameObject.SetActive(true);
             Managers.Game.GameEnd();
         }
     }
+
+
 }
