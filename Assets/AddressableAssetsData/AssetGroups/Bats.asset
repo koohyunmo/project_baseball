@@ -1,0 +1,215 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Bats
+  m_EditorClassIdentifier: 
+  m_GroupName: Bats
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 7742bdb6b8f7f0348948aed99442f614
+  m_SerializeEntries:
+  - m_GUID: d7b95e443c38f4f4d85b679b85f1dc57
+    m_Address: baseball_bat_regular
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 0459bb4f5dab73d45b3b2143563e9852
+    m_Address: black_bat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 14d526fdbdb6a7e4983f5905aa431cbc
+    m_Address: black_stripe
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 5920760aac894e444b25ce0599968e62
+    m_Address: blue_bat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 0db6c382ac9b844479af3e417b68307c
+    m_Address: blue_stripe
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: a8929530fd6ba484583964cdd2dfd13f
+    m_Address: decal01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: e64404accb9a95b46a7870a6abd4a6a4
+    m_Address: decal02
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 813f1434cc290ba4bbdfbbb2b31a4c50
+    m_Address: decal03
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: d5d444231772f224483a1d9a28321437
+    m_Address: decal04
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 67188b9605940c84084e64de91f0dcca
+    m_Address: decal05
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 16335d696d5c1ee4496b40c90754fcb4
+    m_Address: decal06
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 4d35394bc20f20f4884b857e5a359d52
+    m_Address: decal07
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: b037487c6731461439ce44f656ff4f99
+    m_Address: decal08
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 535e9ef493cb3a44890eb849d0789040
+    m_Address: decal09
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: fe4b21a3faa554444847bd6fce93a623
+    m_Address: decal10
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: a7284fab34d2e924180380784cfe9a3a
+    m_Address: decal11
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 7ca68ccfd55e111409db7cf8756f75e4
+    m_Address: flaming_bat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 5ca33b30e7b41384c857aac5b1244043
+    m_Address: future_blue
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: a092a9856ec006e45a7946003e51c113
+    m_Address: future_full_blue
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: efaf7a8da2de35649a0491544f2f2058
+    m_Address: future_full_purple
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 38cc5a51faec6b549b36aaecfa9f141d
+    m_Address: future_full_red
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 673047fcf6bcfc8448049bd575a0983b
+    m_Address: future_full_white
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: e6f52267b03ab9d41b4cf9d5758a000c
+    m_Address: future_purple
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 108fa4ea72e09c647a3c10491088ddb2
+    m_Address: future_red
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 636a3f4838e8217488444cf2bff1c117
+    m_Address: future_white
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 6fa4af28f352cc84b931f433e6cee310
+    m_Address: industrial_bat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 333c750c43a07ad43b1dfa5d3738a401
+    m_Address: industrial_batworn
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 3e60594dfa4aa4843a96cb864e5aca84
+    m_Address: orange_bat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 92922b43796ad7944b776fed135fb814
+    m_Address: orange_stripe
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 83672b1bddebd6d4a93fbf0832da39b3
+    m_Address: purple_bat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: b0540b9d12e5df74da93d9dcdd13a349
+    m_Address: purple_flaming_bat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: bd7e65845683aa0488cf6f2a6604c435
+    m_Address: purple_stripe
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 57dd8708bb3d5a645860cad559ef010b
+    m_Address: red_bat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: e2f6e243f3907d54fa7559f80e1ce842
+    m_Address: red_stripe
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: eb80d1c3f250c364898f4c58a8a58cbc
+    m_Address: white_bat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 7ef39b3ba1bd5d7408d5ac28143b4723
+    m_Address: white_stripe
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: f7c02009691f8134a896f07a2ba6884b
+    m_Address: yellow_bat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: 0e150c09685826044a45db06d3608ef3
+    m_Address: yellow_stripe
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 9c2d91b0a86c0bb4b9bbf0d47449c95f, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 44d23739b18689343929bd8e2a2b14ce, type: 2}
+    - {fileID: 11400000, guid: ed863b6ee8cd6a34ca1d4b51d14a15e9, type: 2}

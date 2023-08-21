@@ -67,5 +67,12 @@ public static class Define
         SemiPro,
     }
 
+	public enum Prefabs
+	{
+		None,
+		Bat,
+		Ball,
+	}
+
 
 }

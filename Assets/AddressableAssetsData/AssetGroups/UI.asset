@@ -22,13 +22,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
-    - Prefabs
-  - m_GUID: 47fc2464387184b4884299d833c7013c
-    m_Address: UI_MainScene
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-  - m_GUID: d61180407f7d769418ab610e26ba2654
+  - m_GUID: 6f8fea55a2de74af09f9e2e71811b147
     m_Address: UI_SkinPopup
     m_ReadOnly: 0
     m_SerializedLabels:
@@ -38,8 +32,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
-  - m_GUID: 7aab6d8c1a11b354eb532ee7a1c0d4ee
-    m_Address: UI_MainScene2
+  - m_GUID: 89caec4a4d2654659a2a4876202a73fb
+    m_Address: UI_Main
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
@@ -60,6 +54,21 @@ MonoBehaviour:
     - PreLoad
   - m_GUID: 600d801894650bc42b4edf55396079d1
     m_Address: UI_GameInfoPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+  - m_GUID: 6076c51eabf02430da5d2ebc17f2bc30
+    m_Address: UI_StorePopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+  - m_GUID: a406ba994235a6942b7376c8f0ca130e
+    m_Address: UI_Skin_Item
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+  - m_GUID: 89844dafcbf1f49feb05adabaa86d210
+    m_Address: UI_ChallengePopup
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad

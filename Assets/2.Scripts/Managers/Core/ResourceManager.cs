@@ -11,6 +11,10 @@ public class ResourceManager
 {
     // 실제 로드한 리소스.
     Dictionary<string, UnityEngine.Object> _resources = new Dictionary<string, UnityEngine.Object>();
+    // 벳 데이터
+    Dictionary<string, UnityEngine.Object> _bats = new Dictionary<string, UnityEngine.Object>();
+
+    public Dictionary<string, UnityEngine.Object> Bats {get { return _bats; } private set { _bats = value; } }
 
     #region 리소스 로드
     public T Load<T>(string key) where T : Object
@@ -66,7 +70,7 @@ public class ResourceManager
     #endregion
     #region 어드레서블
 
-    public void LoadAsync<T>(string key, Action<T> callback = null) where T : UnityEngine.Object
+    public void LoadAsync<T>(string key, Define.Prefabs type = Define.Prefabs.None, Action<T> callback = null) where T : UnityEngine.Object
     {
         //스프라이트인 경우 하위객체의 찐이름으로 로드하면 스프라이트로 로딩이 됌
         string loadKey = key;
@@ -83,12 +87,23 @@ public class ResourceManager
                 return;
             }
 
-            _resources.Add(key, op.Result);
+            switch (type)
+            {
+                case Define.Prefabs.None:
+                    _resources.Add(key, op.Result);
+                    break;
+                case Define.Prefabs.Bat:
+                    _bats.Add(key, op.Result);
+                    break;
+                case Define.Prefabs.Ball:
+                    break;
+            }
+            
             callback?.Invoke(op.Result);
         };
     }
 
-    public void LoadAllAsync<T>(string label, Action<string, int, int> callback) where T : UnityEngine.Object
+    public void LoadAllAsync<T>(string label, Define.Prefabs type = Define.Prefabs.None, Action<string, int, int> callback = null) where T : UnityEngine.Object
     {
         var opHandle = Addressables.LoadResourceLocationsAsync(label, typeof(T));
         opHandle.Completed += (op) =>
@@ -101,19 +116,20 @@ public class ResourceManager
             {
                 if (result.PrimaryKey.Contains(".sprite"))
                 {
-                    LoadAsync<Sprite>(result.PrimaryKey, (obj) =>
+                    LoadAsync<Sprite>(result.PrimaryKey, type ,(obj) =>
                     {
                         loadCount++;
                         callback?.Invoke(result.PrimaryKey, loadCount, totalCount);
                     });
                 }
                 else
-                { 
-                    LoadAsync<T>(result.PrimaryKey, (obj) =>
+                {
+                    LoadAsync<T>(result.PrimaryKey,type, (obj) =>
                     {
                         loadCount++;
                         callback?.Invoke(result.PrimaryKey, loadCount, totalCount);
                     });
+
                 }
             }
         };

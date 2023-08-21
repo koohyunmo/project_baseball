@@ -13,6 +13,8 @@ public class BatCollider : MonoBehaviour
     [SerializeField] Transform _bottom;
     [SerializeField] HitPos _hitPos = HitPos.NONE;
 
+    bool isHit = false;
+
     enum HitPos
     {
         NONE,
@@ -51,7 +53,13 @@ public class BatCollider : MonoBehaviour
                 }
 
                 var hitPoint = other.gameObject.transform.position;
-                HitPointCheck(hitPoint, rb);
+
+                if(isHit == false)
+                {
+                    isHit = true;
+                    HitPointCheck(hitPoint, rb);
+                }
+               
             }
 
         }
@@ -99,6 +107,11 @@ public class BatCollider : MonoBehaviour
         Debug.DrawRay(transform.parent.position, forceDirection * rayLength, hitColor, 3f); // 빨간색 레이를 2초 동안 보여줌
 
         Debug.Log($"HitPoint :  {_hitPos}  Score : {scroe} : Color {hitColor}");
+
+
+        Managers.Game.GetGameScore(scroe);
+
+        isHit = false;
 
     }
 

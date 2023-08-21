@@ -30,7 +30,11 @@ public abstract class UI_Base : MonoBehaviour
 	{
 		string[] names = Enum.GetNames(type);
 		UnityEngine.Object[] objects = new UnityEngine.Object[names.Length];
-		_objects.Add(typeof(T), objects);
+
+		if(_objects.ContainsKey(typeof(T)))
+			Debug.LogWarning($"Already exist type : {typeof(T)}");
+		else
+			_objects.Add(typeof(T), objects);
 
 		for (int i = 0; i < names.Length; i++)
 		{
@@ -40,7 +44,7 @@ public abstract class UI_Base : MonoBehaviour
 				objects[i] = Utils.FindChild<T>(gameObject, names[i], true);
 
 			if (objects[i] == null)
-				Debug.Log($"Failed to bind({names[i]})");
+				Debug.LogWarning($"Failed to bind({names[i]})");
 		}
 	}
 

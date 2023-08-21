@@ -20,20 +20,30 @@ public class GameManager
 
     public GameState GameState { get { return _gameState; } private set { _gameState = value; } }
 
+    public float ReplaySlowMode { get { return 0.25f; } private set { } }
+
     public float Speed { get { return (_speed * 3600) *0.001f; } private set { _speed = value; } }
     public float _speed = 0;
 
     public ThrowType ThrowType { get; private set; }
     public LineRenderer StrikePath { get; private set; }
 
+    public float HitScore { get; private set; }
+    public float GameScore { get; private set; }
     
     public delegate void UIDelegate();
     public UIDelegate UiEvents;
+
+    public delegate void GameUIDelegate();
+    public GameUIDelegate GameUiEvent;
+
     public Action hutSwingCallBack;
     public Action hitCallBack;
     public Action moveBat;
     public Action<LineRenderer> makeReplayEvent;
     public bool isReplay = false;
+
+    List<GameObject> gameObjects = new List<GameObject>();
 
 
     public League League { get { return _league; } private set { _league = value; } }
@@ -46,7 +56,7 @@ public class GameManager
     public void Init()
     {
         _gameState = GameState.Home;
-        Managers.UI.ShowPopupUI<UI_MainTest>();
+        Managers.UI.ShowPopupUI<UI_Main>();
     }
 
 
@@ -101,7 +111,7 @@ public class GameManager
         {
             case GameState.Home:
                 MainCam.MoveOriginaPos();
-                Managers.UI.ShowPopupUI<UI_MainTest>();
+                Managers.UI.ShowPopupUI<UI_Main>();
                 break;
             case GameState.Ready:
                 Managers.UI.ShowPopupUI<UI_Timer>();
@@ -142,6 +152,38 @@ public class GameManager
         //moveBat?.Invoke();
         makeReplayEvent?.Invoke(StrikePath);
     }
+
+    #region 게터세터
+    public void GetGameScore(float score)
+    {
+        if (score < 85)
+        {
+            HitScore = 1;
+        }
+        else if (score >= 85 && score < 95)
+        {
+            HitScore = 3;
+        }
+        else if (score >= 95 && score < 98)
+        {
+            HitScore = 5;
+        }
+        else if (score >= 98 && score <= 100)
+        {
+            HitScore = 10;
+        }
+        else
+        {
+            // 범위 밖의 점수에 대한 처리 (이 경우 에러 값 반환)
+            HitScore = -1;
+        }
+
+        GameScore += HitScore;
+        GameUiEvent?.Invoke();
+    }
+
+
+    #endregion
 
     #region 오브젝트 바인딩
     public void SetBat(Bat bat)
@@ -203,6 +245,12 @@ public class GameManager
     {
         moveBat -= ac;
         moveBat += ac;
+    }
+
+    public void SetGameUiEvent(GameUIDelegate evt)
+    {
+        GameUiEvent -= evt;
+        GameUiEvent += evt;
     }
     #endregion
 

@@ -477,6 +477,7 @@ public class BallPath : MonoBehaviour
         replayBall.transform.position = pathRenderer.GetPosition(0);
         //cam.transform.rotation = Quaternion.Euler(0, 180, 0);
         cam.transform.rotation = Quaternion.Euler(0, -90, 0);
+        float replaySpeed = speed;
 
         for (int i = 0; i < pathRenderer.positionCount; i++)
         {
@@ -490,7 +491,7 @@ public class BallPath : MonoBehaviour
                     yield break;
                 }
 
-                float step = 20f * Time.deltaTime;
+                float step = replaySpeed * Time.deltaTime;
                 Vector3 moveDirection = (targetPosition - replayBall.transform.position).normalized;
                 replayBall.transform.position += moveDirection * step;
                 cam.transform.position = replayBall.transform.position + new Vector3(10f, 0, 0);
@@ -499,6 +500,7 @@ public class BallPath : MonoBehaviour
 
             if (i == pathRenderer.positionCount - 2)
             {
+                replaySpeed = replaySpeed * Managers.Game.ReplaySlowMode;
                 Managers.Game.StrikeEvent();
             }
 

@@ -71,6 +71,11 @@ public class Bat : MonoBehaviour
         Managers.Game.SetMoveBat(OnltMoveModel);
     }
 
+    public void ChangeBat(Material mat)
+    {
+        model.GetComponent<MeshRenderer>().sharedMaterial = mat;
+    }
+
     private void OnltMoveModel()
     {
         model.transform.position = originalBatPos;
@@ -116,18 +121,18 @@ public class Bat : MonoBehaviour
 
     private void ColiderOff()
     {
-        if (batBoxCollider != null && batMeshCollider.enabled == true)
+        if (batBoxCollider != null && batBoxCollider.enabled == true)
         {
-            batMeshCollider.enabled = false;
+            //batMeshCollider.enabled = false;
             batBoxCollider.enabled = false;
         }
     }
 
     private void ColiderOn()
     {
-        if (batBoxCollider != null && batMeshCollider.enabled == false)
+        if (batBoxCollider != null && batBoxCollider.enabled == false)
         {
-            batMeshCollider.enabled = true;
+            //batMeshCollider.enabled = true;
             batBoxCollider.enabled = true;
         }
     }
@@ -161,8 +166,8 @@ public class Bat : MonoBehaviour
         {
             if (GameState != Define.GameState.InGround && Managers.Game.isReplay)
             {
-                slowSpeed = 0.5f;
-                anim.speed = 0.5f;
+                slowSpeed = 1f * Managers.Game.ReplaySlowMode;
+                anim.speed = 1f * Managers.Game.ReplaySlowMode;
             }
             else
             {
