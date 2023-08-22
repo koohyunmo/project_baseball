@@ -13,6 +13,13 @@ public class GameManager
     public Bat Bat { get { return _bat; } private set { _bat = value; } }
     private Bat _bat = null;
 
+    public Vector2 BatPos { get { return _batPos; } private set { _batPos = value; } }
+    private Vector2 _batPos;
+
+    public StrikeZone StrikeZone { get { return _strikeZone; } private set { _strikeZone = value; } }
+    private StrikeZone _strikeZone = null;
+
+    public Vector3 AimPoint;
     #region ∞‘¿” UI
     private UI_DragPopup dragPopup = null;
     private UI_GameInfoPopup gameInfoPopup = null;
@@ -251,6 +258,16 @@ public class GameManager
     {
         GameUiEvent -= evt;
         GameUiEvent += evt;
+    }
+
+    public void SetBatPos(Vector2 pos)
+    {
+        _batPos = pos;
+    }
+
+    public void SetStrikeZone(StrikeZone zone)
+    {
+        _strikeZone = zone;
     }
     #endregion
 

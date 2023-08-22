@@ -17,7 +17,9 @@ public class BallAim : MonoBehaviour
         _ball = ball;
         _initialDistance = (_targetPos - ball.position).magnitude;
 
-        Destroy(gameObject, 1.5f);
+
+        Managers.Game.SetHitCallBack(() => { gameObject.SetActive(false); });
+
     }
     private void Update()
     {

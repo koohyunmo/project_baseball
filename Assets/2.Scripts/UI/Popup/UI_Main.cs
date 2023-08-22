@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -21,6 +22,9 @@ public class UI_Main : UI_Popup, IDragHandler
     }
 
     private List<Image> images = new List<Image>();
+    public TextMeshProUGUI leagueTMP;
+    public Button nextLeague;
+    public Button prevLeague;
 
     private bool _isDrag = false;
 
@@ -35,11 +39,37 @@ public class UI_Main : UI_Popup, IDragHandler
         GetButton((int)Buttons.B_Skin).gameObject.BindEvent(B_SkinClick);
         GetButton((int)Buttons.B_Challenge).gameObject.BindEvent(B_ChanllengeClick);
         GetButton((int)Buttons.B_Store).gameObject.BindEvent(B_StoreClick);
+        leagueTMP.text = Managers.Game.League.ToString();
+
+        nextLeague.gameObject.BindEvent(OnClickNextLeague);
+        prevLeague.gameObject.BindEvent(OnClickPrevLeague);
 
         StartCoroutine(co_GetAllImages());
 
         return true;
 
+    }
+
+    private void OnClickNextLeague()
+    {
+
+
+        float league = (int)Managers.Game.League +1;
+        league = Mathf.Clamp(league, 0, (int)Define.League.COUNT-1);
+
+        Managers.Game.SetLeague((Define.League)league);
+        leagueTMP.text = Managers.Game.League.ToString();
+    }
+
+    private void OnClickPrevLeague()
+    {
+
+
+        float league = (int)Managers.Game.League - 1;
+        league = Mathf.Clamp(league, 0, (int)Define.League.COUNT - 1);
+
+        Managers.Game.SetLeague((Define.League)league);
+        leagueTMP.text = Managers.Game.League.ToString();
     }
 
     private void B_SkinClick()
@@ -69,6 +99,8 @@ public class UI_Main : UI_Popup, IDragHandler
 
     IEnumerator co_GetAllImages()
     {
+        
+
         for (int i = 0; i < transform.childCount; i++)
         {
             Image img = transform.GetChild(i).GetComponent<Image>();
@@ -80,15 +112,21 @@ public class UI_Main : UI_Popup, IDragHandler
 
         }
 
+        Debug.Log(images.Count);
+        yield break;
     }
 
     IEnumerator co_DoFade()
     {
+
+        yield return new WaitForEndOfFrame();
+
         foreach (var item in images)
         {
             item.DOFade(0f, 0.5f);
             yield return null;
         }
+
         yield return new WaitForSeconds(0.51f);
         Managers.UI.ClosePopupUI(this);
         Managers.Game.GameReady();

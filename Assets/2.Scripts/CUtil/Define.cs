@@ -61,10 +61,12 @@ public static class Define
 
     public enum League
     {
-        Major,
-        Mainor,
+		TEST,
         Amateur,
         SemiPro,
+        Mainor,
+        Major,
+		COUNT
     }
 
 	public enum Prefabs

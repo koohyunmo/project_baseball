@@ -8,6 +8,7 @@ public class UI_Skin_Item : UI_Base
 {
     public Image _icon;
     public Material _mat;
+    public GameObject _bat;
     public string _key;
 
 
@@ -23,7 +24,8 @@ public class UI_Skin_Item : UI_Base
 
         if (Managers.Resource.Bats[_key] is GameObject go)
         {
-            MeshRenderer renderer = go.GetComponent<MeshRenderer>();
+            _bat = go;
+            MeshRenderer renderer = _bat.GetComponent<MeshRenderer>();
             if (renderer != null)
             {
                 _mat = renderer.sharedMaterial;

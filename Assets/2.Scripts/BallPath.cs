@@ -242,6 +242,10 @@ public class BallPath : MonoBehaviour
             case League.SemiPro:
                 originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.7f, 0.82f);
                 break;
+            case League.TEST:
+                originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.3f, 0.4f);
+                break;
+
         }
     }
     private void SetThrowTypeSpeed()
@@ -299,6 +303,7 @@ public class BallPath : MonoBehaviour
 
         GameObject ballInstance = Instantiate(ballPrefab, startPoint.position, Quaternion.identity);
         BallMovement ballMovement = ballInstance.AddComponent<BallMovement>();
+        ballInstance.tag = "Ball";
         ballMovement.speed = speed;
         ballMovement.startPoint = startPoint;
         ballMovement.endPoint = endPoint;
@@ -420,11 +425,12 @@ public class BallPath : MonoBehaviour
 
         var randomPoint = endPoint.position + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), -2f);
 
-        
+        var aimPoint = randomPoint + new Vector3(0, 0, +2.25f);
 
-        if(_hEyes == true)
+        Managers.Game.AimPoint = aimPoint;
+
+        if (_hEyes == true)
         {
-            var aimPoint = randomPoint + new Vector3(0, 0, +2.25f);
             var go = Instantiate(ballAimPrefab, aimPoint, Quaternion.identity);
             go.GetOrAddComponent<BallAim>().DataInit(aimPoint, ball);
             ballAims.Add(go);
