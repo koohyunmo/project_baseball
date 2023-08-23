@@ -33,6 +33,7 @@ public class UI_Main : UI_Popup, IDragHandler
         if (base.Init() == false)
             return false;
 
+        _isDrag = true;
         BindButton(typeof(Buttons));
         BindImage(typeof(Images));
 
@@ -92,8 +93,6 @@ public class UI_Main : UI_Popup, IDragHandler
             _isDrag = true;
             StartCoroutine(co_DoFade());
         }
-            
-       
     }
 
 
@@ -113,6 +112,7 @@ public class UI_Main : UI_Popup, IDragHandler
         }
 
         Debug.Log(images.Count);
+        _isDrag = false;
         yield break;
     }
 

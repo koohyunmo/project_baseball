@@ -156,6 +156,7 @@ public class BallPath : MonoBehaviour
 
     void FixedUpdate()
     {
+
         if (_stopBaller == true)
         {
             if (ballDict.Count > 0)
@@ -452,13 +453,8 @@ public class BallPath : MonoBehaviour
     {
         List<GameObject> balls = new List<GameObject>();
 
-        //for (int i = 0; i < renderer.positionCount; i++)
-        //{
-        //    GameObject go = Instantiate(ballPrefab, renderer.GetPosition(i), Quaternion.identity);
-        //    balls.Add(go);
-        //}
+        StartCoroutine(co_RelplayFollowBall());
 
-        StartCoroutine(FollowPath());
 
         foreach (var item in balls)
         {
@@ -468,28 +464,26 @@ public class BallPath : MonoBehaviour
         
     }
 
-
-    /// <summary>
-    /// 리플레이 함수
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator FollowPath()
+    private IEnumerator co_RelplayFollowBall()
     {
-        // 카메라 위치는
-        // 투수, 포수, 항공뷰 ,옆 4개
         var cam = Camera.main;
+        var camManager = Camera.main.gameObject.GetComponent<CameraManager>();
 
         var replayBall = Instantiate(ballPrefab);
         replayBall.transform.position = pathRenderer.GetPosition(0);
-        //cam.transform.rotation = Quaternion.Euler(0, 180, 0);
-        cam.transform.rotation = Quaternion.Euler(0, -90, 0);
+        camManager.OnReplay(replayBall.transform);
+
         float replaySpeed = speed;
 
-        for (int i = 0; i < pathRenderer.positionCount; i++)
+        for (int i = 0; i < pathRenderer.positionCount - 1; i++)
         {
-            Vector3 targetPosition = pathRenderer.GetPosition(i); // 현재 반복의 위치로 설정
+            Vector3 startPoint = replayBall.transform.position;
+            Vector3 endPoint = pathRenderer.GetPosition(i + 1);
 
-            while (Vector3.Distance(replayBall.transform.position, targetPosition) > 0.05f)
+            float journeyLength = Vector3.Distance(startPoint, endPoint);
+            float journeyProgress = 0;
+
+            while (journeyProgress < journeyLength)
             {
                 if (GameState == GameState.Home)
                 {
@@ -497,10 +491,13 @@ public class BallPath : MonoBehaviour
                     yield break;
                 }
 
-                float step = replaySpeed * Time.deltaTime;
-                Vector3 moveDirection = (targetPosition - replayBall.transform.position).normalized;
-                replayBall.transform.position += moveDirection * step;
-                cam.transform.position = replayBall.transform.position + new Vector3(10f, 0, 0);
+                float distanceToMove = replaySpeed * Time.deltaTime;
+                journeyProgress += distanceToMove;
+
+                float fractionOfJourney = journeyProgress / journeyLength;
+
+                replayBall.transform.position = Vector3.Lerp(startPoint, endPoint, fractionOfJourney);
+
                 yield return null;
             }
 
@@ -509,24 +506,15 @@ public class BallPath : MonoBehaviour
                 replaySpeed = replaySpeed * Managers.Game.ReplaySlowMode;
                 Managers.Game.StrikeEvent();
             }
-
-            if (GameState == GameState.Home)
-            {
-                Managers.Game.isReplay = false;
-                yield break;
-            }
-                
-
-
-            // 다음 점으로 넘어가기 전에 잠시 기다림
-            yield return null;
         }
 
+        
         Managers.Game.isReplay = false;
-
-
-
+        yield return new WaitForSeconds(0.1f);
+        camManager.OffRePlay();
+        yield break;
     }
+
 
 
 }

@@ -29,6 +29,7 @@ public class GameManager
 
     public float ReplaySlowMode { get { return 0.25f; } private set { } }
 
+
     public float Speed { get { return (_speed * 3600) *0.001f; } private set { _speed = value; } }
     public float _speed = 0;
 

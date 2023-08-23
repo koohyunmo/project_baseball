@@ -137,7 +137,7 @@ public class UI_SkinPopup : UI_Popup
             }
             UI_Skin_Item skinItem = item.GetOrAddComponent<UI_Skin_Item>();
             skinItem.InitData(itmeID);
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
 
         yield break;
@@ -154,6 +154,7 @@ public class UI_SkinPopup : UI_Popup
         // Set clicked button color
         clickedButton.GetComponent<Image>().color = pressedColor;
     }
+
 
     private void Clear()
     {
