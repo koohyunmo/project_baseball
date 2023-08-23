@@ -203,7 +203,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 24896810}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2026,7 +2026,7 @@ MonoBehaviour:
   originalSpeed: 15
   ballAimPrefab: {fileID: 1867865450545264919, guid: e94cd3598ec66d04b953416f212b5a42,
     type: 3}
-  _hEyes: 0
+  _hEyes: 1
   _ballerDistance: 0
   _throwType: 0
   ballAims: []
