@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using GluonGui.WorkspaceWindow.Views.WorkspaceExplorer;
 using static BatchCaptureWindow;
-using Unity.VisualScripting;
 
 public class BatchCaptureWindow : EditorWindow
 {
@@ -19,7 +18,7 @@ public class BatchCaptureWindow : EditorWindow
     // 스크롤바에 필요한 변수 추가
     Vector2 scrollPosition;
 
-    PaddingRatio paddingRatio = PaddingRatio.Twenty; // 기본값을 Twenty로 설정
+
 
     private enum Resolution
     {
@@ -28,6 +27,8 @@ public class BatchCaptureWindow : EditorWindow
         High = 2048,
         VeryHigh = 4096
     }
+
+    PaddingRatio paddingRatio = PaddingRatio.Ten; // 기본값을 Twenty로 설정
 
     public enum PaddingRatio
     {
@@ -67,7 +68,7 @@ public class BatchCaptureWindow : EditorWindow
         // 해상도 설정 드롭다운 메뉴
         selectedResolution = (Resolution)EditorGUILayout.EnumPopup("[캡처 화질]Capture Resolution", selectedResolution);
 
-        GUILayout.Label("[미구현]Padding Ratio:", EditorStyles.boldLabel);
+        GUILayout.Label("[ 패딩(상대크기 캡처만)]Padding Ratio:", EditorStyles.boldLabel);
         paddingRatio = (PaddingRatio)EditorGUILayout.EnumPopup("Ratio", paddingRatio);
         EditorGUILayout.Space();
 
@@ -108,14 +109,27 @@ public class BatchCaptureWindow : EditorWindow
 
         EditorGUILayout.Space();
 
-        if (GUILayout.Button("[캡처]Capture"))
+
+        if (GUILayout.Button("[절대 크기 캡처]Capture"))
         {
             foreach (GameObject prefab in prefabs)
             {
-                CaptureObject(prefab);
+                CaptureObject_1(prefab);
 
             }
         }
+
+
+        if (GUILayout.Button("[상대 크기 캡처]Capture"))
+        {
+            foreach (GameObject prefab in prefabs)
+            {
+                CaptureObject_2(prefab);
+
+            }
+        }
+
+
 
         // 스크롤뷰 종료
         EditorGUILayout.EndScrollView();
@@ -180,7 +194,71 @@ public class BatchCaptureWindow : EditorWindow
     */
 
 
-    private void CaptureObject(GameObject obj)
+    private void CaptureObject_2(GameObject obj)
+    {
+        string directoryPath = Path.GetDirectoryName(savePath);
+        if (!Directory.Exists(directoryPath))
+        {
+            Directory.CreateDirectory(directoryPath);
+        }
+
+        GameObject instance = Instantiate(obj);
+        instance.transform.Rotate(rotationOffset);
+        instance.transform.localScale = Vector3.Scale(instance.transform.localScale, scaleOffset);
+
+        Camera cam = new GameObject("CaptureCam").AddComponent<Camera>();
+        cam.backgroundColor = Color.clear;
+        cam.clearFlags = CameraClearFlags.SolidColor;
+
+        RenderTexture rt = new RenderTexture((int)selectedResolution, (int)selectedResolution, 24);
+        cam.targetTexture = rt;
+
+        Renderer[] renderers = instance.GetComponentsInChildren<Renderer>();
+        if (renderers.Length == 0)
+            return;
+
+        Bounds combinedBounds = renderers[0].bounds;
+        foreach (Renderer renderer in renderers)
+        {
+            combinedBounds.Encapsulate(renderer.bounds);
+        }
+
+        float maxDimension = Mathf.Max(combinedBounds.size.x, combinedBounds.size.y, combinedBounds.size.z);
+        //float distance = maxDimension / (2 * Mathf.Tan(0.5f * cam.fieldOfView * Mathf.Deg2Rad));
+        //float distance = 1.1f * maxDimension / (2 * Mathf.Tan(0.5f * cam.fieldOfView * Mathf.Deg2Rad)); // 패딩 10%
+
+        float paddingMultiplier = GetPaddingValue(paddingRatio);
+        float distance = paddingMultiplier * maxDimension / (2 * Mathf.Tan(0.5f * cam.fieldOfView * Mathf.Deg2Rad));
+
+
+        cam.transform.position = combinedBounds.center - distance * cam.transform.forward;
+        cam.transform.LookAt(combinedBounds.center);
+
+        // Further adjust the clipping planes
+        cam.nearClipPlane = distance * 0.1f;
+        cam.farClipPlane = distance * 3;
+
+        RenderTexture currentRT = RenderTexture.active;
+        RenderTexture.active = rt;
+        cam.Render();
+
+        Texture2D image = new Texture2D(rt.width, rt.height, TextureFormat.ARGB32, false);
+        image.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
+        image.Apply();
+
+        byte[] bytes = image.EncodeToPNG();
+        string objSavePath = $"{savePath}{obj.name}.png";
+        File.WriteAllBytes(objSavePath, bytes);
+
+        RenderTexture.active = null;
+        DestroyImmediate(cam.gameObject);
+        RenderTexture.active = currentRT;
+
+        DestroyImmediate(instance);
+    }
+
+
+    private void CaptureObject_1(GameObject obj)
     {
         string directoryPath = Path.GetDirectoryName(savePath);
         if (!Directory.Exists(directoryPath))
@@ -234,6 +312,14 @@ public class BatchCaptureWindow : EditorWindow
 
         DestroyImmediate(instance);
     }
+
+
+    private float GetPaddingValue(PaddingRatio ratio)
+    {
+        return 1 + (float)ratio / 100f;  // 5 -> 1.05, 10 -> 1.1, ...
+    }
+
+
 
 
 
