@@ -428,16 +428,19 @@ public class BallPath : MonoBehaviour
     // 기존의 GenerateCurvePath 함수를 GeneratePath로 이름 변경
     void GeneratePath()
     {
+        GeneratePathBazierRayCast();
+    }
+
+    void GeneratePathOriginal()
+    {
         int resolution = 20; // 경로의 해상도
         pathRenderer.positionCount = resolution;
 
         var randomPoint = endPoint.position + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0f);
-        var randomPointTest = endPoint.position + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), -5f);
 
-        var aimPoint = randomPoint;// + new Vector3(0, 0, +2.25f);
-        var aimPointTest = randomPointTest + new Vector3(0, 0, +2.25f);
+        var aimPoint = randomPoint;
 
-        Ray ray = new Ray(startPoint.position, randomPoint - transform.position);
+        Ray ray = new Ray(startPoint.position, aimPoint - transform.position);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit))
@@ -454,13 +457,7 @@ public class BallPath : MonoBehaviour
             go.GetOrAddComponent<BallAim>().DataInit(aimPoint, ball);
             ballAims.Add(go);
 
-            var go2 = Instantiate(ballTestAimPrefab, aimPoint, Quaternion.identity);
-            go2.GetOrAddComponent<BallAim>().DataInit(aimPointTest, ball);
-            ballAims.Add(go2);
         }
-
-        // var posu = Instantiate(cubePrefab, randomPoint, Quaternion.identity);
-        // Destroy(posu, 2);
 
         for (int i = 0; i < resolution; i++)
         {
@@ -473,7 +470,48 @@ public class BallPath : MonoBehaviour
 
         Managers.Game.AimPoint = aimPoint;
     }
+    void GeneratePathBazierRayCast()
+    {
+        int resolution = 20; // 경로의 해상도
+        pathRenderer.positionCount = resolution;
 
+        var randomPoint = endPoint.position + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), -5f);
+        
+
+        Vector3 previousPoint = startPoint.position + new Vector3(0, 0, _ballerDistance);
+
+        var aimPoint = randomPoint;
+
+        for (int i = 0; i < resolution; i++)
+        {
+            float t = i / (float)(resolution - 1);
+            Vector3 position = CalculateBezierPoint(t, startPoint.position + new Vector3(0, 0, _ballerDistance), controlPoint.position, randomPoint);
+            pathRenderer.SetPosition(i, position);
+            pathPoints.Add(position);
+
+            // 레이캐스트 수행
+            RaycastHit hit;
+            if (Physics.Linecast(previousPoint, position, out hit))
+            {
+                if(hit.transform != null && hit.transform.CompareTag("StrikeZone"))
+                {
+                    aimPoint = hit.point;
+                }
+            }
+
+
+            previousPoint = position;
+        }
+
+        if (_hEyes == true)
+        {
+            var go = Instantiate(ballAimPrefab, aimPoint, Quaternion.identity);
+            go.GetOrAddComponent<BallAim>().DataInit(aimPoint, ball);
+            ballAims.Add(go);
+        }
+
+        Managers.Game.AimPoint = aimPoint;
+    }
     private void RePlay(LineRenderer renderer)
     {
         List<GameObject> balls = new List<GameObject>();

@@ -59,17 +59,21 @@ public class BallMovement : MonoBehaviour
     {
         _hit = true;
     }
-
     float customEpsilon = 1e-5f;
-    float customEpsilon2 = 0.1f;
-
-    private void LateUpdate()
+    float customEpsilon2 = 0.42f;
+    public void LateUpdate()
     {
-        
-        if (Vector3.Distance(transform.position,Managers.Game.StrikeZone.transform.position) < customEpsilon2)
+       
+
+        var a = Vector3.Distance(transform.position, Managers.Game.StrikeZone.transform.position);
+        if (a < customEpsilon2)
         {
             // 두 벡터는 충분히 가깝다고 판단
-            Debug.Log("Vectors are close enough!");
+            Debug.Log($"{a} : Vectors are close enough!");
+        }
+        else
+        {
+            Debug.Log($"{a} : Vectors aren't close enough!");
         }
     }
 }
