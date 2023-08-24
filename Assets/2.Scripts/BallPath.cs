@@ -482,6 +482,7 @@ public class BallPath : MonoBehaviour
 
         var aimPoint = randomPoint;
 
+        // 곡선 레이케스트
         for (int i = 0; i < resolution; i++)
         {
             float t = i / (float)(resolution - 1);
@@ -503,6 +504,7 @@ public class BallPath : MonoBehaviour
             previousPoint = position;
         }
 
+        // 호크아이여부
         if (_hEyes == true)
         {
             var go = Instantiate(ballAimPrefab, aimPoint, Quaternion.identity);

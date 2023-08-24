@@ -41,6 +41,8 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
     float offsetX = 18f;
     float offsetY = -95f;
 
+    public bool isRight = false;
+
     private void Start()
     {
         _joystickRadius = _background.gameObject.GetComponent<RectTransform>().sizeDelta.y / 2f;
@@ -247,6 +249,15 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
         Vector3 newDir = new Vector3(_moveDir.x, _moveDir.y, 0);
 
         Vector3 dir = newDir * _speed * Time.deltaTime;
+
+
+        if (isRight) // 우타인 경우
+        {
+
+            dir = -dir;
+            dir.y *= -1;
+        }
+
         bat.HitColider.localPosition += dir;
     }
 }
