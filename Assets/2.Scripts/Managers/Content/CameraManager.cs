@@ -12,6 +12,9 @@ public class CameraManager : MonoBehaviour
 
     public Cinemachine.CinemachineVirtualCamera _virtualCamera;
 
+    public Vector3 replayCamOffsetPos = Vector3.zero;
+    public Vector3 replayCamOffsetRot = Vector3.zero;
+
     private void Awake()
     {
         transform.position = offset; 
@@ -34,8 +37,8 @@ public class CameraManager : MonoBehaviour
 
     public void OnReplay(Transform target)
     {
-        gameObject.transform.position = _cameraPos;
-        gameObject.transform.eulerAngles = _cameraRot;
+        gameObject.transform.position = _cameraPos + replayCamOffsetPos;
+        gameObject.transform.eulerAngles = _cameraRot + replayCamOffsetRot;
         _virtualCamera.gameObject.SetActive(true);
         _virtualCamera.LookAt = target;
     }
@@ -74,6 +77,7 @@ public class CameraManager : MonoBehaviour
                 _virtualCamera.transform.position = _cameraPos;
                 _virtualCamera.transform.rotation = Quaternion.Euler(_cameraRot);
                 _virtualCamera.gameObject.SetActive(false);
+                MoveOriginaPos();
                 yield break;
             }
         }
@@ -83,6 +87,7 @@ public class CameraManager : MonoBehaviour
         _virtualCamera.transform.rotation = Quaternion.Euler(_cameraRot);
         _virtualCamera.gameObject.SetActive(false);
 
+        MoveOriginaPos();
         yield break;
     }
 

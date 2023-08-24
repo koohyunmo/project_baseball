@@ -60,29 +60,16 @@ public class BallMovement : MonoBehaviour
         _hit = true;
     }
 
-    private void Update()
-    {
-        if(Managers.Game.GameState != Define.GameState.InGround)
-        {
-            gameObject.SetActive(false);
-        }
-    }
+    float customEpsilon = 1e-5f;
+    float customEpsilon2 = 0.1f;
 
     private void LateUpdate()
     {
-        if (_strike)
-            return;
-
-        if (transform.position.z <= -8.45 && _strike == false)
+        
+        if (Vector3.Distance(transform.position,Managers.Game.StrikeZone.transform.position) < customEpsilon2)
         {
-            //Relplay()
-            //pathRenderer
-            Managers.Game.StrikeEvent();
-            _strike = true;
-            gameObject.SetActive(true);
-            Managers.Game.GameEnd();
+            // 두 벡터는 충분히 가깝다고 판단
+            Debug.Log("Vectors are close enough!");
         }
     }
-
-
 }

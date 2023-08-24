@@ -17,193 +17,193 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 7742bdb6b8f7f0348948aed99442f614
   m_SerializeEntries:
-  - m_GUID: d7b95e443c38f4f4d85b679b85f1dc57
-    m_Address: baseball_bat_regular
+  - m_GUID: 05d4e39e0325de641baf5840a781f61d
+    m_Address: BAT_1
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 0459bb4f5dab73d45b3b2143563e9852
-    m_Address: black_bat
+  - m_GUID: 9ee15bc6e31c618448db749d140461df
+    m_Address: BAT_2
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 14d526fdbdb6a7e4983f5905aa431cbc
-    m_Address: black_stripe
+  - m_GUID: 7e700ee7bc7e6864797a8854cf6cfd77
+    m_Address: BAT_3
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 5920760aac894e444b25ce0599968e62
-    m_Address: blue_bat
+  - m_GUID: d9614c3761157744f805736f76568b6e
+    m_Address: BAT_4
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 0db6c382ac9b844479af3e417b68307c
-    m_Address: blue_stripe
+  - m_GUID: aa2cfa766601b3242b2dc7e8ea51933c
+    m_Address: BAT_5
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: a8929530fd6ba484583964cdd2dfd13f
-    m_Address: decal01
+  - m_GUID: 2ceaa532578b1b149893774a5c02fe77
+    m_Address: BAT_6
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: e64404accb9a95b46a7870a6abd4a6a4
-    m_Address: decal02
+  - m_GUID: 865f968a0aea27b43a638084e2924ab5
+    m_Address: BAT_7
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 813f1434cc290ba4bbdfbbb2b31a4c50
-    m_Address: decal03
+  - m_GUID: 263f4afd04ba07547ac6698837b045f6
+    m_Address: BAT_8
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: d5d444231772f224483a1d9a28321437
-    m_Address: decal04
+  - m_GUID: 1d1ce44dff156374a9598c38d7b42f91
+    m_Address: BAT_9
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 67188b9605940c84084e64de91f0dcca
-    m_Address: decal05
+  - m_GUID: 165dd08cebc2bda479c7590be28e1d33
+    m_Address: BAT_10
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 16335d696d5c1ee4496b40c90754fcb4
-    m_Address: decal06
+  - m_GUID: 404eb7e500c7122418f53229374510fe
+    m_Address: BAT_11
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 4d35394bc20f20f4884b857e5a359d52
-    m_Address: decal07
+  - m_GUID: ad15bbff0aba2b64ebcad4771bb7e9f5
+    m_Address: BAT_12
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: b037487c6731461439ce44f656ff4f99
-    m_Address: decal08
+  - m_GUID: 579a49bf3a0eee74983e8e666c1a9bb3
+    m_Address: BAT_13
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 535e9ef493cb3a44890eb849d0789040
-    m_Address: decal09
+  - m_GUID: fd2437cb3b935854b9be1889680f3892
+    m_Address: BAT_14
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: fe4b21a3faa554444847bd6fce93a623
-    m_Address: decal10
+  - m_GUID: e8e42ec9beb975542bb871e7005aa79c
+    m_Address: BAT_15
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: a7284fab34d2e924180380784cfe9a3a
-    m_Address: decal11
+  - m_GUID: 2273ae5b26f9b2743bac6eb642e818ad
+    m_Address: BAT_16
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 7ca68ccfd55e111409db7cf8756f75e4
-    m_Address: flaming_bat
+  - m_GUID: a778e3dd1dc45f44c8673dc5f4c4ed89
+    m_Address: BAT_17
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 5ca33b30e7b41384c857aac5b1244043
-    m_Address: future_blue
+  - m_GUID: 947ed4301f003f14287b7fe3b9cbff63
+    m_Address: BAT_18
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: a092a9856ec006e45a7946003e51c113
-    m_Address: future_full_blue
+  - m_GUID: 6b5946cfd8882aa4896d8223a1718b23
+    m_Address: BAT_19
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: efaf7a8da2de35649a0491544f2f2058
-    m_Address: future_full_purple
+  - m_GUID: d69e70c2b225cd94ca1c68567aecac3c
+    m_Address: BAT_20
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 38cc5a51faec6b549b36aaecfa9f141d
-    m_Address: future_full_red
+  - m_GUID: 75667d339a3a94540b80c55d40d1fea8
+    m_Address: BAT_21
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 673047fcf6bcfc8448049bd575a0983b
-    m_Address: future_full_white
+  - m_GUID: c678983fe2dd489438adffb19d0777bd
+    m_Address: BAT_22
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: e6f52267b03ab9d41b4cf9d5758a000c
-    m_Address: future_purple
+  - m_GUID: 0d637e4494ad08d4099d58601ced68a4
+    m_Address: BAT_23
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 108fa4ea72e09c647a3c10491088ddb2
-    m_Address: future_red
+  - m_GUID: 7b3b0b801e8d26147886cdd1fc865bd6
+    m_Address: BAT_24
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 636a3f4838e8217488444cf2bff1c117
-    m_Address: future_white
+  - m_GUID: ff1db81e7a5a5434fb225553646f1351
+    m_Address: BAT_25
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 6fa4af28f352cc84b931f433e6cee310
-    m_Address: industrial_bat
+  - m_GUID: 3e45de80df9c86340958fe50158cf945
+    m_Address: BAT_26
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 333c750c43a07ad43b1dfa5d3738a401
-    m_Address: industrial_batworn
+  - m_GUID: d893680d4c9ba5d41be4a365985ebc1c
+    m_Address: BAT_27
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 3e60594dfa4aa4843a96cb864e5aca84
-    m_Address: orange_bat
+  - m_GUID: fd0a7a807bbc55743b5c7d5c69f15213
+    m_Address: BAT_28
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 92922b43796ad7944b776fed135fb814
-    m_Address: orange_stripe
+  - m_GUID: a393963679c3f084d968b811e625689d
+    m_Address: BAT_29
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 83672b1bddebd6d4a93fbf0832da39b3
-    m_Address: purple_bat
+  - m_GUID: 96e7f113019af014283687414440ed00
+    m_Address: BAT_30
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: b0540b9d12e5df74da93d9dcdd13a349
-    m_Address: purple_flaming_bat
+  - m_GUID: 910a798765aae8c4b9c2e8ee4ba9779c
+    m_Address: BAT_31
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: bd7e65845683aa0488cf6f2a6604c435
-    m_Address: purple_stripe
+  - m_GUID: af94a014d92b81b47af0a322a032acb8
+    m_Address: BAT_32
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 57dd8708bb3d5a645860cad559ef010b
-    m_Address: red_bat
+  - m_GUID: 1b886b522253eb14faa0e5bcb3abd97c
+    m_Address: BAT_33
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: e2f6e243f3907d54fa7559f80e1ce842
-    m_Address: red_stripe
+  - m_GUID: b6b181aad30ba8c45ba2dc5628288d2a
+    m_Address: BAT_34
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: eb80d1c3f250c364898f4c58a8a58cbc
-    m_Address: white_bat
+  - m_GUID: 87311b27ad8684642aebcec64af1df29
+    m_Address: BAT_35
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 7ef39b3ba1bd5d7408d5ac28143b4723
-    m_Address: white_stripe
+  - m_GUID: 08ab99c34cb4a7a4ca43ba10ee34948f
+    m_Address: BAT_36
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: f7c02009691f8134a896f07a2ba6884b
-    m_Address: yellow_bat
+  - m_GUID: d961f3345ecdb7c439a6db03faf4a3b2
+    m_Address: BAT_37
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
-  - m_GUID: 0e150c09685826044a45db06d3608ef3
-    m_Address: yellow_stripe
+  - m_GUID: 48eab77cbcb7e4b49ae620e25130d5b9
+    m_Address: BAT_38
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs

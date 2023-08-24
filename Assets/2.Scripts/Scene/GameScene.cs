@@ -24,7 +24,7 @@ public class GameScene : MonoBehaviour
             }
         });
 
-        Managers.Resource.LoadAllAsync<GameObject>("Prefabs", Define.Prefabs.Bat ,(key, count, totalCount) =>
+        Managers.Resource.LoadAllAsync<ScriptableObject>("Prefabs", Define.Prefabs.Bat ,(key, count, totalCount) =>
         {
             Debug.Log($"{key} {count}/{totalCount}");
         });

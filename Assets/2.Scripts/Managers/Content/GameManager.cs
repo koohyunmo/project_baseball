@@ -48,7 +48,8 @@ public class GameManager
     public Action hutSwingCallBack;
     public Action hitCallBack;
     public Action moveBat;
-    public Action<LineRenderer> makeReplayEvent;
+    public Action movePosu;
+    public Action<LineRenderer> makeReplayBallPathEvent;
     public bool isReplay = false;
 
     List<GameObject> gameObjects = new List<GameObject>();
@@ -158,7 +159,8 @@ public class GameManager
             return;
         isReplay = true;
         //moveBat?.Invoke();
-        makeReplayEvent?.Invoke(StrikePath);
+        movePosu?.Invoke();
+        makeReplayBallPathEvent?.Invoke(StrikePath);
     }
 
     #region 게터세터
@@ -232,16 +234,16 @@ public class GameManager
         hitCallBack += callback;
     }
 
-    public void SerStrikePath(LineRenderer pathRenderer)
+    public void SetStrikePath(LineRenderer pathRenderer)
     {
        StrikePath = pathRenderer;
     }
 
 
-    public void SetReplayGame(Action<LineRenderer> replayAc)
+    public void SetBallPath(Action<LineRenderer> replayAc)
     {
-        makeReplayEvent -= replayAc;
-        makeReplayEvent += replayAc;
+        makeReplayBallPathEvent -= replayAc;
+        makeReplayBallPathEvent += replayAc;
     }
 
     public void SetMainCamera(CameraManager mainCam)
@@ -269,6 +271,12 @@ public class GameManager
     public void SetStrikeZone(StrikeZone zone)
     {
         _strikeZone = zone;
+    }
+
+    public void SetMovePosu(Action movePos)
+    {
+        movePosu -= movePos;
+        movePosu += movePos;
     }
     #endregion
 

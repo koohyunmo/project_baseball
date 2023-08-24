@@ -19,10 +19,11 @@ public class BallPath : MonoBehaviour
     private List<Vector3> pathPoints = new List<Vector3>(); // 경로의 모든 포인트
     private int currentPointIndex = 0; // 현재 목표 포인트
     float speed = 0.0f; // 공의 움직임 속도
-    [SerializeField]float originalSpeed = 41.67f; // 150 km/h to m/s
-    private Dictionary<int,BallMovement> ballDict = new Dictionary<int, BallMovement>();
+    [SerializeField] float originalSpeed = 41.67f; // 150 km/h to m/s
+    private Dictionary<int, BallMovement> ballDict = new Dictionary<int, BallMovement>();
     private Vector3 initialControlPointPosition; // 제어점의 초기 위치
     public GameObject ballAimPrefab; // 큐브 객체
+    public GameObject ballTestAimPrefab; // 큐브 객체
     [SerializeField] private bool _hEyes = false;
     [SerializeField] private float _ballerDistance = 0.0f;
 
@@ -47,7 +48,7 @@ public class BallPath : MonoBehaviour
         StartCoroutine(c_Baller());
 
         Managers.Game.SetHitCallBack(Thrw);
-        Managers.Game.SetReplayGame(RePlay);
+        Managers.Game.SetBallPath(RePlay);
     }
 
     IEnumerator c_Baller()
@@ -70,7 +71,7 @@ public class BallPath : MonoBehaviour
                     if (first == false)
                     {
                         pathRenderer.enabled = true;
-                       yield return new WaitForSeconds(1.5f);
+                        yield return new WaitForSeconds(1.5f);
                         first = true;
                         Thrw();
                     }
@@ -151,7 +152,7 @@ public class BallPath : MonoBehaviour
                 break;
         }
     }
-        
+
 
 
     void FixedUpdate()
@@ -161,6 +162,7 @@ public class BallPath : MonoBehaviour
         {
             if (ballDict.Count > 0)
             {
+                Debug.Log("TODO BAll ClEAR");
                 foreach (var item in ballDict.Values)
                 {
                     Destroy(item.gameObject);
@@ -311,6 +313,7 @@ public class BallPath : MonoBehaviour
         ballMovement.controlPoint = controlPoint;
         ballMovement.pathRenderer = pathRenderer;
         ballMovement.ballId = _ballerCount;
+
         ballMovement.ballClearAction = ((int id) =>
         {
             ballDict.Remove(id);
@@ -329,7 +332,7 @@ public class BallPath : MonoBehaviour
         CheckStrikeZone(startPoint, endPoint);
 
         Managers.Game.ThorwBallEvent();
-        Managers.Game.SerStrikePath(pathRenderer);
+        Managers.Game.SetStrikePath(pathRenderer);
     }
 
     void CheckStrikeZone(Transform sp, Transform ep)
@@ -342,7 +345,11 @@ public class BallPath : MonoBehaviour
         if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("StrikeZone"))
         {
             Debug.DrawRay(ray.origin, ray.direction);
-            Debug.Log("스트라이크TODO");
+            Debug.Log("스트라이크 존안 ");
+        }
+        else
+        {
+            Debug.Log("Ball");
         }
     }
 
@@ -424,29 +431,47 @@ public class BallPath : MonoBehaviour
         int resolution = 20; // 경로의 해상도
         pathRenderer.positionCount = resolution;
 
-        var randomPoint = endPoint.position + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), -2f);
+        var randomPoint = endPoint.position + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0f);
+        var randomPointTest = endPoint.position + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), -5f);
 
-        var aimPoint = randomPoint + new Vector3(0, 0, +2.25f);
+        var aimPoint = randomPoint;// + new Vector3(0, 0, +2.25f);
+        var aimPointTest = randomPointTest + new Vector3(0, 0, +2.25f);
 
-        Managers.Game.AimPoint = aimPoint;
+        Ray ray = new Ray(startPoint.position, randomPoint - transform.position);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.transform.gameObject.CompareTag("StrikeZone"))
+            {
+                aimPoint = hit.point;
+            }
+        }
 
         if (_hEyes == true)
         {
             var go = Instantiate(ballAimPrefab, aimPoint, Quaternion.identity);
             go.GetOrAddComponent<BallAim>().DataInit(aimPoint, ball);
             ballAims.Add(go);
+
+            var go2 = Instantiate(ballTestAimPrefab, aimPoint, Quaternion.identity);
+            go2.GetOrAddComponent<BallAim>().DataInit(aimPointTest, ball);
+            ballAims.Add(go2);
         }
-            
+
         // var posu = Instantiate(cubePrefab, randomPoint, Quaternion.identity);
         // Destroy(posu, 2);
 
         for (int i = 0; i < resolution; i++)
         {
             float t = i / (float)(resolution - 1);
-            Vector3 position = CalculateBezierPoint(t, startPoint.position + new Vector3(0,0, _ballerDistance), controlPoint.position, randomPoint);
+            Vector3 position = CalculateBezierPoint(t, startPoint.position + new Vector3(0, 0, _ballerDistance), controlPoint.position, randomPoint);
             pathRenderer.SetPosition(i, position);
             pathPoints.Add(position);
         }
+
+
+        Managers.Game.AimPoint = aimPoint;
     }
 
     private void RePlay(LineRenderer renderer)
@@ -461,7 +486,7 @@ public class BallPath : MonoBehaviour
             Destroy(item, 3.0f);
         }
 
-        
+
     }
 
     private IEnumerator co_RelplayFollowBall()
@@ -508,7 +533,7 @@ public class BallPath : MonoBehaviour
             }
         }
 
-        
+
         Managers.Game.isReplay = false;
         yield return new WaitForSeconds(0.1f);
         camManager.OffRePlay();

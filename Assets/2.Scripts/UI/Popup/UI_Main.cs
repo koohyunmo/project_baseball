@@ -6,11 +6,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_Main : UI_Popup, IDragHandler
+public class UI_Main : UI_Popup
 {
     enum Buttons
     {
         B_Options,
+        B_Sound,
+        B_Vibration,
         B_Skin,
         B_Challenge,
         B_Store,
@@ -18,13 +20,17 @@ public class UI_Main : UI_Popup, IDragHandler
 
     enum Images
     {
-        Notification
+        Notification,
+        StartDrag,
     }
 
     private List<Image> images = new List<Image>();
     public TextMeshProUGUI leagueTMP;
     public Button nextLeague;
     public Button prevLeague;
+
+    private Button vibrationButton;
+    private Button soundButton;
 
     private bool _isDrag = false;
 
@@ -44,6 +50,17 @@ public class UI_Main : UI_Popup, IDragHandler
 
         nextLeague.gameObject.BindEvent(OnClickNextLeague);
         prevLeague.gameObject.BindEvent(OnClickPrevLeague);
+
+        vibrationButton = GetButton((int)Buttons.B_Vibration);
+        soundButton = GetButton((int)Buttons.B_Sound);
+
+        vibrationButton.gameObject.SetActive(false);
+        soundButton.gameObject.SetActive(false);
+
+        vibrationButton.transform.DOScale(0, 0);
+        soundButton.transform.DOScale(0, 0);
+
+        GetButton((int)Buttons.B_Options).gameObject.BindEvent(B_OptionsClick);
 
         StartCoroutine(co_GetAllImages());
 
@@ -86,6 +103,40 @@ public class UI_Main : UI_Popup, IDragHandler
         Managers.UI.ShowPopupUI<UI_StorePopup>();
     }
 
+    private void B_OptionsClick()
+    {
+        if(vibrationButton.gameObject.activeInHierarchy == false)
+        {
+
+            // 이미 실행 중인 애니메이션 중지
+            DOTween.Kill(vibrationButton.transform);
+            DOTween.Kill(soundButton.transform);
+
+            vibrationButton.gameObject.SetActive(true);
+            soundButton.gameObject.SetActive(true);
+
+            vibrationButton.transform.DOScale(1, 0.5f);
+            soundButton.transform.DOScale(1, 0.5f).SetDelay(0.25f);
+        }
+        else
+        {
+
+            // 이미 실행 중인 애니메이션 중지
+            DOTween.Kill(vibrationButton.transform);
+            DOTween.Kill(soundButton.transform);
+
+            vibrationButton.transform.DOScale(0, 0.5f).OnComplete(() =>
+            {
+                vibrationButton.gameObject.SetActive(false);
+            }).SetDelay(0.25f);
+
+            soundButton.transform.DOScale(0, 0.5f).OnComplete(() =>
+            {
+                soundButton.gameObject.SetActive(false);
+            });
+        }
+        
+    }
     public void OnDrag(PointerEventData eventData)
     {
         if(Managers.Game.GameState == Define.GameState.Home && _isDrag == false)
@@ -93,6 +144,11 @@ public class UI_Main : UI_Popup, IDragHandler
             _isDrag = true;
             StartCoroutine(co_DoFade());
         }
+    }
+
+    public void DoStart()
+    {
+        StartCoroutine(co_DoFade());
     }
 
 

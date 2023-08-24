@@ -32,7 +32,7 @@ public class UI_SkinPopup : UI_Popup
         Background
     }
 
-    private Color defaultColor = new Color(0.98f, 0.64f, 0.42f,0.5f);
+    private Color defaultColor = new Color(0.98f, 0.64f, 0.42f, 0.5f);
     private Color pressedColor = new Color(0.98f, 0.64f, 0.42f, 1.0f); // #FCAA4B
 
     public Button B_Ball { get; private set; }
@@ -109,7 +109,7 @@ public class UI_SkinPopup : UI_Popup
             return;
         Clear();
         ChangeButtonColor(B_Background);
-        _type = ScollViewType.Background; 
+        _type = ScollViewType.Background;
     }
 
     private void OnClickBatCategory()
@@ -119,28 +119,44 @@ public class UI_SkinPopup : UI_Popup
 
         Clear();
         ChangeButtonColor(B_Bat);
-        StartCoroutine(co_MakeItem());
+        MakeItme();
+        //StartCoroutine(co_MakeItem());
 
 
         _type = ScollViewType.Bat;
     }
 
-    IEnumerator co_MakeItem()
+    private void MakeItme()
     {
         foreach (var itmeID in Managers.Resource.Bats.Keys)
         {
-            var item = Managers.Resource.Instantiate("UI_Skin_Item",_grid.transform);
-            if(item == null)
+            var item = Managers.Resource.Instantiate("UI_Skin_Item", _grid.transform);
+            if (item == null)
             {
                 Debug.Log("item is null");
                 continue;
             }
             UI_Skin_Item skinItem = item.GetOrAddComponent<UI_Skin_Item>();
             skinItem.InitData(itmeID);
+            Debug.Log(itmeID);
+        }
+    }
+
+    IEnumerator co_MakeItem()
+    {
+        foreach (var itmeID in Managers.Resource.Bats.Keys)
+        {
+            var item = Managers.Resource.Instantiate("UI_Skin_Item", _grid.transform);
+            if (item == null)
+            {
+                Debug.Log("item is null");
+                continue;
+            }
+            UI_Skin_Item skinItem = item.GetOrAddComponent<UI_Skin_Item>();
+            skinItem.InitData(itmeID);
+            Debug.Log(itmeID);
             yield return new WaitForEndOfFrame();
         }
-
-        yield break;
     }
 
 
