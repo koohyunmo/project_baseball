@@ -104,6 +104,7 @@ public class ScriptableObjectCreator : EditorWindow
                     break;
             }
 
+            item.name = Path.GetFileNameWithoutExtension(modelPath).Split(' ')[0];
             item.id = firstWord + "_" + count++;
             item.model = model;
             item.icon = icon;

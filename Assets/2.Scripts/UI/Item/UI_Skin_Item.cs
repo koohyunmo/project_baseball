@@ -71,8 +71,8 @@ public class UI_Skin_Item : UI_Base
     {
         if(_mat != null)
         {
-            Managers.Game.Bat.ChangeBat(_mat);
-            Debug.Log($"ChangeBat {_key}");
+            Managers.Game.Bat.ChangeBatMat(_mat);
+            Debug.Log($"ChangeBat ID :  {_key}");
         }
 
     }

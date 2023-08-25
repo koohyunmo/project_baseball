@@ -8,5 +8,6 @@ public class ItemScriptableObject : ScriptableObject
     public string id = "";
     public GameObject model;
     public Sprite icon;
+    public string name;
 
 }

@@ -11,38 +11,38 @@ public class Managers : MonoBehaviour
 
 
     public static UIManager UI { get { return Instance?._ui; } }
+    public static DataManager Data { get { return Instance?._db; } }
     public static PoolManager Pool { get { return Instance?._pool; } }
     public static ResourceManager Resource { get { return Instance?._resource; } }
     public static GameManager Game { get { return Instance?._game; } }
 
-    UIManager _ui = new UIManager();
-    PoolManager _pool = new PoolManager();
-    ResourceManager _resource = new ResourceManager();
-    GameManager _game = new GameManager();
+    [SerializeField] UIManager _ui = new UIManager();
+    [SerializeField] PoolManager _pool = new PoolManager();
+    [SerializeField] ResourceManager _resource = new ResourceManager();
+    [SerializeField] GameManager _game = new GameManager();
+    [SerializeField] DataManager _db = new DataManager();
 
 
-    public static Managers Instance
+    public static Managers Instance { get { Init();  return s_instance; } } 
+
+
+    public static void Init()
     {
-        get
+        if (s_instance == null)
         {
-            if (s_init == false)
+            GameObject go = GameObject.Find("@Managers");
+            if (go == null)
             {
-                s_init = true;
-
-                GameObject go = GameObject.Find("@Managers");
-                if (go == null)
-                {
-                    go = new GameObject() { name = "@Managers" };
-                    go.AddComponent<Managers>();
-                }
-
-                DontDestroyOnLoad(go);
-                s_instance = go.GetComponent<Managers>();
+                go = new GameObject { name = "@Managers" };
+                go.AddComponent<Managers>();
             }
 
-            return s_instance;
+            DontDestroyOnLoad(go);
+            s_instance = go.GetComponent<Managers>();
+
         }
     }
+
 
     public static void Clear()
     {

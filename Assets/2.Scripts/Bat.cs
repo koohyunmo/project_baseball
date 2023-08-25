@@ -71,9 +71,14 @@ public class Bat : MonoBehaviour
         Managers.Game.SetMoveBat(OnltMoveModel);
     }
 
-    public void ChangeBat(Material mat)
+    public void ChangeBatMat(Material mat)
     {
         model.GetComponent<MeshRenderer>().sharedMaterial = mat;
+    }
+
+    public void ChangeBatMesh(Mesh mesh)
+    {
+        model.GetComponent<MeshFilter>().sharedMesh = mesh;
     }
 
     private void OnltMoveModel()
@@ -183,6 +188,8 @@ public class Bat : MonoBehaviour
             // 회전 및 위치 보간
             model.transform.position = Vector3.Lerp(originalBatPos, endBat.position, curveValue);
             anim.Play("Bat_Swing");
+            //anim.Play("Bat_Weak_Swing");
+            //anim.Play("Bat_Swing");
 
             if (lerpTimer >= maxTime)
             {

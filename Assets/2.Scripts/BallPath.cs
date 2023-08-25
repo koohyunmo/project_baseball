@@ -118,6 +118,7 @@ public class BallPath : MonoBehaviour
 
         _throwType = (ThrowType)Random.RandomRange(0, (int)ThrowType.COUNT - 1);
 
+
         switch (_throwType)
         {
             case ThrowType.FastBall:
@@ -425,6 +426,19 @@ public class BallPath : MonoBehaviour
     }
 
     #endregion
+
+    #region 마구
+
+
+    public void ThrowMagicBall()
+    {
+        ResetPath();
+        controlPoint.position = (startPoint.position + endPoint.position) * 2; // 중간 지점
+        GeneratePath();
+
+    }
+
+    #endregion
     // 기존의 GenerateCurvePath 함수를 GeneratePath로 이름 변경
     void GeneratePath()
     {
@@ -476,33 +490,20 @@ public class BallPath : MonoBehaviour
         pathRenderer.positionCount = resolution;
 
         var randomPoint = endPoint.position + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), -5f);
-        
 
-        Vector3 previousPoint = startPoint.position + new Vector3(0, 0, _ballerDistance);
+        var colorBlend = Color.white / (float)20;
 
-        var aimPoint = randomPoint;
-
-        // 곡선 레이케스트
         for (int i = 0; i < resolution; i++)
         {
+           
             float t = i / (float)(resolution - 1);
             Vector3 position = CalculateBezierPoint(t, startPoint.position + new Vector3(0, 0, _ballerDistance), controlPoint.position, randomPoint);
             pathRenderer.SetPosition(i, position);
             pathPoints.Add(position);
-
-            // 레이캐스트 수행
-            RaycastHit hit;
-            if (Physics.Linecast(previousPoint, position, out hit))
-            {
-                if(hit.transform != null && hit.transform.CompareTag("StrikeZone"))
-                {
-                    aimPoint = hit.point;
-                }
-            }
-
-
-            previousPoint = position;
         }
+
+        var aimPoint = CheckLineRendererHit();
+
 
         // 호크아이여부
         if (_hEyes == true)
@@ -513,6 +514,33 @@ public class BallPath : MonoBehaviour
         }
 
         Managers.Game.AimPoint = aimPoint;
+    }
+
+
+    Vector3 CheckLineRendererHit()
+    {
+        int numberOfPoints = pathRenderer.positionCount;
+
+
+        Vector3 startPoint = pathRenderer.GetPosition(numberOfPoints - 2);
+        Vector3 endPoint = pathRenderer.GetPosition(numberOfPoints -3);
+        Debug.DrawLine(startPoint, endPoint, Color.red,5f);
+
+        RaycastHit hit;
+        if (Physics.Linecast(startPoint, endPoint, out hit))
+        {
+            // 포인트 콜라이더와 충돌했다면
+            if (hit.collider.CompareTag("StrikeZone"))
+            {
+                var hitpoint = hit.point;
+                hitpoint.z = Managers.Game.StrikeZone.transform.position.z;
+                return hitpoint;
+            }
+        }
+        // 라인 랜더러의 선분을 빨간색으로 그림
+        
+
+        return Vector3.zero;
     }
     private void RePlay(LineRenderer renderer)
     {

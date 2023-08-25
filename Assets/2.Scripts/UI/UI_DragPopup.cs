@@ -251,7 +251,7 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
         Vector3 dir = newDir * _speed * Time.deltaTime;
 
 
-        if (isRight) // 우타인 경우
+        if (Managers.Game.BatPosition == Define.BatPosition.Right) // 우타인 경우
         {
 
             dir = -dir;

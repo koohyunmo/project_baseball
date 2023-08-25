@@ -1,10 +1,9 @@
+using DG.Tweening.Plugins.Core.PathCore;
+using Newtonsoft.Json;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
+using System.IO;
 using UnityEngine;
 using static Define;
-using static EPOOutline.TargetStateListener;
 
 public class GameManager
 {
@@ -19,6 +18,9 @@ public class GameManager
     public StrikeZone StrikeZone { get { return _strikeZone; } private set { _strikeZone = value; } }
     private StrikeZone _strikeZone = null;
 
+    public BatPosition BatPosition { get { return _batPosition; } private set { _batPosition = value; } }
+    private BatPosition _batPosition = BatPosition.Left;
+
     public Vector3 AimPoint;
     #region 게임 UI
     private UI_DragPopup dragPopup = null;
@@ -30,7 +32,7 @@ public class GameManager
     public float ReplaySlowMode { get { return 0.25f; } private set { } }
 
 
-    public float Speed { get { return (_speed * 3600) *0.001f; } private set { _speed = value; } }
+    public float Speed { get { return (_speed * 3600) * 0.001f; } private set { _speed = value; } }
     public float _speed = 0;
 
     public ThrowType ThrowType { get; private set; }
@@ -38,23 +40,25 @@ public class GameManager
 
     public float HitScore { get; private set; }
     public float GameScore { get; private set; }
-    
+
     public delegate void UIDelegate();
     public UIDelegate UiEvents;
 
     public delegate void GameUIDelegate();
     public GameUIDelegate GameUiEvent;
 
+    // 게임 함수
     public Action hutSwingCallBack;
     public Action hitCallBack;
     public Action moveBat;
     public Action movePosu;
+    public Action batPositionSetting;
+    // 리플레이 함수
     public Action<LineRenderer> makeReplayBallPathEvent;
     public bool isReplay = false;
 
-    List<GameObject> gameObjects = new List<GameObject>();
 
-
+    // 난이도
     public League League { get { return _league; } private set { _league = value; } }
     private League _league = League.SemiPro;
 
@@ -64,8 +68,17 @@ public class GameManager
 
     public void Init()
     {
-        _gameState = GameState.Home;
-        Managers.UI.ShowPopupUI<UI_Main>();
+        _path = Application.persistentDataPath + "/SaveData.json";
+        _settingPath = Application.persistentDataPath + "/SettingData.json";
+
+        LoadGameSaveFile();
+        {
+            _gameState = GameState.Home;
+            Managers.UI.ShowPopupUI<UI_Main>();
+            var go = Managers.Resource.Instantiate("InGround");
+            go.transform.position = Vector3.zero;
+            go.transform.rotation = Quaternion.identity;
+        }
     }
 
 
@@ -123,6 +136,7 @@ public class GameManager
                 Managers.UI.ShowPopupUI<UI_Main>();
                 break;
             case GameState.Ready:
+                batPositionSetting?.Invoke();
                 Managers.UI.ShowPopupUI<UI_Timer>();
                 break;
             case GameState.InGround:
@@ -192,6 +206,10 @@ public class GameManager
         GameUiEvent?.Invoke();
     }
 
+    public void SetBatPosition(BatPosition batPosition)
+    {
+        BatPosition = batPosition;
+    }
 
     #endregion
 
@@ -236,7 +254,7 @@ public class GameManager
 
     public void SetStrikePath(LineRenderer pathRenderer)
     {
-       StrikePath = pathRenderer;
+        StrikePath = pathRenderer;
     }
 
 
@@ -277,6 +295,94 @@ public class GameManager
     {
         movePosu -= movePos;
         movePosu += movePos;
+    }
+    public void SetBatPositionSetting(Action setting)
+    {
+        batPositionSetting -= setting;
+        batPositionSetting += setting;
+    }
+    #endregion
+
+
+    #region Save & Load	
+    public string _path;
+    public string _settingPath;
+    public GameDB GameDB { get { return _gameData; } private set { _gameData = value; } }
+    private GameDB _gameData = new GameDB();
+    public GameDB SaveData
+    {
+        get
+        {
+            return _gameData;
+        }
+        set
+        {
+            _gameData = value;
+        }
+    }
+
+
+    public void SaveGame()
+    {
+        string jsonStr = JsonConvert.SerializeObject(SaveData);
+        File.WriteAllTextAsync(_path, jsonStr);
+        Debug.Log($"Save Game Completed : {_path}");
+    }
+
+    public bool LoadGameSaveFile()
+    {
+        if (File.Exists(_path) == false)
+        {
+
+            string path = "TestData";
+            TextAsset textAsset = Managers.Resource.Load<TextAsset>($"{path}");
+            GameDB StartData = new GameDB();
+
+
+
+            if (textAsset != null)
+                StartData = JsonConvert.DeserializeObject<GameDB>(textAsset.text);
+
+            {
+
+
+                if (Managers.Resource.Bats["BAT_2"] is ItemScriptableObject so)
+                {
+                    // Test Data
+                    GameItem startItem = new GameItem(so.id, so.name, so.name);
+                    StartData.playerItem.Add(startItem.itemId, startItem);
+#if UNITY_EDITOR
+                    StartData.playerInfo.money = 100000;
+#endif
+                    StartData.playerInfo.level = 1;
+                    StartData.playerInfo.equipBatId = startItem.itemId;
+                }
+
+            }
+
+
+            _gameData = StartData;
+
+
+            SaveGame();
+
+            Debug.LogWarning("SaveFile is not Existed");
+            return false;
+        }
+
+        string fileStr = File.ReadAllText(_path);
+        GameDB data = JsonConvert.DeserializeObject<GameDB>(fileStr);
+        if (data != null)
+        {
+            //_playerData = data;
+            SaveData = data;
+
+            Debug.Log(SaveData);
+
+        }
+
+        Debug.Log($"Save Game Loaded : {_path}");
+        return true;
     }
     #endregion
 

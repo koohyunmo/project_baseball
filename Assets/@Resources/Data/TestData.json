@@ -1,0 +1,10 @@
+{
+  "playerItem": {
+    "Test": {
+      "itemId": "Test",
+      "itemType": 0,
+      "itemName": "Test",
+      "description": "Test"
+    }
+  }
+}

@@ -7,12 +7,13 @@ using UnityEngine.EventSystems;
 public class GameScene : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        LoadData();
+        Managers.Init();
+        LoadObj();
     }
 
-    private void LoadData()
+    private void LoadObj()
     {
         Managers.Resource.LoadAllAsync<GameObject>("PreLoad",Define.Prefabs.None, (key, count, totalCount) =>
         {

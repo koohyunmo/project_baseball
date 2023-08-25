@@ -39,7 +39,7 @@ public class BallAim : MonoBehaviour
                 return;
             // 현재 거리 계산
             float currentDistance = Vector3.Distance(_ball.position, _targetPos);
-            float scaleValue = Mathf.Lerp(hValue, 1f, currentDistance / _initialDistance);
+            float scaleValue = Mathf.Lerp((float)Managers.Game.League*hValue, 1f, currentDistance / _initialDistance);
 
             transform.localScale = new Vector3(scaleValue, scaleValue, scaleValue);
         }

@@ -76,5 +76,26 @@ public static class Define
 		Ball,
 	}
 
+	public enum BatPosition
+	{
+        Left,
+        Right,
+    }
+
+    public enum BatType
+	{
+        Normal,
+        Strong,
+        Count
+    }
+
+	public enum ItemType
+	{
+		None,
+		Ball,
+		Bat,
+		Background,
+	}
+
 
 }
