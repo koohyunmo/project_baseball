@@ -29,6 +29,12 @@ public class GameScene : MonoBehaviour
         {
             Debug.Log($"{key} {count}/{totalCount}");
         });
+
+
+        Managers.Resource.LoadAllAsync<GameObject>("Prefabs", Define.Prefabs.None, (key, count, totalCount) =>
+        {
+            Debug.Log($"{key} {count}/{totalCount}");
+        });
     }
 
     void StartLoaded()

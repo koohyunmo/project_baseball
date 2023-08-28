@@ -28,6 +28,16 @@ MonoBehaviour:
     m_SerializedLabels:
     - Prefabs
     - PreLoad
+  - m_GUID: e94cd3598ec66d04b953416f212b5a42
+    m_Address: BallAim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+  - m_GUID: b0db29306da16904389d7a369b7a81b3
+    m_Address: StrikeBallAim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9c2d91b0a86c0bb4b9bbf0d47449c95f, type: 2}
   m_SchemaSet:

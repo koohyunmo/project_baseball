@@ -10,7 +10,9 @@ public class Bat : MonoBehaviour
 {
     Define.GameState GameState { get { return Managers.Game.GameState; } }
 
-    public Transform HitColider { get { return batBoxCollider.transform; } }
+    public Transform HitColiderTransform { get { return batBoxCollider.transform; } }
+    public Transform BatModelParent { get; private set; }
+    public Transform HandleTransform;
 
     public BoxCollider batBoxCollider;
     private MeshCollider batMeshCollider;
@@ -60,6 +62,8 @@ public class Bat : MonoBehaviour
         originalBatPos = model.transform.position;
         originalBatRot = model.transform.rotation;
 
+        BatModelParent = model.transform.parent;
+
         originalCamPosition = Camera.main.transform.position;
 
         mainCamera = Camera.main;
@@ -69,17 +73,51 @@ public class Bat : MonoBehaviour
         Managers.Game.SetBat(this);
         Managers.Game.SetStrikeCallBack(HutSwing);
         Managers.Game.SetMoveBat(OnltMoveModel);
+
+
+
+        SetBetHandle();
+
     }
 
-    public void ChangeBatMat(Material mat)
+    public void SetBetHandle()
     {
-        model.GetComponent<MeshRenderer>().sharedMaterial = mat;
+        if (Managers.Game.BatPosition == Define.BatPosition.Left)
+            MakeHandle(batBoxCollider.bounds.max.x, "batBoxCollider.bounds.max.x", -0.3f, -0.2f);
+        else
+            MakeHandle(batBoxCollider.bounds.min.x, "batBoxCollider.bounds.min.x", -0.3f, -0.2f);
+
+    }
+
+    private void MakeHandle(float inputOffset, string name, float offsetX, float offsetZ)
+    {
+        // 박스 콜라이더의 z 크기를 가져옵니다. (배트의 길이)
+        float batBox = inputOffset;
+        // 손잡이의 상대적 위치를 계산합니다. 여기서는 z 크기의 20%를 사용하였습니다.
+        // 0.3f 가손잡이 위치
+        float handleOffset = batBox * offsetX;
+        // 회전을 고려하여 월드 좌표로 변환합니다. 손잡이는 z축 방향으로 배치됩니다.
+        Vector3 handleLocalPosition = new Vector3(batBoxCollider.center.x, batBoxCollider.center.y + handleOffset, batBoxCollider.center.z + offsetZ);
+        Vector3 handleWorldPosition = batBoxCollider.transform.TransformPoint(handleLocalPosition);
+        // 손잡이의 트랜스폼을 생성합니다.
+        Transform tr = new GameObject().transform;
+        HandleTransform = tr;
+        HandleTransform.gameObject.name = name + offsetX.ToString();
+        HandleTransform.position = handleWorldPosition;
+        HandleTransform.parent = batBoxCollider.transform;
+    }
+
+    public void ChangeBatMat(List<Material> mats)
+    {
+        model.GetComponent<MeshRenderer>().sharedMaterials = mats.ToArray();
     }
 
     public void ChangeBatMesh(Mesh mesh)
     {
         model.GetComponent<MeshFilter>().sharedMesh = mesh;
+        endBat.GetComponent<MeshFilter>().sharedMesh = mesh;
     }
+
 
     private void OnltMoveModel()
     {
@@ -153,15 +191,26 @@ public class Bat : MonoBehaviour
         if (mainCamera == null) return; // 카메라가 할당되지 않았다면 함수 종료
         if (GameState != Define.GameState.InGround) return; // 게임중이 아니라면 함수 종료
 
-        Vector3 viewportPosition = mainCamera.WorldToViewportPoint(model.transform.position);
+        Vector3 viewportPosition = mainCamera.WorldToViewportPoint(HitColiderTransform.position);
 
         // 0과 1 사이로 뷰포트 좌표 제한
-        viewportPosition.x = Mathf.Clamp(viewportPosition.x, 0f, 1f);
-        viewportPosition.y = Mathf.Clamp(viewportPosition.y, 0f, 1f);
+        viewportPosition.x = Mathf.Clamp(viewportPosition.x, 0.1f, 0.9f);
+        viewportPosition.y = Mathf.Clamp(viewportPosition.y, 0.1f, 0.9f);
 
-        // 제한된 뷰포트 좌표를 월드 좌표로 변환 후, 오브젝트 위치 업데이트
-        model.transform.position = mainCamera.ViewportToWorldPoint(viewportPosition);
+        // 제한된 뷰포트 좌표를 월드 좌표로 변환
+        Vector3 clampedWorldPosition = mainCamera.ViewportToWorldPoint(viewportPosition);
+
+        // z 좌표를 원래의 z 좌표로 유지
+        clampedWorldPosition.z = HitColiderTransform.position.z;
+
+        // HitColider 위치 업데이트
+        HitColiderTransform.position = clampedWorldPosition;
+
+        var moveVec =  Vector3.Lerp(BatModelParent.position, HandleTransform.position, 0.1f);
+
+        BatModelParent.position = moveVec;
     }
+
 
     private void SwingAndBack()
     {

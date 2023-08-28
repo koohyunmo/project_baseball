@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using UnityEngine;
 using static Define;
+using static EPOOutline.TargetStateListener;
 
 public class GameManager
 {
@@ -53,6 +54,7 @@ public class GameManager
     public Action moveBat;
     public Action movePosu;
     public Action batPositionSetting;
+    public Action gameReplayObjectClear;
     // 리플레이 함수
     public Action<LineRenderer> makeReplayBallPathEvent;
     public bool isReplay = false;
@@ -122,7 +124,12 @@ public class GameManager
         if (GameState != GameState.End)
             return;
 
+        Debug.Log($"{GameScore} 게임 저장");
+
         GameState = GameState.Home;
+
+        GameScore = 0;
+        Debug.Log($"{GameScore} 게임 리셋");
 
         callBack?.Invoke();
         StateChangeEvent();
@@ -132,12 +139,14 @@ public class GameManager
         switch (GameState)
         {
             case GameState.Home:
+                Managers.Object.Clear();
                 MainCam.MoveOriginaPos();
                 Managers.UI.ShowPopupUI<UI_Main>();
                 break;
             case GameState.Ready:
                 batPositionSetting?.Invoke();
                 Managers.UI.ShowPopupUI<UI_Timer>();
+                Managers.Object.Clear();
                 break;
             case GameState.InGround:
                 gameInfoPopup = Managers.UI.ShowPopupUI<UI_GameInfoPopup>();
@@ -146,11 +155,14 @@ public class GameManager
             case GameState.End:
                 Managers.UI.ClosePopupUI(dragPopup);
                 Managers.UI.ClosePopupUI(gameInfoPopup);
-                Managers.UI.ShowPopupUI<UI_EndPopup>();
+                //Managers.UI.ShowPopupUI<UI_EndPopup>();
+                Managers.UI.ShowPopupUI<UI_ReplayPopupTimer>();
                 break;
         }
 
     }
+
+
 
     public void ThorwBallEvent()
     {
@@ -167,7 +179,7 @@ public class GameManager
         hitCallBack?.Invoke();
     }
 
-    public void Replay()
+    public void ReplayReview()
     {
         if (isReplay)
             return;
@@ -175,6 +187,13 @@ public class GameManager
         //moveBat?.Invoke();
         movePosu?.Invoke();
         makeReplayBallPathEvent?.Invoke(StrikePath);
+    }
+
+    public void GameRetry(Action callBack = null)
+    {
+        GameState = GameState.Ready;
+        callBack?.Invoke();
+        StateChangeEvent();
     }
 
     #region 게터세터
@@ -300,6 +319,12 @@ public class GameManager
     {
         batPositionSetting -= setting;
         batPositionSetting += setting;
+    }
+
+    public void SetReplayGameClearAction(Action clear)
+    {
+        gameReplayObjectClear -= clear;
+        gameReplayObjectClear += clear;
     }
     #endregion
 

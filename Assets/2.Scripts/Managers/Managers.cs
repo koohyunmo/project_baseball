@@ -15,12 +15,14 @@ public class Managers : MonoBehaviour
     public static PoolManager Pool { get { return Instance?._pool; } }
     public static ResourceManager Resource { get { return Instance?._resource; } }
     public static GameManager Game { get { return Instance?._game; } }
+    public static ObjectManager Object { get { return Instance?._object; } }
 
     [SerializeField] UIManager _ui = new UIManager();
     [SerializeField] PoolManager _pool = new PoolManager();
     [SerializeField] ResourceManager _resource = new ResourceManager();
     [SerializeField] GameManager _game = new GameManager();
     [SerializeField] DataManager _db = new DataManager();
+    [SerializeField] ObjectManager _object = new ObjectManager();
 
 
     public static Managers Instance { get { Init();  return s_instance; } } 
@@ -39,6 +41,7 @@ public class Managers : MonoBehaviour
 
             DontDestroyOnLoad(go);
             s_instance = go.GetComponent<Managers>();
+            s_instance._object.Init() ;
 
         }
     }
@@ -46,6 +49,7 @@ public class Managers : MonoBehaviour
 
     public static void Clear()
     {
+        s_instance._resource.Clear();
 
     }
 }

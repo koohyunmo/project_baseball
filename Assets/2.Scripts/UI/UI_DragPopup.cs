@@ -258,6 +258,7 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
             dir.y *= -1;
         }
 
-        bat.HitColider.localPosition += dir;
+        bat.HitColiderTransform.localPosition += dir;
+        bat.BatModelParent.localPosition += dir;
     }
 }

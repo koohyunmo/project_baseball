@@ -47,6 +47,8 @@ public class BatCollider : MonoBehaviour
             // 날려 보내기
             Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
 
+            MeshSlicer.Slice2(other.gameObject, 1f);
+
             if (rb != null)
             {
                 if(Managers.Game.GameState == Define.GameState.InGround)

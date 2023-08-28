@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class UI_Skin_Item : UI_Base
 {
     public Image _icon;
-    public Material _mat;
+    public List<Material> _mats;
+    public Mesh _mesh;
     public ItemScriptableObject _item;
     public GameObject _bat;
     public string _key;
@@ -46,9 +47,14 @@ public class UI_Skin_Item : UI_Base
 
            
             MeshRenderer renderer = _item.model.GetComponent<MeshRenderer>();
-            if (renderer != null)
+            var meshfilter = _item.model.GetComponent<MeshFilter>();
+            if (renderer != null && meshfilter != null)
             {
-                _mat = renderer.sharedMaterial;
+                _mats = new List<Material>();
+
+                var modelMats = renderer.sharedMaterials;
+                _mats.AddRange(modelMats);
+                _mesh = meshfilter.sharedMesh;
             }
             else
             {
@@ -69,10 +75,16 @@ public class UI_Skin_Item : UI_Base
 
     private void OnClick()
     {
-        if(_mat != null)
+        if(_mats != null && _mesh != null)
         {
-            Managers.Game.Bat.ChangeBatMat(_mat);
+            Managers.Game.Bat.ChangeBatMat(_mats);
+            Managers.Game.Bat.ChangeBatMesh(_mesh);
+            Managers.Game.Bat.SetBetHandle();
             Debug.Log($"ChangeBat ID :  {_key}");
+        }
+        else
+        {
+            Debug.LogWarning("æ∆¿Ã≈€ ∏µ®");
         }
 
     }

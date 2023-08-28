@@ -129,6 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bcb4fd4e592ee43ba60454c6a4fb78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HandleTransform: {fileID: 4185053120795634101}
   batBoxCollider: {fileID: 0}
   model: {fileID: 4943062830181966362}
   lerpSpeed: 1
@@ -635,6 +636,7 @@ Transform:
   - {fileID: 4943062829967396443}
   - {fileID: 4943062830007341453}
   - {fileID: 4943062828882068235}
+  - {fileID: 3323769559749081946}
   m_Father: {fileID: 4943062829658489820}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
@@ -788,6 +790,7 @@ Transform:
   - {fileID: 4943062828992945333}
   - {fileID: 4943062828623431085}
   - {fileID: 4943062830373488230}
+  - {fileID: 4185053120795634101}
   m_Father: {fileID: 4943062828776566060}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
@@ -1722,6 +1725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bcb4fd4e592ee43ba60454c6a4fb78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HandleTransform: {fileID: 3323769559749081946}
   batBoxCollider: {fileID: 0}
   model: {fileID: 6709317978893180619}
   lerpSpeed: 1
@@ -2867,6 +2871,68 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!1 &7478368211821243745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3323769559749081946}
+  m_Layer: 0
+  m_Name: Handle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3323769559749081946
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7478368211821243745}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4943062828837093187}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7495068900348738510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4185053120795634101}
+  m_Layer: 0
+  m_Name: Handle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4185053120795634101
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7495068900348738510}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4943062828878122849}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3996255442572188481
 PrefabInstance:
   m_ObjectHideFlags: 0

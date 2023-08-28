@@ -22,7 +22,8 @@ public class Batter : MonoBehaviour
         BatChange();
 
         Managers.Game.SetBatPositionSetting(SetBatPosition);
-        Managers.Game.SetBatPosition(Define.BatPosition.Left);
+
+        Managers.Game.SetBatPosition(batPosition);
 
         SetBatPosition();
         AdjustBatPositionBasedOnPadding();
@@ -47,15 +48,20 @@ public class Batter : MonoBehaviour
         string batId = Managers.Game.GameDB.playerInfo.equipBatId;
         if (Managers.Resource.Bats[batId] is ItemScriptableObject so)
         {
-            var mat = so.model.GetComponent<MeshRenderer>().sharedMaterial;
+            List<Material> mats = new List<Material>();
+
+            var modelMats = so.model.GetComponent<MeshRenderer>().sharedMaterials;
+            mats.AddRange(modelMats);
+
             var mesh = so.model.GetComponent<MeshFilter>().sharedMesh;
 
             // 매테리얼
-            leftBat.ChangeBatMat(mat);
-            rightBat.ChangeBatMat(mat);
+            leftBat.ChangeBatMat(mats);
+            rightBat.ChangeBatMat(mats);
             // 매쉬
             leftBat.ChangeBatMesh(mesh);
             rightBat.ChangeBatMesh(mesh);
+            // 콜라이더 매쉬
         }
 
     }

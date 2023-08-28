@@ -32,14 +32,13 @@ public class UI_Main : UI_Popup
     private Button vibrationButton;
     private Button soundButton;
 
-    private bool _isDrag = false;
+    private bool _isDrag = true;
 
     public override bool Init()
     {
         if (base.Init() == false)
             return false;
 
-        _isDrag = true;
         BindButton(typeof(Buttons));
         BindImage(typeof(Images));
 
@@ -169,7 +168,6 @@ public class UI_Main : UI_Popup
 
         Debug.Log(images.Count);
         _isDrag = false;
-        yield break;
     }
 
     IEnumerator co_DoFade()

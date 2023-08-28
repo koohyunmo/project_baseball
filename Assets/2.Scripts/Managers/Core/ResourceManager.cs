@@ -56,6 +56,24 @@ public class ResourceManager
         return go;
     }
 
+
+    public GameObject Instantiate(GameObject prefab, Transform parent = null, bool pooling = false)
+    {
+        if (prefab == null)
+        {
+            Debug.LogError($"Failed to load prefab : {prefab.name}");
+            return null;
+        }
+
+        if (pooling)
+            return Managers.Pool.Pop(prefab);
+
+        GameObject go = Object.Instantiate(prefab, parent);
+
+        go.name = prefab.name;
+        return go;
+    }
+
     public void Destroy(GameObject go)
     {
         if (go == null)
@@ -136,4 +154,10 @@ public class ResourceManager
     }
 
     #endregion
+
+    public void Clear()
+    {
+        _resources.Clear();
+        _bats.Clear();
+    }
 }
