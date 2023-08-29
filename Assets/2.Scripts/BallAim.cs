@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallAim : MonoBehaviour
+public class BallAim : InGameObject
 {
 
     Vector3 _targetPos = Vector3.zero;

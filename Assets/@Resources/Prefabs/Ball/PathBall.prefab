@@ -4783,6 +4783,7 @@ GameObject:
   - component: {fileID: 6540116673774256026}
   - component: {fileID: 6540116673774256027}
   - component: {fileID: 6540116673774256028}
+  - component: {fileID: 8209320602010886417}
   m_Layer: 0
   m_Name: PathBall
   m_TagString: Ball
@@ -4887,6 +4888,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8209320602010886417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6540116673774256030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb8f0568af2a4740885eac2ed779e32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  ballId: 0
+  startPoint: {fileID: 0}
+  endPoint: {fileID: 0}
+  controlPoint: {fileID: 0}
+  pathRenderer: {fileID: 0}
+  speed: 0
 --- !u!1 &7699706411782385582
 GameObject:
   m_ObjectHideFlags: 0

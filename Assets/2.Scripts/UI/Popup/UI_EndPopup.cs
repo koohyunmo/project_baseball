@@ -16,6 +16,8 @@ public class UI_EndPopup : UI_Popup
         homeButton.gameObject.BindEvent(HomeButtonClick);
         replayButton.gameObject.BindEvent(ReplayButtonClick);
         retryButton.gameObject.BindEvent(RetryButtonClick);
+
+        Managers.Object.DespawnBall();
     }
 
     private void HomeButtonClick()

@@ -144,7 +144,7 @@ public class GameManager
         switch (GameState)
         {
             case GameState.Home:
-                Managers.Object.Clear();
+                Managers.Object.DespawnAll();
                 batMoveReplayData.Clear();
                 MainCam.MoveOriginaPos();
                 Managers.UI.ShowPopupUI<UI_Main>();
@@ -152,7 +152,7 @@ public class GameManager
             case GameState.Ready:
                 batPositionSetting?.Invoke();
                 Managers.UI.ShowPopupUI<UI_Timer>();
-                Managers.Object.Clear();
+                Managers.Object.DespawnAll();
                 break;
             case GameState.InGround:
                 gameInfoPopup = Managers.UI.ShowPopupUI<UI_GameInfoPopup>();

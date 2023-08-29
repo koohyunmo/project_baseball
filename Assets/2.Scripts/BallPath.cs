@@ -20,7 +20,7 @@ public class BallPath : MonoBehaviour
     private int currentPointIndex = 0; // 현재 목표 포인트
     float speed = 0.0f; // 공의 움직임 속도
     [SerializeField] float originalSpeed = 41.67f; // 150 km/h to m/s
-    private Dictionary<int, BallMovement> ballDict = new Dictionary<int, BallMovement>();
+    private List<BallMovement> ballList = new List<BallMovement>();
     private Vector3 initialControlPointPosition; // 제어점의 초기 위치
     public GameObject ballAimPrefab; // 호크가이에임
     public GameObject ballTestAimPrefab; // 스트라이크에임
@@ -111,7 +111,7 @@ public class BallPath : MonoBehaviour
 
     private void StrikeAim()
     {
-        var go = Managers.Object.SpawnObj(ballTestAimPrefab.name, Managers.Game.AimPoint);
+        var go = Managers.Object.Spawn<InGameObject>(ballTestAimPrefab.name, Managers.Game.AimPoint);
         go.name = $"{_throwType} : {Managers.Game.Speed.ToString("F2")}km/s";
     }
 
@@ -162,29 +162,14 @@ public class BallPath : MonoBehaviour
 
     void FixedUpdate()
     {
-
         if (_stopBaller == true)
-        {
-            if (ballDict.Count > 0)
-            {
-                Debug.Log("TODO BAll ClEAR");
-                foreach (var item in ballDict.Values)
-                {
-                    Destroy(item.gameObject);
-                }
-                ballDict.Clear();
-            }
-            else
-                return;
-        }
-
-        if (ballDict.Count <= 0)
             return;
 
-        var balls = new List<BallMovement>(ballDict.Values);
-        foreach (var ball in balls)
+        // 복사 삭제
+        List<int> ballKeysToRemove = new List<int>(Managers.Object.BallDict.Keys);
+        foreach (var key in ballKeysToRemove)
         {
-            ball.MoveAlongPath();
+            Managers.Object.BallDict[key].MoveAlongPath();
         }
     }
 
@@ -310,35 +295,30 @@ public class BallPath : MonoBehaviour
         //var pathEnd = new Vector3(endPoint.position.x, endPoint.position.y, endPoint.position.z - 0.5f);
 
         //GameObject ballInstance = Instantiate(ballPrefab, startPoint.position, Quaternion.identity);
-        GameObject ballInstance = Managers.Object.SpawnObj(ballPrefab.name, startPoint.position);
-        BallMovement ballMovement = ballInstance.AddComponent<BallMovement>();
-        ballInstance.tag = "Ball";
-        ballMovement.speed = speed;
-        ballMovement.startPoint = startPoint;
-        ballMovement.endPoint = endPoint;
-        ballMovement.controlPoint = controlPoint;
-        ballMovement.pathRenderer = pathRenderer;
-        ballMovement.ballId = _ballerCount;
+        var ballInstance = Managers.Object.Spawn<BallMovement>(ballPrefab.name, startPoint.position);
 
-        ballMovement.ballClearAction = ((int id) =>
-        {
-            ballDict.Remove(id);
+        ballInstance.transform.position = startPoint.position;
+        ballInstance.transform.rotation = Quaternion.identity;
+        ballInstance.transform.name = ballPrefab.name;
 
-        });
-
+        ballInstance.speed = speed;
+        ballInstance.startPoint = startPoint;
+        ballInstance.endPoint = endPoint;
+        ballInstance.controlPoint = controlPoint;
+        ballInstance.pathRenderer = pathRenderer;
+        ballInstance.ballId = _ballerCount;
 
         ball = ballInstance.transform;
         generatePathMethod.Invoke();
 
-        ballMovement.SetPath(pathRenderer);
-        //balls.Add(ballMovement);
-        _ballerCount++;
-        ballDict.Add(_ballerCount, ballMovement);
+        ballInstance.SetPath(pathRenderer);
 
         CheckStrikeZone(startPoint, endPoint);
 
         Managers.Game.ThorwBallEvent();
         Managers.Game.SetStrikePath(pathRenderer);
+
+        _ballerCount++;
     }
 
     void CheckStrikeZone(Transform sp, Transform ep)
@@ -473,9 +453,9 @@ public class BallPath : MonoBehaviour
         if (_hEyes == true)
         {
             //var go = Instantiate(ballAimPrefab, aimPoint, Quaternion.identity);
-            var go = Managers.Object.SpawnObj(ballAimPrefab.name, aimPoint);
+            var go = Managers.Object.Spawn<InGameObject>(ballAimPrefab.name, aimPoint);
             go.GetOrAddComponent<BallAim>().DataInit(aimPoint, ball);
-            ballAims.Add(go);
+            ballAims.Add(go.gameObject);
 
         }
 
@@ -501,7 +481,7 @@ public class BallPath : MonoBehaviour
 
         for (int i = 0; i < resolution; i++)
         {
-           
+
             float t = i / (float)(resolution - 1);
             Vector3 position = CalculateBezierPoint(t, startPoint.position + new Vector3(0, 0, _ballerDistance), controlPoint.position, randomPoint);
             pathRenderer.SetPosition(i, position);
@@ -515,9 +495,9 @@ public class BallPath : MonoBehaviour
         if (_hEyes == true)
         {
             //var go = Instantiate(ballAimPrefab, aimPoint, Quaternion.identity);
-            var go = Managers.Object.SpawnObj(ballAimPrefab.name, aimPoint);
+            var go = Managers.Object.Spawn<InGameObject>(ballAimPrefab.name, aimPoint);
             go.GetOrAddComponent<BallAim>().DataInit(aimPoint, ball);
-            ballAims.Add(go);
+            ballAims.Add(go.gameObject);
         }
 
         Managers.Game.AimPoint = aimPoint;
@@ -530,8 +510,8 @@ public class BallPath : MonoBehaviour
 
 
         Vector3 startPoint = pathRenderer.GetPosition(numberOfPoints - 2);
-        Vector3 endPoint = pathRenderer.GetPosition(numberOfPoints -3);
-        Debug.DrawLine(startPoint, endPoint, Color.red,5f);
+        Vector3 endPoint = pathRenderer.GetPosition(numberOfPoints - 3);
+        Debug.DrawLine(startPoint, endPoint, Color.red, 5f);
 
         RaycastHit hit;
         if (Physics.Linecast(startPoint, endPoint, out hit))
@@ -545,7 +525,7 @@ public class BallPath : MonoBehaviour
             }
         }
         // 라인 랜더러의 선분을 빨간색으로 그림
-        
+
 
         return Vector3.zero;
     }
@@ -570,7 +550,7 @@ public class BallPath : MonoBehaviour
         var camManager = Camera.main.gameObject.GetComponent<CameraManager>();
 
         //var replayBall = Instantiate(ballPrefab);
-        var replayBall = Managers.Object.SpawnObj(ballPrefab.name, pathRenderer.GetPosition(0));
+        var replayBall = Managers.Object.Spawn<BallMovement>(ballPrefab.name, pathRenderer.GetPosition(0));
         //replayBall.transform.position = pathRenderer.GetPosition(0);
         camManager.OnReplay(replayBall.transform);
 
