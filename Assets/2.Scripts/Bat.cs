@@ -1,12 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using TMPro;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
-using static UnityEngine.UI.Image;
+
+using Debug = UnityEngine.Debug;
 
 public class Bat : MonoBehaviour
 {
@@ -333,6 +330,9 @@ public class Bat : MonoBehaviour
 
     IEnumerator co_BatMoveReplay()
     {
+
+        Debug.Log("TODO : 内风凭 包府");
+
         var data = Managers.Game.batMoveReplayData;
 
         for (int i = 0; i < data.Count -1; i++)

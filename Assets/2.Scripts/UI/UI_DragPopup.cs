@@ -66,7 +66,11 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
 
         Managers.Game.SetHitCallBack(MovePosReset);
         Managers.Game.SetStrikeCallBack(SaveMovePos);
-       
+
+
+        _batReplayData.Clear();
+
+
 
     }
 
@@ -263,7 +267,7 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
             dir.y *= -1;
         }
 
-        if (Managers.Game.GameState == Define.GameState.InGround)
+        if ( Managers.Game.isRecord == true && Managers.Game.GameState == Define.GameState.InGround)
         {
             ReplayData replatData;
             replatData.position = bat.HitColiderTransform.localPosition;

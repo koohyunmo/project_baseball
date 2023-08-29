@@ -83,6 +83,7 @@ public class BallPath : MonoBehaviour
                     {
                         pathRenderer.enabled = true;
                         yield return new WaitForSeconds(1.5f);
+                        Managers.Game.isRecord = true;
                         first = true;
                         Thrw();
                     }

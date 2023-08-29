@@ -9,19 +9,21 @@ public class PosuCollider : MonoBehaviour
 
     private void Start()
     {
-       psController = GetComponentInParent<PosuController>();
+        psController = GetComponentInParent<PosuController>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other != null && other.CompareTag("Ball"))
+        if (other != null && other.CompareTag("Ball"))
         {
+
             Debug.Log("Catch the Ball");
             other.gameObject.SetActive(false);
             Managers.Game.StrikeEvent();
             gameObject.SetActive(true);
             Managers.Game.GameEnd();
             psController.CatchBall();
+
         }
     }
 }

@@ -60,6 +60,7 @@ public class GameManager
     public Action<LineRenderer> makeReplayBallPathEvent;
     public List<ReplayData> batMoveReplayData = new List<ReplayData>();
     public bool isReplay = false;
+    public bool isRecord = false;
 
 
     // ≥≠¿Ãµµ
@@ -83,6 +84,8 @@ public class GameManager
             go.transform.position = Vector3.zero;
             go.transform.rotation = Quaternion.identity;
         }
+
+        GameScore = 0;
     }
 
 
@@ -160,6 +163,7 @@ public class GameManager
                 Managers.UI.ClosePopupUI(gameInfoPopup);
                 //Managers.UI.ShowPopupUI<UI_EndPopup>();
                 Managers.UI.ShowPopupUI<UI_ReplayPopupTimer>();
+                isRecord = false;
                 break;
         }
 
