@@ -19,6 +19,11 @@ public class RouletteController : MonoBehaviour
     private float currentSpeed;       // 현재 회전 속도
     public float deceleration = 100.0f; // 감속률
 
+    private int numberOfPrizes = 0; // 상품의 수
+    [Header("기즈모 디버그용")]
+    public float radius = 1.0f; // 룰렛의 반지름
+    public float rotationOffset = 0f; // 기즈모의 회전 오프셋
+
 
     [Header("상품 목록")]
     [SerializeField]private string[] prizes = { "Product 1", "Product 2", "Product 3", "Product 4", "Product 5", "Product 6", "Product7", "Product 8" }; // 상품 배열
@@ -157,10 +162,7 @@ public class RouletteController : MonoBehaviour
 
 
     
-    private int numberOfPrizes = 0; // 상품의 수
-    [Header("기즈모 디버그용")]
-    public float radius = 1.0f; // 룰렛의 반지름
-    public float rotationOffset = 0f; // 기즈모의 회전 오프셋
+
 
 
 

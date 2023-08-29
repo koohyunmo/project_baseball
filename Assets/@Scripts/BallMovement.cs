@@ -1,8 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.Apple.ReplayKit;
+
+#if UNITY_IOS
+    using UnityEngine.Apple.ReplayKit;
+    using Unity.VisualScripting;
+#endif
+
 
 public class BallMovement : InGameObject
 {
@@ -27,10 +33,8 @@ public class BallMovement : InGameObject
         gameObject.TryGetComponent<Rigidbody>(out _rigidbody);
     }
 
-    public override void OnEnable()
+    public virtual void OnEnable()
     {
-        base.OnEnable();
-
         if (_rigidbody == null)
             return;
         else
@@ -104,4 +108,14 @@ public class BallMovement : InGameObject
         _hit = true;
     }
 
+
+    private void LateUpdate()
+    {
+       
+        if(transform.position.z >= 40)
+        {
+            Debug.Log("TODO ¼öÁ¤ ");
+            Managers.Object.Despawn<BallMovement>(ObjId);
+        }
+    }
 }

@@ -11,6 +11,12 @@ public class BallAim : InGameObject
 
     float hValue = 0.1f;
 
+    private void OnEnable()
+    {
+        _initialDistance = 0f;
+        hValue = 0.1f;
+    }
+
     public void DataInit(Vector3 vec, Transform ball)
     {
         _targetPos = vec;

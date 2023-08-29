@@ -47,7 +47,10 @@ public class UI_ReplayPopupTimer : UI_Popup
             Co_timer = null;
         }
 
+
+        adImage.transform.DOKill();
         Managers.UI.ClosePopupUI(this);
+
         Managers.Game.GameRetry();
         Debug.Log("TODO 광고");
     }
@@ -102,6 +105,8 @@ public class UI_ReplayPopupTimer : UI_Popup
         }
 
         TimeSpan time = TimeSpan.FromSeconds(maxTime);
+
+        adImage.transform.DOKill();
 
         // 코드 작성
         Managers.UI.ClosePopupUI(this);

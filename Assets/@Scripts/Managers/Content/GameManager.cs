@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static Define;
-using static EPOOutline.TargetStateListener;
 
 public class GameManager
 {
@@ -58,7 +57,7 @@ public class GameManager
     public Action gameReplayObjectClear;
     // 리플레이 함수
     public Action<LineRenderer> makeReplayBallPathEvent;
-    public List<ReplayData> batMoveReplayData = new List<ReplayData>();
+    public List<CustomReplayData> batMoveReplayData = new List<CustomReplayData>();
     public bool isReplay = false;
     public bool isRecord = false;
 
@@ -66,6 +65,10 @@ public class GameManager
     // 난이도
     public League League { get { return _league; } private set { _league = value; } }
     private League _league = League.SemiPro;
+
+    // 게임 타입
+    private GameType _gameType = GameType.None;
+    public GameType GameType { get { return _gameType; } private set { _gameType = value; }  }
 
     public CameraManager MainCam { get; private set; }
 
@@ -89,12 +92,12 @@ public class GameManager
     }
 
 
-    public void GameReady(Action callBack = null)
+    public void GameReady(GameType gameType,Action callBack = null)
     {
         if (GameState != GameState.Home)
             return;
 
-
+        _gameType = gameType;
         GameState = GameState.Ready;
 
         callBack?.Invoke();
@@ -148,6 +151,7 @@ public class GameManager
                 batMoveReplayData.Clear();
                 MainCam.MoveOriginaPos();
                 Managers.UI.ShowPopupUI<UI_Main>();
+                _gameType = GameType.None;
                 break;
             case GameState.Ready:
                 batPositionSetting?.Invoke();
@@ -334,7 +338,7 @@ public class GameManager
         gameReplayObjectClear += clear;
     }
 
-    public void ReplayData(List<ReplayData> moveList)
+    public void ReplayData(List<CustomReplayData> moveList)
     {
         batMoveReplayData = moveList;
     }

@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Jobs;
 using UnityEngine.UIElements;
 
 public class ObjectManager
 {
 
+    // 모든 오브젝트
     Dictionary<int, InGameObject> _inGameObjDict = new Dictionary<int, InGameObject>();
+    // 공 오브젝트
     Dictionary<int, BallMovement> _ballDict = new Dictionary<int, BallMovement>();
     public Dictionary<int, InGameObject> InGameObjDict { get { return _inGameObjDict; } private set { _inGameObjDict = value; } }
     public Dictionary<int, BallMovement> BallDict { get { return _ballDict; } private set { _ballDict = value; } }
@@ -25,21 +28,36 @@ public class ObjectManager
     {
         System.Type type = typeof(T);
 
+        int id = GetId();
+
         if (type == typeof(BallMovement))
         {
             GameObject ball = Managers.Resource.Instantiate(key, parent , isPool);
             ball.transform.position = pos;
+
             BallMovement bm = ball.GetOrAddComponent<BallMovement>();
-            BallDict.Add(bm.id, bm);
+            bm.ObjId = id;
+            if (_ballDict.ContainsKey(id) == false)
+                _ballDict.Add(id, bm);
+            else
+                Debug.LogWarning("Aleady Has Key");
+
             return bm as T;
         }
         else if(type == typeof(InGameObject))
         {
 
             GameObject go = Managers.Resource.Instantiate(key, parent, isPool);
-            InGameObject component = go.GetOrAddComponent<InGameObject>();
             go.gameObject.transform.position = pos;
-            InGameObjDict.Add(component.id, component);
+
+            InGameObject component = go.GetOrAddComponent<InGameObject>();        
+            component.ObjId = id;
+
+            if (_inGameObjDict.ContainsKey(id) == false)
+                _inGameObjDict.Add(id, component);
+            else
+                Debug.LogWarning("Aleady Has Key");
+
             return component as T;
         }
 
@@ -50,7 +68,7 @@ public class ObjectManager
     {
         System.Type type = typeof(T);
 
-        int id = component.GetComponent<InGameObject>().id;
+        int id = component.GetComponent<InGameObject>().ObjId;
 
         if (type == null)
         {
@@ -86,9 +104,12 @@ public class ObjectManager
         }
         else if (type == typeof(InGameObject))
         {
-            var _inGameObj = _inGameObjDict[key];
-            _inGameObjDict.Remove(id);
-            Managers.Resource.Destroy(_inGameObj.gameObject as GameObject);
+
+            if (_inGameObjDict.TryGetValue(key, out InGameObject ig))
+            {
+                _inGameObjDict.Remove(key);
+                Managers.Resource.Destroy(ig.gameObject as GameObject);
+            }
         }
     }
 
@@ -116,6 +137,7 @@ public class ObjectManager
         {
             Despawn<InGameObject>(item);
         }
+
     }
 
 

@@ -21,6 +21,12 @@ public class Roullett_Controller : MonoBehaviour
     public float imagePos = 300.0f; // 룰렛의 반지름
 
 
+    private int numberOfPrizes = 0; // 상품의 수
+
+    [Header("기즈모 디버그용")]
+    public float radius = 1.0f; // 룰렛의 반지름
+    public float rotationOffset = 0f; // 기즈모의 회전 오프셋
+
     [Header("상품 목록")]
     [SerializeField] private string[] prizes = { "Product 1", "Product 2", "Product 3", "Product 4", "Product 5", "Product 6", "Product7", "Product 8" }; // 상품 배열
 
@@ -157,11 +163,6 @@ public class Roullett_Controller : MonoBehaviour
 #if UNITY_EDITOR
 
 
-
-    private int numberOfPrizes = 0; // 상품의 수
-    [Header("기즈모 디버그용")]
-    public float radius = 1.0f; // 룰렛의 반지름
-    public float rotationOffset = 0f; // 기즈모의 회전 오프셋
 
 
 

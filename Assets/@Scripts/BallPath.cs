@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using static Define;
-using static UnityEngine.ParticleSystem;
 
 public class BallPath : MonoBehaviour
 {
@@ -81,10 +79,10 @@ public class BallPath : MonoBehaviour
                 case Define.GameState.InGround:
                     if (first == false)
                     {
+                        first = true;
                         pathRenderer.enabled = true;
                         yield return new WaitForSeconds(1.5f);
                         Managers.Game.isRecord = true;
-                        first = true;
                         Thrw();
                     }
                     yield return null;
@@ -165,6 +163,9 @@ public class BallPath : MonoBehaviour
         if (_stopBaller == true)
             return;
 
+
+        if (Managers.Object.BallDict.Count < 0)
+            return;
         // 복사 삭제
         List<int> ballKeysToRemove = new List<int>(Managers.Object.BallDict.Keys);
         foreach (var key in ballKeysToRemove)
@@ -190,7 +191,7 @@ public class BallPath : MonoBehaviour
 
     void GenerateCurvePath()
     {
-        int resolution = 20; // 경로의 해상도
+        int resolution = 10; // 경로의 해상도
         pathRenderer.positionCount = resolution;
 
         // 제어점의 위치를 약간 변경하여 경로의 변화를 만듭니다.
@@ -472,12 +473,12 @@ public class BallPath : MonoBehaviour
     }
     void GeneratePathBazierRayCast()
     {
-        int resolution = 20; // 경로의 해상도
+        int resolution = 10; // 경로의 해상도
         pathRenderer.positionCount = resolution;
 
         var randomPoint = endPoint.position + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), -5f);
 
-        var colorBlend = Color.white / (float)20;
+        var colorBlend = Color.white / (float)resolution;
 
         for (int i = 0; i < resolution; i++)
         {

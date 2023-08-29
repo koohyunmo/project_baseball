@@ -98,10 +98,18 @@ public static class Define
 	}
 
 
-	public struct ReplayData
+	public struct CustomReplayData
 	{
         public Vector3 position;
         public float time;
     }
+
+
+	public enum GameType
+	{
+		None,
+		Normal,
+		Challenge
+	}
 
 }

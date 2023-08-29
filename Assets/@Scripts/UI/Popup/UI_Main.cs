@@ -183,7 +183,7 @@ public class UI_Main : UI_Popup
 
         yield return new WaitForSeconds(0.51f);
         Managers.UI.ClosePopupUI(this);
-        Managers.Game.GameReady();
+        Managers.Game.GameReady(Define.GameType.Normal);
         yield break;
     }
 }

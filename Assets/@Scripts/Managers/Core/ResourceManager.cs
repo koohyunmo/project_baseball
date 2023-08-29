@@ -16,6 +16,8 @@ public class ResourceManager
 
     public Dictionary<string, UnityEngine.Object> Bats {get { return _bats; } private set { _bats = value; } }
 
+    public float LoadBytes { get; private set; }
+
     #region 리소스 로드
     public T Load<T>(string key) where T : Object
     {
@@ -88,6 +90,11 @@ public class ResourceManager
     #endregion
     #region 어드레서블
 
+    public void GetLoadBytes()
+    {
+        Debug.Log($"Load Bytes size: {LoadBytes} KB");
+    }
+
     public void LoadAsync<T>(string key, Define.Prefabs type = Define.Prefabs.None, Action<T> callback = null) where T : UnityEngine.Object
     {
         //스프라이트인 경우 하위객체의 찐이름으로 로드하면 스프라이트로 로딩이 됌
@@ -95,9 +102,18 @@ public class ResourceManager
         if (key.Contains(".sprite"))
             loadKey = $"{key}[{key.Replace(".sprite", "")}]";
 
+        float beforeLoad = System.GC.GetTotalMemory(false); // 메모리 사용량 측정 시작
+
         var asyncOperation = Addressables.LoadAssetAsync<T>(loadKey);
         asyncOperation.Completed += (op) =>
         {
+
+            float afterLoad = System.GC.GetTotalMemory(false); // 메모리 사용량 측정 종료
+            float sizeInBytes = afterLoad - beforeLoad;
+            Debug.Log($"Resource {key} size: {sizeInBytes / 1024f} KB");
+
+            LoadBytes += sizeInBytes / 1024f;
+
             // 캐시 확인.
             if (_resources.TryGetValue(key, out Object resource))
             {

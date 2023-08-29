@@ -1,11 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Net.Sockets;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 using static Define;
 
@@ -46,7 +41,7 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
     public bool isRight = false;
 
 
-    List<ReplayData> _batReplayData = new List<ReplayData>();
+    List<CustomReplayData> _batReplayData = new List<CustomReplayData>();
 
 
     private void Start()
@@ -269,7 +264,7 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
 
         if ( Managers.Game.isRecord == true && Managers.Game.GameState == Define.GameState.InGround)
         {
-            ReplayData replatData;
+            CustomReplayData replatData;
             replatData.position = bat.HitColiderTransform.localPosition;
             replatData.time = Time.timeSinceLevelLoad;
 

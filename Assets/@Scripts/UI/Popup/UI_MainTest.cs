@@ -30,7 +30,7 @@ public class UI_MainTest : UI_Popup
     private void ClickStartButton()
     {
         Managers.UI.ClosePopupUI(this);
-        Managers.Game.GameReady();
+        //Managers.Game.GameReady();
     }
 
     private void OnClickMajorLeague()
