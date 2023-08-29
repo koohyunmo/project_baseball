@@ -98,4 +98,10 @@ public static class Define
 	}
 
 
+	public struct ReplayData
+	{
+        public Vector3 position;
+        public float time;
+    }
+
 }

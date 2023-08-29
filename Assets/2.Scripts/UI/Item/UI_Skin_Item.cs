@@ -79,7 +79,7 @@ public class UI_Skin_Item : UI_Base
         {
             Managers.Game.Bat.ChangeBatMat(_mats);
             Managers.Game.Bat.ChangeBatMesh(_mesh);
-            Managers.Game.Bat.SetBetHandle();
+            //Managers.Game.Bat.SetBetHandle();
             Debug.Log($"ChangeBat ID :  {_key}");
         }
         else

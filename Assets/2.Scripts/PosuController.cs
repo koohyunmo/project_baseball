@@ -14,7 +14,7 @@ public class PosuController : MonoBehaviour
     private void Start()
     {
         originPos = transform.position;
-        Managers.Game.SetMovePosu(() => StartCoroutine(MoveToTarget()));
+        Managers.Game.SetReplatMoveAction(() => StartCoroutine(MoveToTarget()));
     }
 
     private IEnumerator MoveToTarget()

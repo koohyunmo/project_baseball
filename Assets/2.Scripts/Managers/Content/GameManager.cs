@@ -1,6 +1,7 @@
 using DG.Tweening.Plugins.Core.PathCore;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static Define;
@@ -57,6 +58,7 @@ public class GameManager
     public Action gameReplayObjectClear;
     // 리플레이 함수
     public Action<LineRenderer> makeReplayBallPathEvent;
+    public List<ReplayData> batMoveReplayData = new List<ReplayData>();
     public bool isReplay = false;
 
 
@@ -140,6 +142,7 @@ public class GameManager
         {
             case GameState.Home:
                 Managers.Object.Clear();
+                batMoveReplayData.Clear();
                 MainCam.MoveOriginaPos();
                 Managers.UI.ShowPopupUI<UI_Main>();
                 break;
@@ -310,7 +313,7 @@ public class GameManager
         _strikeZone = zone;
     }
 
-    public void SetMovePosu(Action movePos)
+    public void SetReplatMoveAction(Action movePos)
     {
         movePosu -= movePos;
         movePosu += movePos;
@@ -325,6 +328,11 @@ public class GameManager
     {
         gameReplayObjectClear -= clear;
         gameReplayObjectClear += clear;
+    }
+
+    public void ReplayData(List<ReplayData> moveList)
+    {
+        batMoveReplayData = moveList;
     }
     #endregion
 

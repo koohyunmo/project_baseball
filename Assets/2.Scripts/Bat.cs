@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using TMPro;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.UI.Image;
@@ -45,8 +47,6 @@ public class Bat : MonoBehaviour
 
 
 
-
-
     void Start()
     {
         First();
@@ -73,7 +73,7 @@ public class Bat : MonoBehaviour
         Managers.Game.SetBat(this);
         Managers.Game.SetStrikeCallBack(HutSwing);
         Managers.Game.SetMoveBat(OnltMoveModel);
-
+        Managers.Game.SetReplatMoveAction(() => StartCoroutine(co_BatMoveReplay()));
 
 
         SetBetHandle();
@@ -82,10 +82,11 @@ public class Bat : MonoBehaviour
 
     public void SetBetHandle()
     {
+
         if (Managers.Game.BatPosition == Define.BatPosition.Left)
-            MakeHandle(batBoxCollider.bounds.max.x, "batBoxCollider.bounds.max.x", -0.3f, -0.2f);
+            MakeHandle(batBoxCollider.bounds.max.x, "batBoxCollider.bounds.max.x", -0.4f, -0.2f);
         else
-            MakeHandle(batBoxCollider.bounds.min.x, "batBoxCollider.bounds.min.x", -0.3f, -0.2f);
+            MakeHandle(batBoxCollider.bounds.min.x, "batBoxCollider.bounds.min.x", -0.4f, -0.2f);
 
     }
 
@@ -186,16 +187,36 @@ public class Bat : MonoBehaviour
         ClampToCameraView();
     }
 
+    private void ClampToCameraViewOriginal()
+    {
+
+        if (mainCamera == null) return; // 카메라가 할당되지 않았다면 함수 종료
+        if (GameState != Define.GameState.InGround) return; // 게임중이 아니라면 함수 종료
+
+        Vector3 viewportPosition = mainCamera.WorldToViewportPoint(model.transform.position);
+
+        // 0과 1 사이로 뷰포트 좌표 제한
+        viewportPosition.x = Mathf.Clamp(viewportPosition.x, 0f, 1f);
+        viewportPosition.y = Mathf.Clamp(viewportPosition.y, 0f, 1f);
+
+        // 제한된 뷰포트 좌표를 월드 좌표로 변환 후, 오브젝트 위치 업데이트
+        model.transform.position = mainCamera.ViewportToWorldPoint(viewportPosition);
+
+
+    }
+
+
     private void ClampToCameraView()
     {
+
         if (mainCamera == null) return; // 카메라가 할당되지 않았다면 함수 종료
         if (GameState != Define.GameState.InGround) return; // 게임중이 아니라면 함수 종료
 
         Vector3 viewportPosition = mainCamera.WorldToViewportPoint(HitColiderTransform.position);
 
         // 0과 1 사이로 뷰포트 좌표 제한
-        viewportPosition.x = Mathf.Clamp(viewportPosition.x, 0.1f, 0.9f);
-        viewportPosition.y = Mathf.Clamp(viewportPosition.y, 0.1f, 0.9f);
+        viewportPosition.x = Mathf.Clamp(viewportPosition.x, 0f, 1f);
+        viewportPosition.y = Mathf.Clamp(viewportPosition.y, 0f, 1f);
 
         // 제한된 뷰포트 좌표를 월드 좌표로 변환
         Vector3 clampedWorldPosition = mainCamera.ViewportToWorldPoint(viewportPosition);
@@ -227,15 +248,15 @@ public class Bat : MonoBehaviour
             {
                 anim.speed = 1f;
             }
-                
+
 
             lerpTimer += Time.deltaTime * lerpSpeed * slowSpeed;
-            
+
 
             float curveValue = swingCurve.Evaluate(lerpTimer);  // 0과 1 사이의 lerpTime 값을 기반으로 곡선 값 추출
 
             // 회전 및 위치 보간
-            model.transform.position = Vector3.Lerp(originalBatPos, endBat.position, curveValue);
+            //model.transform.position = Vector3.Lerp(originalBatPos, endBat.position, curveValue);
             anim.Play("Bat_Swing");
             //anim.Play("Bat_Weak_Swing");
             //anim.Play("Bat_Swing");
@@ -247,7 +268,7 @@ public class Bat : MonoBehaviour
                 isReturning = true;
                 anim.Play("Bat_Idle");
             }
-                
+
         }
 
 
@@ -261,16 +282,16 @@ public class Bat : MonoBehaviour
                 returnLerpTime += Time.deltaTime * returnLerpSpeed;
 
                 // 선형적으로 원래 위치 및 회전으로 돌아오기
-                model.transform.position = Vector3.Lerp(endBat.position, originalBatPos, returnLerpTime);
-                model.transform.rotation = Quaternion.Lerp(endBat.rotation, originalBatRot, returnLerpTime);
+                //model.transform.position = Vector3.Lerp(endBat.position, originalBatPos, returnLerpTime);
+                //model.transform.rotation = Quaternion.Lerp(endBat.rotation, originalBatRot, returnLerpTime);
 
                 if (returnLerpTime >= 1)
                 {
                     returnLerpTime = 0;
                     returnTimer = 0;
                     isReturning = false;
-                    model.transform.position = originalBatPos;
-                    model.transform.rotation = originalBatRot;
+                    //model.transform.position = originalBatPos;
+                    //model.transform.rotation = originalBatRot;
                 }
             }
         }
@@ -307,6 +328,28 @@ public class Bat : MonoBehaviour
         if (!isSwinging) // 스윙 중이 아닐 때만 스윙 시작
         {
             isSwinging = true;
+        }
+    }
+
+    IEnumerator co_BatMoveReplay()
+    {
+        var data = Managers.Game.batMoveReplayData;
+
+        for (int i = 0; i < data.Count -1; i++)
+        {
+            // 현재 위치와 다음 위치 사이의 대기 시간을 계산합니다.
+            float waitTime = data[i + 1].time - data[i].time;
+            HitColiderTransform.localPosition = data[i].position;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < waitTime)
+            {
+                float t = elapsedTime / waitTime;
+                Vector3 interpolatedPosition = Vector3.Lerp(HitColiderTransform.localPosition, data[i].position, t);;
+                HitColiderTransform.localPosition = interpolatedPosition;
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
         }
     }
 

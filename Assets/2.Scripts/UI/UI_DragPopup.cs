@@ -5,7 +5,9 @@ using System.Net.Sockets;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
+using static Define;
 
 public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
@@ -43,6 +45,10 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
 
     public bool isRight = false;
 
+
+    List<ReplayData> _batReplayData = new List<ReplayData>();
+
+
     private void Start()
     {
         _joystickRadius = _background.gameObject.GetComponent<RectTransform>().sizeDelta.y / 2f;
@@ -58,23 +64,22 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
         offsetX = 18f;
         offsetY = -95f;
 
+        Managers.Game.SetHitCallBack(MovePosReset);
+        Managers.Game.SetStrikeCallBack(SaveMovePos);
+       
 
     }
 
-    private void LateUpdate()
+
+    private void MovePosReset()
     {
-        // UI 좌표 + Vec2(x 정규화. y 정규화)
-        //batRect.anchoredPosition =
-        //    new Vector2(bat.HitColider.localPosition.x * ratioX, (bat.HitColider.localPosition.y) * ratioY);
+        if (_batReplayData.Count > 0)
+            _batReplayData.Clear();
+    }
 
-        //if(Managers.Game.AimPoint != null)
-        //{
-        //    _ballAim.anchoredPosition = new Vector2(Managers.Game.AimPoint.x * ratioX, Managers.Game.AimPoint.y * ratioY) ;
-        //}
-
-        //batRect.anchoredPosition = CalculateZoneRatio4(bat.HitColider.localPosition);
-        //_ballAim.anchoredPosition = CalculateZoneRatio4(Managers.Game.AimPoint);
-
+    private void SaveMovePos()
+    {
+        Managers.Game.ReplayData(_batReplayData);
     }
 
     public void CalculateZoneRatio()
@@ -258,7 +263,15 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
             dir.y *= -1;
         }
 
+        if (Managers.Game.GameState == Define.GameState.InGround)
+        {
+            ReplayData replatData;
+            replatData.position = bat.HitColiderTransform.localPosition;
+            replatData.time = Time.timeSinceLevelLoad;
+
+            _batReplayData.Add(replatData);
+        }
+
         bat.HitColiderTransform.localPosition += dir;
-        bat.BatModelParent.localPosition += dir;
     }
 }

@@ -610,7 +610,7 @@ public class BallPath : MonoBehaviour
 
 
         Managers.Game.isReplay = false;
-        yield return new WaitForSeconds(0.1f);
+        yield return new FixedUpdate();
         camManager.OffRePlay();
         yield break;
     }

@@ -775,7 +775,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 1, z: -10}
   _virtualCamera: {fileID: 31124143}
-  replayCamOffsetPos: {x: 0, y: 1, z: -3}
+  replayCamOffsetPos: {x: 0, y: 0, z: 0}
   replayCamOffsetRot: {x: 0, y: 0, z: 0}
 --- !u!114 &607225665
 MonoBehaviour:
