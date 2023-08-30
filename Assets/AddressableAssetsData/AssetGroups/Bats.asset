@@ -20,44 +20,53 @@ MonoBehaviour:
   - m_GUID: 911ce9a4c14e55a48a24dbca60bce9ee
     m_Address: BAT_10
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - PreLoad
   - m_GUID: c318f0587ddfa4a44bee71c588926dc1
     m_Address: BAT_2
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Prefabs
+    - PreLoad
   - m_GUID: db436519937ba2f42b4c6e53aa148c72
     m_Address: BAT_3
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - PreLoad
   - m_GUID: dc157c19078ef674cb2f33b669a90fbc
     m_Address: BAT_8
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - PreLoad
   - m_GUID: 6198b31f34eaa1f41bc21f09c7b236cd
     m_Address: BAT_9
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - PreLoad
   - m_GUID: dc56cfe7bbb0ea24da06d39eace68620
     m_Address: BAT_7
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - PreLoad
   - m_GUID: bdea2dc611ad5fd4485b19a3a234141c
     m_Address: BAT_6
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - PreLoad
   - m_GUID: 45223432dda787d4697b97812427741c
     m_Address: BAT_1
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - PreLoad
   - m_GUID: 9c1f15b897a88fe4196b91076d8013b1
     m_Address: BAT_5
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - PreLoad
   - m_GUID: 9e4ad81e2f8a87a45bf4a863cc05e6a2
     m_Address: BAT_4
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - PreLoad
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9c2d91b0a86c0bb4b9bbf0d47449c95f, type: 2}
   m_SchemaSet:

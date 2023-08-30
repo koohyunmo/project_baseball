@@ -4,6 +4,8 @@ using System.IO;
 
 public class CaptureWindow : EditorWindow
 {
+
+#if UNITY_EDITOR
     public RenderTexture renderTexture;
     public string savePath = "Assets/Captured.png";
 
@@ -40,4 +42,6 @@ public class CaptureWindow : EditorWindow
 
         AssetDatabase.Refresh(); // 에디터에서 바로 변경 사항을 확인하기 위해 에셋 데이터베이스를 새로고침
     }
+
+#endif
 }

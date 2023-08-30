@@ -12,9 +12,10 @@ public class ResourceManager
     // 실제 로드한 리소스.
     Dictionary<string, UnityEngine.Object> _resources = new Dictionary<string, UnityEngine.Object>();
     // 벳 데이터
-    Dictionary<string, UnityEngine.Object> _bats = new Dictionary<string, UnityEngine.Object>();
+   // Dictionary<string, UnityEngine.Object> _bats = new Dictionary<string, UnityEngine.Object>();
 
-    public Dictionary<string, UnityEngine.Object> Bats {get { return _bats; } private set { _bats = value; } }
+   // public Dictionary<string, UnityEngine.Object> Bats {get { return _bats; } private set { _bats = value; } }
+   public Dictionary<string, UnityEngine.Object> Bats {get { return _resources; } private set { _resources = value; } }
 
     public float LoadBytes { get; private set; }
 
@@ -127,9 +128,10 @@ public class ResourceManager
                     _resources.Add(key, op.Result);
                     break;
                 case Define.Prefabs.Bat:
-                    _bats.Add(key, op.Result);
+                    _resources.Add(key, op.Result);
                     break;
                 case Define.Prefabs.Ball:
+                    _resources.Add(key, op.Result);
                     break;
             }
             
@@ -139,6 +141,7 @@ public class ResourceManager
 
     public void LoadAllAsync<T>(string label, Define.Prefabs type = Define.Prefabs.None, Action<string, int, int> callback = null) where T : UnityEngine.Object
     {
+
         var opHandle = Addressables.LoadResourceLocationsAsync(label, typeof(T));
         opHandle.Completed += (op) =>
         {
@@ -174,6 +177,6 @@ public class ResourceManager
     public void Clear()
     {
         _resources.Clear();
-        _bats.Clear();
+        //_bats.Clear();
     }
 }

@@ -7,6 +7,7 @@ using static BatchCaptureWindow;
 
 public class BatchCaptureWindow : EditorWindow
 {
+#if UNITY_EDITOR
     private List<GameObject> prefabs = new List<GameObject>();
     public List<GameObject> objectsToCapture = new List<GameObject>();
     public string savePath = "Assets/Captures/";
@@ -322,5 +323,5 @@ public class BatchCaptureWindow : EditorWindow
 
 
 
-
+#endif
 }

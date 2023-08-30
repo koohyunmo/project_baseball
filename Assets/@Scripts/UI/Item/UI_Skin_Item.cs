@@ -40,12 +40,10 @@ public class UI_Skin_Item : UI_Base
     {
         _key = key;
 
-        if (Managers.Resource.Bats[_key] is ItemScriptableObject so)
+        if (Managers.Resource.Bats.TryGetValue(_key, out Object obj) && obj is ItemScriptableObject so)
         {
-
             _item = so;
 
-           
             MeshRenderer renderer = _item.model.GetComponent<MeshRenderer>();
             var meshfilter = _item.model.GetComponent<MeshFilter>();
             if (renderer != null && meshfilter != null)
@@ -63,12 +61,19 @@ public class UI_Skin_Item : UI_Base
         }
         else
         {
-            Debug.LogError("Bats[key] is not a GameObject.");
+            _item = null;
+            Debug.LogError("Bats[key] is not a GameObject or the key does not exist.");
         }
+
     }
 
     private void UpdateUI()
     {
+        if(_item == null)
+        {
+            Debug.LogError("Item is Null");
+            return;
+        }
         _bat = _item.model;
         _icon.sprite = _item.icon;
     }

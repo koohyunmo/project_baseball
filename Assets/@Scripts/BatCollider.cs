@@ -30,8 +30,13 @@ public class BatCollider : MonoBehaviour
     {
         bat = GetComponentInParent<Bat>();
         _effectPos.gameObject.SetActive(false);
+        Managers.Game.SetBatCollider(this);
     }
 
+    public Vector3 BatMid()
+    {
+        return _mid.position;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -41,7 +46,10 @@ public class BatCollider : MonoBehaviour
 
 
             _effectPos.gameObject.SetActive(true);
-            bat.Swing();
+
+            var hitPoint = other.gameObject.transform.position;
+
+            bat.Swing(hitPoint);
 
 
             // 날려 보내기
@@ -53,11 +61,9 @@ public class BatCollider : MonoBehaviour
             {
                 if(Managers.Game.GameState == Define.GameState.InGround)
                 {
-                    other.gameObject.GetComponent<BallMovement>().SetHit();
+                    other.gameObject.GetComponent<BallController>().SetHit();
 
-                }
-
-                var hitPoint = other.gameObject.transform.position;
+                }   
 
                 if(isHit == false)
                 {

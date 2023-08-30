@@ -2021,7 +2021,7 @@ MonoBehaviour:
     type: 3}
   ballTestAimPrefab: {fileID: 1867865450545264919, guid: b0db29306da16904389d7a369b7a81b3,
     type: 3}
-  _hEyes: 0
+  _hEyes: 1
   _ballerDistance: 0
   _throwType: 0
   ballAims: []

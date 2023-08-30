@@ -63,4 +63,25 @@ public class Utils
 
 		return spawnPosition;
 	}
+
+    public static (Vector3 Center, Vector3 TopLeft, Vector3 TopRight, Vector3 BottomLeft, Vector3 BottomRight) GetScreenRectanglePoints(Vector3 randomPoint,float height = 0.5f,float width = 0.5f)
+    {
+        // randomPoint를 기준으로 범위 설정
+        float range = width; // 원하는 범위를 설정
+        Vector3 center = randomPoint;
+        Vector3 topLeft = new Vector3(center.x - range, center.y + height, center.z);
+        Vector3 topRight = new Vector3(center.x + range, center.y + height, center.z);
+        Vector3 bottomLeft = new Vector3(center.x - range, center.y - height, center.z);
+        Vector3 bottomRight = new Vector3(center.x + range, center.y - height, center.z);
+
+        // 각 포인트를 스크린 좌표로 변환
+        Vector2 screenCenter = Camera.main.WorldToScreenPoint(center);
+        Vector2 screenTopLeft = Camera.main.WorldToScreenPoint(topLeft);
+        Vector2 screenTopRight = Camera.main.WorldToScreenPoint(topRight);
+        Vector2 screenBottomLeft = Camera.main.WorldToScreenPoint(bottomLeft);
+        Vector2 screenBottomRight = Camera.main.WorldToScreenPoint(bottomRight);
+
+        // 스크린 좌표를 튜플로 반환
+        return (screenCenter, screenTopLeft, screenTopRight, screenBottomLeft, screenBottomRight);
+    }
 }

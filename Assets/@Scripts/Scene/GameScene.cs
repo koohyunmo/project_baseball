@@ -15,13 +15,17 @@ public class GameScene : MonoBehaviour
 
     private void LoadObj()
     {
-        Managers.Resource.LoadAllAsync<GameObject>("PreLoad", Define.Prefabs.None, (System.Action<string, int, int>)((key, count, totalCount) =>
+        Managers.Resource.LoadAllAsync<Object>("PreLoad", Define.Prefabs.None, (System.Action<string, int, int>)((key, count, totalCount) =>
         {
             Debug.Log($"{key} {count}/{totalCount}");
 
             if (count == totalCount)
             {
-                StartLoaded();
+                Object obj = GameObject.FindObjectOfType(typeof(EventSystem));
+                if (obj == null)
+                    Managers.Resource.Instantiate("EventSystem").name = "@EventSystem";
+                Managers.Game.Init();
+                Managers.Resource.GetLoadBytes();
             }
         }));
     }

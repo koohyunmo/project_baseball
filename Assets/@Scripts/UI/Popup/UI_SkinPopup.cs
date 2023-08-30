@@ -128,8 +128,12 @@ public class UI_SkinPopup : UI_Popup
 
     private void MakeItme()
     {
-        foreach (var itmeID in Managers.Resource.Bats.Keys)
+        foreach (var itemID in Managers.Resource.Bats.Keys)
         {
+            // "BAT_" 문자열을 포함하지 않는 경우, 다음 반복으로 건너뜁니다.
+            if (!itemID.Contains("BAT_"))
+                continue;
+
             var item = Managers.Resource.Instantiate("UI_Skin_Item", _grid.transform);
             if (item == null)
             {
@@ -137,15 +141,18 @@ public class UI_SkinPopup : UI_Popup
                 continue;
             }
             UI_Skin_Item skinItem = item.GetOrAddComponent<UI_Skin_Item>();
-            skinItem.InitData(itmeID);
-            Debug.Log(itmeID);
+            skinItem.InitData(itemID);
         }
     }
 
     IEnumerator co_MakeItem()
     {
-        foreach (var itmeID in Managers.Resource.Bats.Keys)
+        foreach (var itemID in Managers.Resource.Bats.Keys)
         {
+            // "BAT_" 문자열을 포함하지 않는 경우, 다음 반복으로 건너뜁니다.
+            if (!itemID.Contains("BAT_"))
+                continue;
+
             var item = Managers.Resource.Instantiate("UI_Skin_Item", _grid.transform);
             if (item == null)
             {
@@ -153,9 +160,8 @@ public class UI_SkinPopup : UI_Popup
                 continue;
             }
             UI_Skin_Item skinItem = item.GetOrAddComponent<UI_Skin_Item>();
-            skinItem.InitData(itmeID);
-            Debug.Log(itmeID);
-            yield return new WaitForEndOfFrame();
+            skinItem.InitData(itemID);
+            yield return null;
         }
     }
 

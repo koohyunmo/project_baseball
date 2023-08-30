@@ -54,8 +54,6 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
         zoneRt = _zoneImage.GetComponent<RectTransform>();
         batRect = _batAim.GetComponent<RectTransform>();
 
-        CalculateZoneRatio();
-
         offsetX = 18f;
         offsetY = -95f;
 
@@ -65,8 +63,28 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
 
         _batReplayData.Clear();
 
+        ZoneSetting();
+
+    }
+
+    private void ZoneSetting()
+    {
+        var zone = Utils.GetScreenRectanglePoints(Managers.Game.StrikeZone.transform.position,0.7f);
+
+        // RectTransform을 가져옵니다.
+
+        // 스크린 좌표의 너비와 높이를 계산합니다.
+        float width = Mathf.Abs(zone.TopRight.x - zone.TopLeft.x);
+        float height = Mathf.Abs(zone.TopLeft.y - zone.BottomLeft.y);
 
 
+        // 이미지의 중심 위치를 설정합니다.
+        Vector2 centerPosition = new Vector2((zone.TopLeft.x + zone.BottomRight.x) / 2, (zone.TopLeft.y + zone.BottomRight.y) / 2);
+
+        zoneRt.position = centerPosition;
+
+        // 이미지의 크기를 설정합니다.
+        zoneRt.sizeDelta = new Vector2(width, height);
     }
 
 
@@ -76,134 +94,15 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
             _batReplayData.Clear();
     }
 
+    private void LateUpdate()
+    {
+        _ballAim.position = Managers.Game.AimPointScreen;
+        _batAim.position = Managers.Game.BatColiderPointScreen;
+    }
+
     private void SaveMovePos()
     {
         Managers.Game.ReplayData(_batReplayData);
-    }
-
-    public void CalculateZoneRatio()
-    {
-        // 월드 좌표 크기
-        Vector3 worldSize = Managers.Game.StrikeZone.size; // 'size'가 StrikeZone의 가로와 세로 크기를 반환한다고 가정
-
-
-        Debug.Log(Managers.Game.StrikeZone.boxCollider.bounds.max);
-        Debug.Log(Managers.Game.StrikeZone.boxCollider.bounds.center);
-        Debug.Log(Managers.Game.StrikeZone.boxCollider.bounds.min);
-
-        Debug.Log("World Size" + worldSize);
-
-        // UI 좌표 크기
-        float distanceZoneX = zoneRt.rect.width;
-        float distanceZoneY = zoneRt.rect.height;
-
-        Debug.Log(distanceZoneX);
-        Debug.Log(distanceZoneY);
-
-        var bounds = Managers.Game.StrikeZone.boxCollider.bounds;
-
-        ratioX = distanceZoneX * 2f / Mathf.Abs(bounds.max.x - bounds.min.x);
-        ratioY = distanceZoneY * 2f / Mathf.Abs(bounds.max.y - bounds.min.y);
-    }
-
-    public Vector2 CalculateZoneRatio2(Vector3 worldVector)
-    {
-        float worldXoffset = 0.45f;
-        float worldYoffset = 0.25f;
-        Vector2 worldX = new Vector2(Managers.Game.StrikeZone.boxCollider.bounds.min.x, Managers.Game.StrikeZone.boxCollider.bounds.max.x) + new Vector2(worldXoffset, worldXoffset);
-        Vector2 worldY = new Vector2(Managers.Game.StrikeZone.boxCollider.bounds.min.y, Managers.Game.StrikeZone.boxCollider.bounds.max.y) + new Vector2(worldYoffset, worldYoffset);
-
-        float zoneOffset = 250.0f;
-        Vector2 zoneX = new Vector2(zoneRt.rect.xMin, zoneRt.rect.xMax) + new Vector2(zoneOffset, zoneOffset);
-        Vector2 zoneY = new Vector2(zoneRt.rect.yMin, zoneRt.rect.yMax) + new Vector2(zoneOffset, zoneOffset);
-
-        // Calculate scale ratios
-        float scaleX = Mathf.Abs(zoneX.y - zoneX.x) / Mathf.Abs(worldX.y - worldX.x);
-        float scaleY = Mathf.Abs(zoneY.y - zoneY.x) / Mathf.Abs(worldY.y - worldY.x);
-
-        // Transform world coordinates to zone coordinates
-        float transformedWorldX = (worldVector.x - worldX.x) * scaleX + zoneX.x;
-        float transformedWorldY = (worldVector.y - worldY.x) * scaleY + zoneY.x; // Adjusted the y transformation logic
-
-
-        // Assuming there's an offset between the origins of the two coordinate systems
-        Vector2 originOffset = new Vector2(0, 0); // Adjust this value as needed
-        transformedWorldX += originOffset.x;
-        transformedWorldY += originOffset.y;
-
-
-
-        return new Vector2(transformedWorldX, transformedWorldY);
-    }
-
-
-    public Vector2 CalculateZoneRatio3(Vector3 worldVector)
-    {
-        float worldXoffset = 0.45f;
-        float worldYoffset = 0.25f;
-        Vector2 worldX = new Vector2(Managers.Game.StrikeZone.boxCollider.bounds.min.x, Managers.Game.StrikeZone.boxCollider.bounds.max.x) + new Vector2(worldXoffset, worldXoffset);
-        Vector2 worldY = new Vector2(Managers.Game.StrikeZone.boxCollider.bounds.min.y, Managers.Game.StrikeZone.boxCollider.bounds.max.y) + new Vector2(worldYoffset, worldYoffset);
-
-        float zoneOffset = 250.0f;
-        Vector2 zoneX = new Vector2(zoneRt.rect.xMin, zoneRt.rect.xMax) + new Vector2(zoneOffset, zoneOffset);
-        Vector2 zoneY = new Vector2(zoneRt.rect.yMin, zoneRt.rect.yMax) + new Vector2(zoneOffset, zoneOffset);
-
-        // Calculate scale ratios
-        float scaleX = (zoneX.y - zoneX.x) / (worldX.y - worldX.x);
-        float scaleY = (zoneY.y - zoneY.x) / (worldY.y - worldY.x);
-
-        float aspect = (float)Screen.width / (float)Screen.height;
-    
-        // Transform world coordinates to zone coordinates
-        float transformedWorldX = (worldVector.x - worldX.x) * scaleX + zoneX.x; // Subtract zoneOffset to adjust the range
-        float transformedWorldY = (worldVector.y - worldY.x) * (scaleY) + zoneY.x ; // Subtract zoneOffset to adjust the range
-
-
-
-        return new Vector2(transformedWorldX, transformedWorldY);
-    }
-
-
-    public Vector2 ConvertWorldToUIPosition(Vector3 worldPosition, RectTransform canvasRectTransform, Camera camera = null)
-    {
-
-        camera = Camera.main;
-        // 월드 좌표를 스크린 좌표로 변환
-        Vector2 screenPosition = camera.WorldToScreenPoint(worldPosition);
-
-        // 스크린 좌표를 canvasRectTransform 내의 로컬 좌표로 변환
-        Vector2 localUIPosition;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, screenPosition, camera, out localUIPosition);
-
-        return localUIPosition;
-    }
-
-
-    public Vector2 CalculateZoneRatio4(Vector3 worldVector)
-    {
-        float worldXoffset = 0.45f;
-        float worldYoffset = 0.25f;
-        Vector2 worldX = new Vector2(Managers.Game.StrikeZone.boxCollider.bounds.min.x, Managers.Game.StrikeZone.boxCollider.bounds.max.x) + new Vector2(worldXoffset, worldXoffset);
-        Vector2 worldY = new Vector2(Managers.Game.StrikeZone.boxCollider.bounds.min.y, Managers.Game.StrikeZone.boxCollider.bounds.max.y) + new Vector2(worldYoffset, worldYoffset);
-
-        float zoneOffset = 250.0f;
-        Vector2 zoneX = new Vector2(zoneRt.rect.xMin, zoneRt.rect.xMax) + new Vector2(zoneOffset, zoneOffset);
-        Vector2 zoneY = new Vector2(zoneRt.rect.yMin, zoneRt.rect.yMax) + new Vector2(zoneOffset, zoneOffset);
-
-        // Calculate scale ratios
-        float scaleX = Mathf.Abs(zoneX.y - zoneX.x) / Mathf.Abs(worldX.y - worldX.x);
-        float scaleY = Mathf.Abs(zoneY.y - zoneY.x) / Mathf.Abs(worldY.y - worldY.x);
-
-        // Transform world coordinates to zone coordinates
-        float transformedWorldX = (worldVector.x - worldX.x) * scaleX + zoneX.x;
-        float transformedWorldY = (worldVector.y - worldY.x) * scaleY + zoneY.y; // Adjusted the y transformation logic
-
-        // Assuming there's an offset between the origins of the two coordinate systems
-        Vector2 originOffset = new Vector2(0, 0); // Adjust this value as needed
-        transformedWorldX += originOffset.x;
-        transformedWorldY += originOffset.y;
-
-        return new Vector2(transformedWorldX, transformedWorldY);
     }
 
     public void OnPointerClick(UnityEngine.EventSystems.PointerEventData eventData)

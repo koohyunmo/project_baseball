@@ -23,7 +23,6 @@ public class Bat : MonoBehaviour
     public Transform startBat;
     public Transform endBat;
 
-    bool isSwinging;
     [SerializeField] float lerpTimer;
     float maxTime = 0.3f;
 
@@ -36,13 +35,18 @@ public class Bat : MonoBehaviour
 
     Camera mainCamera;
 
-    private bool isReturning = false; // 배트가 원래 위치로 돌아가는 중인지 체크하는 변수
     private float returnDelay = 0.2f; // 원래 위치로 돌아가기 전 대기 시간
     private float returnTimer = 0; // 대기 시간을 체크하는 타이머
     private float returnLerpTime = 0; // 원래 위치로 돌아갈 때 사용하는 lerp 타이머
     private float returnLerpSpeed = 1f; // 원래 위치로 돌아갈 때의 lerp 속도
 
+    enum BatState
+    {
+        Idle,
+        Swing,
+    }
 
+    BatState batState = BatState.Idle;
 
     void Start()
     {
@@ -234,7 +238,7 @@ public class Bat : MonoBehaviour
     {
         float slowSpeed = 1f;
 
-        if (isSwinging)
+        if (batState == BatState.Swing)
         {
             if (GameState != Define.GameState.InGround && Managers.Game.isReplay)
             {
@@ -261,8 +265,7 @@ public class Bat : MonoBehaviour
             if (lerpTimer >= maxTime)
             {
                 lerpTimer = 0;
-                isSwinging = false;
-                isReturning = true;
+                batState = BatState.Idle;
                 anim.Play("Bat_Idle");
             }
 
@@ -270,7 +273,7 @@ public class Bat : MonoBehaviour
 
 
 
-        if (isReturning)
+        if (batState == BatState.Idle)
         {
             returnTimer += Time.deltaTime;
 
@@ -286,7 +289,6 @@ public class Bat : MonoBehaviour
                 {
                     returnLerpTime = 0;
                     returnTimer = 0;
-                    isReturning = false;
                     //model.transform.position = originalBatPos;
                     //model.transform.rotation = originalBatRot;
                 }
@@ -299,7 +301,7 @@ public class Bat : MonoBehaviour
         if (GameState == Define.GameState.End)
         {
             string animationName = "Bat_Swing"; // 애니메이션 클립 이름
-            isSwinging = false;
+            batState = BatState.Idle;
             float stopAt = 0.2f; // 애니메이션의 중간에서 멈추려면 0.5 (0은 시작, 1은 끝)
 
             // 애니메이션의 정확한 시점에서 멈추기
@@ -308,12 +310,14 @@ public class Bat : MonoBehaviour
         }
     }
 
-    public void Swing()
+    public void Swing(Vector3 hitPoint)
     {
-        if (!isSwinging) // 스윙 중이 아닐 때만 스윙 시작
+        if (batState == BatState.Idle) // 스윙 중이 아닐 때만 스윙 시작
         {
+            var go = Managers.Object.Spawn<TextController>("HitScoreText", hitPoint);
+            go.transform.position = hitPoint;
             Managers.Game.HitEvent();
-            isSwinging = true;
+            batState = BatState.Swing;
         }
 
         // 카메라 효과를 추가합니다.
@@ -322,9 +326,9 @@ public class Bat : MonoBehaviour
 
     public void HutSwing()
     {
-        if (!isSwinging) // 스윙 중이 아닐 때만 스윙 시작
+        if (batState == BatState.Idle) // 스윙 중이 아닐 때만 스윙 시작
         {
-            isSwinging = true;
+            batState = BatState.Swing;
         }
     }
 

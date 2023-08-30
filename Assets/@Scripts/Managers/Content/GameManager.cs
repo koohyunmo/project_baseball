@@ -19,10 +19,33 @@ public class GameManager
     public StrikeZone StrikeZone { get { return _strikeZone; } private set { _strikeZone = value; } }
     private StrikeZone _strikeZone = null;
 
+    public BatCollider BatCollider { get { return _batCollider; } private set { _batCollider = value; } }
+    private BatCollider _batCollider = null;
+
     public BatPosition BatPosition { get { return _batPosition; } private set { _batPosition = value; } }
     private BatPosition _batPosition = BatPosition.Left;
 
     public Vector3 AimPoint;
+
+    public Vector2 AimPointScreen
+    {
+        get
+        {
+            // 2. 월드 좌표를 스크린 좌표로 변환
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(AimPoint);
+            return screenPosition;
+        }
+    }
+
+    public Vector2 BatColiderPointScreen
+    {
+        get
+        {
+            // 2. 월드 좌표를 스크린 좌표로 변환
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(BatCollider.BatMid());
+            return screenPosition;
+        }
+    }
     #region 게임 UI
     private UI_DragPopup dragPopup = null;
     private UI_GameInfoPopup gameInfoPopup = null;
@@ -66,11 +89,18 @@ public class GameManager
     public League League { get { return _league; } private set { _league = value; } }
     private League _league = League.SemiPro;
 
+    // 호크아이
+
+    HawkeyeLevel hawkeyeLevel = HawkeyeLevel.ZERO;
+    public HawkeyeLevel HawkeyeLevel { get { return hawkeyeLevel; } private set { hawkeyeLevel = value; } }
+
     // 게임 타입
     private GameType _gameType = GameType.None;
-    public GameType GameType { get { return _gameType; } private set { _gameType = value; }  }
+    public GameType GameType { get { return _gameType; } private set { _gameType = value; } }
 
     public CameraManager MainCam { get; private set; }
+
+    public ChacterController ChacterController { get; private set; }
 
 
 
@@ -92,7 +122,7 @@ public class GameManager
     }
 
 
-    public void GameReady(GameType gameType,Action callBack = null)
+    public void GameReady(GameType gameType, Action callBack = null)
     {
         if (GameState != GameState.Home)
             return;
@@ -281,6 +311,10 @@ public class GameManager
         hitCallBack -= callback;
         hitCallBack += callback;
     }
+    public void RemoveCallBack(Action callback)
+    {
+        hitCallBack -= callback;
+    }
 
     public void SetStrikePath(LineRenderer pathRenderer)
     {
@@ -342,6 +376,11 @@ public class GameManager
     {
         batMoveReplayData = moveList;
     }
+
+    public void SetBatCollider(BatCollider batCollider)
+    {
+        _batCollider = batCollider;
+    }
     #endregion
 
 
@@ -362,6 +401,7 @@ public class GameManager
         }
     }
 
+    public BallPath Baller { get; private set; }
 
     public void SaveGame()
     {
@@ -424,6 +464,16 @@ public class GameManager
 
         Debug.Log($"Save Game Loaded : {_path}");
         return true;
+    }
+
+    public void SetCharacter(ChacterController chacterController)
+    {
+        ChacterController = chacterController;
+    }
+
+    public void SetBaller(BallPath ballPath)
+    {
+        Baller = ballPath;
     }
     #endregion
 

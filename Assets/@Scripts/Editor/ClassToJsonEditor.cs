@@ -7,6 +7,7 @@ using System.IO;
 
 public class ClassToJsonEditor : EditorWindow
 {
+#if UNITY_EDITOR
     GameDB gameDB = new GameDB();
     List<GameItem> itemsList = new List<GameItem>(); // 임시로 아이템을 저장할 리스트
 
@@ -87,4 +88,6 @@ public class ClassToJsonEditor : EditorWindow
         AssetDatabase.Refresh();
         Debug.Log("Saved GameDB to JSON!");
     }
+
+#endif
 }
