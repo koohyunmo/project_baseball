@@ -14,7 +14,7 @@ public class ChacterController : MonoBehaviour
     {
         Idle,
         IdleSwing,
-        Swing,
+        Hit,
     }
     CharState charState = CharState.Idle;
     public float lerpSpeed = 2.5f;
@@ -27,33 +27,23 @@ public class ChacterController : MonoBehaviour
         anim = GetComponent<Animator>();
 
         Managers.Game.SetCharacter(this);
-        Managers.Game.SetHitCallBack(SwingAnim);
+        Managers.Game.SetHitCallBack(UpdateSwing);
 
+
+    }
+
+    public void UpdateIdle()
+    {
         charState = CharState.Idle;
         anim.Play(charState.ToString());
     }
 
-    public void SwingAnim()
+    public void UpdateSwing()
     {
-        //anim.Play(CharState.Swing.ToString());
-
         var prevAnim = charState;
-        charState = CharState.Swing;
-        SmoothTransition(prevAnim.ToString(), charState.ToString(), 0.5f);
-        StartCoroutine(co_AnimCallBack(anim, charState.ToString()));
+        charState = CharState.Hit;
+        SmoothTransition(prevAnim.ToString(), charState.ToString(), 0.1f);
 
-    }
-
-    IEnumerator co_AnimCallBack(Animator anim, string animClipName)
-    {
-        while (!anim.GetCurrentAnimatorStateInfo(0).IsName(animClipName) || anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
-        {
-            yield return null;
-        }
-
-        charState = CharState.IdleSwing;
-
-        SmoothTransition(animClipName, charState.ToString(), 0.5f);
     }
 
 
@@ -63,13 +53,10 @@ public class ChacterController : MonoBehaviour
     /// <param name="fromAnimation">끝난 애니메이션의 이름</param>
     /// <param name="toAnimation">시작할 애니메이션의 이름</param>
     /// <param name="transitionDuration">보간값 (전환하는 데 걸리는 시간, 초 단위)</param>
-    public void SmoothTransition(string fromAnimation, string toAnimation, float transitionDuration)
+    public void SmoothTransition(string fromAnimation, string toAnimation, float transitionDuration = 0.1f)
     {
-        // 현재 실행 중인 애니메이션이 'fromAnimation'인지 확인
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName(fromAnimation))
-        {
-            anim.CrossFade(toAnimation, transitionDuration);
-        }
+        anim.CrossFade(toAnimation, transitionDuration,-1,0);
+        anim.Play(toAnimation);
     }
 
 
