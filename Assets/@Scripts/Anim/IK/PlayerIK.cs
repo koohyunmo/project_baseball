@@ -13,6 +13,9 @@ public class PlayerIK : MonoBehaviour
     [SerializeField] private TwoBoneIKConstraint[] twoBoneIKConstraints;
     [SerializeField] private MultiAimConstraint[] multiAimConstraints;
 
+    [Header(" IK Target ")]
+    [SerializeField] private Transform ikTarget;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,22 +23,22 @@ public class PlayerIK : MonoBehaviour
     }
 
 
-    public void ConfigureIK(Transform iKtarget)
+    public void ConfigureIK(Transform iktarget)
     {
 
-        if (iKtarget == null)
-            iKtarget = GameObject.Find("IK_Target").transform;
+        if (iktarget == null)
+            iktarget = ikTarget;
         // Enable the rig builderr
         rigidBuilder.enabled = true;
 
         foreach (var item in twoBoneIKConstraints)
         {
-            item.data.target = iKtarget;
+            item.data.target = iktarget;
         }
         foreach (var item in multiAimConstraints)
         {
             var weightTr = new WeightedTransformArray();
-            weightTr.Add(new WeightedTransform(iKtarget, 1));
+            weightTr.Add(new WeightedTransform(iktarget, 1));
 
             item.data.sourceObjects = weightTr;
         }

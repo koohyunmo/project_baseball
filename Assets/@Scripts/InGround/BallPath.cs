@@ -311,7 +311,6 @@ public class BallPath : MonoBehaviour
         ballInstance.endPoint = endPoint;
         ballInstance.controlPoint = controlPoint;
         ballInstance.pathRenderer = pathRenderer;
-        ballInstance.ballId = _ballerCount;
 
         ball = ballInstance.transform;
         generatePathMethod.Invoke();
@@ -322,8 +321,6 @@ public class BallPath : MonoBehaviour
 
         Managers.Game.ThorwBallEvent();
         Managers.Game.SetStrikePath(pathRenderer);
-
-        _ballerCount++;
     }
 
     void CheckStrikeZone(Transform sp, Transform ep)

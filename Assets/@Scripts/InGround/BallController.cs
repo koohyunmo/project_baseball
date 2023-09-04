@@ -12,7 +12,6 @@ using UnityEngine;
 
 public class BallController : InGameObjectController
 {
-    public int ballId;
     public Transform startPoint;
     public Transform endPoint;
     public Transform controlPoint;
@@ -27,10 +26,35 @@ public class BallController : InGameObjectController
 
     Rigidbody _rigidbody;
 
+    public enum PlayMode
+    {
+        None,
+        Character
+    }
+
+    public PlayMode playMode  = PlayMode.None;
+
 
     private void Start()
     {
-        gameObject.TryGetComponent<Rigidbody>(out _rigidbody);
+        if(_rigidbody == null)
+        {
+            gameObject.TryGetComponent<Rigidbody>(out _rigidbody);
+
+            if (!_rigidbody)
+                _rigidbody = gameObject.GetOrAddComponent<Rigidbody>();
+
+            _rigidbody.useGravity = false;
+        }
+            
+    }
+
+    private void FixedUpdate()
+    {
+        if (playMode == PlayMode.None)
+            return;
+
+        MoveAlongPath();
     }
 
     public virtual void OnEnable()
@@ -63,7 +87,6 @@ public class BallController : InGameObjectController
         // 만약 Rigidbody에 힘 또는 토크가 적용되어 있었다면, 이를 중지
         _rigidbody.isKinematic = true;
         _rigidbody.isKinematic = false;
-
         _rigidbody.useGravity = false;
     }
 
@@ -80,7 +103,7 @@ public class BallController : InGameObjectController
     {
         if(_strike)
         {
-            ballClearAction?.Invoke(ballId);
+            Debug.Log("스트라이크");
         }
         else if(_hit)
         {
@@ -99,8 +122,6 @@ public class BallController : InGameObjectController
             }
 
         }
-
-
     }
 
     public void SetHit()
@@ -112,7 +133,7 @@ public class BallController : InGameObjectController
     private void LateUpdate()
     {
        
-        if(transform.position.z >= 40)
+        if(transform.position.z >= 100)
         {
             Debug.Log("TODO 수정 ");
             Managers.Object.Despawn<BallController>(ObjId);
