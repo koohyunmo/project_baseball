@@ -105,8 +105,8 @@ public static class Define
     }
 
 
-	public enum GameType
-	{
+	public enum GameMode
+    {
 		None,
 		Normal,
 		Challenge
@@ -124,4 +124,27 @@ public static class Define
 		SEVEN = 9
 	}
 
+	public enum Grade
+	{
+		Common,
+		Uncommon,
+		Rare,
+		Epic,
+		Legendary,
+	}
+	public enum ChallengeType
+	{
+		None,
+        Score,
+        HomeRun,
+        RealMode
+    }
+
+
+    public enum ScollViewType
+    {
+        Ball,
+        Bat,
+        Background
+    }
 }

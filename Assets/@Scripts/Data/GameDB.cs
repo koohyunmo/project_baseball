@@ -8,19 +8,20 @@ using UnityEngine;
 [Serializable]
 public class GameDB 
 {
-    public Dictionary<string,GameItem> playerItem = new Dictionary<string, GameItem>();
+    public Dictionary<string,PlayerItem> playerItem = new Dictionary<string, PlayerItem>();
+    public HashSet<string> playerInventory = new HashSet<string>();
     public PlayerInfo playerInfo = new PlayerInfo();
 }
 
 [Serializable]
-public class GameItem
+public class PlayerItem
 {
-    public GameItem()
+    public PlayerItem()
     {
 
     }
 
-    public GameItem(string id,string name, string desc,Define.ItemType itemType = Define.ItemType.Bat)
+    public PlayerItem(string id,string name, string desc,Define.ItemType itemType = Define.ItemType.Bat)
     {
         itemId = id;
         this.itemType = itemType;

@@ -84,6 +84,14 @@ public class GameManager
     public bool isReplay = false;
     public bool isRecord = false;
 
+    //첼린지 모드
+    public int ChallengeScore;
+    public int HomeRunCount;
+    public int SwingCount;
+
+    // 알람
+    public Action notifyItemAction;
+    public Action notifyRewardAction;
 
     // 난이도
     public League League { get { return _league; } private set { _league = value; } }
@@ -95,12 +103,14 @@ public class GameManager
     public HawkeyeLevel HawkeyeLevel { get { return hawkeyeLevel; } private set { hawkeyeLevel = value; } }
 
     // 게임 타입
-    private GameType _gameType = GameType.None;
-    public GameType GameType { get { return _gameType; } private set { _gameType = value; } }
+    private GameMode _gameMode = GameMode.None;
+    public GameMode GameMode { get { return _gameMode; } private set { _gameMode = value; } }
 
     public CameraManager MainCam { get; private set; }
 
     public ChacterController ChacterController { get; private set; }
+
+    ChallengeType challengeMode = ChallengeType.RealMode;
 
 
 
@@ -122,12 +132,12 @@ public class GameManager
     }
 
 
-    public void GameReady(GameType gameType, Action callBack = null)
+    public void GameReady(GameMode gameType, Action callBack = null)
     {
         if (GameState != GameState.Home)
             return;
 
-        _gameType = gameType;
+        _gameMode = gameType;
         GameState = GameState.Ready;
 
         callBack?.Invoke();
@@ -177,11 +187,17 @@ public class GameManager
         switch (GameState)
         {
             case GameState.Home:
-                Managers.Object.DespawnAll();
-                batMoveReplayData.Clear();
-                MainCam.MoveOriginaPos();
-                Managers.UI.ShowPopupUI<UI_Main>();
-                _gameType = GameType.None;
+                {
+                    Managers.Object.DespawnAll();
+                    batMoveReplayData.Clear();
+                    MainCam.MoveOriginaPos();
+                    Managers.UI.ShowPopupUI<UI_Main>();
+                    _gameMode = GameMode.None;
+
+                    SwingCount = 0;
+                    HomeRunCount = 0;
+                    ChallengeScore = 0;
+                }              
                 break;
             case GameState.Ready:
                 batPositionSetting?.Invoke();
@@ -218,6 +234,7 @@ public class GameManager
     public void HitEvent()
     {
         hitCallBack?.Invoke();
+        ChallengeModeCheck();
     }
 
     public void ReplayReview()
@@ -243,18 +260,24 @@ public class GameManager
         if (score < 85)
         {
             HitScore = 1;
+            SwingCount++;
         }
         else if (score >= 85 && score < 95)
         {
             HitScore = 3;
+            SwingCount++;
         }
         else if (score >= 95 && score < 98)
         {
             HitScore = 5;
+            SwingCount++;
+            HomeRunCount++;
         }
         else if (score >= 98 && score <= 100)
         {
             HitScore = 10;
+            SwingCount++;
+            HomeRunCount++;
         }
         else
         {
@@ -264,11 +287,32 @@ public class GameManager
 
         GameScore += HitScore;
         GameUiEvent?.Invoke();
+
+        ChallengeModeCheck();
     }
 
     public void SetBatPosition(BatPosition batPosition)
     {
         BatPosition = batPosition;
+    }
+
+
+    public void SetChallengeMode(int score, ChallengeType mode)
+    {
+        ChallengeScore = score;
+        challengeMode = mode;
+    }
+
+    public void Getitme(string key)
+    {
+
+        if (_gameData.playerInventory.Contains(key) == true)
+            return;
+
+        _gameData.playerInventory.Add(key);
+        notifyItemAction();
+         
+
     }
 
     #endregion
@@ -384,11 +428,41 @@ public class GameManager
     #endregion
 
 
+    #region 첼린지 모드 체크
+    private void ChallengeModeCheck()
+    {
+        if (GameMode != GameMode.Challenge)
+            return;
+
+        switch (challengeMode)
+        {
+            case ChallengeType.None:
+                break;
+            case ChallengeType.Score:
+                if (GameScore == ChallengeScore)
+                    Debug.Log("Score 완수");
+                break;
+            case ChallengeType.HomeRun:
+                if (HomeRunCount > ChallengeScore)
+                    Debug.Log("HomeRunCount 완수");
+                break;
+            case ChallengeType.RealMode:
+                if (SwingCount > ChallengeScore)
+                    Debug.Log("RealMode 완수");
+                break;
+        }
+    }
+    #endregion
+
     #region Save & Load	
     public string _path;
     public string _settingPath;
     public GameDB GameDB { get { return _gameData; } private set { _gameData = value; } }
     private GameDB _gameData = new GameDB();
+
+    public PlayerInfo PlayerInfo { get { return _gameData.playerInfo; } private set { _gameData.playerInfo = value; } }
+    public string EquipBallId { get { return _gameData.playerInfo.equipBallId; } private set { _gameData.playerInfo.equipBallId = value; } }
+    public string EquipBatId { get { return _gameData.playerInfo.equipBallId; } private set { _gameData.playerInfo.equipBatId = value; } }
     public GameDB SaveData
     {
         get
@@ -401,7 +475,7 @@ public class GameManager
         }
     }
 
-    public BallPath Baller { get; private set; }
+    public Baller Baller { get; private set; }
 
     public void SaveGame()
     {
@@ -427,16 +501,29 @@ public class GameManager
             {
 
 
-                if (Managers.Resource.Bats["BAT_2"] is ItemScriptableObject so)
+                if (Managers.Resource.Resources["BAT_2"] is ItemScriptableObject so)
                 {
                     // Test Data
-                    GameItem startItem = new GameItem(so.id, so.name, so.name);
+                    PlayerItem startItem = new PlayerItem(so.id, so.name, so.name, ItemType.Bat);
                     StartData.playerItem.Add(startItem.itemId, startItem);
 #if UNITY_EDITOR
                     StartData.playerInfo.money = 100000;
 #endif
                     StartData.playerInfo.level = 1;
                     StartData.playerInfo.equipBatId = startItem.itemId;
+                    StartData.playerInventory.Add(startItem.itemId);
+                }
+
+                if (Managers.Resource.Resources["BALL_1"] is ItemScriptableObject ball)
+                {
+                    // Test Data
+                    PlayerItem startItem = new PlayerItem(ball.id, ball.name, ball.name, ItemType.Ball);
+                    StartData.playerItem.Add(startItem.itemId, startItem);
+
+                    StartData.playerInfo.level = 1;
+                    StartData.playerInfo.equipBallId = startItem.itemId;
+
+                    StartData.playerInventory.Add(startItem.itemId);
                 }
 
             }
@@ -471,9 +558,30 @@ public class GameManager
         ChacterController = chacterController;
     }
 
-    public void SetBaller(BallPath ballPath)
+    public void SetBaller(Baller ballPath)
     {
         Baller = ballPath;
+    }
+
+
+    internal void ChangeBall(string key)
+    {
+        if (EquipBallId != key)
+            EquipBallId = key;
+        else
+            return;
+
+        SaveGame();
+    }
+
+    public void SetNotifyItemAction(Action notifyItemAnim)
+    {
+        notifyItemAction = notifyItemAnim;
+    }
+
+    public void SetNotifyRewardAction(Action notifyItemAnim)
+    {
+        notifyRewardAction = notifyItemAnim;
     }
     #endregion
 

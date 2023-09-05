@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
 public class ItemScriptableObject : ScriptableObject
 {
@@ -9,5 +10,12 @@ public class ItemScriptableObject : ScriptableObject
     public GameObject model;
     public Sprite icon;
     public string name;
+    public ItemType type = ItemType.None;
+    public Grade grade = Grade.Common;
+
+    public virtual void Settings()
+    {
+
+    }
 
 }

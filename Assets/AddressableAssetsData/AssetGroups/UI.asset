@@ -47,11 +47,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
-  - m_GUID: 235f41a193368794dba50ac3e1de18fa
-    m_Address: UI_MainTest
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
   - m_GUID: 600d801894650bc42b4edf55396079d1
     m_Address: UI_GameInfoPopup
     m_ReadOnly: 0

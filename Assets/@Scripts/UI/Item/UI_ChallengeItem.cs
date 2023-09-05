@@ -45,6 +45,7 @@ public class UI_ChallengeItem : UI_Base
         _itemId = itemId;
         _parentClose = parentClose;
 
+
         if (Managers.Resource.Resources.TryGetValue(_itemId, out UnityEngine.Object obj) && obj is ChallengeScriptableObject cso)
         {
             _cso = cso;

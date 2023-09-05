@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static Define;
 
 public class UI_Skin_Item : UI_Base
 {
@@ -10,9 +11,8 @@ public class UI_Skin_Item : UI_Base
     public List<Material> _mats;
     public Mesh _mesh;
     public ItemScriptableObject _item;
-    public GameObject _bat;
     public string _key;
-
+    public ScollViewType _type;
 
     enum Images
     {
@@ -36,35 +36,42 @@ public class UI_Skin_Item : UI_Base
         UpdateUI();
     }
 
-    public void InitData(string key)
+    public void InitData(string key, ScollViewType type)
     {
         _key = key;
+        _type = type;
 
-        if (Managers.Resource.Bats.TryGetValue(_key, out Object obj) && obj is ItemScriptableObject so)
-        {
+        if (Managers.Resource.Resources.TryGetValue(_key, out Object obj) && obj is ItemScriptableObject so)
             _item = so;
-
-            MeshRenderer renderer = _item.model.GetComponent<MeshRenderer>();
-            var meshfilter = _item.model.GetComponent<MeshFilter>();
-            if (renderer != null && meshfilter != null)
-            {
-                _mats = new List<Material>();
-
-                var modelMats = renderer.sharedMaterials;
-                _mats.AddRange(modelMats);
-                _mesh = meshfilter.sharedMesh;
-            }
-            else
-            {
-                Debug.LogError("No MeshRenderer component found on the GameObject.");
-            }
-        }
         else
-        {
             _item = null;
-            Debug.LogError("Bats[key] is not a GameObject or the key does not exist.");
+
+
+        switch (_type)
+        {
+            case ScollViewType.Ball:
+                break;
+            case ScollViewType.Bat:
+                BatSetting();
+                break;
+            case ScollViewType.Background:
+                break;
         }
 
+    }
+
+    private void BatSetting()
+    {
+        MeshRenderer renderer = _item.model.GetComponent<MeshRenderer>();
+        var meshfilter = _item.model.GetComponent<MeshFilter>();
+        if (renderer != null && meshfilter != null)
+        {
+            _mats = new List<Material>();
+
+            var modelMats = renderer.sharedMaterials;
+            _mats.AddRange(modelMats);
+            _mesh = meshfilter.sharedMesh;
+        }
     }
 
     private void UpdateUI()
@@ -74,13 +81,40 @@ public class UI_Skin_Item : UI_Base
             Debug.LogError("Item is Null");
             return;
         }
-        _bat = _item.model;
+
         _icon.sprite = _item.icon;
     }
 
     private void OnClick()
     {
-        if(_mats != null && _mesh != null)
+
+        switch (_type)
+        {
+            case ScollViewType.Ball:
+                BallClick();
+              
+                break;
+            case ScollViewType.Bat:
+                BatClick();
+                break;
+            case ScollViewType.Background:
+                break;
+        }
+
+
+
+    }
+
+
+    private void BallClick()
+    {
+        Managers.Game.ChangeBall(_key);
+        Managers.Game.Getitme(_key);
+    }
+
+    private void BatClick()
+    {
+        if (_mats != null && _mesh != null)
         {
             Managers.Game.Bat.ChangeBatMat(_mats);
             Managers.Game.Bat.ChangeBatMesh(_mesh);
@@ -93,6 +127,5 @@ public class UI_Skin_Item : UI_Base
         }
 
     }
-
 
 }

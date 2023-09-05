@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: InGameObject
+  m_Name: ChallengeData
   m_EditorClassIdentifier: 
-  m_GroupName: InGameObject
+  m_GroupName: ChallengeData
   m_Data:
     m_SerializedData: []
-  m_GUID: b59fa4c9ed04dda4f979e9ffb3a1574c
+  m_GUID: 404306c6f50fb314f9a5c2a30ee78224
   m_SerializeEntries:
-  - m_GUID: c23fd671981e69441a7d3f2bd5142726
-    m_Address: InGround
+  - m_GUID: 474defa88dc61f54285d4c4944c249bc
+    m_Address: CSO_1
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
-  - m_GUID: e94cd3598ec66d04b953416f212b5a42
-    m_Address: BallAim
+  - m_GUID: e04875027644d894097761ce62460b9e
+    m_Address: CSO_2
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
-  - m_GUID: b0db29306da16904389d7a369b7a81b3
-    m_Address: StrikeBallAim
+  - m_GUID: 47f06a01fede5ae4f9e4826426e19cf9
+    m_Address: CSO_3
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
@@ -36,5 +36,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 9c2d91b0a86c0bb4b9bbf0d47449c95f, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: b8603437ec5737c44b95f27d4d03c182, type: 2}
-    - {fileID: 11400000, guid: 417a8a2fb7dd9af4d8015cab40c0a668, type: 2}
+    - {fileID: 11400000, guid: 39ed9d1848e6eb34bb1ccc7a4e90a618, type: 2}
+    - {fileID: 11400000, guid: 23d248ab9a88762479e4841451880513, type: 2}

@@ -77,12 +77,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb8f0568af2a4740885eac2ed779e32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballId: 0
   startPoint: {fileID: 0}
   endPoint: {fileID: 0}
   controlPoint: {fileID: 0}
   pathRenderer: {fileID: 0}
   speed: 0
+  playMode: 0
 --- !u!1 &3684559574338491685
 GameObject:
   m_ObjectHideFlags: 0

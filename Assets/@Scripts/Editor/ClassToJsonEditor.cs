@@ -9,7 +9,7 @@ public class ClassToJsonEditor : EditorWindow
 {
 #if UNITY_EDITOR
     GameDB gameDB = new GameDB();
-    List<GameItem> itemsList = new List<GameItem>(); // 임시로 아이템을 저장할 리스트
+    List<PlayerItem> itemsList = new List<PlayerItem>(); // 임시로 아이템을 저장할 리스트
 
     string savePath = "Assets/@Resources/Data/";
     string jsonFileName = "SaveJson";
@@ -55,7 +55,7 @@ public class ClassToJsonEditor : EditorWindow
 
         if (GUILayout.Button("Add New Item"))
         {
-            itemsList.Add(new GameItem());
+            itemsList.Add(new PlayerItem());
         }
 
         savePath = EditorGUILayout.TextField("Save Path:", savePath);

@@ -46,7 +46,7 @@ public class Batter : MonoBehaviour
     private void BatChange()
     {
         string batId = Managers.Game.GameDB.playerInfo.equipBatId;
-        if (Managers.Resource.Bats[batId] is ItemScriptableObject so)
+        if (Managers.Resource.Resources[batId] is ItemScriptableObject so)
         {
             List<Material> mats = new List<Material>();
 

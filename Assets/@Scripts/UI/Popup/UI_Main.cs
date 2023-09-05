@@ -20,7 +20,8 @@ public class UI_Main : UI_Popup
 
     enum Images
     {
-        Notification,
+        NotificationItem,
+        NotificationReward,
         StartDrag,
     }
 
@@ -33,6 +34,9 @@ public class UI_Main : UI_Popup
     private Button soundButton;
 
     private bool _isDrag = true;
+
+    public Image NotifyItem;
+    public Image NotifyReward;
 
     public override bool Init()
     {
@@ -61,16 +65,45 @@ public class UI_Main : UI_Popup
 
         GetButton((int)Buttons.B_Options).gameObject.BindEvent(B_OptionsClick);
 
+        NotifyItem = GetImage((int)Images.NotificationItem);
+        NotifyReward = GetImage((int)Images.NotificationReward);
+
+        NotifyItem.gameObject.SetActive(false);
+        NotifyReward.gameObject.SetActive(false);
+
         StartCoroutine(co_GetAllImages());
+
+        Managers.Game.SetNotifyItemAction(NotifyItemAnim);
+        Managers.Game.SetNotifyRewardAction(NotifyItemAnim);
 
         return true;
 
     }
 
+    public void NotifyItemAnim()
+    {
+        if (NotifyItem.gameObject.activeSelf == false)
+            NotifyItem.gameObject.SetActive(true);
+
+        NotifyItem.transform.DOScale(0.5f, 1f).OnComplete(() =>
+        {
+            NotifyItem.transform.DOScale(1f, 1f);
+        }).SetLoops(-1,LoopType.Yoyo);
+    }
+
+    public void NotifyRewardAnim()
+    {
+        if (NotifyReward.gameObject.activeSelf == false)
+            NotifyReward.gameObject.SetActive(true);
+
+        NotifyReward.transform.DOScale(0.5f, 1f).OnComplete(() =>
+        {
+            NotifyReward.transform.DOScale(1f, 1f);
+        }).SetLoops(-1, LoopType.Yoyo);
+    }
+
     private void OnClickNextLeague()
     {
-
-
         float league = (int)Managers.Game.League +1;
         league = Mathf.Clamp(league, 0, (int)Define.League.COUNT-1);
 
@@ -154,7 +187,6 @@ public class UI_Main : UI_Popup
     IEnumerator co_GetAllImages()
     {
         
-
         for (int i = 0; i < transform.childCount; i++)
         {
             Image img = transform.GetChild(i).GetComponent<Image>();
@@ -166,7 +198,6 @@ public class UI_Main : UI_Popup
 
         }
 
-        Debug.Log(images.Count);
         _isDrag = false;
     }
 
@@ -183,7 +214,7 @@ public class UI_Main : UI_Popup
 
         yield return new WaitForSeconds(0.51f);
         Managers.UI.ClosePopupUI(this);
-        Managers.Game.GameReady(Define.GameType.Normal);
+        Managers.Game.GameReady(Define.GameMode.Normal);
         yield break;
     }
 }

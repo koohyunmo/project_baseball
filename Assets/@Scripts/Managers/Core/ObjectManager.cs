@@ -24,6 +24,83 @@ public class ObjectManager
         Clear();
     }
 
+    public T Spawn<T>(GameObject obj, Vector3 pos, Transform parent = null, bool isPool = true) where T : InGameObjectController
+    {
+        System.Type type = typeof(T);
+
+        int id = GetId();
+
+        if (type == typeof(BallController))
+        {
+            GameObject ball = Managers.Resource.Instantiate(obj, parent, isPool);
+            ball.transform.position = pos;
+
+            BallController bm = ball.GetOrAddComponent<BallController>();
+
+            bm.ObjId = id;
+
+            if (_ballDict.ContainsKey(id) == false)
+                _ballDict.Add(id, bm);
+            else
+                Debug.LogWarning("Aleady Has Key");
+
+            return bm as T;
+        }
+
+        else if (type == typeof(TextController))
+        {
+
+            GameObject go = Managers.Resource.Instantiate(obj, parent, isPool);
+            go.transform.position = pos;
+
+            TextController component = go.GetOrAddComponent<TextController>();
+
+            component.ObjId = id;
+
+            if (_inGameObjDict.ContainsKey(id) == false)
+                _inGameObjDict.Add(id, component);
+            else
+                Debug.LogWarning("Aleady Has Key");
+
+            return component as T;
+        }
+        else if (type == typeof(BallAimController))
+        {
+
+            GameObject go = Managers.Resource.Instantiate(obj, parent, isPool);
+            go.transform.position = pos;
+
+            BallAimController component = go.GetOrAddComponent<BallAimController>();
+
+            component.ObjId = id;
+
+            if (_inGameObjDict.ContainsKey(id) == false)
+                _inGameObjDict.Add(id, component);
+            else
+                Debug.LogWarning("Aleady Has Key");
+
+            return component as T;
+        }
+        else if (type == typeof(InGameObjectController))
+        {
+
+            GameObject go = Managers.Resource.Instantiate(obj, parent, isPool);
+            go.transform.position = pos;
+
+            InGameObjectController component = go.GetOrAddComponent<InGameObjectController>();
+
+            component.ObjId = id;
+
+            if (_inGameObjDict.ContainsKey(id) == false)
+                _inGameObjDict.Add(id, component);
+            else
+                Debug.LogWarning("Aleady Has Key");
+
+            return component as T;
+        }
+        return null as T;
+    }
+
     public T Spawn<T>(string key, Vector3 pos, Transform parent = null, bool isPool = true) where T : InGameObjectController
     {
         System.Type type = typeof(T);

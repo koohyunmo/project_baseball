@@ -4,11 +4,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static Define;
 
-public class BallPath : MonoBehaviour
+public class Baller : MonoBehaviour
 {
 
     Define.GameState GameState { get { return Managers.Game.GameState; } }
     public GameObject ballPrefab; // 공 객체
+    public BallScriptableObject ballSO;
     public Transform startPoint; // 공의 시작 위치
     private Transform originPath; // 공의 시작 위치
     public Transform endPoint; // 스트라이크 존
@@ -33,6 +34,8 @@ public class BallPath : MonoBehaviour
 
     private bool first;
 
+    private string _prevId;
+
 
     void Start()
     {
@@ -54,13 +57,18 @@ public class BallPath : MonoBehaviour
         Managers.Game.SetBallPath(RePlay);
         Managers.Game.SetStrikeCallBack(StrikeAim);
 
-        // Object Binding;
-        ballPrefab = Managers.Resource.Load<GameObject>("PathBall");
-        ballPrefab.name = "PathBall";
+
+        var ballId = Managers.Game.EquipBallId;
+        ballSO = Managers.Resource.GetScriptableObjet<BallScriptableObject>(ballId);
+
+        _prevId = ballId;
+
+        ballPrefab = ballSO.model;
+        ballPrefab.name = ballSO.id;
         ballAimPrefab = Managers.Resource.Load<GameObject>("BallAim");
-        ballAimPrefab.name = "BallAim";
+        ballAimPrefab.name = ballAimPrefab.name;
         strikeAimPrefab = Managers.Resource.Load<GameObject>("StrikeBallAim");
-        strikeAimPrefab.name = "StrikeBallAim";
+        strikeAimPrefab.name = strikeAimPrefab.name;
     }
 
     IEnumerator c_Baller()
@@ -168,6 +176,7 @@ public class BallPath : MonoBehaviour
             return;
 
 
+        /*
         if (Managers.Object.BallDict.Count < 0)
             return;
         // 복사 삭제
@@ -176,6 +185,7 @@ public class BallPath : MonoBehaviour
         {
             Managers.Object.BallDict[key].MoveAlongPath();
         }
+        */
     }
 
     public void ThrowCurveBall()
@@ -300,7 +310,17 @@ public class BallPath : MonoBehaviour
         //var pathEnd = new Vector3(endPoint.position.x, endPoint.position.y, endPoint.position.z - 0.5f);
 
         //GameObject ballInstance = Instantiate(ballPrefab, startPoint.position, Quaternion.identity);
-        var ballInstance = Managers.Object.Spawn<BallController>(ballPrefab.name, startPoint.position);
+
+
+        if(_prevId != Managers.Game.EquipBallId)
+        {
+            var ballId = Managers.Game.EquipBallId;
+            ballPrefab = Managers.Resource.GetScriptableObjet<BallScriptableObject>(ballId).model;
+        }
+
+
+        var ballInstance = Managers.Object.Spawn<BallController>(ballPrefab, startPoint.position);
+        
 
         ballInstance.transform.position = startPoint.position;
         ballInstance.transform.rotation = Quaternion.identity;
@@ -321,6 +341,8 @@ public class BallPath : MonoBehaviour
 
         Managers.Game.ThorwBallEvent();
         Managers.Game.SetStrikePath(pathRenderer);
+
+        _ballerCount++;
     }
 
     void CheckStrikeZone(Transform sp, Transform ep)
@@ -506,9 +528,13 @@ public class BallPath : MonoBehaviour
         var cam = Camera.main;
         var camManager = Camera.main.gameObject.GetComponent<CameraManager>();
 
-        //var replayBall = Instantiate(ballPrefab);
-        var replayBall = Managers.Object.Spawn<BallController>(ballPrefab.name, pathRenderer.GetPosition(0));
-        //replayBall.transform.position = pathRenderer.GetPosition(0);
+
+        if (_prevId != Managers.Game.EquipBallId)
+        {
+            var ballId = Managers.Game.EquipBallId;
+            ballPrefab = Managers.Resource.GetScriptableObjet<BallScriptableObject>(ballId).model;
+        }
+        var replayBall = Managers.Object.Spawn<BallController>(ballPrefab, pathRenderer.GetPosition(0));
         camManager.OnReplay(replayBall.transform);
 
         float replaySpeed = speed;

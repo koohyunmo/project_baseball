@@ -51,9 +51,6 @@ public class BallController : InGameObjectController
 
     private void FixedUpdate()
     {
-        if (playMode == PlayMode.None)
-            return;
-
         MoveAlongPath();
     }
 

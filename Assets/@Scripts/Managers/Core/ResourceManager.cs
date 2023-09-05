@@ -11,11 +11,8 @@ public class ResourceManager
 {
     // 실제 로드한 리소스.
     Dictionary<string, UnityEngine.Object> _resources = new Dictionary<string, UnityEngine.Object>();
-    // 벳 데이터
-   // Dictionary<string, UnityEngine.Object> _bats = new Dictionary<string, UnityEngine.Object>();
 
-   // public Dictionary<string, UnityEngine.Object> Bats {get { return _bats; } private set { _bats = value; } }
-   public Dictionary<string, UnityEngine.Object> Bats {get { return _resources; } private set { _resources = value; } }
+   public Dictionary<string, UnityEngine.Object> Resources {get { return _resources; } private set { _resources = value; } }
 
     public float LoadBytes { get; private set; }
 
@@ -172,6 +169,26 @@ public class ResourceManager
         };
     }
 
+    #endregion
+
+    #region 
+
+    public T GetScriptableObjet<T>(string key) where T : ItemScriptableObject
+    {
+        if (Resources.ContainsKey(key) == false)
+            Debug.Log($"{key} is not exist");
+
+        if (Resources.TryGetValue(key, out Object obj) && obj is T so)
+        {
+            Debug.Log(key);
+            return so;
+        }
+        else
+        {
+            Debug.LogError(key);
+            return null;
+        }
+    }
     #endregion
 
     public void Clear()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.UI;
+using static Define;
 
 public class UI_SkinPopup : UI_Popup
 {
@@ -25,12 +26,7 @@ public class UI_SkinPopup : UI_Popup
         Slider
     }
 
-    enum ScollViewType
-    {
-        Ball,
-        Bat,
-        Background
-    }
+
 
     private Color defaultColor = new Color(0.98f, 0.64f, 0.42f, 0.5f);
     private Color pressedColor = new Color(0.98f, 0.64f, 0.42f, 1.0f); // #FCAA4B
@@ -96,20 +92,21 @@ public class UI_SkinPopup : UI_Popup
     {
         if (_grid == null)
             return;
-
+        _type = ScollViewType.Ball;
         Clear();
         ChangeButtonColor(B_Ball);
+        MakeItme();
 
-        _type = ScollViewType.Ball;
     }
 
     private void OnClickBackgroundCategory()
     {
         if (_grid == null)
             return;
+        _type = ScollViewType.Background;
         Clear();
         ChangeButtonColor(B_Background);
-        _type = ScollViewType.Background;
+
     }
 
     private void OnClickBatCategory()
@@ -117,40 +114,35 @@ public class UI_SkinPopup : UI_Popup
         if (_grid == null)
             return;
 
+        _type = ScollViewType.Bat;
         Clear();
         ChangeButtonColor(B_Bat);
         MakeItme();
-        //StartCoroutine(co_MakeItem());
-
-
-        _type = ScollViewType.Bat;
     }
 
     private void MakeItme()
     {
-        foreach (var itemID in Managers.Resource.Bats.Keys)
-        {
-            // "BAT_" 문자열을 포함하지 않는 경우, 다음 반복으로 건너뜁니다.
-            if (!itemID.Contains("BAT_"))
-                continue;
+        string key = "";
 
-            var item = Managers.Resource.Instantiate("UI_Skin_Item", _grid.transform);
-            if (item == null)
-            {
-                Debug.Log("item is null");
-                continue;
-            }
-            UI_Skin_Item skinItem = item.GetOrAddComponent<UI_Skin_Item>();
-            skinItem.InitData(itemID);
+        switch (_type)
+        {
+            case ScollViewType.Ball:
+                key = "BALL_";
+                break;
+            case ScollViewType.Bat:
+                key = "BAT_";
+                break;
+            case ScollViewType.Background:
+                break;
+            default:
+                break;
         }
-    }
 
-    IEnumerator co_MakeItem()
-    {
-        foreach (var itemID in Managers.Resource.Bats.Keys)
+
+        foreach (var itemID in Managers.Resource.Resources.Keys)
         {
             // "BAT_" 문자열을 포함하지 않는 경우, 다음 반복으로 건너뜁니다.
-            if (!itemID.Contains("BAT_"))
+            if (!itemID.Contains(key))
                 continue;
 
             var item = Managers.Resource.Instantiate("UI_Skin_Item", _grid.transform);
@@ -160,8 +152,7 @@ public class UI_SkinPopup : UI_Popup
                 continue;
             }
             UI_Skin_Item skinItem = item.GetOrAddComponent<UI_Skin_Item>();
-            skinItem.InitData(itemID);
-            yield return null;
+            skinItem.InitData(itemID, _type);
         }
     }
 
