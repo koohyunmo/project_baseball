@@ -110,7 +110,7 @@ public class GameManager
 
     public ChacterController ChacterController { get; private set; }
 
-    ChallengeType challengeMode = ChallengeType.RealMode;
+    public ChallengeType ChallengeMode { get; private set; } = ChallengeType.RealMode;
 
 
 
@@ -300,7 +300,7 @@ public class GameManager
     public void SetChallengeMode(int score, ChallengeType mode)
     {
         ChallengeScore = score;
-        challengeMode = mode;
+        ChallengeMode = mode;
     }
 
     public void Getitme(string key)
@@ -310,9 +310,9 @@ public class GameManager
             return;
 
         _gameData.playerInventory.Add(key);
+        SaveGame();
+        Debug.Log("TODO");
         notifyItemAction();
-         
-
     }
 
     #endregion
@@ -434,7 +434,7 @@ public class GameManager
         if (GameMode != GameMode.Challenge)
             return;
 
-        switch (challengeMode)
+        switch (ChallengeMode)
         {
             case ChallengeType.None:
                 break;
@@ -568,6 +568,16 @@ public class GameManager
     {
         if (EquipBallId != key)
             EquipBallId = key;
+        else
+            return;
+
+        SaveGame();
+    }
+
+    internal void ChangeBat(string key)
+    {
+        if (EquipBatId != key)
+            EquipBatId = key;
         else
             return;
 

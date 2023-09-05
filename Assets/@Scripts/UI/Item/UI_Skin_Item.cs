@@ -120,6 +120,8 @@ public class UI_Skin_Item : UI_Base
             Managers.Game.Bat.ChangeBatMesh(_mesh);
             //Managers.Game.Bat.SetBetHandle();
             Debug.Log($"ChangeBat ID :  {_key}");
+            Managers.Game.Getitme(_key);
+            Managers.Game.ChangeBat(_key);
         }
         else
         {
