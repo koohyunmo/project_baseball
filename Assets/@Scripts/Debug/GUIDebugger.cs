@@ -69,14 +69,16 @@ public class GUIDebugger : MonoBehaviour
         GUI.skin.toggle.fontSize = 60; // 토글 버튼 폰트 크기 조절
         GUI.skin.toggle.fontStyle = FontStyle.Bold;
         GUI.skin.label.fontSize = fontSize;
-        GUI.contentColor = fontColor;
+        
 
         scrollPosition = GUILayout.BeginScrollView(scrollPosition);
 
         // Player Inventory 출력
+        GUI.contentColor = Color.green;
         showPlayerInventory = GUILayout.Toggle(showPlayerInventory, "Player Inventory");
         if (showPlayerInventory)
         {
+            GUI.contentColor = Color.white;
             GUILayout.BeginHorizontal();
             int num = 0;
             foreach (var item in playerInventory)
@@ -87,9 +89,11 @@ public class GUIDebugger : MonoBehaviour
         }
 
         // PlayerInfo 정보 출력
+        GUI.contentColor = Color.green;
         showPlayerInfo = GUILayout.Toggle(showPlayerInfo, "Player Info");
         if (showPlayerInfo)
         {
+            GUI.contentColor = Color.white;
             GUILayout.Label("Player ID: " + playerInfo.playerId);
             GUILayout.Label("Money: " + playerInfo.money);
             GUILayout.Label("Level: " + playerInfo.level);
@@ -98,12 +102,13 @@ public class GUIDebugger : MonoBehaviour
             GUILayout.Label("Equipped Ball ID: " + playerInfo.equipBallId);
             GUILayout.Label("Equipped Background ID: " + playerInfo.equipBackgroundID);
         }
-        
-        
+
+        GUI.contentColor = Color.red;
         // 첼린지 섹션
         showChallenge = GUILayout.Toggle(showChallenge, "Challenge");
         if (showChallenge)
         {
+            GUI.contentColor = Color.white;
             GUILayout.Label("ChallengeType " + Managers.Game.ChallengeMode.ToString());
             GUILayout.Label("ChallengeScore " + Managers.Game.ChallengeScore);
             GUILayout.Label("Score " + Managers.Game.GameScore);
@@ -112,19 +117,19 @@ public class GUIDebugger : MonoBehaviour
         }
 
 
-
+        GUI.contentColor = Color.white;
         // 옵션 섹션
         showOptions = GUILayout.Toggle(showOptions, "Options");
         if (showOptions)
         {
             // 폰트 크기 및 색상 조절
-            GUILayout.Label("Font Size:");
-            fontSize = (int)GUILayout.HorizontalSlider(fontSize, 11, 80, GUILayout.Width(400), GUILayout.Height(50));
-            GUILayout.Label("Font Color:");
-            fontColor.r = GUILayout.HorizontalSlider(fontColor.r, 0, 1, GUILayout.Width(400), GUILayout.Height(50));
-            fontColor.g = GUILayout.HorizontalSlider(fontColor.g, 0, 1, GUILayout.Width(400), GUILayout.Height(50));
-            fontColor.b = GUILayout.HorizontalSlider(fontColor.b, 0, 1, GUILayout.Width(400), GUILayout.Height(50));
-            fontColor.a = GUILayout.HorizontalSlider(fontColor.a, 0, 1, GUILayout.Width(400), GUILayout.Height(50));
+            GUILayout.Label($"Font Size: {fontSize}");
+            fontSize = (int)GUILayout.HorizontalSlider(fontSize, 11, 80, GUILayout.Width(500), GUILayout.Height(120));
+            //GUILayout.Label("Font Color:");
+            //fontColor.r = GUILayout.HorizontalSlider(fontColor.r, 0, 1, GUILayout.Width(400), GUILayout.Height(50));
+            //fontColor.g = GUILayout.HorizontalSlider(fontColor.g, 0, 1, GUILayout.Width(400), GUILayout.Height(50));
+            //fontColor.b = GUILayout.HorizontalSlider(fontColor.b, 0, 1, GUILayout.Width(400), GUILayout.Height(50));
+            //fontColor.a = GUILayout.HorizontalSlider(fontColor.a, 0, 1, GUILayout.Width(400), GUILayout.Height(50));
         }
 
         GUILayout.EndScrollView();

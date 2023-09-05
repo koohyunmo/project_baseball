@@ -21,7 +21,7 @@ public class TextController : InGameObjectController
 
     private void TextAnim()
     {
-        tmp.text = "+" + Managers.Game.GameScore.ToString();
+        tmp.text = "+" + Managers.Game.HitScore.ToString();
 
         gameObject.transform.DOMoveY(1.5f, 1f).SetEase(Ease.InOutQuad).OnComplete(() => {
             Managers.Object.Despawn<TextController>(ObjId); 

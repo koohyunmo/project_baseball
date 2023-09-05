@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: BatEffect
+  m_EditorClassIdentifier: 
+  m_GroupName: BatEffect
+  m_Data:
+    m_SerializedData: []
+  m_GUID: ede323c662ac2d8448ab678960f770ca
+  m_SerializeEntries:
+  - m_GUID: 5a916a3fb0ee95b44bd923ff54c5f3d9
+    m_Address: HitB
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+  - m_GUID: cd509fa438adf2442a80e17ec7c6a00d
+    m_Address: HitA
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+  - m_GUID: 0759edfa323816741b6f40ca13cbdc1f
+    m_Address: HitD
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 9c2d91b0a86c0bb4b9bbf0d47449c95f, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: b6a49c728dc49904c8bba80d630feb55, type: 2}
+    - {fileID: 11400000, guid: 538b0d56ceff7724d9a45b7de621eba1, type: 2}

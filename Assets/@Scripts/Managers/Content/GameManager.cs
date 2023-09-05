@@ -63,6 +63,7 @@ public class GameManager
     public LineRenderer StrikePath { get; private set; }
 
     public float HitScore { get; private set; }
+    public Vector3 HitPos { get; private set; } = Vector3.zero;
     public float GameScore { get; private set; }
 
     public delegate void UIDelegate();
@@ -255,8 +256,10 @@ public class GameManager
     }
 
     #region 게터세터
-    public void GetGameScore(float score)
+    public void GetGameScoreAndGetPosition(float score,Vector3 hitPos)
     {
+        HitPos = hitPos;
+
         if (score < 85)
         {
             HitScore = 1;

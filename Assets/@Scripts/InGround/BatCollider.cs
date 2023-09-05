@@ -49,9 +49,6 @@ public class BatCollider : MonoBehaviour
 
             var hitPoint = other.gameObject.transform.position;
 
-            bat.Swing(hitPoint);
-
-
             // 날려 보내기
             Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
 
@@ -70,6 +67,10 @@ public class BatCollider : MonoBehaviour
                 }
                
             }
+
+            bat.Swing(hitPoint);
+
+            Managers.Effect.Play("HitA", hitPoint);
 
         }
     }
@@ -118,7 +119,7 @@ public class BatCollider : MonoBehaviour
         Debug.Log($"HitPoint :  {_hitPos}  Score : {scroe} : Color {hitColor}");
 
 
-        Managers.Game.GetGameScore(scroe);
+        Managers.Game.GetGameScoreAndGetPosition(scroe,hitPoint);
 
         isHit = false;
 

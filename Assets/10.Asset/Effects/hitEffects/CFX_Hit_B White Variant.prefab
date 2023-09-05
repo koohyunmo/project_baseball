@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100002, guid: 2b72198793d0ddf418b28c556d8de663, type: 3}
       propertyPath: m_Name
-      value: CFX_Hit_B White
+      value: CFX_Hit_B White Variant
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2b72198793d0ddf418b28c556d8de663, type: 3}
       propertyPath: m_RootOrder
@@ -53,6 +53,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2b72198793d0ddf418b28c556d8de663, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 2b72198793d0ddf418b28c556d8de663, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 19900000, guid: 2b72198793d0ddf418b28c556d8de663, type: 3}

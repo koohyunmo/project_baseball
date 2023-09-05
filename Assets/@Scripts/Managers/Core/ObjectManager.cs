@@ -158,6 +158,23 @@ public class ObjectManager
 
             return component as T;
         }
+        else if (type == typeof(EffectController))
+        {
+
+            GameObject go = Managers.Resource.Instantiate(key, parent, isPool);
+            go.transform.position = pos;
+
+            EffectController component = go.GetOrAddComponent<EffectController>();
+
+            component.ObjId = id;
+
+            if (_inGameObjDict.ContainsKey(id) == false)
+                _inGameObjDict.Add(id, component);
+            else
+                Debug.LogWarning("Aleady Has Key");
+
+            return component as T;
+        }
         else if (type == typeof(InGameObjectController))
         {
 
@@ -231,6 +248,15 @@ public class ObjectManager
             }
         }
         else if (typeof(T) == typeof(BallAimController))
+        {
+            if (_inGameObjDict.TryGetValue(key, out InGameObjectController ig))
+            {
+                ig.Clear();
+                _inGameObjDict.Remove(key);
+                Managers.Resource.Destroy(ig.gameObject);
+            }
+        }
+        else if (typeof(T) == typeof(EffectController))
         {
             if (_inGameObjDict.TryGetValue(key, out InGameObjectController ig))
             {

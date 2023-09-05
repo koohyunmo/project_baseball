@@ -16,6 +16,7 @@ public class Managers : MonoBehaviour
     public static ResourceManager Resource { get { return Instance?._resource; } }
     public static GameManager Game { get { return Instance?._game; } }
     public static ObjectManager Object { get { return Instance?._object; } }
+    public static EffectManager Effect { get { return Instance?._effect; } }
 
     [SerializeField] UIManager _ui = new UIManager();
     [SerializeField] PoolManager _pool = new PoolManager();
@@ -23,6 +24,7 @@ public class Managers : MonoBehaviour
     [SerializeField] GameManager _game = new GameManager();
     [SerializeField] DataManager _db = new DataManager();
     [SerializeField] ObjectManager _object = new ObjectManager();
+    [SerializeField] EffectManager _effect = new EffectManager();
 
 
     public static Managers Instance { get { Init();  return s_instance; } } 
