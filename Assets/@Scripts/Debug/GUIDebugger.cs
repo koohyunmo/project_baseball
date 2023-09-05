@@ -31,6 +31,7 @@ public class GUIDebugger : MonoBehaviour
 
     private Rect windowRect = new Rect(50, 200, 800, 800);
     private Vector2 scrollPosition = Vector2.zero;
+    private Vector2 scrollPosition2 = Vector2.zero;
     private int fontSize = 60;
     private Color fontColor = Color.white;
 
@@ -79,13 +80,15 @@ public class GUIDebugger : MonoBehaviour
         if (showPlayerInventory)
         {
             GUI.contentColor = Color.white;
-            GUILayout.BeginHorizontal();
+            GUI.skin.label.fontSize = 40;
+            GUILayout.BeginVertical();
             int num = 0;
             foreach (var item in playerInventory)
             {
                 GUILayout.Label($"{num++}" + item + ",");
             }
-            GUILayout.EndHorizontal();
+            GUI.skin.label.fontSize = fontSize;
+            GUILayout.EndVertical();
         }
 
         // PlayerInfo 정보 출력
@@ -109,6 +112,7 @@ public class GUIDebugger : MonoBehaviour
         if (showChallenge)
         {
             GUI.contentColor = Color.white;
+
             GUILayout.Label("ChallengeType " + Managers.Game.ChallengeMode.ToString());
             GUILayout.Label("ChallengeScore " + Managers.Game.ChallengeScore);
             GUILayout.Label("Score " + Managers.Game.GameScore);

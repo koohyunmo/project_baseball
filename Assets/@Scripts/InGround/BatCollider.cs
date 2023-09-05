@@ -12,7 +12,6 @@ public class BatCollider : MonoBehaviour
     [SerializeField] Transform _midRow;
     [SerializeField] Transform _bottom;
     [SerializeField] HitPos _hitPos = HitPos.NONE;
-    [SerializeField] Transform _effectPos;
 
     bool isHit = false;
 
@@ -29,7 +28,7 @@ public class BatCollider : MonoBehaviour
     void Start()
     {
         bat = GetComponentInParent<Bat>();
-        _effectPos.gameObject.SetActive(false);
+
         Managers.Game.SetBatCollider(this);
     }
 
@@ -45,7 +44,6 @@ public class BatCollider : MonoBehaviour
             Debug.Log("Hit");
 
 
-            _effectPos.gameObject.SetActive(true);
 
             var hitPoint = other.gameObject.transform.position;
 

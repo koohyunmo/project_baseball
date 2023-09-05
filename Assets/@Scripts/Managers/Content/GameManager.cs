@@ -127,6 +127,9 @@ public class GameManager
             var go = Managers.Resource.Instantiate("InGround");
             go.transform.position = Vector3.zero;
             go.transform.rotation = Quaternion.identity;
+
+            EquipBallId = _gameData.playerInfo.equipBallId;
+            EquipBatId = _gameData.playerInfo.equipBatId;
         }
 
         GameScore = 0;

@@ -9,8 +9,6 @@ public class UI_ChallengePopup : UI_Popup
     enum Buttons
     {
         B_Back,
-        StartButton,
-        Close
     }
 
     enum GameObejcts
