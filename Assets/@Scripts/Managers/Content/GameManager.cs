@@ -93,6 +93,7 @@ public class GameManager
     // 알람
     public Action notifyItemAction;
     public Action notifyRewardAction;
+    public Action EquipItemAction;
 
     // 난이도
     public League League { get { return _league; } private set { _league = value; } }
@@ -204,20 +205,26 @@ public class GameManager
                 }              
                 break;
             case GameState.Ready:
-                batPositionSetting?.Invoke();
-                Managers.UI.ShowPopupUI<UI_Timer>();
-                Managers.Object.DespawnAll();
+                {
+                    batPositionSetting?.Invoke();
+                    Managers.UI.ShowPopupUI<UI_Timer>();
+                    Managers.Object.DespawnAll();
+                }
                 break;
             case GameState.InGround:
-                gameInfoPopup = Managers.UI.ShowPopupUI<UI_GameInfoPopup>();
-                dragPopup = Managers.UI.ShowPopupUI<UI_DragPopup>();
+                {
+                    gameInfoPopup = Managers.UI.ShowPopupUI<UI_GameInfoPopup>();
+                    dragPopup = Managers.UI.ShowPopupUI<UI_DragPopup>();
+                }
                 break;
             case GameState.End:
-                Managers.UI.ClosePopupUI(dragPopup);
-                Managers.UI.ClosePopupUI(gameInfoPopup);
-                //Managers.UI.ShowPopupUI<UI_EndPopup>();
-                Managers.UI.ShowPopupUI<UI_ReplayPopupTimer>();
-                isRecord = false;
+                {
+                    Managers.UI.ClosePopupUI(dragPopup);
+                    Managers.UI.ClosePopupUI(gameInfoPopup);
+                    //Managers.UI.ShowPopupUI<UI_EndPopup>();
+                    Managers.UI.ShowPopupUI<UI_ReplayPopupTimer>();
+                    isRecord = false;
+                }
                 break;
         }
 
@@ -253,8 +260,10 @@ public class GameManager
 
     public void GameRetry(Action callBack = null)
     {
+        
         GameState = GameState.Ready;
         callBack?.Invoke();
+        MainCam.OffRePlay();
         StateChangeEvent();
     }
 
@@ -468,7 +477,7 @@ public class GameManager
 
     public PlayerInfo PlayerInfo { get { return _gameData.playerInfo; } private set { _gameData.playerInfo = value; } }
     public string EquipBallId { get { return _gameData.playerInfo.equipBallId; } private set { _gameData.playerInfo.equipBallId = value; } }
-    public string EquipBatId { get { return _gameData.playerInfo.equipBallId; } private set { _gameData.playerInfo.equipBatId = value; } }
+    public string EquipBatId { get { return _gameData.playerInfo.equipBatId; } private set { _gameData.playerInfo.equipBatId = value; } }
     public GameDB SaveData
     {
         get
@@ -516,7 +525,7 @@ public class GameManager
                     StartData.playerInfo.money = 100000;
 #endif
                     StartData.playerInfo.level = 1;
-                    StartData.playerInfo.equipBatId = startItem.itemId;
+                    StartData.playerInfo.equipBatId = "BAT_2";
                     StartData.playerInventory.Add(startItem.itemId);
                 }
 
@@ -527,7 +536,7 @@ public class GameManager
                     StartData.playerItem.Add(startItem.itemId, startItem);
 
                     StartData.playerInfo.level = 1;
-                    StartData.playerInfo.equipBallId = startItem.itemId;
+                    StartData.playerInfo.equipBallId = "BALL_1";
 
                     StartData.playerInventory.Add(startItem.itemId);
                 }
@@ -572,7 +581,7 @@ public class GameManager
 
     internal void ChangeBall(string key)
     {
-        if (EquipBallId != key)
+        if (EquipBallId.Equals(key) == false)
             EquipBallId = key;
         else
             return;
@@ -582,7 +591,7 @@ public class GameManager
 
     internal void ChangeBat(string key)
     {
-        if (EquipBatId != key)
+        if (EquipBatId.Equals(key) == false)
             EquipBatId = key;
         else
             return;
@@ -598,6 +607,17 @@ public class GameManager
     public void SetNotifyRewardAction(Action notifyItemAnim)
     {
         notifyRewardAction = notifyItemAnim;
+    }
+
+    public void SetEquipUIItemAction(Action choiceUIUpdate)
+    {
+        EquipItemAction -= choiceUIUpdate;
+        EquipItemAction += choiceUIUpdate;
+    }
+
+    public void RemoveEqupUIItemAction(Action choiceUIUpdate)
+    {
+        EquipItemAction -= choiceUIUpdate;
     }
     #endregion
 

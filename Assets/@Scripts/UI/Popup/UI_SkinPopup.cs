@@ -82,7 +82,6 @@ public class UI_SkinPopup : UI_Popup
             case ScollViewType.Background:
                 OnClickBackgroundCategory();
                 break;
-
         }
 
         return true;
@@ -95,7 +94,7 @@ public class UI_SkinPopup : UI_Popup
         _type = ScollViewType.Ball;
         Clear();
         ChangeButtonColor(B_Ball);
-        MakeItme();
+        MakeItem();
 
     }
 
@@ -117,10 +116,10 @@ public class UI_SkinPopup : UI_Popup
         _type = ScollViewType.Bat;
         Clear();
         ChangeButtonColor(B_Bat);
-        MakeItme();
+        MakeItem();
     }
 
-    private void MakeItme()
+    private void MakeItem()
     {
         string key = "";
 

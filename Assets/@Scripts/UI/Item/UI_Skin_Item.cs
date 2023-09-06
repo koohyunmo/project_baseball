@@ -18,7 +18,13 @@ public class UI_Skin_Item : UI_Base
     {
         Icon,
         Background,
+        Choice,
         LockImage
+    }
+
+    enum Buttons
+    {
+        B_Information
     }
 
     public void Start()
@@ -29,11 +35,18 @@ public class UI_Skin_Item : UI_Base
     private void Init()
     {
         Bind<Image>(typeof(Images));
+        Bind<Button>(typeof(Buttons));
+
         _icon = Get<Image>((int)Images.Icon);
         gameObject.gameObject.BindEvent(OnClick);
 
         GetImage((int)Images.Background).gameObject.SetActive(false);
+        GetButton((int)Buttons.B_Information).gameObject.BindEvent(ShowInfoPopup);
+
+
         UpdateUI();
+        ChoiceUIUpdate();
+        
     }
 
     public void InitData(string key, ScollViewType type)
@@ -60,6 +73,11 @@ public class UI_Skin_Item : UI_Base
 
     }
 
+
+    private void ShowInfoPopup()
+    {
+
+    }
     private void BatSetting()
     {
         MeshRenderer renderer = _item.model.GetComponent<MeshRenderer>();
@@ -82,7 +100,34 @@ public class UI_Skin_Item : UI_Base
             return;
         }
 
+        if(Managers.Game.GameDB.playerInventory.Contains(_item.id) == true)
+        {
+            GetImage((int)Images.LockImage).gameObject.SetActive(false);
+        }
+
         _icon.sprite = _item.icon;
+    }
+
+    private void ChoiceUIUpdate()
+    {
+        if (Managers.Game.EquipBallId.Equals(_item.id))
+        {
+            GetImage((int)Images.Choice).gameObject.SetActive(true);
+            Managers.Game.SetEquipUIItemAction(ChoiceUIUpdate);
+            return;
+        }
+        else if (Managers.Game.EquipBatId.Equals(_item.id))
+        {
+            GetImage((int)Images.Choice).gameObject.SetActive(true);
+            Managers.Game.SetEquipUIItemAction(ChoiceUIUpdate);
+            return;
+        }
+        else
+        {
+            GetImage((int)Images.Choice).gameObject.SetActive(false);
+            Managers.Game.RemoveEqupUIItemAction(ChoiceUIUpdate);
+        }
+
     }
 
     private void OnClick()
@@ -92,7 +137,6 @@ public class UI_Skin_Item : UI_Base
         {
             case ScollViewType.Ball:
                 BallClick();
-              
                 break;
             case ScollViewType.Bat:
                 BatClick();
@@ -101,15 +145,17 @@ public class UI_Skin_Item : UI_Base
                 break;
         }
 
-
+        
+        Managers.Game.EquipItemAction?.Invoke(); // 등록된 Item
+        ChoiceUIUpdate(); // 현재 Item
 
     }
 
 
     private void BallClick()
     {
-        Managers.Game.ChangeBall(_key);
-        Managers.Game.Getitme(_key);
+        Managers.Game.ChangeBall(_item.id);
+        Managers.Game.Getitme(_item.id);
     }
 
     private void BatClick()
@@ -118,16 +164,21 @@ public class UI_Skin_Item : UI_Base
         {
             Managers.Game.Bat.ChangeBatMat(_mats);
             Managers.Game.Bat.ChangeBatMesh(_mesh);
+            Managers.Game.Getitme(_item.id);
+            Managers.Game.ChangeBat(_item.id);
             //Managers.Game.Bat.SetBetHandle();
-            Debug.Log($"ChangeBat ID :  {_key}");
-            Managers.Game.Getitme(_key);
-            Managers.Game.ChangeBat(_key);
+            Debug.Log($"ChangeBat ID :  {_item.id}");
         }
         else
         {
             Debug.LogWarning("아이템 모델");
         }
 
+    }
+
+    private void OnDestroy()
+    {
+        Managers.Game.RemoveEqupUIItemAction(ChoiceUIUpdate);
     }
 
 }

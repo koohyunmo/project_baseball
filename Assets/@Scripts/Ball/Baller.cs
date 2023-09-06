@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using static Define;
 
 public class Baller : MonoBehaviour
@@ -115,6 +116,7 @@ public class Baller : MonoBehaviour
         pathRenderer.enabled = false;
         first = false;
         _stopBaller = false;
+        pathRenderer.widthMultiplier = 0.0f;
     }
 
     private void StrikeAim()
@@ -510,17 +512,8 @@ public class Baller : MonoBehaviour
     }
     private void RePlay(LineRenderer renderer)
     {
-        List<GameObject> balls = new List<GameObject>();
 
         StartCoroutine(co_RelplayFollowBall());
-
-
-        foreach (var item in balls)
-        {
-            Destroy(item, 3.0f);
-        }
-
-
     }
 
     private IEnumerator co_RelplayFollowBall()
@@ -529,20 +522,35 @@ public class Baller : MonoBehaviour
         var camManager = Camera.main.gameObject.GetComponent<CameraManager>();
 
 
+        // widthCurve를 설정하는 부분
+        AnimationCurve curve = new AnimationCurve();
+        curve.AddKey(0, 1f);
+        curve.AddKey(1, 1f);
+
+        pathRenderer.widthCurve = curve;
+
+        // 절대적인 너비 설정
+        pathRenderer.widthMultiplier = 0.01f;
+
         if (_prevId != Managers.Game.EquipBallId)
         {
             var ballId = Managers.Game.EquipBallId;
             ballPrefab = Managers.Resource.GetScriptableObjet<BallScriptableObject>(ballId).model;
         }
         var replayBall = Managers.Object.Spawn<BallController>(ballPrefab, pathRenderer.GetPosition(0));
-        camManager.OnReplay(replayBall.transform);
+        //camManager.OnReplay(replayBall.transform);
+        camManager.OnReplay(replayBall.transform, transform.position);
 
         float replaySpeed = speed;
+
+        var forwardDistacne = (transform.position - Managers.Game.StrikeZone.transform.position) / (pathRenderer.positionCount - 1);
 
         for (int i = 0; i < pathRenderer.positionCount - 1; i++)
         {
             Vector3 startPoint = replayBall.transform.position;
             Vector3 endPoint = pathRenderer.GetPosition(i + 1);
+
+            
 
             float journeyLength = Vector3.Distance(startPoint, endPoint);
             float journeyProgress = 0;
@@ -562,7 +570,9 @@ public class Baller : MonoBehaviour
 
                 replayBall.transform.position = Vector3.Lerp(startPoint, endPoint, fractionOfJourney);
 
-                yield return null;
+                camManager.CameraMove(replayBall.transform.position);
+
+                yield return new FixedUpdate();
             }
 
             if (i == pathRenderer.positionCount - 2)
@@ -570,13 +580,19 @@ public class Baller : MonoBehaviour
                 replaySpeed = replaySpeed * Managers.Game.ReplaySlowMode;
                 Managers.Game.StrikeEvent();
             }
+
+
         }
 
 
         Managers.Game.isReplay = false;
-        yield return new FixedUpdate();
-        camManager.OffRePlay();
-        yield break;
+        
+        yield return new WaitForSeconds(5f);
+
+        if(Managers.Game.GameState == GameState.End)
+            camManager.ReplayBack(replayBall.transform, transform.position);
+
+        //yield break;
     }
 
 

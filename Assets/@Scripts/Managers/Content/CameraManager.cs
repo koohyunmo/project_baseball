@@ -1,24 +1,34 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class CameraManager : MonoBehaviour
 {
     public Vector3 offset;
 
-    Vector3 _cameraPos = Vector3.zero;
-    Vector3 _cameraRot = Vector3.zero;
+    private Vector3 _cameraPos = Vector3.zero;
+    private Quaternion _cameraRot;
 
 
     public Cinemachine.CinemachineVirtualCamera _virtualCamera;
+    private Vector3 vcamPos;
+    private Quaternion vcamRot;
 
     public Vector3 replayCamOffsetPos = Vector3.zero;
-    public Vector3 replayCamOffsetRot = Vector3.zero;
+    public Quaternion replayCamOffsetRot;
 
     private void Awake()
     {
         transform.position = offset; 
         transform.rotation = Quaternion.identity;
+
+        vcamPos = _virtualCamera.transform.localPosition;
+        vcamRot = _virtualCamera.transform.rotation;
+        _cameraPos = transform.position;
+        _cameraRot = transform.rotation;
+
         _virtualCamera.gameObject.SetActive(false);
     }
 
@@ -29,73 +39,56 @@ public class CameraManager : MonoBehaviour
 
     private void Init()
     {
-        
-        _cameraPos = Camera.main.transform.position;
-        _cameraRot = Camera.main.transform.eulerAngles;
         Managers.Game.SetMainCamera(this);
+    }
+
+    public void CameraMove(Vector3 pos)
+    {
+        gameObject.transform.DOMoveZ(pos.z + 10f,0.5f);
+        gameObject.transform.DOMoveY(pos.y + 1f,0);
+
     }
 
     public void OnReplay(Transform target)
     {
         gameObject.transform.position = _cameraPos + replayCamOffsetPos;
-        gameObject.transform.eulerAngles = _cameraRot + replayCamOffsetRot;
+        gameObject.transform.rotation = _cameraRot * replayCamOffsetRot;
+        _virtualCamera.gameObject.SetActive(true);
+        _virtualCamera.LookAt = target;
+    }
+    public void OnReplay(Transform target, Vector3 pos)
+    {
+        gameObject.transform.position = pos + replayCamOffsetPos;
+        gameObject.transform.rotation = _cameraRot * replayCamOffsetRot;
         _virtualCamera.gameObject.SetActive(true);
         _virtualCamera.LookAt = target;
     }
 
     public void OffRePlay()
     {
-        Managers.Resource.Destroy(_virtualCamera.LookAt.transform.gameObject);
-        _virtualCamera.LookAt = null;
-        StartCoroutine(co_MoveCam());
-    }
-
-    public IEnumerator co_MoveCam()
-    {
-        Vector3 startingPosition = _virtualCamera.transform.position;
-        Quaternion startingRotation = _virtualCamera.transform.rotation;
-
-        Vector3 targetPosition = _cameraPos;
-        Quaternion targetRotation = Quaternion.Euler(_cameraRot);
-
-        float duration = 1.0f; // 전환에 걸리는 시간, 원하는 대로 조절
-        float elapsedTime = 0.0f;
-
-        while (elapsedTime < duration)
+        gameObject.transform.DOKill();
+        if(_virtualCamera.LookAt != null)
         {
-            float t = elapsedTime / duration;
-
-            _virtualCamera.transform.position = Vector3.Lerp(startingPosition, targetPosition, t);
-            _virtualCamera.transform.rotation = Quaternion.Slerp(startingRotation, targetRotation, t);
-
-            elapsedTime += Time.deltaTime;
-            yield return null;
-
-            if(Managers.Game.GameState == Define.GameState.Home)
-            {
-                // 보간이 완료된 후의 최종 값으로 설정
-                _virtualCamera.transform.position = _cameraPos;
-                _virtualCamera.transform.rotation = Quaternion.Euler(_cameraRot);
-                _virtualCamera.gameObject.SetActive(false);
-                MoveOriginaPos();
-                yield break;
-            }
+            Managers.Resource.Destroy(_virtualCamera.LookAt.transform.gameObject);
+            _virtualCamera.LookAt = null;
         }
-
-        // 보간이 완료된 후의 최종 값으로 설정
-        _virtualCamera.transform.position = _cameraPos;
-        _virtualCamera.transform.rotation = Quaternion.Euler(_cameraRot);
-        _virtualCamera.gameObject.SetActive(false);
-
         MoveOriginaPos();
-        yield break;
     }
 
-
+    public void ReplayBack(Transform target, Vector3 pos)
+    {
+        gameObject.transform.DOMove(pos + replayCamOffsetPos,0f);
+        gameObject.transform.DOMoveY(transform.position.y + 1f,0f);
+        gameObject.transform.rotation = _cameraRot * replayCamOffsetRot;
+        _virtualCamera.LookAt = target;
+    }
     public void MoveOriginaPos()
     {
-        Camera.main.transform.position = _cameraPos;
-        Camera.main.transform.eulerAngles = _cameraRot;
+        _virtualCamera.transform.localPosition = vcamPos;
+        _virtualCamera.transform.rotation = vcamRot;
+        _virtualCamera.gameObject.SetActive(false);
+        transform.position = _cameraPos;
+        transform.transform.rotation = _cameraRot;
     }
     
 }

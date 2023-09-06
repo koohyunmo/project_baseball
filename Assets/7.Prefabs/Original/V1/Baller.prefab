@@ -49,16 +49,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballPrefab: {fileID: 6540116673774256030, guid: 6991cebaa25c9cb4bba2a3e8a309ced4,
     type: 3}
+  ballSO: {fileID: 0}
   startPoint: {fileID: 5036578385062299148}
   endPoint: {fileID: 0}
   controlPoint: {fileID: 5036578386225844282}
   pathRenderer: {fileID: 0}
   originalSpeed: 15
-  cubePrefab: {fileID: 0}
+  ballAimPrefab: {fileID: 0}
+  strikeAimPrefab: {fileID: 0}
   _hEyes: 1
   _ballerDistance: 0
   _throwType: 0
-  _league: 0
 --- !u!120 &5036578385062299146
 LineRenderer:
   m_ObjectHideFlags: 0
