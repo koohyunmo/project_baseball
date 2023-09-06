@@ -77,9 +77,9 @@ public class ClassToJsonEditor : EditorWindow
 
         foreach (var item in itemsList)
         {
-            if (!gameDB.playerItem.ContainsKey(item.itemId))
+            if (!gameDB.playerInventory.Contains(item.itemId))
             {
-                gameDB.playerItem.Add(item.itemId, item);
+                gameDB.playerInventory.Add(item.itemId);
             }
         }
 

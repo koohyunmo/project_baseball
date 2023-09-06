@@ -8,9 +8,10 @@ using UnityEngine;
 [Serializable]
 public class GameDB 
 {
-    public Dictionary<string,PlayerItem> playerItem = new Dictionary<string, PlayerItem>();
+    //public Dictionary<string,PlayerItem> playerItem = new Dictionary<string, PlayerItem>();
     public HashSet<string> playerInventory = new HashSet<string>();
     public PlayerInfo playerInfo = new PlayerInfo();
+    public Dictionary<string, bool> challengeData = new Dictionary<string, bool>();
 }
 
 [Serializable]
@@ -46,6 +47,7 @@ public class PlayerInfo
     public string equipBatId;
     public string equipBallId;
     public string equipBackgroundID;
+    public int playerPower;
 }
 
 

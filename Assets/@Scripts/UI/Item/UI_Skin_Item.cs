@@ -76,7 +76,8 @@ public class UI_Skin_Item : UI_Base
 
     private void ShowInfoPopup()
     {
-
+        var infoPopup = Managers.UI.ShowPopupUI<UI_SkinItemInfoPopup>();
+        infoPopup.InitData<ItemScriptableObject>(_item, UpdateLockUI);
     }
     private void BatSetting()
     {
@@ -108,6 +109,16 @@ public class UI_Skin_Item : UI_Base
         _icon.sprite = _item.icon;
     }
 
+    private void UpdateLockUI()
+    {
+
+        if (Managers.Game.GameDB.playerInventory.Contains(_item.id) == true)
+        {
+            GetImage((int)Images.LockImage).gameObject.SetActive(false);
+        }
+
+    }
+
     private void ChoiceUIUpdate()
     {
         if (Managers.Game.EquipBallId.Equals(_item.id))
@@ -133,21 +144,30 @@ public class UI_Skin_Item : UI_Base
     private void OnClick()
     {
 
-        switch (_type)
+        if(Managers.Game.GameDB.playerInventory.Contains(_key) == false)
         {
-            case ScollViewType.Ball:
-                BallClick();
-                break;
-            case ScollViewType.Bat:
-                BatClick();
-                break;
-            case ScollViewType.Background:
-                break;
+            var infoPopup = Managers.UI.ShowPopupUI<UI_SkinItemInfoPopup>();
+            infoPopup.InitData<ItemScriptableObject>(_item, UpdateLockUI);
+            return;
         }
+        else
+        {
+            switch (_type)
+            {
+                case ScollViewType.Ball:
+                    BallClick();
+                    break;
+                case ScollViewType.Bat:
+                    BatClick();
+                    break;
+                case ScollViewType.Background:
+                    break;
+            }
 
-        
-        Managers.Game.EquipItemAction?.Invoke(); // 등록된 Item
-        ChoiceUIUpdate(); // 현재 Item
+
+            Managers.Game.EquipItemAction?.Invoke(); // 등록된 Item
+            ChoiceUIUpdate(); // 현재 Item
+        }
 
     }
 

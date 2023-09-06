@@ -15,7 +15,7 @@ public class Managers : MonoBehaviour
     public static PoolManager Pool { get { return Instance?._pool; } }
     public static ResourceManager Resource { get { return Instance?._resource; } }
     public static GameManager Game { get { return Instance?._game; } }
-    public static ObjectManager Object { get { return Instance?._object; } }
+    public static ObjectManager Obj { get { return Instance?._object; } }
     public static EffectManager Effect { get { return Instance?._effect; } }
 
     [SerializeField] UIManager _ui = new UIManager();
@@ -51,7 +51,16 @@ public class Managers : MonoBehaviour
 
     public static void Clear()
     {
+        Resource.Resources.Clear();
+        Obj.Clear();
+        UI.Clear();
         s_instance._resource.Clear();
 
+    }
+
+
+    public void OnDestroy()
+    {
+        Clear();
     }
 }

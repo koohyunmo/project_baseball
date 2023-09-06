@@ -13,5 +13,4 @@ public class BatScriptableObject : ItemScriptableObject
         type = Define.ItemType.Bat;
 
     }
-
 }

@@ -121,7 +121,7 @@ public class Baller : MonoBehaviour
 
     private void StrikeAim()
     {
-        var go = Managers.Object.Spawn<InGameObjectController>(strikeAimPrefab.name, Managers.Game.AimPoint);
+        var go = Managers.Obj.Spawn<InGameObjectController>(strikeAimPrefab.name, Managers.Game.AimPoint);
         //var go = Managers.Resource.Instantiate("ballTestAimPrefab.name");
         go.transform.position = Managers.Game.AimPoint;
         go.name = $"{_throwType} : {Managers.Game.Speed.ToString("F2")}km/s";
@@ -321,7 +321,7 @@ public class Baller : MonoBehaviour
         }
 
 
-        var ballInstance = Managers.Object.Spawn<BallController>(ballPrefab, startPoint.position);
+        var ballInstance = Managers.Obj.Spawn<BallController>(ballPrefab, startPoint.position);
         
 
         ballInstance.transform.position = startPoint.position;
@@ -477,7 +477,7 @@ public class Baller : MonoBehaviour
         // 호크아이여부
         if (_hEyes == true)
         {
-            var go = Managers.Object.Spawn<BallAimController>(ballAimPrefab.name, aimPoint);
+            var go = Managers.Obj.Spawn<BallAimController>(ballAimPrefab.name, aimPoint);
             go.DataInit(aimPoint, ball);
         }
 
@@ -537,7 +537,7 @@ public class Baller : MonoBehaviour
             var ballId = Managers.Game.EquipBallId;
             ballPrefab = Managers.Resource.GetScriptableObjet<BallScriptableObject>(ballId).model;
         }
-        var replayBall = Managers.Object.Spawn<BallController>(ballPrefab, pathRenderer.GetPosition(0));
+        var replayBall = Managers.Obj.Spawn<BallController>(ballPrefab, pathRenderer.GetPosition(0));
         //camManager.OnReplay(replayBall.transform);
         camManager.OnReplay(replayBall.transform, transform.position);
 

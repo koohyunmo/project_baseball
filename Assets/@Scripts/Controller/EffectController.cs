@@ -12,6 +12,6 @@ public class EffectController : InGameObjectController
     IEnumerator co_Delay(float time)
     {
         yield return new WaitForSeconds(time);
-        Managers.Object.Despawn<EffectController>(ObjId);
+        Managers.Obj.Despawn<EffectController>(ObjId);
     }
 }

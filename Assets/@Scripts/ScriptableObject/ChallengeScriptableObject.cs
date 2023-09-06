@@ -5,7 +5,8 @@ using static Define;
 [CreateAssetMenu(fileName = "ChallengeData", menuName = "Challenge/Create New Challenge")]
 public class ChallengeScriptableObject : ScriptableObject
 {
-    public int id;
+    public int orderID;
+    public string key;
     public ChallengeType mode;
     public int score;
     public float speed;

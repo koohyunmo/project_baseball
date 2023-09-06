@@ -39,7 +39,7 @@ public class BallAimController : InGameObjectController
         if (gameObject.IsValid())
         {
             Managers.Game.RemoveCallBack(DespawnBall);
-            Managers.Object.Despawn<BallAimController>(ObjId);       
+            Managers.Obj.Despawn<BallAimController>(ObjId);       
         }
             
     }

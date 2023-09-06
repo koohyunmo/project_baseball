@@ -33,11 +33,10 @@ public class UI_ChallengeItem : UI_Base
 
     private void ShowPopup()
     {
-        Managers.UI.CloseAllPopupUI();
-        Managers.Game.GameReady(Define.GameMode.Challenge);
-        Managers.Game.SetChallengeMode(_cso.score, _cso.mode);
-        Debug.Log("TODO POPUP");
-        Debug.Log(desc);
+
+        var challengePopup = Managers.UI.ShowPopupUI<UI_ChallengeInfoPopup>();
+        challengePopup.InitData(_cso);
+
     }
 
     public void InitData(string itemId, Action parentClose)
@@ -68,7 +67,7 @@ public class UI_ChallengeItem : UI_Base
             return;
         }
 
-        Get<TextMeshProUGUI>((int)(TMPs.IDTMP)).text = _cso.id.ToString();
+        Get<TextMeshProUGUI>((int)(TMPs.IDTMP)).text = _cso.orderID.ToString();
         desc = _cso.desc;
     }
 

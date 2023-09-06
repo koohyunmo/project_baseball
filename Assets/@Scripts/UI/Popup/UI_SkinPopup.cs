@@ -74,23 +74,46 @@ public class UI_SkinPopup : UI_Popup
         switch (_type)
         {
             case ScollViewType.Ball:
-                OnClickBallCategory();
+                FirstItemUpdate();
                 break;
             case ScollViewType.Bat:
-                OnClickBatCategory();
+                FirstItemUpdate();
                 break;
             case ScollViewType.Background:
-                OnClickBackgroundCategory();
+                FirstItemUpdate();
                 break;
         }
 
         return true;
     }
 
+    private void FirstItemUpdate()
+    {
+        Clear();
+        switch (_type)
+        {
+            case ScollViewType.Ball:
+                ChangeButtonColor(B_Ball);
+                break;
+            case ScollViewType.Bat:
+                ChangeButtonColor(B_Bat);
+                break;
+            case ScollViewType.Background:
+                ChangeButtonColor(B_Background);
+                break;
+
+        }
+        MakeItem();
+    }
+
     private void OnClickBallCategory()
     {
         if (_grid == null)
             return;
+
+        if (_type == ScollViewType.Ball)
+            return;
+
         _type = ScollViewType.Ball;
         Clear();
         ChangeButtonColor(B_Ball);
@@ -102,6 +125,10 @@ public class UI_SkinPopup : UI_Popup
     {
         if (_grid == null)
             return;
+
+        if (_type == ScollViewType.Background)
+            return;
+
         _type = ScollViewType.Background;
         Clear();
         ChangeButtonColor(B_Background);
@@ -111,6 +138,9 @@ public class UI_SkinPopup : UI_Popup
     private void OnClickBatCategory()
     {
         if (_grid == null)
+            return;
+
+        if (_type == ScollViewType.Bat)
             return;
 
         _type = ScollViewType.Bat;

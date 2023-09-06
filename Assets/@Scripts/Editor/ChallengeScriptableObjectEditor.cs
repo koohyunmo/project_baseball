@@ -20,13 +20,15 @@ public class ChallengeScriptableObjectEditor : Editor
         }
 
         // Add a button to change the name of the ScriptableObject
-        if (GUILayout.Button("Change Name"))
+        if (GUILayout.Button("Change Name AND Key"))
         {
-            string newName = $"CSO_{challenge.id}";
+            string newName = $"CSO_{challenge.orderID}";
             challenge.name = newName;
+            challenge.key = newName;
             AssetDatabase.RenameAsset(AssetDatabase.GetAssetPath(challenge), newName);
             AssetDatabase.SaveAssets();
         }
+
     }
 #endif
 }

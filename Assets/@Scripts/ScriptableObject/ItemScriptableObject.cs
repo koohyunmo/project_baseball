@@ -18,4 +18,6 @@ public class ItemScriptableObject : ScriptableObject
 
     }
 
+    public virtual List<string> GetData() { return new List<string>(); }
+
 }

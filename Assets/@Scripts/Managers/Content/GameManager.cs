@@ -113,8 +113,7 @@ public class GameManager
     public ChacterController ChacterController { get; private set; }
 
     public ChallengeType ChallengeMode { get; private set; } = ChallengeType.RealMode;
-
-
+    public string ChallengeGameID { get; private set; }
 
     public void Init()
     {
@@ -193,7 +192,7 @@ public class GameManager
         {
             case GameState.Home:
                 {
-                    Managers.Object.DespawnAll();
+                    Managers.Obj.DespawnAll();
                     batMoveReplayData.Clear();
                     MainCam.MoveOriginaPos();
                     Managers.UI.ShowPopupUI<UI_Main>();
@@ -202,13 +201,14 @@ public class GameManager
                     SwingCount = 0;
                     HomeRunCount = 0;
                     ChallengeScore = 0;
+                    ChallengeGameID = "";
                 }              
                 break;
             case GameState.Ready:
                 {
                     batPositionSetting?.Invoke();
                     Managers.UI.ShowPopupUI<UI_Timer>();
-                    Managers.Object.DespawnAll();
+                    Managers.Obj.DespawnAll();
                 }
                 break;
             case GameState.InGround:
@@ -246,6 +246,33 @@ public class GameManager
     {
         hitCallBack?.Invoke();
         ChallengeModeCheck();
+    }
+
+    // 게임 시간을 멈추기 위한 함수
+    public void PauseGame()
+    {
+        Time.timeScale = 0f; // 게임 시간을 멈춥니다.
+    }
+
+    // 일시적으로 멈췄던 게임 시간을 다시 시작하기 위한 함수
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f; // 게임 시간을 다시 시작합니다.
+    }
+
+    public void ChallengeClearEvent(string csoKey)
+    {
+        if(_gameData.challengeData.ContainsKey(csoKey))
+        {
+            _gameData.challengeData[csoKey] = true;
+        }
+        else
+        {
+            Debug.LogError($"{csoKey} is not exist");
+        }
+
+        SaveGame();
+        Debug.Log("TODO 첼린지 완수 이펙트");
     }
 
     public void ReplayReview()
@@ -312,10 +339,11 @@ public class GameManager
     }
 
 
-    public void SetChallengeMode(int score, ChallengeType mode)
+    public void SetChallengeMode(int score, ChallengeType mode, string csoKey)
     {
         ChallengeScore = score;
         ChallengeMode = mode;
+        ChallengeGameID = csoKey;
     }
 
     public void Getitme(string key)
@@ -455,15 +483,21 @@ public class GameManager
                 break;
             case ChallengeType.Score:
                 if (GameScore == ChallengeScore)
-                    Debug.Log("Score 완수");
+                {
+                    ChallengeClearEvent(ChallengeGameID);
+                }
                 break;
             case ChallengeType.HomeRun:
                 if (HomeRunCount > ChallengeScore)
-                    Debug.Log("HomeRunCount 완수");
+                {
+                    ChallengeClearEvent(ChallengeGameID);
+                }
                 break;
             case ChallengeType.RealMode:
                 if (SwingCount > ChallengeScore)
-                    Debug.Log("RealMode 완수");
+                {
+                    ChallengeClearEvent(ChallengeGameID);
+                }
                 break;
         }
     }
@@ -520,7 +554,7 @@ public class GameManager
                 {
                     // Test Data
                     PlayerItem startItem = new PlayerItem(so.id, so.name, so.name, ItemType.Bat);
-                    StartData.playerItem.Add(startItem.itemId, startItem);
+                    //StartData.playerItem.Add(startItem.itemId, startItem);
 #if UNITY_EDITOR
                     StartData.playerInfo.money = 100000;
 #endif
@@ -533,7 +567,7 @@ public class GameManager
                 {
                     // Test Data
                     PlayerItem startItem = new PlayerItem(ball.id, ball.name, ball.name, ItemType.Ball);
-                    StartData.playerItem.Add(startItem.itemId, startItem);
+                    //StartData.playerItem.Add(startItem.itemId, startItem);
 
                     StartData.playerInfo.level = 1;
                     StartData.playerInfo.equipBallId = "BALL_1";
@@ -541,10 +575,23 @@ public class GameManager
                     StartData.playerInventory.Add(startItem.itemId);
                 }
 
+
+            }
+
+            Dictionary<string, bool> challengeData = new Dictionary<string, bool>();
+
+            foreach (var item in Managers.Resource.Resources)
+            {
+                if (item.Key.Contains("CSO_"))
+                {
+                    challengeData.Add(item.Key, false);
+                }
+
             }
 
 
             _gameData = StartData;
+            _gameData.challengeData = challengeData;
 
 
             SaveGame();
@@ -578,6 +625,22 @@ public class GameManager
         Baller = ballPath;
     }
 
+
+    public void ChangeItem(string key)
+    {
+        if(key.Contains("BALL_"))
+        {
+            ChangeBall(key);
+        }
+        else if(key.Contains("BAT_"))
+        {
+            ChangeBat(key);
+        }
+        else
+        {
+            Debug.LogError($"{key} is not item");
+        }
+    }
 
     internal void ChangeBall(string key)
     {

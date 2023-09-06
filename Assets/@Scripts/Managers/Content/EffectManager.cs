@@ -18,7 +18,7 @@ public class EffectManager
     
     public void Play(string key, Vector3 pos, Transform parent = null)
     {
-        var effect = Managers.Object.Spawn<EffectController>(key, pos);
+        var effect = Managers.Obj.Spawn<EffectController>(key, pos);
 
         if (effect == null)
             return;

@@ -10,6 +10,7 @@ public class GUIDebugger : MonoBehaviour
 
     public HashSet<string> playerInventory;
     public PlayerInfo playerInfo;
+    public Dictionary<string,bool> csoData;
 
     bool isManagerLoading = false;
 
@@ -65,7 +66,7 @@ public class GUIDebugger : MonoBehaviour
     {
         playerInventory = Managers.Game.GameDB.playerInventory;
         playerInfo = Managers.Game.GameDB.playerInfo;
-
+        csoData = Managers.Game.GameDB.challengeData;
         // Font 설정
         GUI.skin.toggle.fontSize = 60; // 토글 버튼 폰트 크기 조절
         GUI.skin.toggle.fontStyle = FontStyle.Bold;
@@ -104,6 +105,8 @@ public class GUIDebugger : MonoBehaviour
             GUILayout.Label("Equipped Bat ID: " + playerInfo.equipBatId);
             GUILayout.Label("Equipped Ball ID: " + playerInfo.equipBallId);
             GUILayout.Label("Equipped Background ID: " + playerInfo.equipBackgroundID);
+
+
         }
 
         GUI.contentColor = Color.red;
@@ -112,6 +115,12 @@ public class GUIDebugger : MonoBehaviour
         if (showChallenge)
         {
             GUI.contentColor = Color.white;
+            GUILayout.BeginVertical();
+            foreach (var item in csoData.Keys)
+            {
+                GUILayout.Label($"{item} Clear : {csoData[item]}");
+            }
+            GUILayout.EndVertical();
 
             GUILayout.Label("ChallengeType " + Managers.Game.ChallengeMode.ToString());
             GUILayout.Label("ChallengeScore " + Managers.Game.ChallengeScore);

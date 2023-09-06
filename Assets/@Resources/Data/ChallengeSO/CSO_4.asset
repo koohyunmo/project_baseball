@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13285a6ba3a668744879e504dd23b2d0, type: 3}
-  m_Name: CSO_3
+  m_Name: CSO_4
   m_EditorClassIdentifier: 
-  orderID: 3
-  key: CSO_3
-  mode: 2
+  orderID: 4
+  key: CSO_4
+  mode: 1
   score: 1
   speed: 0
-  desc: Hit 1 home runs to succeed.
+  desc: Achieve exactly 1 points.

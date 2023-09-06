@@ -133,7 +133,7 @@ public class BallController : InGameObjectController
         if(transform.position.z >= 100)
         {
             Debug.Log("TODO ¼öÁ¤ ");
-            Managers.Object.Despawn<BallController>(ObjId);
+            Managers.Obj.Despawn<BallController>(ObjId);
         }
     }
 }

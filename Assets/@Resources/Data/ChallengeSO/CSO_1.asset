@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13285a6ba3a668744879e504dd23b2d0, type: 3}
   m_Name: CSO_1
   m_EditorClassIdentifier: 
-  id: 1
+  orderID: 1
+  key: CSO_1
   mode: 1
   score: 10
   speed: 0

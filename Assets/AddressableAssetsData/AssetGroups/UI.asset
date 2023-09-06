@@ -77,6 +77,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
+  - m_GUID: 73bc3c213680bdb44bd686ce40e31dd0
+    m_Address: UI_SkinItemInfoPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+  - m_GUID: 9230f23156f9f2f4ea2f8d7e5d90105b
+    m_Address: UI_ChallengeInfoPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9c2d91b0a86c0bb4b9bbf0d47449c95f, type: 2}
   m_SchemaSet:

@@ -314,7 +314,7 @@ public class Bat : MonoBehaviour
     {
         if (batState == BatState.Idle) // Ω∫¿Æ ¡ﬂ¿Ã æ∆¥“ ∂ß∏∏ Ω∫¿Æ Ω√¿€
         {
-            var go = Managers.Object.Spawn<TextController>("HitScoreText", hitPoint);
+            var go = Managers.Obj.Spawn<TextController>("HitScoreText", hitPoint);
             go.transform.position = hitPoint;
             Managers.Game.HitEvent();
             batState = BatState.Swing;
