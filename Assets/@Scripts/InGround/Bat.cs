@@ -75,7 +75,8 @@ public class Bat : MonoBehaviour
         Managers.Game.SetStrikeCallBack(HutSwing);
         Managers.Game.SetMoveBat(OnltMoveModel);
         Managers.Game.SetReplatMoveAction(() => StartCoroutine(co_BatMoveReplay()));
-
+        Managers.Game.SetBatPositionSetting(ClampToCameraViewSetting);
+        Managers.Game.batPositionSetting?.Invoke();
 
         SetBetHandle();
 
@@ -204,6 +205,36 @@ public class Bat : MonoBehaviour
         model.transform.position = mainCamera.ViewportToWorldPoint(viewportPosition);
 
 
+    }
+
+
+
+    private void ClampToCameraViewSetting()
+    {
+        var mainCamea = Camera.main;
+
+        Vector3 firstBatPos = new Vector3(0.78f, 0.37f, -6.45f);
+
+        Vector3 viewportPosition = mainCamea.WorldToViewportPoint(firstBatPos);
+        //Debug.Log($"World : {HitColiderTransform.position} View : {viewportPosition}");
+        //World : (0.78, 0.37, -6.45) View : (0.84, 0.35, 3.55);
+
+        // 0과 1 사이로 뷰포트 좌표 제한
+        viewportPosition.x = Mathf.Clamp(viewportPosition.x, 0f, 1f);
+        viewportPosition.y = Mathf.Clamp(viewportPosition.y, 0f, 1f);
+
+        // 제한된 뷰포트 좌표를 월드 좌표로 변환
+        Vector3 clampedWorldPosition = mainCamera.ViewportToWorldPoint(viewportPosition);
+
+        // z 좌표를 원래의 z 좌표로 유지
+        clampedWorldPosition.z = HitColiderTransform.position.z;
+
+        // HitColider 위치 업데이트
+        HitColiderTransform.position = clampedWorldPosition;
+
+        var moveVec = Vector3.Lerp(BatModelParent.position, HandleTransform.position, 1f);
+
+        BatModelParent.position = moveVec;
     }
 
 

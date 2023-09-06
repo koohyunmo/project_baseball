@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -69,6 +70,8 @@ public class BatCollider : MonoBehaviour
             bat.Swing(hitPoint);
 
             Managers.Effect.Play("HitA", hitPoint);
+
+            transform.DOShakeScale(0.3f,0.7f);
 
         }
     }
@@ -202,22 +205,24 @@ public class BatCollider : MonoBehaviour
 
         float midRowDist = midRow;
 
+        var batPower = Managers.Resource.GetScriptableObjet<BatScriptableObject>(Managers.Game.PlayerInfo.equipBatId).power;
+
         if (topDist < midDist && topDist < midRowDist && topDist < bottomDist) // Top에 가장 가까울 때
         {
             float t = topDist / (topDist + midDist); // 보간 비율 계산
-            score = Mathf.Lerp(40, 100, t);
+            score = Mathf.Lerp(40 + batPower, 100+ batPower, t);
         }
         else if (midDist < topDist && midDist < midRowDist && midDist < bottomDist) // Mid에 가장 가까울 때
         {
             if (topDist < midRowDist) // Mid에서 Top이 더 가깝다면
             {
                 float t = midDist / (midDist + topDist);
-                score = Mathf.Lerp(100, 40, t);
+                score = Mathf.Lerp(100 + batPower, 40 + batPower, t);
             }
             else // Mid에서 MidRow가 더 가깝다면
             {
                 float t = midDist / (midDist + midRowDist);
-                score = Mathf.Lerp(100, 50, t);
+                score = Mathf.Lerp(100 + batPower, 50 + batPower, t);
             }
         }
         else if (midRowDist < topDist && midRowDist < midDist && midRowDist < bottomDist) // MidRow에 가장 가까울 때
@@ -225,18 +230,18 @@ public class BatCollider : MonoBehaviour
             if (midDist < bottomDist) // MidRow에서 Mid가 더 가깝다면
             {
                 float t = midRowDist / (midRowDist + midDist);
-                score = Mathf.Lerp(50, 100, t);
+                score = Mathf.Lerp(50 + batPower, 100 + batPower, t);
             }
             else // MidRow에서 Bottom이 더 가깝다면
             {
                 float t = midRowDist / (midRowDist + bottomDist);
-                score = Mathf.Lerp(50, 1, t);
+                score = Mathf.Lerp(50 + batPower, 1 + batPower, t);
             }
         }
         else // Bottom에 가장 가까울 때
         {
             float t = bottomDist / (bottomDist + midRowDist);
-            score = Mathf.Lerp(1, 50, t);
+            score = Mathf.Lerp(1 + batPower, 50 + batPower, t);
         }
 
         return score;

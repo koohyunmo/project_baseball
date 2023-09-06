@@ -1,8 +1,10 @@
 using DG.DemiEditor;
+using System.Drawing;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
 using static BatchCaptureWindow;
+using static Define;
 
 public class ScriptableObjectCreator : EditorWindow
 {
@@ -86,7 +88,7 @@ public class ScriptableObjectCreator : EditorWindow
             }
 
             // Create a new scriptable object
-            ItemScriptableObject item = ScriptableObject.CreateInstance<ItemScriptableObject>();
+
 
             string firstWord;
             switch (itemType)
@@ -94,30 +96,63 @@ public class ScriptableObjectCreator : EditorWindow
                 case ItemType.Bat:
                     firstWord = "BAT";
                     CreateFolder(savePath + "/Bat");
+                    {
+                        BatScriptableObject item = ScriptableObject.CreateInstance<BatScriptableObject>();
+
+                        item.name = Path.GetFileNameWithoutExtension(modelPath).Split(' ')[0];
+                        item.id = firstWord + "_" + count++;
+                        item.model = model;
+                        item.icon = icon;
+
+                        // Save the scriptable object
+                        string newSavePath = Path.Combine(savePath + "/" + firstWord, item.id + ".asset");
+                        AssetDatabase.CreateAsset(item, newSavePath);
+                    }
                     break;
                 case ItemType.Ball:
                     firstWord = "BALL";
                     CreateFolder(savePath + "/Ball");
+                    {
+                        BallScriptableObject item = ScriptableObject.CreateInstance<BallScriptableObject>();
+
+                        item.name = Path.GetFileNameWithoutExtension(modelPath).Split(' ')[0];
+                        item.id = firstWord + "_" + count++;
+                        item.model = model;
+                        item.icon = icon;
+
+                        // Save the scriptable object
+                        string newSavePath = Path.Combine(savePath + "/" + firstWord, item.id + ".asset");
+                        AssetDatabase.CreateAsset(item, newSavePath);
+                    }
                     break;
                 default:
                     firstWord = Path.GetFileNameWithoutExtension(modelPath).Split(' ')[0];
+                    {
+                        ItemScriptableObject item = ScriptableObject.CreateInstance<ItemScriptableObject>();
+
+                        item.name = Path.GetFileNameWithoutExtension(modelPath).Split(' ')[0];
+                        item.id = firstWord + "_" + count++;
+                        item.model = model;
+                        item.icon = icon;
+
+                        // Save the scriptable object
+                        string newSavePath = Path.Combine(savePath + "/" + firstWord, item.id + ".asset");
+                        AssetDatabase.CreateAsset(item, newSavePath);
+                    }
                     break;
             }
 
-            item.name = Path.GetFileNameWithoutExtension(modelPath).Split(' ')[0];
-            item.id = firstWord + "_" + count++;
-            item.model = model;
-            item.icon = icon;
-
-            // Save the scriptable object
-            string newSavePath = Path.Combine(savePath + "/" + firstWord, item.id + ".asset");
-            AssetDatabase.CreateAsset(item, newSavePath);
 
 
         }
         AssetDatabase.SaveAssets();
     }
 
+    private void CreateScriptableObject<T>() where T : ItemScriptableObject
+    {
+
+
+    }
     private static void CreateFolder(string path)
     {
         if (!Directory.Exists(path))

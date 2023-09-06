@@ -3,7 +3,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using static Define;
 
 public class GameManager
@@ -123,7 +125,8 @@ public class GameManager
         LoadGameSaveFile();
         {
             _gameState = GameState.Home;
-            Managers.UI.ShowPopupUI<UI_Main>();
+            //Managers.UI.ShowPopupUI<UI_Main>();
+            StateChangeEvent();
             var go = Managers.Resource.Instantiate("InGround");
             go.transform.position = Vector3.zero;
             go.transform.rotation = Quaternion.identity;
@@ -198,6 +201,7 @@ public class GameManager
                     Managers.UI.ShowPopupUI<UI_Main>();
                     _gameMode = GameMode.None;
 
+                    HitScore = 0;
                     SwingCount = 0;
                     HomeRunCount = 0;
                     ChallengeScore = 0;
@@ -260,11 +264,22 @@ public class GameManager
         Time.timeScale = 1f; // 게임 시간을 다시 시작합니다.
     }
 
+    #region 챌린지
+    private bool isPaused = false; // 게임 일시 정지 상태를 저장하기 위한 변수
     public void ChallengeClearEvent(string csoKey)
     {
-        if(_gameData.challengeData.ContainsKey(csoKey))
+        if (_gameData.challengeData.ContainsKey(csoKey))
         {
             _gameData.challengeData[csoKey] = true;
+            if (!isPaused)
+            {
+                // 게임 시간을 일시적으로 멈춥니다.
+                Time.timeScale = 0;
+                isPaused = true;
+
+                // 1초 후에 ResumeChallengeGame 함수를 호출합니다.
+                DelayedResumeGame();
+            }
         }
         else
         {
@@ -274,6 +289,20 @@ public class GameManager
         SaveGame();
         Debug.Log("TODO 첼린지 완수 이펙트");
     }
+
+    private async void DelayedResumeGame()
+    {
+        await Task.Delay(10000);  // 10초 대기
+        ResumeChallengeGame();
+    }
+    
+    private void ResumeChallengeGame()
+    {
+        // 게임 시간을 다시 시작합니다.
+        Time.timeScale = 1f;
+        isPaused = false;
+    }
+    #endregion
 
     public void ReplayReview()
     {
@@ -299,32 +328,32 @@ public class GameManager
     {
         HitPos = hitPos;
 
-        if (score < 85)
+        if (score < 79 && score > 0)
         {
             HitScore = 1;
             SwingCount++;
         }
+        else if(score >= 80 && score < 85)
+        {
+            HitScore += 1;
+            SwingCount++;
+        }
         else if (score >= 85 && score < 95)
         {
-            HitScore = 3;
+            HitScore += 2;
             SwingCount++;
         }
-        else if (score >= 95 && score < 98)
+        else if (score >= 95 && score < 100)
         {
-            HitScore = 5;
-            SwingCount++;
-            HomeRunCount++;
-        }
-        else if (score >= 98 && score <= 100)
-        {
-            HitScore = 10;
+            HitScore += 4;
             SwingCount++;
             HomeRunCount++;
         }
-        else
+        else if (score >= 100 && score <= float.MaxValue)
         {
-            // 범위 밖의 점수에 대한 처리 (이 경우 에러 값 반환)
-            HitScore = -1;
+            HitScore += 10;
+            SwingCount++;
+            HomeRunCount++;
         }
 
         GameScore += HitScore;
