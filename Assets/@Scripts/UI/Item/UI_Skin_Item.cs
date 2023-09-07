@@ -67,7 +67,7 @@ public class UI_Skin_Item : UI_Base
             case ScollViewType.Bat:
                 BatSetting();
                 break;
-            case ScollViewType.Background:
+            case ScollViewType.Skill:
                 break;
         }
 
@@ -77,7 +77,7 @@ public class UI_Skin_Item : UI_Base
     private void ShowInfoPopup()
     {
         var infoPopup = Managers.UI.ShowPopupUI<UI_SkinItemInfoPopup>();
-        infoPopup.InitData<ItemScriptableObject>(_item, UpdateLockUI);
+        infoPopup.InitData<ItemScriptableObject>(_item, UpdateLockUI, ChoiceUIUpdate);
     }
     private void BatSetting()
     {
@@ -133,6 +133,12 @@ public class UI_Skin_Item : UI_Base
             Managers.Game.SetEquipUIItemAction(ChoiceUIUpdate);
             return;
         }
+        else if(Managers.Game.EquipSkillId.Equals(_item.id))
+        {
+            GetImage((int)Images.Choice).gameObject.SetActive(true);
+            Managers.Game.SetEquipUIItemAction(ChoiceUIUpdate);
+            return;
+        }
         else
         {
             GetImage((int)Images.Choice).gameObject.SetActive(false);
@@ -147,7 +153,7 @@ public class UI_Skin_Item : UI_Base
         if(Managers.Game.GameDB.playerInventory.Contains(_key) == false)
         {
             var infoPopup = Managers.UI.ShowPopupUI<UI_SkinItemInfoPopup>();
-            infoPopup.InitData<ItemScriptableObject>(_item, UpdateLockUI);
+            infoPopup.InitData<ItemScriptableObject>(_item, UpdateLockUI, ChoiceUIUpdate);
             return;
         }
         else
@@ -160,7 +166,8 @@ public class UI_Skin_Item : UI_Base
                 case ScollViewType.Bat:
                     BatClick();
                     break;
-                case ScollViewType.Background:
+                case ScollViewType.Skill:
+                    SkillClick();
                     break;
             }
 
@@ -194,6 +201,11 @@ public class UI_Skin_Item : UI_Base
             Debug.LogWarning("æ∆¿Ã≈€ ∏µ®");
         }
 
+    }
+
+    private void SkillClick()
+    {
+        Managers.Game.ChangeSkill(_item.id);
     }
 
     private void OnDestroy()

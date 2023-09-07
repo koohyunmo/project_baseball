@@ -31,6 +31,8 @@ public class Bat : MonoBehaviour
     Vector3 originalBatPos = Vector3.zero;
     Quaternion originalBatRot;
     Vector3 originalCamPosition;
+
+    AnimatorStateInfo stateInfo;
     Animator anim;
 
     public AnimationCurve swingCurve;
@@ -43,13 +45,13 @@ public class Bat : MonoBehaviour
     private float returnLerpSpeed = 1f; // 원래 위치로 돌아갈 때의 lerp 속도
 
     private Action<Vector3, Rigidbody> _flyTheBall; 
-    enum BatState
+    public enum BatState
     {
         Idle,
         Swing,
     }
 
-    BatState batState = BatState.Idle;
+    public BatState batState { get; private set; } = BatState.Idle;
 
     void Start()
     {
@@ -302,15 +304,14 @@ public class Bat : MonoBehaviour
 
             // stateInfo.normalizedTime은 애니메이션의 현재 진행 시간을 0.0 ~ 1.0의 범위로 반환합니다.
             // 따라서 이 값이 0.5f 이상이면 애니메이션의 중간 지점에 도달했다고 볼 수 있습니다.
-            if (stateInfo.IsName("Bat_Swing") && stateInfo.normalizedTime >= 0.15f)
+            if (stateInfo.normalizedTime >= 0.15f)
             {
-                
+
                 _flyTheBall?.Invoke(_hitPoint,_ballRigid);
                 _flyTheBall = null;
-
-                //Managers.Game.StopWatch.Stop();
+                Managers.Game.StopWatch.Stop();
                 //Debug.Log($"FunctionB 실행 시간: {Managers.Game.StopWatch.ElapsedMilliseconds}ms");
-                
+
             }
 
 
@@ -350,18 +351,18 @@ public class Bat : MonoBehaviour
         }
     }
 
+
     private Rigidbody _ballRigid;
     private Vector3 _hitPoint;
 
     public void SwingCollision(Vector3 hitPoint, Action<Vector3,Rigidbody> flyTheBallAction, Rigidbody ballRigid)
     {
-
-        if (batState == BatState.Swing) // 스윙 중이 아닐 때만 스윙 시작
+        Debug.Log("공 타격");
+        if (batState == BatState.Swing) //
         {
             Debug.Log("SwingCollision");
             var go = Managers.Obj.Spawn<TextController>("HitScoreText", hitPoint);
             go.transform.position = hitPoint;
-            //batState = BatState.Swing;
 
             _flyTheBall -= flyTheBallAction;
             _flyTheBall += flyTheBallAction;
@@ -385,14 +386,18 @@ public class Bat : MonoBehaviour
         if (batState == BatState.Idle) // 스윙 중이 아닐 때만 스윙 시작
         {
             batState = BatState.Swing;
+            anim.Play("Bat_Swing");
+            stateInfo = anim.GetCurrentAnimatorStateInfo(0);
         }
     }
     public void HutSwing()
     {
-        if (batState == BatState.Idle) // 스윙 중이 아닐 때만 스윙 시작
-        {
-            batState = BatState.Swing;
-        }
+        return;
+
+        //if (batState == BatState.Idle) // 스윙 중이 아닐 때만 스윙 시작
+        //{
+        //    batState = BatState.Swing;
+        //}
     }
 
     IEnumerator co_BatMoveReplay()

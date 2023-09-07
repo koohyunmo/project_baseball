@@ -31,6 +31,15 @@ public class ItemScriptableObejctEditor : Editor
             GUILayout.Label(item.icon.texture);
         }
 
+        if (GUILayout.Button("Change FileName AND Key"))
+        {
+            item.Settings();
+            string newName = $"{item.type}_";
+            item.id = newName;
+            AssetDatabase.RenameAsset(AssetDatabase.GetAssetPath(item), newName);
+            AssetDatabase.SaveAssets();
+        }
+
     }
 #endif
 }

@@ -16,6 +16,7 @@ public class SwingCollider : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ball"))
         {
+            if(_bat.batState == Bat.BatState.Idle)
             Debug.Log("SwingANim");
             _bat.SwingBatAnim();
         }

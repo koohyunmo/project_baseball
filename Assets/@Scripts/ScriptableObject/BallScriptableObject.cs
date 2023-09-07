@@ -7,6 +7,6 @@ public class BallScriptableObject : ItemScriptableObject
 
     public override void Settings()
     {
-        type = Define.ItemType.Ball;
+        type = Define.ItemType.BALL;
     }
 }

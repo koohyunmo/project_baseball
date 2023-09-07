@@ -12,9 +12,10 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
     }
 
     protected ItemScriptableObject _itemSO;
-    private Action _updateUI = null;
+    private Action _lockUIAction = null;
+    private Action _equipUIAction = null;
 
-    public virtual void InitData<T>(T itemInfo,Action updateItem) where T : ItemScriptableObject
+    public virtual void InitData<T>(T itemInfo,Action updateLockUI, Action updateEquipUI) where T : ItemScriptableObject
     {
         var type = typeof(T);
 
@@ -31,7 +32,8 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
 
         }
 
-        _updateUI = updateItem;
+        _lockUIAction = updateLockUI;
+        _equipUIAction = updateEquipUI;
         _itemSO = itemInfo;
     }
 
@@ -72,13 +74,15 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
     private void GetItem()
     {
         Managers.Game.Getitme(_itemSO.id);
-        _updateUI?.Invoke();
+        _lockUIAction?.Invoke();
         ClosePopupUI();
         Debug.Log("TODO ±¤°í or µ·");
     }
     private void EquipItem()
     {
         Managers.Game.ChangeItem(_itemSO.id);
+        _equipUIAction?.Invoke();
+        Managers.Game.EquipItemAction?.Invoke(); // µî·ÏµÈ Item
         ClosePopupUI();
     }
 }

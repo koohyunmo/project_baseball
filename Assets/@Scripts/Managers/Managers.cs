@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static Define;
 
+
 public class Managers : MonoBehaviour
 {
     static Managers s_instance; // 유일성이 보장된다

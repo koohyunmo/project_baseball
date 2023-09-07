@@ -8,6 +8,6 @@ public class InGameObjectController : MonoBehaviour
 
     public virtual void Clear()
     {
-        Debug.Log($"Obj Clear {ObjId}");
+        //Debug.Log($"Obj Clear {ObjId}");
     }
 }

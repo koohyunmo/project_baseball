@@ -104,8 +104,7 @@ public class GUIDebugger : MonoBehaviour
             GUILayout.Label("Experience: " + playerInfo.exp);
             GUILayout.Label("Equipped Bat ID: " + playerInfo.equipBatId);
             GUILayout.Label("Equipped Ball ID: " + playerInfo.equipBallId);
-            GUILayout.Label("Equipped Background ID: " + playerInfo.equipBackgroundID);
-
+            GUILayout.Label("Equipped Skill ID: " + playerInfo.equipSkillId);
 
         }
 

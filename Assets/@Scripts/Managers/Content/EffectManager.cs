@@ -18,7 +18,7 @@ public class EffectManager
 
     public void PlayEffect(string key, Vector3 pos, Transform parent = null)
     {
-        var effect = Managers.Obj.Spawn<EffectController>(key, pos);
+        var effect = Managers.Obj.Spawn<EffectController>(key, pos, parent);
 
         if (effect == null)
             return;
@@ -44,4 +44,16 @@ public class EffectManager
         ps.Play();
     }
 
+
+    public void PlayTrail(string key, Vector3 pos, Transform parent = null)
+    {
+        //GameObject ball = Managers.Resource.Instantiate(key, parent);
+        //ball.transform.SetParent(parent);
+        //ball.transform.position = pos;
+       
+        var trail = Managers.Obj.Spawn<EffectController>(key, pos, parent);
+        var ps = trail.GetComponent<ParticleSystem>();
+        trail.transform.SetParent(parent);
+        ps.Play();
+    }
 }

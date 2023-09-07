@@ -46,7 +46,9 @@ public class Batter : MonoBehaviour
     private void BatChange()
     {
         string batId = Managers.Game.GameDB.playerInfo.equipBatId;
-        if (Managers.Resource.Resources[batId] is ItemScriptableObject so)
+
+       var so =  Managers.Resource.GetScriptableObjet<BatScriptableObject>(batId);
+
         {
             List<Material> mats = new List<Material>();
 
@@ -63,6 +65,8 @@ public class Batter : MonoBehaviour
             rightBat.ChangeBatMesh(mesh);
             // 콜라이더 매쉬
         }
+
+
 
     }
 

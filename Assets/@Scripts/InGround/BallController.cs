@@ -24,6 +24,27 @@ public class BallController : InGameObjectController
     private List<Vector3> pathPoints = new List<Vector3>();
     private int currentPointIndex = 0;
 
+    private Transform _trailRoot;
+    private Transform TrailRoot 
+    {
+        get
+        {
+            if(_trailRoot == null)
+            {
+                var go = new GameObject { name = "@TrailRoot" };
+                go.transform.SetParent(transform);
+                _trailRoot = go.transform;
+            }
+
+            return _trailRoot;
+        }
+
+        set
+        {
+            _trailRoot = value;
+        }
+    }
+
     Rigidbody _rigidbody;
 
     public enum PlayMode
@@ -126,6 +147,16 @@ public class BallController : InGameObjectController
         _hit = true;
     }
 
+    public bool GetHit()
+    {
+        return _hit;
+    }
+
+    public Rigidbody GetRigid()
+    {
+        return _rigidbody;
+    }
+
 
     private void LateUpdate()
     {
@@ -134,6 +165,39 @@ public class BallController : InGameObjectController
         {
             Debug.Log("TODO ¼öÁ¤ ");
             Managers.Obj.Despawn<BallController>(ObjId);
+        }
+    }
+
+    public void CreateEffect()
+    {
+
+        if(Managers.Game.HitScore > 9999)
+        {
+            TrailClear();
+            Managers.Effect.PlayTrail(Keys.BALL_EFFECT_KEY.Trail_4_Flash.ToString(), transform.localPosition, TrailRoot);
+        }
+        else if(Managers.Game.HitScore > 10)
+        {
+            TrailClear();
+            Managers.Effect.PlayTrail(Keys.BALL_EFFECT_KEY.Trail_2_SmallFire.ToString(), transform.localPosition, TrailRoot);
+        }
+        else if(Managers.Game.HitScore > 3)
+        {
+            TrailClear();
+            Managers.Effect.PlayTrail(Keys.BALL_EFFECT_KEY.Trail_1_Smoke.ToString(), transform.localPosition, TrailRoot);
+        }
+        else
+        {
+            TrailClear();
+        }
+    }
+
+
+    private void TrailClear()
+    {
+        foreach (Transform child in TrailRoot.transform)
+        {
+            Managers.Resource.Destroy(child.gameObject);
         }
     }
 }

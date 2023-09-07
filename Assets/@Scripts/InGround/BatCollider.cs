@@ -14,6 +14,8 @@ public class BatCollider : MonoBehaviour
     [SerializeField] Transform _bottom;
     [SerializeField] HitPos _hitPos = HitPos.NONE;
 
+    Vector3 originalScale;
+
     bool isHit = false;
 
     enum HitPos
@@ -30,6 +32,8 @@ public class BatCollider : MonoBehaviour
     {
         bat = GetComponentInParent<Bat>();
 
+        originalScale = transform.localScale;
+
         Managers.Game.SetBatCollider(this);
     }
 
@@ -42,16 +46,16 @@ public class BatCollider : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ball"))
         {
-            Debug.Log("Hit");
-
-
+            Time.timeScale = 1f;
 
             var hitPoint = other.gameObject.transform.position;
 
             // 날려 보내기
-            Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
+            var bc = other.gameObject.GetComponent<BallController>();
 
-            if (rb != null)
+
+
+            if (bc.GetRigid() != null && bc.GetHit() == false)
             {
                 Managers.Game.StopWatch.Reset();
                 Managers.Game.StopWatch.Start();
@@ -59,20 +63,18 @@ public class BatCollider : MonoBehaviour
 
                 if (Managers.Game.GameState == Define.GameState.InGround)
                 {
-                    other.gameObject.GetComponent<BallController>().SetHit();
+                    bc.SetHit();
+                    CalHitScore(hitPoint);
+                    Debug.Log("Hit");
+                    // 람다로 공날리는 함수 보내기
+                    bat.SwingCollision(hitPoint, HitAction, bc.GetRigid());
+
+                    Managers.Effect.PlayEffect(Keys.BAT_EFFECT_KEY.HitA.ToString(), hitPoint);
+                    transform.DOShakeScale(0.3f, 0.7f).OnComplete(() => transform.DOScale(originalScale, 0));
 
                 }
 
-                CalHitScore(hitPoint);
-                // 람다로 공날리는 함수 보내기
-                bat.SwingCollision(hitPoint, HitAction, rb);
-
             }
-
-
-
-            Managers.Effect.PlayEffect(Keys.BAT_EFFECT_KEY.HitA.ToString(), hitPoint);
-            transform.DOShakeScale(0.3f,0.7f);
 
         }
     }
@@ -120,6 +122,9 @@ public class BatCollider : MonoBehaviour
 
     private void FlyTheBall(Vector3 hitPoint, Rigidbody rb)
     {
+
+        Debug.Log("TODO 볼 날라가는 효과");
+
         if (Managers.Game.GameState != Define.GameState.InGround)
             return;
 
@@ -134,19 +139,33 @@ public class BatCollider : MonoBehaviour
 
         forceDirection = GetDirection(topCheck, midCheck, midRowCheck, bottomCheck, ref hitColor);
 
+
+        forceDirection += new Vector3(Random.Range(-0.3f, 0.3f), 0, 0);
+
         rb.velocity = forceDirection;
-        rb.AddForce(forceDirection * forceAmount, ForceMode.Impulse);
+
+
+        var ballFlyVelocity = forceDirection;
+
+
+        ballFlyVelocity.x = ballFlyVelocity.x * (forceAmount + (Managers.Game.Speed * 0.2f));
+        ballFlyVelocity.y = ballFlyVelocity.y * (forceAmount + (Managers.Game.Speed * 0.2f));
+        ballFlyVelocity.z = ballFlyVelocity.z * (forceAmount + (Managers.Game.Speed * 0.2f));
+
+        ballFlyVelocity.y = Mathf.Clamp(ballFlyVelocity.y, 1f, 55f);
+
+        rb.AddForce(ballFlyVelocity, ForceMode.Impulse);
         rb.useGravity = true;
 
         // 레이 그리기
-        float rayLength = 5f; // 원하는 레이의 길이
-        Debug.DrawRay(transform.parent.position, forceDirection * rayLength, hitColor, 3f); // 빨간색 레이를 2초 동안 보여줌
+        Debug.DrawRay(transform.parent.position, ballFlyVelocity, Color.yellow, 10f); // 빨간색 레이를 2초 동안 보여줌
+        Debug.DrawRay(transform.parent.position, forceDirection*forceAmount, Color.magenta, 10f); // 빨간색 레이를 2초 동안 보여줌
 
         isHit = false;
 
     }
 
-    private void HitPointCheck(Vector3 hitPoint,Rigidbody rb)
+    private void HitPointCheck(Vector3 hitPoint, Rigidbody rb)
     {
         if (Managers.Game.GameState != Define.GameState.InGround)
             return;
@@ -164,7 +183,7 @@ public class BatCollider : MonoBehaviour
             _hitPos = HitPos.Mid;
         else if (min == bottomCheck)
             _hitPos = HitPos.Bottom;
-        else if(min == midRowCheck)
+        else if (min == midRowCheck)
             _hitPos = HitPos.MidRow;
         else
         {
@@ -175,8 +194,8 @@ public class BatCollider : MonoBehaviour
         Vector3 forceDirection = Vector3.zero;
         Color hitColor = Color.white;
 
-        forceDirection = GetDirection(topCheck, midCheck, midRowCheck, bottomCheck,ref hitColor);
-        float scroe = GetScoreFromDistance(topCheck,midRowCheck, midCheck, bottomCheck);
+        forceDirection = GetDirection(topCheck, midCheck, midRowCheck, bottomCheck, ref hitColor);
+        float scroe = GetScoreFromDistance(topCheck, midRowCheck, midCheck, bottomCheck);
 
 
         rb.velocity = forceDirection;
@@ -185,12 +204,12 @@ public class BatCollider : MonoBehaviour
 
         // 레이 그리기
         float rayLength = 5f; // 원하는 레이의 길이
-        Debug.DrawRay(transform.parent.position, forceDirection * rayLength, hitColor, 3f); // 빨간색 레이를 2초 동안 보여줌
+        Debug.DrawRay(transform.parent.position, forceDirection * (forceAmount + Managers.Game.Speed*0.5f), hitColor, 3f); // 빨간색 레이를 2초 동안 보여줌
 
         Debug.Log($"HitPoint :  {_hitPos}  Score : {scroe} : Color {hitColor}");
 
 
-        Managers.Game.GetGameScoreAndGetPosition(scroe,hitPoint);
+        Managers.Game.GetGameScoreAndGetPosition(scroe, hitPoint);
 
         isHit = false;
 
@@ -198,7 +217,7 @@ public class BatCollider : MonoBehaviour
 
 
 
-    private Vector3 GetDirection(float topDist, float midDist,float midRowDist, float bottomDist, ref Color hitColor)
+    private Vector3 GetDirection(float topDist, float midDist, float midRowDist, float bottomDist, ref Color hitColor)
     {
         Vector3 forceDirection = Vector3.zero;
 
@@ -280,7 +299,7 @@ public class BatCollider : MonoBehaviour
         if (topDist < midDist && topDist < midRowDist && topDist < bottomDist) // Top에 가장 가까울 때
         {
             float t = topDist / (topDist + midDist); // 보간 비율 계산
-            score = Mathf.Lerp(40 + batPower, 100+ batPower, t);
+            score = Mathf.Lerp(40 + batPower, 100 + batPower, t);
         }
         else if (midDist < topDist && midDist < midRowDist && midDist < bottomDist) // Mid에 가장 가까울 때
         {
@@ -318,24 +337,42 @@ public class BatCollider : MonoBehaviour
 
     }
 
+    private void OnDestroy()
+    {
+        transform.DOKill();
+        transform.localScale = originalScale;
+    }
+
 
 #if UNITY_EDITOR
 
     private void OnDrawGizmos()
     {
-        
+
         float forceAmount = 2f;
 
         Gizmos.color = Color.blue;
-        Vector3 forceDirection = transform.parent.forward + transform.parent.up*2f;
+        Vector3 forceDirection = transform.parent.forward + transform.parent.up * 2f;
+        Gizmos.DrawRay(transform.position, forceDirection * forceAmount);
+        forceDirection += new Vector3(1, 0, 0);
+        Gizmos.DrawRay(transform.position, forceDirection * forceAmount);
+        forceDirection += new Vector3(-1, 0, 0);
         Gizmos.DrawRay(transform.position, forceDirection * forceAmount);
 
         Gizmos.color = Color.green;
-        forceDirection = transform.parent.forward + transform.parent.up*1f;
+        forceDirection = transform.parent.forward + transform.parent.up * 1f;
+        Gizmos.DrawRay(transform.position, forceDirection * forceAmount);
+        forceDirection += new Vector3(0, 0, 1);
+        Gizmos.DrawRay(transform.position, forceDirection * forceAmount);
+        forceDirection += new Vector3(0, 0, -1);
         Gizmos.DrawRay(transform.position, forceDirection * forceAmount);
 
         Gizmos.color = Color.cyan;
         forceDirection = transform.parent.forward + transform.parent.up * 0.5f;
+        Gizmos.DrawRay(transform.position, forceDirection * forceAmount);
+        forceDirection += new Vector3(1, 0, 1);
+        Gizmos.DrawRay(transform.position, forceDirection * forceAmount);
+        forceDirection += new Vector3(-1, 0, -1);
         Gizmos.DrawRay(transform.position, forceDirection * forceAmount);
     }
 

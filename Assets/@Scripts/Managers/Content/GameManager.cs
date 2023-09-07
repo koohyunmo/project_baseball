@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 using static Define;
+using static Keys;
 
 
 using Debug = UnityEngine.Debug;
@@ -104,12 +105,21 @@ public class GameManager
 
     // 난이도
     public League League { get { return _league; } private set { _league = value; } }
-    private League _league = League.SemiPro;
+    private League _league = League.Silver;
 
     // 호크아이
-
+    public bool HawkEyes { get; private set; }
     HawkeyeLevel hawkeyeLevel = HawkeyeLevel.ZERO;
     public HawkeyeLevel HawkeyeLevel { get { return hawkeyeLevel; } private set { hawkeyeLevel = value; } }
+
+    public float HawkEyesAmount
+    {
+        get
+        {
+            return (100 - (int)hawkeyeLevel) * 0.01f;
+        }
+    }
+
 
     // 게임 타입
     private GameMode _gameMode = GameMode.None;
@@ -132,7 +142,7 @@ public class GameManager
             _gameState = GameState.Home;
             //Managers.UI.ShowPopupUI<UI_Main>();
             StateChangeEvent();
-            var go = Managers.Resource.Instantiate("InGround");
+            var go = Managers.Resource.Instantiate(IN_GAME_OBJ_KEY.InGround.ToString());
             go.transform.position = Vector3.zero;
             go.transform.rotation = Quaternion.identity;
 
@@ -207,7 +217,7 @@ public class GameManager
                     _gameMode = GameMode.None;
                     ScoreAndCountClear();
 
-                }              
+                }
                 break;
             case GameState.Ready:
                 {
@@ -215,6 +225,15 @@ public class GameManager
                     batPositionSetting?.Invoke();
                     Managers.UI.ShowPopupUI<UI_Timer>();
                     Managers.Obj.DespawnAll();
+                    {
+                        var skillSo = Managers.Resource.GetScriptableObjet<SkillScriptableObject>(Managers.Game.EquipSkillId);
+                        hawkeyeLevel = skillSo.HawkeyeLevel;
+
+                        if (hawkeyeLevel == HawkeyeLevel.ZERO)
+                            HawkEyes = false;
+                        else
+                            HawkEyes = true;
+                    }
                 }
                 break;
             case GameState.InGround:
@@ -307,7 +326,7 @@ public class GameManager
         await Task.Delay(10000);  // 10초 대기
         ResumeChallengeGame();
     }
-    
+
     private void ResumeChallengeGame()
     {
         // 게임 시간을 다시 시작합니다.
@@ -328,7 +347,7 @@ public class GameManager
 
     public void GameRetry(Action callBack = null)
     {
-        
+
         GameState = GameState.Ready;
         callBack?.Invoke();
         MainCam.OffRePlay();
@@ -336,7 +355,7 @@ public class GameManager
     }
 
     #region 게터세터
-    public void GetGameScoreAndGetPosition(float score,Vector3 hitPos)
+    public void GetGameScoreAndGetPosition(float score, Vector3 hitPos)
     {
         HitPos = hitPos;
 
@@ -345,7 +364,7 @@ public class GameManager
             HitScore = 1;
             SwingCount++;
         }
-        else if(score >= 80 && score < 85)
+        else if (score >= 80 && score < 85)
         {
             HitScore += 1;
             SwingCount++;
@@ -550,9 +569,13 @@ public class GameManager
     public GameDB GameDB { get { return _gameData; } private set { _gameData = value; } }
     private GameDB _gameData = new GameDB();
 
+
+
+
     public PlayerInfo PlayerInfo { get { return _gameData.playerInfo; } private set { _gameData.playerInfo = value; } }
     public string EquipBallId { get { return _gameData.playerInfo.equipBallId; } private set { _gameData.playerInfo.equipBallId = value; } }
     public string EquipBatId { get { return _gameData.playerInfo.equipBatId; } private set { _gameData.playerInfo.equipBatId = value; } }
+    public string EquipSkillId { get { return _gameData.playerInfo.equipSkillId; } private set { _gameData.playerInfo.equipSkillId = value; } }
     public GameDB SaveData
     {
         get
@@ -591,28 +614,36 @@ public class GameManager
             {
 
 
-                if (Managers.Resource.Resources["BAT_2"] is ItemScriptableObject so)
+                if (Managers.Resource.Resources[BAT_KEY.BAT_2.ToString()] is ItemScriptableObject so)
                 {
                     // Test Data
-                    PlayerItem startItem = new PlayerItem(so.id, so.name, so.name, ItemType.Bat);
+                    PlayerItem startItem = new PlayerItem(so.id, so.name, so.name, ItemType.BAT);
                     //StartData.playerItem.Add(startItem.itemId, startItem);
 #if UNITY_EDITOR
                     StartData.playerInfo.money = 100000;
 #endif
                     StartData.playerInfo.level = 1;
-                    StartData.playerInfo.equipBatId = "BAT_2";
+                    StartData.playerInfo.equipBatId = BAT_KEY.BAT_2.ToString();
                     StartData.playerInventory.Add(startItem.itemId);
                 }
 
-                if (Managers.Resource.Resources["BALL_1"] is ItemScriptableObject ball)
+                if (Managers.Resource.Resources[BALL_KEY.BALL_1.ToString()] is ItemScriptableObject ball)
                 {
                     // Test Data
-                    PlayerItem startItem = new PlayerItem(ball.id, ball.name, ball.name, ItemType.Ball);
+                    PlayerItem startItem = new PlayerItem(ball.id, ball.name, ball.name, ItemType.BALL);
                     //StartData.playerItem.Add(startItem.itemId, startItem);
 
                     StartData.playerInfo.level = 1;
-                    StartData.playerInfo.equipBallId = "BALL_1";
+                    StartData.playerInfo.equipBallId = BALL_KEY.BALL_1.ToString();
 
+                    StartData.playerInventory.Add(startItem.itemId);
+                }
+
+                if (Managers.Resource.Resources[HAWK_EYE_KEY.SKILL_0.ToString()] is ItemScriptableObject so2)
+                {
+                    // Test Data
+                    PlayerItem startItem = new PlayerItem(so2.id, so2.name, so2.name, ItemType.SKILL);
+                    StartData.playerInfo.equipSkillId = HAWK_EYE_KEY.SKILL_0.ToString();
                     StartData.playerInventory.Add(startItem.itemId);
                 }
 
@@ -669,11 +700,15 @@ public class GameManager
 
     public void ChangeItem(string key)
     {
-        if(key.Contains("BALL_"))
+        if (key.Contains("BALL_"))
         {
             ChangeBall(key);
         }
-        else if(key.Contains("BAT_"))
+        else if (key.Contains("BAT_"))
+        {
+            ChangeBat(key);
+        }
+        else if (key.Contains("SKILL_"))
         {
             ChangeBat(key);
         }
@@ -722,6 +757,16 @@ public class GameManager
     public void RemoveEqupUIItemAction(Action choiceUIUpdate)
     {
         EquipItemAction -= choiceUIUpdate;
+    }
+
+    public void ChangeSkill(string id)
+    {
+        if (EquipSkillId.Equals(id) == false)
+            EquipSkillId = id;
+        else
+            return;
+
+        SaveGame();
     }
     #endregion
 

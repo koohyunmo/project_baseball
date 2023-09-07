@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1345027383935582, guid: 508c9f007a2bf724d88361f16953bbac, type: 3}
       propertyPath: m_Name
-      value: FX_Fire_Big_02
+      value: FX_Fire_Big_02 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4490625886785072, guid: 508c9f007a2bf724d88361f16953bbac, type: 3}
       propertyPath: m_RootOrder
@@ -55,11 +55,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 199716733195319564, guid: 508c9f007a2bf724d88361f16953bbac, type: 3}
+    - target: {fileID: 199716733195319564, guid: 508c9f007a2bf724d88361f16953bbac,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 199716733195319564, guid: 508c9f007a2bf724d88361f16953bbac,
+        type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 199925524669934206, guid: 508c9f007a2bf724d88361f16953bbac, type: 3}
+    - target: {fileID: 199925524669934206, guid: 508c9f007a2bf724d88361f16953bbac,
+        type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}

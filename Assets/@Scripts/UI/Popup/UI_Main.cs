@@ -217,4 +217,10 @@ public class UI_Main : UI_Popup
         Managers.Game.GameReady(Define.GameMode.Normal);
         yield break;
     }
+
+
+    private void OnDestroy()
+    {
+        transform.DOKill();
+    }
 }

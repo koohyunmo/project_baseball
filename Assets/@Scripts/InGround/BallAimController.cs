@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,17 +10,12 @@ public class BallAimController : InGameObjectController
     Transform _ball = null;
     float _initialDistance = 0f;
 
-    readonly float testValue = 0.1f;
-
-    float hValue = 0.1f;
+    float hValue = 1f;
 
     private void OnEnable()
     {
         _initialDistance = 0f;
-        hValue = testValue;
-        var tt = (int)(10 - Managers.Game.HawkeyeLevel) * 0.1f;
-
-        Debug.Log("hValue : " + tt);
+        hValue = 1f;
     }
 
     public void DataInit(Vector3 vec, Transform ball)
@@ -27,6 +23,7 @@ public class BallAimController : InGameObjectController
         _targetPos = vec;
         _ball = ball;
         _initialDistance = (_targetPos - ball.position).magnitude;
+        hValue = Managers.Game.HawkEyesAmount;
 
 
         Managers.Game.SetHitCallBack(DespawnBall);
@@ -62,7 +59,7 @@ public class BallAimController : InGameObjectController
                 return;
 
             float currentDistance = Vector3.Distance(_ball.position, _targetPos);
-            float scaleValue = Mathf.Lerp((float)Managers.Game.League * hValue, 1f, currentDistance / _initialDistance);
+            float scaleValue = Mathf.Lerp(hValue, 1f, currentDistance / _initialDistance);
 
             transform.localScale = new Vector3(scaleValue, scaleValue, scaleValue);
         }

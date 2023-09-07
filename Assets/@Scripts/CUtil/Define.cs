@@ -62,10 +62,12 @@ public static class Define
     public enum League
     {
 		TEST,
-        Amateur,
-        SemiPro,
-        Mainor,
-        Major,
+        Bronze,
+        Silver,
+        Gold,
+        Platinum,
+		Diamond,
+        Master,
 		COUNT
     }
 
@@ -92,9 +94,10 @@ public static class Define
 	public enum ItemType
 	{
 		None,
-		Ball,
-		Bat,
+		BALL,
+		BAT,
 		Background,
+		SKILL
 	}
 
 
@@ -115,13 +118,16 @@ public static class Define
 	public enum HawkeyeLevel
 	{
 		ZERO = 0,
-		ONE = 1,
-		TWO = 2,
-		THREE = 3,
-		FOUR = 4,
-		FIVE = 5,
-		SIX = 7,
-		SEVEN = 9
+		ONE = 10,
+		TWO = 20,
+		THREE = 30,
+		FOUR = 40,
+		FIVE = 50,
+		SIX = 60,
+		SEVEN = 70,
+        EIGHT = 80,
+		NINE = 90,
+		TEN = 95
 	}
 
 	public enum Grade
@@ -145,6 +151,6 @@ public static class Define
     {
         Ball,
         Bat,
-        Background
+        Skill
     }
 }

@@ -225,7 +225,7 @@ Transform:
   m_Children:
   - {fileID: 557910485}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &72273702
 MonoBehaviour:
@@ -449,7 +449,7 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   _virtualCamera: {fileID: 0}
   replayCamOffsetPos: {x: 0, y: 0, z: 0}
-  replayCamOffsetRot: {x: 0, y: 0, z: 0}
+  replayCamOffsetRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &404291605
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,7 +713,7 @@ MonoBehaviour:
   offset: {x: 0, y: 1, z: -10}
   _virtualCamera: {fileID: 31124143}
   replayCamOffsetPos: {x: 0, y: 0, z: 0}
-  replayCamOffsetRot: {x: 0, y: 0, z: 0}
+  replayCamOffsetRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!81 &607225666
 AudioListener:
   m_ObjectHideFlags: 0
@@ -732,7 +732,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.4811321, g: 0.40623888, b: 0.40623888, a: 0}
+  m_BackGroundColor: {r: 0.24528301, g: 0.18396226, b: 0.18396226, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -941,6 +941,7 @@ MonoBehaviour:
     equipBatId: 
     equipBallId: 
     equipBackgroundID: 
+    playerPower: 0
 --- !u!4 &697456229
 Transform:
   m_ObjectHideFlags: 0
@@ -954,7 +955,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1573257421
 GameObject:
@@ -1066,7 +1067,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2131472087
 GameObject:
@@ -1210,7 +1211,7 @@ RectTransform:
   m_Children:
   - {fileID: 8813019073340567139}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

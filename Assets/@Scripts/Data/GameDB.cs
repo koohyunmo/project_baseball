@@ -22,7 +22,7 @@ public class PlayerItem
 
     }
 
-    public PlayerItem(string id,string name, string desc,Define.ItemType itemType = Define.ItemType.Bat)
+    public PlayerItem(string id,string name, string desc,Define.ItemType itemType = Define.ItemType.BAT)
     {
         itemId = id;
         this.itemType = itemType;
@@ -48,6 +48,7 @@ public class PlayerInfo
     public string equipBallId;
     public string equipBackgroundID;
     public int playerPower;
+    public string equipSkillId;
 }
 
 

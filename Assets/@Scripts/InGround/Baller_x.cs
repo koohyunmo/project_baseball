@@ -228,16 +228,16 @@ public class Baller_X : MonoBehaviour
         // 난이도별 구속
         switch (League)
         {
-            case League.Major:
+            case League.Platinum:
                 originalSpeed = Random.Range(41.67f, 44.44f);
                 break;
-            case League.Mainor:
+            case League.Gold:
                 originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.9f, 0.95f);
                 break;
-            case League.Amateur:
+            case League.Bronze:
                 originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.8f, 0.88f);
                 break;
-            case League.SemiPro:
+            case League.Silver:
                 originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.7f, 0.82f);
                 break;
             case League.TEST:

@@ -26,7 +26,8 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
     Vector2 _touchPosition;
     Vector2 _moveDir;
     float _joystickRadius = 0.0f;
-    float _speed = 2.5f;
+    //float _speed = 2.5f;
+    float _speed = 5f;
 
     float ratioX;
     float ratioY;

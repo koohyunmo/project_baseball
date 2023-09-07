@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: BallEffect
+  m_EditorClassIdentifier: 
+  m_GroupName: BallEffect
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 57c9fddfd783d414ead8c7350eb9fb9c
+  m_SerializeEntries:
+  - m_GUID: f6d201bc8595a5b4f92f70df92d33aed
+    m_Address: Trail_1_Smoke
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+  - m_GUID: 08044a28ec92ac248a400719aac7174e
+    m_Address: Trail_2_SmallFire
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+  - m_GUID: 4cfa403c790cf324981887a07a1552ed
+    m_Address: Trail_3_BigFire
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+  - m_GUID: 168db9be908d7c14687ece76ce374b2f
+    m_Address: Trail_4_Flash
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 9c2d91b0a86c0bb4b9bbf0d47449c95f, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 14bd8ad3b59152c418bc7e06401cc4c4, type: 2}
+    - {fileID: 11400000, guid: aac84f7a1e3d6834a8a40081732cc743, type: 2}

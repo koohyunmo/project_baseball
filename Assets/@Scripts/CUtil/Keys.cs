@@ -49,4 +49,14 @@ public static class Keys
     {
         HitB, HitA, HitD
     }
+
+    public enum BALL_EFFECT_KEY
+    {
+        Trail_1_Smoke, Trail_2_SmallFire, Trail_3_BigFire, Trail_4_Flash
+    }
+
+    public enum HAWK_EYE_KEY
+    {
+        SKILL_0, SKILL_1, SKILL_2, SKILL_3
+    }
 }

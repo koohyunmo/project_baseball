@@ -10,7 +10,7 @@ public class BatScriptableObject : ItemScriptableObject
     public override void Settings()
     {
         power = ((int)grade+1) * 5.0f;
-        type = Define.ItemType.Bat;
+        type = Define.ItemType.BAT;
 
     }
 }

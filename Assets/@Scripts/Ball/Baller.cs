@@ -23,7 +23,7 @@ public class Baller : MonoBehaviour
     private Vector3 initialControlPointPosition; // 제어점의 초기 위치
     public GameObject ballAimPrefab; // 호크가이에임
     public GameObject strikeAimPrefab; // 스트라이크에임
-    [SerializeField] private bool _hEyes = false;
+
     [SerializeField] private float _ballerDistance = 0.0f;
 
     [SerializeField] private ThrowType _throwType;
@@ -240,16 +240,22 @@ public class Baller : MonoBehaviour
         // 난이도별 구속
         switch (League)
         {
-            case League.Major:
+            case League.Master:
+                originalSpeed = Random.Range(58f, 62f);
+                break;
+            case League.Diamond:
+                originalSpeed = Random.Range(49f, 53f);
+                break;
+            case League.Platinum:
                 originalSpeed = Random.Range(41.67f, 44.44f);
                 break;
-            case League.Mainor:
+            case League.Gold:
                 originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.9f, 0.95f);
                 break;
-            case League.Amateur:
+            case League.Bronze:
                 originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.8f, 0.88f);
                 break;
-            case League.SemiPro:
+            case League.Silver:
                 originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.7f, 0.82f);
                 break;
             case League.TEST:
@@ -264,34 +270,34 @@ public class Baller : MonoBehaviour
         switch (_throwType)
         {
             case ThrowType.FastBall:
-                speed = originalSpeed * 1.0f;
+                speed = originalSpeed * (1.0f + ((int)Managers.Game.League) * 0.03f);
                 break;
             case ThrowType.Curve:
-                speed = originalSpeed * 0.83f;
+                speed = originalSpeed * (0.83f + ((int)Managers.Game.League) * 0.03f);
                 break;
             case ThrowType.Slider:
-                speed = originalSpeed * 0.92f;
+                speed = originalSpeed * (0.92f + ((int)Managers.Game.League) * 0.03f);
                 break;
             case ThrowType.ChangUp:
-                speed = originalSpeed * 0.87f;
+                speed = originalSpeed * (0.87f + ((int)Managers.Game.League) * 0.03f);
                 break;
             case ThrowType.Sinker:
-                speed = originalSpeed * 0.98f;
+                speed = originalSpeed * (0.98f + ((int)Managers.Game.League) * 0.03f);
                 break;
             case ThrowType.ExCurve:
-                speed = originalSpeed * 0.65f;
+                speed = originalSpeed * (0.65f + ((int)Managers.Game.League) * 0.035f);
                 break;
             case ThrowType.NormalCurve:
-                speed = originalSpeed * 0.75f;
+                speed = originalSpeed * (0.75f + ((int)Managers.Game.League) * 0.035f);
                 break;
             case ThrowType.Knuckleball:
-                speed = originalSpeed * 0.72f;
+                speed = originalSpeed * (0.72f + ((int)Managers.Game.League) * 0.035f);
                 break;
             case ThrowType.TwoSeamFastball:
-                speed = originalSpeed * 0.98f;
+                speed = originalSpeed * (0.98f + ((int)Managers.Game.League) * 0.03f);
                 break;
             case ThrowType.Splitter:
-                speed = originalSpeed * 0.92f;
+                speed = originalSpeed * (0.92f + ((int)Managers.Game.League) * 0.03f);
                 break;
         }
     }
@@ -314,7 +320,7 @@ public class Baller : MonoBehaviour
         //GameObject ballInstance = Instantiate(ballPrefab, startPoint.position, Quaternion.identity);
 
 
-        if(_prevId != Managers.Game.EquipBallId)
+        if (_prevId != Managers.Game.EquipBallId)
         {
             var ballId = Managers.Game.EquipBallId;
             ballPrefab = Managers.Resource.GetScriptableObjet<BallScriptableObject>(ballId).model;
@@ -322,7 +328,7 @@ public class Baller : MonoBehaviour
 
 
         var ballInstance = Managers.Obj.Spawn<BallController>(ballPrefab, startPoint.position);
-        
+
 
         ballInstance.transform.position = startPoint.position;
         ballInstance.transform.rotation = Quaternion.identity;
@@ -333,6 +339,7 @@ public class Baller : MonoBehaviour
         ballInstance.endPoint = endPoint;
         ballInstance.controlPoint = controlPoint;
         ballInstance.pathRenderer = pathRenderer;
+        ballInstance.CreateEffect();
 
         ball = ballInstance.transform;
         generatePathMethod.Invoke();
@@ -475,7 +482,7 @@ public class Baller : MonoBehaviour
         Managers.Game.AimPoint = aimPoint;
 
         // 호크아이여부
-        if (_hEyes == true)
+        if (Managers.Game.HawkEyes == true)
         {
             var go = Managers.Obj.Spawn<BallAimController>(ballAimPrefab.name, aimPoint);
             go.DataInit(aimPoint, ball);
@@ -538,19 +545,19 @@ public class Baller : MonoBehaviour
             ballPrefab = Managers.Resource.GetScriptableObjet<BallScriptableObject>(ballId).model;
         }
         var replayBall = Managers.Obj.Spawn<BallController>(ballPrefab, pathRenderer.GetPosition(0));
-        //camManager.OnReplay(replayBall.transform);
+
         camManager.OnReplay(replayBall.transform, transform.position);
 
         float replaySpeed = speed;
 
-        var forwardDistacne = (transform.position - Managers.Game.StrikeZone.transform.position) / (pathRenderer.positionCount - 1);
+
 
         for (int i = 0; i < pathRenderer.positionCount - 1; i++)
         {
             Vector3 startPoint = replayBall.transform.position;
             Vector3 endPoint = pathRenderer.GetPosition(i + 1);
 
-            
+
 
             float journeyLength = Vector3.Distance(startPoint, endPoint);
             float journeyProgress = 0;
@@ -586,10 +593,10 @@ public class Baller : MonoBehaviour
 
 
         Managers.Game.isReplay = false;
-        
+
         yield return new WaitForSeconds(5f);
 
-        if(Managers.Game.GameState == GameState.End)
+        if (Managers.Game.GameState == GameState.End)
             camManager.ReplayBack(replayBall.transform, transform.position);
 
         //yield break;

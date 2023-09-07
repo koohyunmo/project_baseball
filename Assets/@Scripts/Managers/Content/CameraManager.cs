@@ -44,7 +44,7 @@ public class CameraManager : MonoBehaviour
     public void CameraMove(Vector3 pos)
     {
         gameObject.transform.DOMoveZ(pos.z + 10f,0.5f);
-        gameObject.transform.DOMoveY(pos.y + 1f,0);
+        gameObject.transform.DOMoveY(pos.y + 0f,0);
 
     }
 

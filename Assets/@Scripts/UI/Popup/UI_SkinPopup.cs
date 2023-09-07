@@ -60,7 +60,7 @@ public class UI_SkinPopup : UI_Popup
         Slider = Get<Slider>((int)Sliders.Slider);
 
         B_Ball.gameObject.BindEvent(() => { OnClickBallCategory(); });
-        B_Background.gameObject.BindEvent(() => { OnClickBackgroundCategory(); });
+        B_Background.gameObject.BindEvent(() => { OnClickSkillCategory(); });
         B_Bat.gameObject.BindEvent(() => { OnClickBatCategory(); });
 
 
@@ -69,7 +69,7 @@ public class UI_SkinPopup : UI_Popup
         B_Back.gameObject.BindEvent(() => { Managers.UI.ClosePopupUI(this); });
 
 
-        _type = ScollViewType.Bat;
+        _type = ScollViewType.Skill;
 
         switch (_type)
         {
@@ -79,7 +79,7 @@ public class UI_SkinPopup : UI_Popup
             case ScollViewType.Bat:
                 FirstItemUpdate();
                 break;
-            case ScollViewType.Background:
+            case ScollViewType.Skill:
                 FirstItemUpdate();
                 break;
         }
@@ -98,7 +98,7 @@ public class UI_SkinPopup : UI_Popup
             case ScollViewType.Bat:
                 ChangeButtonColor(B_Bat);
                 break;
-            case ScollViewType.Background:
+            case ScollViewType.Skill:
                 ChangeButtonColor(B_Background);
                 break;
 
@@ -121,17 +121,18 @@ public class UI_SkinPopup : UI_Popup
 
     }
 
-    private void OnClickBackgroundCategory()
+    private void OnClickSkillCategory()
     {
         if (_grid == null)
             return;
 
-        if (_type == ScollViewType.Background)
+        if (_type == ScollViewType.Skill)
             return;
 
-        _type = ScollViewType.Background;
+        _type = ScollViewType.Skill;
         Clear();
         ChangeButtonColor(B_Background);
+        MakeItem();
 
     }
 
@@ -161,8 +162,10 @@ public class UI_SkinPopup : UI_Popup
             case ScollViewType.Bat:
                 key = "BAT_";
                 break;
-            case ScollViewType.Background:
+            case ScollViewType.Skill:
+                key = "SKILL_";
                 break;
+                
             default:
                 break;
         }
@@ -174,7 +177,7 @@ public class UI_SkinPopup : UI_Popup
             if (!itemID.Contains(key))
                 continue;
 
-            var item = Managers.Resource.Instantiate("UI_Skin_Item", _grid.transform);
+            var item = Managers.Resource.Instantiate(Keys.UI_KEY.UI_Skin_Item.ToString(), _grid.transform);
             if (item == null)
             {
                 Debug.Log("item is null");
