@@ -53,27 +53,97 @@ public class BatCollider : MonoBehaviour
 
             if (rb != null)
             {
-                if(Managers.Game.GameState == Define.GameState.InGround)
+                Managers.Game.StopWatch.Reset();
+                Managers.Game.StopWatch.Start();
+
+
+                if (Managers.Game.GameState == Define.GameState.InGround)
                 {
                     other.gameObject.GetComponent<BallController>().SetHit();
 
-                }   
-
-                if(isHit == false)
-                {
-                    isHit = true;
-                    HitPointCheck(hitPoint, rb);
                 }
-               
+
+                CalHitScore(hitPoint);
+                // 람다로 공날리는 함수 보내기
+                bat.SwingCollision(hitPoint, HitAction, rb);
+
             }
 
-            bat.Swing(hitPoint);
 
-            Managers.Effect.Play("HitA", hitPoint);
 
+            Managers.Effect.PlayEffect(Keys.BAT_EFFECT_KEY.HitA.ToString(), hitPoint);
             transform.DOShakeScale(0.3f,0.7f);
 
         }
+    }
+
+
+    private void HitAction(Vector3 hitPoint, Rigidbody rb)
+    {
+        if (isHit == false)
+        {
+            isHit = true;
+            FlyTheBall(hitPoint, rb);
+        }
+
+    }
+
+    private void CalHitScore(Vector3 hitPoint)
+    {
+        if (Managers.Game.GameState != Define.GameState.InGround)
+            return;
+
+        var topCheck = (_top.transform.position - hitPoint).sqrMagnitude;
+        var midCheck = (_mid.transform.position - hitPoint).sqrMagnitude;
+        var bottomCheck = (_bottom.transform.position - hitPoint).sqrMagnitude;
+        var midRowCheck = (_midRow.transform.position - hitPoint).sqrMagnitude;
+
+        var min = Mathf.Min(topCheck, midCheck, bottomCheck, midRowCheck);
+
+        if (min == topCheck)
+            _hitPos = HitPos.Top;
+        else if (min == midCheck)
+            _hitPos = HitPos.Mid;
+        else if (min == bottomCheck)
+            _hitPos = HitPos.Bottom;
+        else if (min == midRowCheck)
+            _hitPos = HitPos.MidRow;
+        else
+        {
+            Debug.LogWarning("없는 타입");
+        }
+
+
+        float scroe = GetScoreFromDistance(topCheck, midRowCheck, midCheck, bottomCheck);
+        Managers.Game.GetGameScoreAndGetPosition(scroe, hitPoint);
+    }
+
+    private void FlyTheBall(Vector3 hitPoint, Rigidbody rb)
+    {
+        if (Managers.Game.GameState != Define.GameState.InGround)
+            return;
+
+        var topCheck = (_top.transform.position - hitPoint).sqrMagnitude;
+        var midCheck = (_mid.transform.position - hitPoint).sqrMagnitude;
+        var bottomCheck = (_bottom.transform.position - hitPoint).sqrMagnitude;
+        var midRowCheck = (_midRow.transform.position - hitPoint).sqrMagnitude;
+
+        float forceAmount = 20f;
+        Vector3 forceDirection = Vector3.zero;
+        Color hitColor = Color.white;
+
+        forceDirection = GetDirection(topCheck, midCheck, midRowCheck, bottomCheck, ref hitColor);
+
+        rb.velocity = forceDirection;
+        rb.AddForce(forceDirection * forceAmount, ForceMode.Impulse);
+        rb.useGravity = true;
+
+        // 레이 그리기
+        float rayLength = 5f; // 원하는 레이의 길이
+        Debug.DrawRay(transform.parent.position, forceDirection * rayLength, hitColor, 3f); // 빨간색 레이를 2초 동안 보여줌
+
+        isHit = false;
+
     }
 
     private void HitPointCheck(Vector3 hitPoint,Rigidbody rb)

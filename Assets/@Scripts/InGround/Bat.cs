@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using TMPro;
 using UnityEngine;
 
@@ -40,6 +42,7 @@ public class Bat : MonoBehaviour
     private float returnLerpTime = 0; // 원래 위치로 돌아갈 때 사용하는 lerp 타이머
     private float returnLerpSpeed = 1f; // 원래 위치로 돌아갈 때의 lerp 속도
 
+    private Action<Vector3, Rigidbody> _flyTheBall; 
     enum BatState
     {
         Idle,
@@ -271,6 +274,8 @@ public class Bat : MonoBehaviour
 
         if (batState == BatState.Swing)
         {
+           
+
             if (GameState != Define.GameState.InGround && Managers.Game.isReplay)
             {
                 slowSpeed = 1f * Managers.Game.ReplaySlowMode;
@@ -290,14 +295,32 @@ public class Bat : MonoBehaviour
             // 회전 및 위치 보간
             //model.transform.position = Vector3.Lerp(originalBatPos, endBat.position, curveValue);
             anim.Play("Bat_Swing");
-            //anim.Play("Bat_Weak_Swing");
-            //anim.Play("Bat_Swing");
 
+
+            // 이시점에서 애니메이션 실행
+            AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+
+            // stateInfo.normalizedTime은 애니메이션의 현재 진행 시간을 0.0 ~ 1.0의 범위로 반환합니다.
+            // 따라서 이 값이 0.5f 이상이면 애니메이션의 중간 지점에 도달했다고 볼 수 있습니다.
+            if (stateInfo.IsName("Bat_Swing") && stateInfo.normalizedTime >= 0.15f)
+            {
+                
+                _flyTheBall?.Invoke(_hitPoint,_ballRigid);
+                _flyTheBall = null;
+
+                //Managers.Game.StopWatch.Stop();
+                //Debug.Log($"FunctionB 실행 시간: {Managers.Game.StopWatch.ElapsedMilliseconds}ms");
+                
+            }
+
+
+            // 최대시간 도달후 배트 스윙 + 상태 종료
             if (lerpTimer >= maxTime)
             {
                 lerpTimer = 0;
                 batState = BatState.Idle;
                 anim.Play("Bat_Idle");
+                Time.timeScale = 1f;
             }
 
         }
@@ -327,34 +350,43 @@ public class Bat : MonoBehaviour
         }
     }
 
-    private void SwingAnim()
-    {
-        if (GameState == Define.GameState.End)
-        {
-            string animationName = "Bat_Swing"; // 애니메이션 클립 이름
-            batState = BatState.Idle;
-            float stopAt = 0.2f; // 애니메이션의 중간에서 멈추려면 0.5 (0은 시작, 1은 끝)
+    private Rigidbody _ballRigid;
+    private Vector3 _hitPoint;
 
-            // 애니메이션의 정확한 시점에서 멈추기
-            anim.Play(animationName, 0, stopAt);
-            anim.speed = 0;
-        }
-    }
-
-    public void Swing(Vector3 hitPoint)
+    public void SwingCollision(Vector3 hitPoint, Action<Vector3,Rigidbody> flyTheBallAction, Rigidbody ballRigid)
     {
-        if (batState == BatState.Idle) // 스윙 중이 아닐 때만 스윙 시작
+
+        if (batState == BatState.Swing) // 스윙 중이 아닐 때만 스윙 시작
         {
+            Debug.Log("SwingCollision");
             var go = Managers.Obj.Spawn<TextController>("HitScoreText", hitPoint);
             go.transform.position = hitPoint;
+            //batState = BatState.Swing;
+
+            _flyTheBall -= flyTheBallAction;
+            _flyTheBall += flyTheBallAction;
+
+            _ballRigid = null;
+            _ballRigid = ballRigid;
+
+            _hitPoint = Vector3.zero;
+            _hitPoint = hitPoint;
+
+
             Managers.Game.HitEvent();
-            batState = BatState.Swing;
         }
 
         // 카메라 효과를 추가합니다.
         StartCoroutine(CameraShake());
     }
 
+    public void SwingBatAnim()
+    {
+        if (batState == BatState.Idle) // 스윙 중이 아닐 때만 스윙 시작
+        {
+            batState = BatState.Swing;
+        }
+    }
     public void HutSwing()
     {
         if (batState == BatState.Idle) // 스윙 중이 아닐 때만 스윙 시작
@@ -398,8 +430,8 @@ public class Bat : MonoBehaviour
 
         while (elapsed < shakeDuration)
         {
-            float x = originalCamPosition.x + Random.Range(-1f, 1f) * shakeMagnitude;
-            float z = originalCamPosition.z + Random.Range(-1f, 1f) * shakeMagnitude;
+            float x = originalCamPosition.x + UnityEngine.Random.Range(-1f, 1f) * shakeMagnitude;
+            float z = originalCamPosition.z + UnityEngine.Random.Range(-1f, 1f) * shakeMagnitude;
 
             Camera.main.transform.position = new Vector3(x, originalCamPosition.y, z);
 

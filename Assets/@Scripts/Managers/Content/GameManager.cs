@@ -2,15 +2,20 @@ using DG.Tweening.Plugins.Core.PathCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 using static Define;
 
+
+using Debug = UnityEngine.Debug;
 public class GameManager
 {
     GameState _gameState = GameState.Home;
+
+
+    public Stopwatch StopWatch { get; set; } = new Stopwatch();
 
     public Bat Bat { get { return _bat; } private set { _bat = value; } }
     private Bat _bat = null;
@@ -200,16 +205,13 @@ public class GameManager
                     MainCam.MoveOriginaPos();
                     Managers.UI.ShowPopupUI<UI_Main>();
                     _gameMode = GameMode.None;
+                    ScoreAndCountClear();
 
-                    HitScore = 0;
-                    SwingCount = 0;
-                    HomeRunCount = 0;
-                    ChallengeScore = 0;
-                    ChallengeGameID = "";
                 }              
                 break;
             case GameState.Ready:
                 {
+                    HitScore = 0;
                     batPositionSetting?.Invoke();
                     Managers.UI.ShowPopupUI<UI_Timer>();
                     Managers.Obj.DespawnAll();
@@ -232,6 +234,16 @@ public class GameManager
                 break;
         }
 
+    }
+
+    private void ScoreAndCountClear()
+    {
+        HitScore = 0;
+        GameScore = 0;
+        SwingCount = 0;
+        HomeRunCount = 0;
+        ChallengeScore = 0;
+        ChallengeGameID = "";
     }
 
 

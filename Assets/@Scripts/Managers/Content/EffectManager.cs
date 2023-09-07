@@ -12,11 +12,11 @@ public struct EffectData
 
 }
 
-public class EffectManager 
+public class EffectManager
 {
     public Dictionary<string, EffectData> EffectDataDict = new Dictionary<string, EffectData>();
-    
-    public void Play(string key, Vector3 pos, Transform parent = null)
+
+    public void PlayEffect(string key, Vector3 pos, Transform parent = null)
     {
         var effect = Managers.Obj.Spawn<EffectController>(key, pos);
 
@@ -26,7 +26,7 @@ public class EffectManager
         var ps = effect.GetComponent<ParticleSystem>();
 
         if (EffectDataDict.ContainsKey(key) == false)
-        {     
+        {
             EffectData efd = new EffectData
             {
                 ec = effect,
@@ -35,15 +35,13 @@ public class EffectManager
                 duration = ps.main.duration
             };
 
-            EffectDataDict.Add(key,efd);
+            EffectDataDict.Add(key, efd);
         }
-        else
-        {
-            var duration = EffectDataDict[key].duration;
-            effect.SetData(duration);
-            ps.Play();
-        }
-     
+
+
+        var duration = EffectDataDict[key].duration;
+        effect.SetData(duration);
+        ps.Play();
     }
 
 }
