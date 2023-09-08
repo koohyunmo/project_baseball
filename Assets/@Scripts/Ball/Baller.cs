@@ -178,16 +178,10 @@ public class Baller : MonoBehaviour
             return;
 
 
-        /*
-        if (Managers.Object.BallDict.Count < 0)
-            return;
-        // 복사 삭제
-        List<int> ballKeysToRemove = new List<int>(Managers.Object.BallDict.Keys);
-        foreach (var key in ballKeysToRemove)
+        if (false)
         {
-            Managers.Object.BallDict[key].MoveAlongPath();
+            RelplayFollowBall();
         }
-        */
     }
 
     public void ThrowCurveBall()
@@ -273,31 +267,31 @@ public class Baller : MonoBehaviour
                 speed = originalSpeed * (1.0f + ((int)Managers.Game.League) * 0.03f);
                 break;
             case ThrowType.Curve:
-                speed = originalSpeed * (0.83f + ((int)Managers.Game.League) * 0.03f);
+                speed = originalSpeed * (0.83f + ((int)Managers.Game.League) * 0.01f);
                 break;
             case ThrowType.Slider:
-                speed = originalSpeed * (0.92f + ((int)Managers.Game.League) * 0.03f);
+                speed = originalSpeed * (0.92f + ((int)Managers.Game.League) * 0.01f);
                 break;
             case ThrowType.ChangUp:
-                speed = originalSpeed * (0.87f + ((int)Managers.Game.League) * 0.03f);
+                speed = originalSpeed * (0.87f + ((int)Managers.Game.League) * 0.01f);
                 break;
             case ThrowType.Sinker:
-                speed = originalSpeed * (0.98f + ((int)Managers.Game.League) * 0.03f);
+                speed = originalSpeed * (0.98f + ((int)Managers.Game.League) * 0.01f);
                 break;
             case ThrowType.ExCurve:
-                speed = originalSpeed * (0.65f + ((int)Managers.Game.League) * 0.035f);
+                speed = originalSpeed * (0.65f + ((int)Managers.Game.League) * 0.01f);
                 break;
             case ThrowType.NormalCurve:
-                speed = originalSpeed * (0.75f + ((int)Managers.Game.League) * 0.035f);
+                speed = originalSpeed * (0.75f + ((int)Managers.Game.League) * 0.01f);
                 break;
             case ThrowType.Knuckleball:
-                speed = originalSpeed * (0.72f + ((int)Managers.Game.League) * 0.035f);
+                speed = originalSpeed * (0.72f + ((int)Managers.Game.League) * 0.01f);
                 break;
             case ThrowType.TwoSeamFastball:
-                speed = originalSpeed * (0.98f + ((int)Managers.Game.League) * 0.03f);
+                speed = originalSpeed * (0.98f + ((int)Managers.Game.League) * 0.01f);
                 break;
             case ThrowType.Splitter:
-                speed = originalSpeed * (0.92f + ((int)Managers.Game.League) * 0.03f);
+                speed = originalSpeed * (0.92f + ((int)Managers.Game.League) * 0.01f);
                 break;
         }
     }
@@ -310,6 +304,8 @@ public class Baller : MonoBehaviour
         SetLeagueSpeed();
         SetThrowTypeSpeed();
 
+
+        speed = speed + (speed * Managers.Game.HitScore / 500);
 
         Managers.Game.SetBallInfo(speed, _throwType);
 
@@ -519,8 +515,9 @@ public class Baller : MonoBehaviour
     }
     private void RePlay(LineRenderer renderer)
     {
-
+        //pathRenderer = renderer;
         StartCoroutine(co_RelplayFollowBall());
+
     }
 
     private IEnumerator co_RelplayFollowBall()
@@ -602,6 +599,82 @@ public class Baller : MonoBehaviour
         //yield break;
     }
 
+
+
+    private void RelplayFollowBall()
+    {
+        var cam = Camera.main;
+        var camManager = Camera.main.gameObject.GetComponent<CameraManager>();
+
+
+        // widthCurve를 설정하는 부분
+        AnimationCurve curve = new AnimationCurve();
+        curve.AddKey(0, 1f);
+        curve.AddKey(1, 1f);
+
+        pathRenderer.widthCurve = curve;
+
+        // 절대적인 너비 설정
+        pathRenderer.widthMultiplier = 0.01f;
+
+        if (_prevId != Managers.Game.EquipBallId)
+        {
+            var ballId = Managers.Game.EquipBallId;
+            ballPrefab = Managers.Resource.GetScriptableObjet<BallScriptableObject>(ballId).model;
+        }
+        var replayBall = Managers.Obj.Spawn<BallController>(ballPrefab, pathRenderer.GetPosition(0));
+
+        camManager.OnReplay(replayBall.transform, transform.position);
+
+        float replaySpeed = speed;
+
+
+
+        for (int i = 0; i < pathRenderer.positionCount - 1; i++)
+        {
+            Vector3 startPoint = replayBall.transform.position;
+            Vector3 endPoint = pathRenderer.GetPosition(i + 1);
+
+
+
+            float journeyLength = Vector3.Distance(startPoint, endPoint);
+            float journeyProgress = 0;
+
+            while (journeyProgress < journeyLength)
+            {
+                if (GameState == GameState.Home)
+                {
+                    Managers.Game.isReplay = false;
+                }
+
+                float distanceToMove = replaySpeed * Time.deltaTime;
+                journeyProgress += distanceToMove;
+
+                float fractionOfJourney = journeyProgress / journeyLength;
+
+                replayBall.transform.position = Vector3.Lerp(startPoint, endPoint, fractionOfJourney);
+
+                camManager.CameraMove(replayBall.transform.position);
+
+            }
+
+            if (i == pathRenderer.positionCount - 2)
+            {
+                replaySpeed = replaySpeed * Managers.Game.ReplaySlowMode;
+                Managers.Game.StrikeEvent();
+            }
+
+
+        }
+
+
+        Managers.Game.isReplay = false;
+
+
+        if (Managers.Game.GameState == GameState.End)
+            camManager.ReplayBack(replayBall.transform, transform.position);
+
+    }
 
 
 }

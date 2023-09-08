@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 3d84922c38d7c444782fb1a791d97b21, type: 3}
       propertyPath: m_Name
-      value: CFXM_Hit_C White
+      value: CFXM_Hit_C White Variant
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3d84922c38d7c444782fb1a791d97b21, type: 3}
       propertyPath: m_RootOrder
@@ -17,11 +17,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3d84922c38d7c444782fb1a791d97b21, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.0413508
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3d84922c38d7c444782fb1a791d97b21, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.86209583
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3d84922c38d7c444782fb1a791d97b21, type: 3}
       propertyPath: m_LocalPosition.z

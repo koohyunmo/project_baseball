@@ -75,6 +75,7 @@ public class UI_Main : UI_Popup
 
         Managers.Game.SetNotifyItemAction(NotifyItemAnim);
         Managers.Game.SetNotifyRewardAction(NotifyItemAnim);
+        Managers.Game.ChageBackgroundColor();
 
         return true;
 
@@ -109,6 +110,11 @@ public class UI_Main : UI_Popup
 
         Managers.Game.SetLeague((Define.League)league);
         leagueTMP.text = Managers.Game.League.ToString();
+
+
+        Managers.Game.ChageBackgroundColor();
+
+
     }
 
     private void OnClickPrevLeague()
@@ -120,6 +126,8 @@ public class UI_Main : UI_Popup
 
         Managers.Game.SetLeague((Define.League)league);
         leagueTMP.text = Managers.Game.League.ToString();
+
+        Managers.Game.ChageBackgroundColor();
     }
 
     private void B_SkinClick()

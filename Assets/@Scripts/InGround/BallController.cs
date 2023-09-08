@@ -171,10 +171,10 @@ public class BallController : InGameObjectController
     public void CreateEffect()
     {
 
-        if(Managers.Game.HitScore > 9999)
+        if(Managers.Game.HitScore > 30)
         {
             TrailClear();
-            Managers.Effect.PlayTrail(Keys.BALL_EFFECT_KEY.Trail_4_Flash.ToString(), transform.localPosition, TrailRoot);
+            Managers.Effect.PlayTrail(Keys.BALL_EFFECT_KEY.Trail_3_BigFire.ToString(), transform.localPosition, TrailRoot);
         }
         else if(Managers.Game.HitScore > 10)
         {

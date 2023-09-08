@@ -269,5 +269,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeSlider: {fileID: 874826495353732685}
   adImage: {fileID: 2589399345109548890}
-  maxTime: 5
+  maxTime: 2.5
   useColorBlend: 1

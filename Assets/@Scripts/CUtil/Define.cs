@@ -153,4 +153,12 @@ public static class Define
         Bat,
         Skill
     }
+
+    public static readonly Color Bronze = new Color(205f / 255f, 127f / 255f, 50f / 255f, (155f/255f));
+    public static readonly Color Silver = new Color(192f / 255f, 192f / 255f, 192f / 255f, (155f / 255f));
+    public static readonly Color Gold = new Color(255f / 255f, 223f / 255f, 86f / 255f, 1f);
+    public static readonly Color Platinum = new Color(8f / 255f, 232f / 255f, 222f / 255f, 1f);
+    public static readonly Color Diamond = new Color(185f / 255f, 242f / 255f, 255f / 255f, (155f / 255f));
+    public static readonly Color Master = new Color(123f / 255f, 31f / 255f, 162f / 255f, 1f);
+
 }

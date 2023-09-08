@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: SKILL_0
   model: {fileID: 0}
-  icon: {fileID: 21300000, guid: 0dc6643ddb3934127b12402c7fd7bcf1, type: 3}
+  icon: {fileID: 21300000, guid: 13527793884104b46b7446fd7464c3ed, type: 3}
   name: 
   type: 4
   grade: 0

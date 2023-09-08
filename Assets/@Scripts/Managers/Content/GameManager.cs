@@ -359,12 +359,12 @@ public class GameManager
     {
         HitPos = hitPos;
 
-        if (score < 79 && score > 0)
+        if (score < 50 && score > 0)
         {
             HitScore = 1;
             SwingCount++;
         }
-        else if (score >= 80 && score < 85)
+        else if (score >= 51 && score < 85)
         {
             HitScore += 1;
             SwingCount++;
@@ -767,6 +767,35 @@ public class GameManager
             return;
 
         SaveGame();
+    }
+
+    public void ChageBackgroundColor()
+    {
+
+        Color color = Color.white;
+        switch (League)
+        {
+            case League.Bronze:
+                color = Bronze;
+                break;
+            case League.Silver:
+                color = Silver;
+                break;
+            case League.Gold:
+                color = Gold;
+                break;
+            case League.Platinum:
+                color = Platinum;
+                break;
+            case League.Diamond:
+                color = Diamond;
+                break;
+            case League.Master:
+                color = Master;
+                break;
+        }
+
+        Camera.main.backgroundColor = color; 
     }
     #endregion
 

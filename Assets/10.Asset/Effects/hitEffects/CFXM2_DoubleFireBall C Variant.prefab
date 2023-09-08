@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100002, guid: 9f84515800072d6479df88e8bd2f6604, type: 3}
       propertyPath: m_Name
-      value: CFXM2_DoubleFireBall C
+      value: CFXM2_DoubleFireBall C Variant
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 9f84515800072d6479df88e8bd2f6604, type: 3}
       propertyPath: m_RootOrder
@@ -17,11 +17,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 9f84515800072d6479df88e8bd2f6604, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.6919868
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 9f84515800072d6479df88e8bd2f6604, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.1228027
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 9f84515800072d6479df88e8bd2f6604, type: 3}
       propertyPath: m_LocalPosition.z
@@ -29,11 +29,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 9f84515800072d6479df88e8bd2f6604, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 9f84515800072d6479df88e8bd2f6604, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 9f84515800072d6479df88e8bd2f6604, type: 3}
       propertyPath: m_LocalRotation.y

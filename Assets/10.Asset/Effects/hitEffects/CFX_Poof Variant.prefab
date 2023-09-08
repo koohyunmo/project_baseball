@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
       propertyPath: m_Name
-      value: CFX_Poof
+      value: CFX_Poof Variant
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
       propertyPath: m_RootOrder
@@ -17,11 +17,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.393686
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.7203982
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -54,6 +54,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19900000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 19900000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
       propertyPath: m_Materials.Array.size

@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: d9d64543c9675f2498b17b97f782bfdf, type: 3}
       propertyPath: m_Name
-      value: CFXM_SoftStar
+      value: CFXM_SoftStar Variant
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d9d64543c9675f2498b17b97f782bfdf, type: 3}
       propertyPath: m_RootOrder
@@ -17,11 +17,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d9d64543c9675f2498b17b97f782bfdf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.8251544
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d9d64543c9675f2498b17b97f782bfdf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.968697
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d9d64543c9675f2498b17b97f782bfdf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -29,11 +29,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d9d64543c9675f2498b17b97f782bfdf, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d9d64543c9675f2498b17b97f782bfdf, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d9d64543c9675f2498b17b97f782bfdf, type: 3}
       propertyPath: m_LocalRotation.y

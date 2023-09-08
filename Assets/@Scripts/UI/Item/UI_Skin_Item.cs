@@ -121,24 +121,24 @@ public class UI_Skin_Item : UI_Base
 
     private void ChoiceUIUpdate()
     {
-        if (Managers.Game.EquipBallId.Equals(_item.id))
+        if (Managers.Game.EquipBallId.Equals(_item.id) || Managers.Game.EquipBatId.Equals(_item.id) || Managers.Game.EquipSkillId.Equals(_item.id))
         {
             GetImage((int)Images.Choice).gameObject.SetActive(true);
             Managers.Game.SetEquipUIItemAction(ChoiceUIUpdate);
             return;
         }
-        else if (Managers.Game.EquipBatId.Equals(_item.id))
-        {
-            GetImage((int)Images.Choice).gameObject.SetActive(true);
-            Managers.Game.SetEquipUIItemAction(ChoiceUIUpdate);
-            return;
-        }
-        else if(Managers.Game.EquipSkillId.Equals(_item.id))
-        {
-            GetImage((int)Images.Choice).gameObject.SetActive(true);
-            Managers.Game.SetEquipUIItemAction(ChoiceUIUpdate);
-            return;
-        }
+        //else if (Managers.Game.EquipBatId.Equals(_item.id))
+        //{
+        //    GetImage((int)Images.Choice).gameObject.SetActive(true);
+        //    Managers.Game.SetEquipUIItemAction(ChoiceUIUpdate);
+        //    return;
+        //}
+        //else if(Managers.Game.EquipSkillId.Equals(_item.id))
+        //{
+        //    GetImage((int)Images.Choice).gameObject.SetActive(true);
+        //    Managers.Game.SetEquipUIItemAction(ChoiceUIUpdate);
+        //    return;
+        //}
         else
         {
             GetImage((int)Images.Choice).gameObject.SetActive(false);

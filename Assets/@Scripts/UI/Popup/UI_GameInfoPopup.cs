@@ -15,6 +15,8 @@ public class UI_GameInfoPopup : UI_Popup
     {
         Managers.Game.SetThrowBallEvent(UpdateUI);
         Managers.Game.SetGameUiEvent(UpdateGameUI);
+
+        thorwBallTypeTMP.gameObject.SetActive(false);
     }
 
     private void UpdateUI()
@@ -22,8 +24,8 @@ public class UI_GameInfoPopup : UI_Popup
         if (Managers.Game.GameState != Define.GameState.InGround)
             return;
 
-        ballSpeedTMP.text = Managers.Game.Speed.ToString("F2");
-        thorwBallTypeTMP.text = Managers.Game.ThrowType.ToString();
+        ballSpeedTMP.text = Managers.Game.Speed.ToString("F2")+" KM/S";
+        //thorwBallTypeTMP.text = Managers.Game.ThrowType.ToString();
     }
 
     private void UpdateGameUI()

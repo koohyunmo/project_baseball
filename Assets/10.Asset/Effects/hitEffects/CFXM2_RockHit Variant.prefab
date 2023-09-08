@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1929876780485766, guid: 62bc17ad81f130e46b4c5941b8d06ebf, type: 3}
       propertyPath: m_Name
-      value: CFXM2_RockHit
+      value: CFXM2_RockHit Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4767371329548052, guid: 62bc17ad81f130e46b4c5941b8d06ebf, type: 3}
       propertyPath: m_RootOrder
@@ -17,11 +17,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4767371329548052, guid: 62bc17ad81f130e46b4c5941b8d06ebf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.7990239
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4767371329548052, guid: 62bc17ad81f130e46b4c5941b8d06ebf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.3065326
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4767371329548052, guid: 62bc17ad81f130e46b4c5941b8d06ebf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -55,23 +55,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 199629076277599386, guid: 62bc17ad81f130e46b4c5941b8d06ebf, type: 3}
+    - target: {fileID: 199629076277599386, guid: 62bc17ad81f130e46b4c5941b8d06ebf,
+        type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 199697482767286398, guid: 62bc17ad81f130e46b4c5941b8d06ebf, type: 3}
+    - target: {fileID: 199697482767286398, guid: 62bc17ad81f130e46b4c5941b8d06ebf,
+        type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 199726796333825098, guid: 62bc17ad81f130e46b4c5941b8d06ebf, type: 3}
+    - target: {fileID: 199726796333825098, guid: 62bc17ad81f130e46b4c5941b8d06ebf,
+        type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 199806493590900210, guid: 62bc17ad81f130e46b4c5941b8d06ebf, type: 3}
+    - target: {fileID: 199806493590900210, guid: 62bc17ad81f130e46b4c5941b8d06ebf,
+        type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 199881261838617972, guid: 62bc17ad81f130e46b4c5941b8d06ebf, type: 3}
+    - target: {fileID: 199881261838617972, guid: 62bc17ad81f130e46b4c5941b8d06ebf,
+        type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
