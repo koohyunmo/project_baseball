@@ -105,7 +105,7 @@ public class GameManager
 
     // 난이도
     public League League { get { return _league; } private set { _league = value; } }
-    private League _league = League.Silver;
+    private League _league = League.Bronze;
 
     // 호크아이
     public bool HawkEyes { get; private set; }
@@ -221,6 +221,7 @@ public class GameManager
                 break;
             case GameState.Ready:
                 {
+                    MainCam.MoveOriginaPos();
                     HitScore = 0;
                     batPositionSetting?.Invoke();
                     Managers.UI.ShowPopupUI<UI_Timer>();
@@ -233,6 +234,7 @@ public class GameManager
                             HawkEyes = false;
                         else
                             HawkEyes = true;
+
                     }
                 }
                 break;

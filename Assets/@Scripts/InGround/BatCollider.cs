@@ -294,6 +294,7 @@ public class BatCollider : MonoBehaviour
 
         float midRowDist = midRow;
 
+        //TODO
         var batPower = Managers.Resource.GetScriptableObjet<BatScriptableObject>(Managers.Game.PlayerInfo.equipBatId).power;
 
         if (topDist < midDist && topDist < midRowDist && topDist < bottomDist) // Top에 가장 가까울 때

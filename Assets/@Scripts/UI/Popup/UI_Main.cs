@@ -16,6 +16,8 @@ public class UI_Main : UI_Popup
         B_Skin,
         B_Challenge,
         B_Store,
+        B_NextLeague,
+        B_PrevLeague
     }
 
     enum Images
@@ -27,16 +29,16 @@ public class UI_Main : UI_Popup
 
     private List<Image> images = new List<Image>();
     public TextMeshProUGUI leagueTMP;
-    public Button nextLeague;
-    public Button prevLeague;
+    Button nextLeague;
+    Button prevLeague;
 
     private Button vibrationButton;
     private Button soundButton;
 
     private bool _isDrag = true;
 
-    public Image NotifyItem;
-    public Image NotifyReward;
+    Image NotifyItem;
+    Image NotifyReward;
 
     public override bool Init()
     {
@@ -49,7 +51,13 @@ public class UI_Main : UI_Popup
         GetButton((int)Buttons.B_Skin).gameObject.BindEvent(B_SkinClick);
         GetButton((int)Buttons.B_Challenge).gameObject.BindEvent(B_ChanllengeClick);
         GetButton((int)Buttons.B_Store).gameObject.BindEvent(B_StoreClick);
+        GetButton((int)Buttons.B_Options).gameObject.BindEvent(B_OptionsClick);
+        GetImage((int)Images.StartDrag).gameObject.BindEvent(null,OnDrag, Define.UIEvent.Drag);
+
         leagueTMP.text = Managers.Game.League.ToString();
+
+        nextLeague = GetButton((int)Buttons.B_NextLeague);
+        prevLeague = GetButton((int)Buttons.B_PrevLeague);
 
         nextLeague.gameObject.BindEvent(OnClickNextLeague);
         prevLeague.gameObject.BindEvent(OnClickPrevLeague);
@@ -63,7 +71,7 @@ public class UI_Main : UI_Popup
         vibrationButton.transform.DOScale(0, 0);
         soundButton.transform.DOScale(0, 0);
 
-        GetButton((int)Buttons.B_Options).gameObject.BindEvent(B_OptionsClick);
+
 
         NotifyItem = GetImage((int)Images.NotificationItem);
         NotifyReward = GetImage((int)Images.NotificationReward);
@@ -89,7 +97,7 @@ public class UI_Main : UI_Popup
         NotifyItem.transform.DOScale(0.5f, 1f).OnComplete(() =>
         {
             NotifyItem.transform.DOScale(1f, 1f);
-        }).SetLoops(-1,LoopType.Yoyo);
+        }).SetLoops(-1, LoopType.Yoyo);
     }
 
     public void NotifyRewardAnim()
@@ -105,8 +113,8 @@ public class UI_Main : UI_Popup
 
     private void OnClickNextLeague()
     {
-        float league = (int)Managers.Game.League +1;
-        league = Mathf.Clamp(league, 0, (int)Define.League.COUNT-1);
+        float league = (int)Managers.Game.League + 1;
+        league = Mathf.Clamp(league, 0, (int)Define.League.COUNT - 1);
 
         Managers.Game.SetLeague((Define.League)league);
         leagueTMP.text = Managers.Game.League.ToString();
@@ -145,7 +153,7 @@ public class UI_Main : UI_Popup
 
     private void B_OptionsClick()
     {
-        if(vibrationButton.gameObject.activeInHierarchy == false)
+        if (vibrationButton.gameObject.activeInHierarchy == false)
         {
 
             // 이미 실행 중인 애니메이션 중지
@@ -175,11 +183,11 @@ public class UI_Main : UI_Popup
                 soundButton.gameObject.SetActive(false);
             });
         }
-        
+
     }
-    public void OnDrag(PointerEventData eventData)
+    public void OnDrag(BaseEventData eventData)
     {
-        if(Managers.Game.GameState == Define.GameState.Home && _isDrag == false)
+        if (Managers.Game.GameState == Define.GameState.Home && _isDrag == false)
         {
             _isDrag = true;
             StartCoroutine(co_DoFade());
@@ -194,7 +202,7 @@ public class UI_Main : UI_Popup
 
     IEnumerator co_GetAllImages()
     {
-        
+
         for (int i = 0; i < transform.childCount; i++)
         {
             Image img = transform.GetChild(i).GetComponent<Image>();

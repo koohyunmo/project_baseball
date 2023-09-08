@@ -11,17 +11,22 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
         TouchBG,
         BG,
         Handler,
-        Icon
+        Icon,
+        ZoneImage,
+        BallAim,
+        BatAim,
     }
 
-    public Image _background;
+
+    public Image _bg;
     public Image _handler;
     public Image _icon;
     public Image _touchBG;
     public Image _zoneImage;
+    public Image _batAim;
+    public Image _ballAim;
+
     public Bat bat;
-    public Transform _batAim;
-    public RectTransform _ballAim;
 
     Vector2 _touchPosition;
     Vector2 _moveDir;
@@ -29,15 +34,9 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
     //float _speed = 2.5f;
     float _speed = 5f;
 
-    float ratioX;
-    float ratioY;
 
     RectTransform zoneRt;
-    RectTransform batRect;
 
-
-    float offsetX = 18f;
-    float offsetY = -95f;
 
     public bool isRight = false;
 
@@ -47,26 +46,40 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
 
     private void Start()
     {
-        _joystickRadius = _background.gameObject.GetComponent<RectTransform>().sizeDelta.y / 2f;
+        BindUI();
+    }
+
+    private void BindUI()
+    {
+        BindImage(typeof(Images));
+
+
 
         bat = Managers.Game.Bat;
 
+        _zoneImage = GetImage((int)Images.ZoneImage);
+        _batAim = GetImage((int)Images.BatAim);
+        _ballAim = GetImage((int)Images.BallAim);
+        _touchBG = GetImage((int)Images.TouchBG);
+        _icon = GetImage((int)Images.Icon);
+        _handler = GetImage((int)Images.Handler);
+        _bg = GetImage((int)Images.BG);
+
         Managers.Game.SetDragPopup(this);
         zoneRt = _zoneImage.GetComponent<RectTransform>();
-        batRect = _batAim.GetComponent<RectTransform>();
 
-        offsetX = 18f;
-        offsetY = -95f;
 
         Managers.Game.SetHitCallBack(MovePosReset);
         Managers.Game.SetStrikeCallBack(SaveMovePos);
 
 
+
         _batReplayData.Clear();
 
         ZoneSetting();
-
+        _joystickRadius = _bg.gameObject.GetComponent<RectTransform>().sizeDelta.y / 2f;
     }
+
 
     private void ZoneSetting()
     {
@@ -97,8 +110,9 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
 
     private void LateUpdate()
     {
-        _ballAim.position = Managers.Game.AimPointScreen;
-        _batAim.position = Managers.Game.BatColiderPointScreen;
+        return;
+        _ballAim.transform.position = Managers.Game.AimPointScreen;
+        _batAim.transform.position = Managers.Game.BatColiderPointScreen;
     }
 
     private void SaveMovePos()
@@ -116,7 +130,7 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
     public void OnPointerDown(UnityEngine.EventSystems.PointerEventData eventData)
     {
         //Debug.Log("OnPointerDown");
-        _background.transform.position = eventData.position;
+        _bg.transform.position = eventData.position;
         _handler.transform.position = eventData.position;
         _touchPosition = eventData.position;
     }

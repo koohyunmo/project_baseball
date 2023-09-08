@@ -23,6 +23,7 @@ public class BallController : InGameObjectController
 
     private List<Vector3> pathPoints = new List<Vector3>();
     private int currentPointIndex = 0;
+    private Vector3 baseShadowScale = new Vector3(0.1f, 0.1f, 0.1f);
 
     private Transform _trailRoot;
     private Transform TrailRoot 
@@ -46,6 +47,12 @@ public class BallController : InGameObjectController
     }
 
     Rigidbody _rigidbody;
+    private GameObject Shadow;
+    private Vector3 shadowStartPoint;
+
+
+    public float baseHeight = 1.0f; // 기준 높이 (이 높이일 때 기본 크기)
+    public float scaleFactor = 0.5f; // 높이가 변할 때 크기 조절 비율
 
     public enum PlayMode
     {
@@ -58,7 +65,13 @@ public class BallController : InGameObjectController
 
     private void Start()
     {
-        if(_rigidbody == null)
+        FirstInit();
+    }
+
+
+    private void FirstInit()
+    {
+        if (_rigidbody == null)
         {
             gameObject.TryGetComponent<Rigidbody>(out _rigidbody);
 
@@ -66,8 +79,34 @@ public class BallController : InGameObjectController
                 _rigidbody = gameObject.GetOrAddComponent<Rigidbody>();
 
             _rigidbody.useGravity = false;
+
         }
-            
+
+        RaycastHit hit;
+        // 아래 방향으로 레이캐스트를 발사합니다.
+        if (Physics.Raycast(transform.position, Vector3.down, out hit))
+        {
+            // 레이가 Plane에 닿았다면
+            if (hit.collider.CompareTag("Plane")) // "Ground" 태그를 가진 Plane에만 반응하게 됩니다.
+            {
+                // 그림자가 아직 없다면 생성합니다.
+                if (Shadow == null)
+                {
+                    Shadow = Managers.Resource.Instantiate("Shadow", transform);
+                    shadowStartPoint = hit.point;
+                    Shadow.transform.position = shadowStartPoint + new Vector3(0, 0.01f, 0); // 0.01f를 추가하여 바닥에서 약간 위에 위치하게 합니다.
+                    Shadow.transform.localScale = baseShadowScale;
+                }
+                else
+                {
+                    // 그림자가 이미 있다면 위치를 업데이트 합니다.
+                    Shadow.transform.position = hit.point + new Vector3(0, 0.01f, 0); // 0.01f를 추가하여 바닥에서 약간 위에 위치하게 합니다.
+                    shadowStartPoint = hit.point;
+                }
+            }
+        }
+
+
     }
 
     private void FixedUpdate()
@@ -88,6 +127,9 @@ public class BallController : InGameObjectController
         _strike = false;
         _hit = false;
         currentPointIndex = 0;
+        Shadow.gameObject.SetActive(true);
+        Shadow.transform.position = shadowStartPoint + new Vector3(0, 0.001f, 0); // 0.01f를 추가하여 바닥에서 약간 위에 위치하게 합니다.
+        Shadow.transform.localScale = baseShadowScale;
     }
 
     private void ResetRigid()
@@ -133,6 +175,11 @@ public class BallController : InGameObjectController
             {
                 transform.position = Vector3.MoveTowards(transform.position, pathPoints[currentPointIndex], speed * Time.deltaTime);
 
+                {
+                    var moveShadowVec = new Vector3(transform.position.x, shadowStartPoint.y + 0.001f, transform.position.z);
+                    Shadow.transform.position = moveShadowVec;
+                }
+
                 if (transform.position == pathPoints[currentPointIndex])
                 {
                     currentPointIndex++;
@@ -145,6 +192,7 @@ public class BallController : InGameObjectController
     public void SetHit()
     {
         _hit = true;
+        Shadow.gameObject.SetActive(false);
     }
 
     public bool GetHit()

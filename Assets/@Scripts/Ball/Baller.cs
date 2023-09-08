@@ -30,6 +30,9 @@ public class Baller : MonoBehaviour
     [SerializeField] private League League { get { return Managers.Game.League; } }
 
 
+    private GameObject shadow = null;
+
+
     static int _ballerCount = 0;
     private bool _stopBaller = false;
 
@@ -176,12 +179,6 @@ public class Baller : MonoBehaviour
     {
         if (_stopBaller == true)
             return;
-
-
-        if (false)
-        {
-            RelplayFollowBall();
-        }
     }
 
     public void ThrowCurveBall()
@@ -247,13 +244,13 @@ public class Baller : MonoBehaviour
                 originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.9f, 0.95f);
                 break;
             case League.Bronze:
-                originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.8f, 0.88f);
-                break;
-            case League.Silver:
                 originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.7f, 0.82f);
                 break;
+            case League.Silver:
+                originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.8f, 0.88f);
+                break;
             case League.TEST:
-                originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.3f, 0.4f);
+                originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.8f, 0.88f);
                 break;
 
         }
@@ -303,6 +300,11 @@ public class Baller : MonoBehaviour
 
         SetLeagueSpeed();
         SetThrowTypeSpeed();
+
+        if(League == League.TEST)
+            Time.timeScale = 0.25f;
+        else
+            Time.timeScale = 1f;
 
 
         speed = speed + (speed * Managers.Game.HitScore / 500);
@@ -561,22 +563,27 @@ public class Baller : MonoBehaviour
 
             while (journeyProgress < journeyLength)
             {
-                if (GameState == GameState.Home)
+
+                if (Managers.Game.GameState != GameState.End)
                 {
                     Managers.Game.isReplay = false;
+                    Managers.Game.MainCam.MoveOriginaPos();
                     yield break;
                 }
+                else
+                {
+                    float distanceToMove = replaySpeed * Time.deltaTime;
+                    journeyProgress += distanceToMove;
 
-                float distanceToMove = replaySpeed * Time.deltaTime;
-                journeyProgress += distanceToMove;
+                    float fractionOfJourney = journeyProgress / journeyLength;
 
-                float fractionOfJourney = journeyProgress / journeyLength;
+                    replayBall.transform.position = Vector3.Lerp(startPoint, endPoint, fractionOfJourney);
 
-                replayBall.transform.position = Vector3.Lerp(startPoint, endPoint, fractionOfJourney);
+                    camManager.CameraMove(replayBall.transform.position);
 
-                camManager.CameraMove(replayBall.transform.position);
+                    yield return new FixedUpdate();
+                }
 
-                yield return new FixedUpdate();
             }
 
             if (i == pathRenderer.positionCount - 2)
@@ -642,6 +649,7 @@ public class Baller : MonoBehaviour
 
             while (journeyProgress < journeyLength)
             {
+
                 if (GameState == GameState.Home)
                 {
                     Managers.Game.isReplay = false;

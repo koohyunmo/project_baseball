@@ -416,11 +416,20 @@ public class Bat : MonoBehaviour
 
             while (elapsedTime < waitTime)
             {
-                float t = elapsedTime / waitTime;
-                Vector3 interpolatedPosition = Vector3.Lerp(HitColiderTransform.localPosition, data[i].position, t);;
-                HitColiderTransform.localPosition = interpolatedPosition;
-                elapsedTime += Time.deltaTime;
-                yield return null;
+                if (Managers.Game.GameState != Define.GameState.End)
+                {
+                    Managers.Game.isReplay = false;
+                    Managers.Game.MainCam.MoveOriginaPos();
+                    yield break;
+                }
+                else
+                {
+                    float t = elapsedTime / waitTime;
+                    Vector3 interpolatedPosition = Vector3.Lerp(HitColiderTransform.localPosition, data[i].position, t);
+                    HitColiderTransform.localPosition = interpolatedPosition;
+                    elapsedTime += Time.deltaTime;
+                    yield return null;
+                }
             }
         }
     }

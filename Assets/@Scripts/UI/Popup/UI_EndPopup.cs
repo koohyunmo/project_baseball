@@ -6,12 +6,37 @@ using UnityEngine.UI;
 
 public class UI_EndPopup : UI_Popup
 {
+    enum Buttons
+    {
+        retryButton,
+        replayButton,
+        homeButton
+    }
+
+    enum TMPs
+    {
+        StrikeTMP
+    }
+
     public TextMeshProUGUI strikeTMP;
     public Button homeButton;
     public Button replayButton;
     public Button retryButton;
     void Start()
     {
+        BindUI();
+    }
+
+    void BindUI()
+    {
+        Bind<Button>(typeof(Buttons));
+        Bind<TextMeshProUGUI>(typeof(TMPs));
+
+        homeButton = GetButton((int)Buttons.homeButton);
+        replayButton = GetButton((int)Buttons.replayButton);
+        retryButton = GetButton((int)Buttons.retryButton);
+        strikeTMP = Get<TextMeshProUGUI>((int)TMPs.StrikeTMP);
+
         StartCoroutine(c_Delay());
         homeButton.gameObject.BindEvent(HomeButtonClick);
         replayButton.gameObject.BindEvent(ReplayButtonClick);
