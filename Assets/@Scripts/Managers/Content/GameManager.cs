@@ -712,7 +712,7 @@ public class GameManager
         }
         else if (key.Contains("SKILL_"))
         {
-            ChangeBat(key);
+            ChangeSkill(key);
         }
         else
         {
@@ -720,7 +720,7 @@ public class GameManager
         }
     }
 
-    internal void ChangeBall(string key)
+    public void ChangeBall(string key)
     {
         if (EquipBallId.Equals(key) == false)
             EquipBallId = key;
@@ -730,7 +730,7 @@ public class GameManager
         SaveGame();
     }
 
-    internal void ChangeBat(string key)
+    public void ChangeBat(string key)
     {
         if (EquipBatId.Equals(key) == false)
             EquipBatId = key;
@@ -739,6 +739,17 @@ public class GameManager
 
         SaveGame();
     }
+
+    public void ChangeSkill(string key)
+    {
+        if (EquipSkillId.Equals(key) == false)
+            EquipSkillId = key;
+        else
+            return;
+
+        SaveGame();
+    }
+
 
     public void SetNotifyItemAction(Action notifyItemAnim)
     {
@@ -759,16 +770,6 @@ public class GameManager
     public void RemoveEqupUIItemAction(Action choiceUIUpdate)
     {
         EquipItemAction -= choiceUIUpdate;
-    }
-
-    public void ChangeSkill(string id)
-    {
-        if (EquipSkillId.Equals(id) == false)
-            EquipSkillId = id;
-        else
-            return;
-
-        SaveGame();
     }
 
     public void ChageBackgroundColor()
@@ -798,6 +799,16 @@ public class GameManager
         }
 
         Camera.main.backgroundColor = color; 
+    }
+
+    public void RemoveThrowBallEvent(UIDelegate updateUI)
+    {
+        UiEvents -= updateUI;
+    }
+
+    public void RemoveGameUiEvent(GameUIDelegate updateGameUI)
+    {
+        GameUiEvent -= updateGameUI;
     }
     #endregion
 

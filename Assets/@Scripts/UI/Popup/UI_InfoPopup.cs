@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,8 +28,8 @@ public class UI_InfoPopup : UI_Popup
 
     protected Image popupIcon;
     protected Image popupButtonIcon;
-    protected Text popupInfoText;
-    protected Text popupButtonText;
+    protected TextMeshProUGUI popupInfoText;
+    protected TextMeshProUGUI popupButtonText;
     protected Button popupButton;
 
 
@@ -40,7 +41,7 @@ public class UI_InfoPopup : UI_Popup
             return false ;
         }
 
-        Bind<Text>(typeof(SharedText));
+        Bind<TextMeshProUGUI>(typeof(SharedText));
         Bind<Image>(typeof(SharedImage));
         Bind<Button>(typeof(SharedIButton));
 
@@ -50,9 +51,9 @@ public class UI_InfoPopup : UI_Popup
 
         popupIcon = Get<Image>((int)SharedImage.Icon);
         popupButtonIcon = Get<Image>((int)SharedImage.ButtonIcon);
-        popupInfoText = Get<Text>((int)SharedText.InfoText);
+        popupInfoText = Get<TextMeshProUGUI>((int)SharedText.InfoText);
         popupButton = Get<Button>((int)SharedIButton.InfoButton);
-        popupButtonText = Get<Text>((int)SharedText.ButtonText);
+        popupButtonText = Get<TextMeshProUGUI>((int)SharedText.ButtonText);
 
 
         return true;

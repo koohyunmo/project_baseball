@@ -114,6 +114,8 @@ MonoBehaviour:
   controlPoint: {fileID: 0}
   pathRenderer: {fileID: 0}
   speed: 0
+  baseHeight: 1
+  scaleFactor: 0.5
   playMode: 0
 --- !u!1 &8456383675725300198
 GameObject:

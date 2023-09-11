@@ -60,7 +60,7 @@ public class RouletteController : MonoBehaviour
         {
             roullet.Rotate(0, 0, -currentSpeed * Time.deltaTime); // Z축을 중심으로 회전
             currentSpeed -= deceleration * Time.deltaTime; // 속도 감소
-            //UpdateUI();
+            UpdateUI();
 
             if (currentSpeed <= 0)
             {
@@ -142,7 +142,7 @@ public class RouletteController : MonoBehaviour
         Vector3 position = roullet.position; // 룰렛의 중심 위치
         float angleStep = 360.0f / numberOfPrizes; // 각 상품 섹션의 각도
         float currentAngle = rotationOffset;
-        float radius2 = 300.0f; // 룰렛의 반지름
+        float radius2 = 25.0f; // 룰렛의 반지름
 
         for (int i = 0; i < images.Length; i++)
         {
@@ -155,6 +155,8 @@ public class RouletteController : MonoBehaviour
 
             currentAngle += angleStep;
         }
+
+        resultText.text = null;
     }
 
 

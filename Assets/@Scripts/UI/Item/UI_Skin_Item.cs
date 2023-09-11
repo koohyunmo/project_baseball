@@ -127,18 +127,6 @@ public class UI_Skin_Item : UI_Base
             Managers.Game.SetEquipUIItemAction(ChoiceUIUpdate);
             return;
         }
-        //else if (Managers.Game.EquipBatId.Equals(_item.id))
-        //{
-        //    GetImage((int)Images.Choice).gameObject.SetActive(true);
-        //    Managers.Game.SetEquipUIItemAction(ChoiceUIUpdate);
-        //    return;
-        //}
-        //else if(Managers.Game.EquipSkillId.Equals(_item.id))
-        //{
-        //    GetImage((int)Images.Choice).gameObject.SetActive(true);
-        //    Managers.Game.SetEquipUIItemAction(ChoiceUIUpdate);
-        //    return;
-        //}
         else
         {
             GetImage((int)Images.Choice).gameObject.SetActive(false);

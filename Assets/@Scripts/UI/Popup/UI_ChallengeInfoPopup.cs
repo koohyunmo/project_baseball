@@ -11,7 +11,7 @@ public class UI_ChallengeInfoPopup : UI_InfoPopup
         Init();
     }
 
-    public virtual void InitData(ChallengeScriptableObject challengeInfo)
+    public void InitData(ChallengeScriptableObject challengeInfo)
     {
         _cso = challengeInfo;
     }
@@ -25,6 +25,12 @@ public class UI_ChallengeInfoPopup : UI_InfoPopup
 
         if (_cso != null)
         {
+            if(popupInfoText == null)
+            {
+                Debug.LogWarning($"Info Popup is Null ID {_cso.key}");
+                return false;
+            }
+
             popupInfoText.text = _cso.desc;
             popupButtonText.text = "PLAY";
             popupButton.gameObject.BindEvent(ChallengeButtonClick);

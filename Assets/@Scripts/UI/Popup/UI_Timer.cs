@@ -23,7 +23,7 @@ public class UI_Timer : UI_Popup
         timerTMP.text = "1";
         yield return new WaitForSeconds(1.0f);
 
-        timerTMP.text = "시작!";
+        timerTMP.text = "START!";
         yield return new WaitForSeconds(0.5f);
 
         timerTMP.gameObject.SetActive(false); // 카운트다운 텍스트를 숨깁니다.

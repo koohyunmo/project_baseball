@@ -33,17 +33,14 @@ public class UI_ChallengeItem : UI_Base
 
     private void ShowPopup()
     {
-
         var challengePopup = Managers.UI.ShowPopupUI<UI_ChallengeInfoPopup>();
         challengePopup.InitData(_cso);
-
     }
 
     public void InitData(string itemId, Action parentClose)
     {
         _itemId = itemId;
         _parentClose = parentClose;
-
 
         if (Managers.Resource.Resources.TryGetValue(_itemId, out UnityEngine.Object obj) && obj is ChallengeScriptableObject cso)
         {

@@ -2599,43 +2599,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Roulette
       objectReference: {fileID: 0}
-    - target: {fileID: 8061781010961600655, guid: b2454bbe0674d164894b4b8ff726d3fd,
+    - target: {fileID: 6696143650808456580, guid: b2454bbe0674d164894b4b8ff726d3fd,
         type: 3}
-      propertyPath: m_fontSize
-      value: 100
+      propertyPath: radius
+      value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 8061781010961600655, guid: b2454bbe0674d164894b4b8ff726d3fd,
+    - target: {fileID: 6696143650808456580, guid: b2454bbe0674d164894b4b8ff726d3fd,
         type: 3}
-      propertyPath: m_margin.w
-      value: -83.73849
+      propertyPath: spinSpeed
+      value: 1000
       objectReference: {fileID: 0}
-    - target: {fileID: 8061781010961600655, guid: b2454bbe0674d164894b4b8ff726d3fd,
-        type: 3}
-      propertyPath: m_margin.x
-      value: -344.8226
-      objectReference: {fileID: 0}
-    - target: {fileID: 8061781010961600655, guid: b2454bbe0674d164894b4b8ff726d3fd,
-        type: 3}
-      propertyPath: m_margin.z
-      value: -354.78635
-      objectReference: {fileID: 0}
-    - target: {fileID: 8061781010961600655, guid: b2454bbe0674d164894b4b8ff726d3fd,
-        type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 9fe018fe5f9f045c7811bf5459e2e4d6,
-        type: 2}
-    - target: {fileID: 8061781010961600655, guid: b2454bbe0674d164894b4b8ff726d3fd,
-        type: 3}
-      propertyPath: m_fontSizeBase
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8061781010961600655, guid: b2454bbe0674d164894b4b8ff726d3fd,
-        type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 6447333859754382329, guid: 9fe018fe5f9f045c7811bf5459e2e4d6,
-        type: 2}
     - target: {fileID: 8744529916540836377, guid: b2454bbe0674d164894b4b8ff726d3fd,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2741,8 +2714,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 972196970713964585, guid: b2454bbe0674d164894b4b8ff726d3fd, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2454bbe0674d164894b4b8ff726d3fd, type: 3}
 --- !u!224 &7341485803227866155 stripped
 RectTransform:

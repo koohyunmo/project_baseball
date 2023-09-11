@@ -15,19 +15,24 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
     private Action _lockUIAction = null;
     private Action _equipUIAction = null;
 
-    public virtual void InitData<T>(T itemInfo,Action updateLockUI, Action updateEquipUI) where T : ItemScriptableObject
+    public void InitData<T>(T itemInfo, Action updateLockUI, Action updateEquipUI) where T : ItemScriptableObject
     {
         var type = typeof(T);
 
-        if (type == typeof(ItemScriptableObject))
-        {
 
-        }
-        else if (type == typeof(BallScriptableObject))
+        if (type == typeof(BallScriptableObject))
         {
 
         }
         else if (type == typeof(BatScriptableObject))
+        {
+
+        }
+        else if (type == typeof(SkillScriptableObject))
+        {
+
+        }
+        else if (type == typeof(ItemScriptableObject))
         {
 
         }
@@ -44,7 +49,7 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
             return false;
         }
 
-        if(_itemSO != null)
+        if (_itemSO != null)
         {
             popupIcon.sprite = _itemSO.icon;
             popupInfoText.text = _itemSO.name;
@@ -59,7 +64,7 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
 
     private void ButtonUpdate()
     {
-        if(Managers.Game.GameDB.playerInventory.Contains(_itemSO.id))
+        if (Managers.Game.GameDB.playerInventory.Contains(_itemSO.id))
         {
             popupButtonText.text = "EQUIP";
             popupButton.gameObject.BindEvent(EquipItem);

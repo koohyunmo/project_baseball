@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 8744529916540836377}
   - component: {fileID: 7368131533211033199}
   - component: {fileID: 1446167690141693498}
-  - component: {fileID: 972196970713964585}
+  - component: {fileID: 6696143650808456580}
   m_Layer: 5
   m_Name: Roulette
   m_TagString: Untagged
@@ -262,7 +262,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2900103148582300395}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.56251466, y: 0.56251466, z: 0.56251466}
   m_ConstrainProportionsScale: 0
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &972196970713964585
+--- !u!114 &6696143650808456580
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -339,11 +339,29 @@ MonoBehaviour:
   - {fileID: 6829406704953810340}
   - {fileID: 3422166305327656699}
   hand: {fileID: 7832297530189338835}
-  spinSpeed: 1000
   resultText: {fileID: 8061781010961600655}
-  deceleration: 100
-  radius: 100
+  spinSpeed: 2000
+  deceleration: 300
+  radius: 1
   rotationOffset: 0
+  prizes:
+  - Product 1
+  - Product 2
+  - Product 3
+  - Product 4
+  - Product 5
+  - Product 6
+  - Product7
+  - Product 8
+  colors:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0, b: 1, a: 1}
+  - {r: 0, g: 0, b: 0, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &3047831132703101995
 GameObject:
   m_ObjectHideFlags: 0
@@ -868,8 +886,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9fe018fe5f9f045c7811bf5459e2e4d6, type: 2}
+  m_sharedMaterial: {fileID: 6447333859754382329, guid: 9fe018fe5f9f045c7811bf5459e2e4d6,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -893,8 +912,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 72
+  m_fontSize: 100
+  m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -929,7 +948,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -344.8226, y: 0, z: -354.78635, w: -83.73849}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
