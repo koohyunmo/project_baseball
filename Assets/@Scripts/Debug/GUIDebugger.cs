@@ -8,6 +8,9 @@ public class GUIDebugger : MonoBehaviour
 {
 #if UNITY_EDITOR
 
+    public HashSet<string> playerBats;
+    public HashSet<string> playerBalls;
+    public HashSet<string> playerSkills;
     public HashSet<string> playerInventory;
     public PlayerInfo playerInfo;
     public Dictionary<string,bool> csoData;
@@ -65,6 +68,9 @@ public class GUIDebugger : MonoBehaviour
     void DisplayDebugWindow(int windowID)
     {
         playerInventory = Managers.Game.GameDB.playerInventory;
+        playerSkills = Managers.Game.GameDB.playerSkills;
+        playerBalls = Managers.Game.GameDB.playerBalls;
+        playerBats = Managers.Game.GameDB.playerBats;
         playerInfo = Managers.Game.GameDB.playerInfo;
         csoData = Managers.Game.GameDB.challengeData;
         // Font ¼³Á¤
@@ -84,7 +90,32 @@ public class GUIDebugger : MonoBehaviour
             GUI.skin.label.fontSize = 40;
             GUILayout.BeginVertical();
             int num = 0;
+            GUI.contentColor = Color.cyan;
+            GUILayout.Label($"Player Inventory");
+            GUI.contentColor = Color.white;
             foreach (var item in playerInventory)
+            {
+                GUILayout.Label($"{num++}" + item + ",");
+            }
+            GUI.contentColor = Color.cyan;
+            GUILayout.Label($"Player Bats");
+            GUI.contentColor = Color.white;
+
+            foreach (var item in playerBats)
+            {
+                GUILayout.Label($"{num++}" + item + ",");
+            }
+            GUI.contentColor = Color.cyan;
+            GUILayout.Label($"Player Balls");
+            GUI.contentColor = Color.white;
+            foreach (var item in playerBalls)
+            {
+                GUILayout.Label($"{num++}" + item + ",");
+            }
+            GUI.contentColor = Color.cyan;
+            GUILayout.Label($"Player Skills");
+            GUI.contentColor = Color.white;
+            foreach (var item in playerSkills)
             {
                 GUILayout.Label($"{num++}" + item + ",");
             }

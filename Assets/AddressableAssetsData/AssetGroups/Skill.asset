@@ -22,16 +22,19 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
+    - Skill
   - m_GUID: ba205fab2b9a43946beed430d5963562
     m_Address: SKILL_2
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
+    - Skill
   - m_GUID: b85b35001b309e847a15e95b814a4ebe
     m_Address: SKILL_3
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
+    - Skill
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9c2d91b0a86c0bb4b9bbf0d47449c95f, type: 2}
   m_SchemaSet:

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro.Examples;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
 
 public class GameScene : MonoBehaviour

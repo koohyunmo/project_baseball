@@ -80,6 +80,10 @@ public class GameManager
     public delegate void GameUIDelegate();
     public GameUIDelegate GameUiEvent;
 
+    public delegate void LobbyUIDelegate();
+    public LobbyUIDelegate LobbyUIEvent;
+
+
     // 게임 함수
     public Action hutSwingCallBack;
     public Action hitCallBack;
@@ -132,7 +136,12 @@ public class GameManager
     public ChallengeType ChallengeMode { get; private set; } = ChallengeType.RealMode;
     public string ChallengeGameID { get; private set; }
 
-    public void Init()
+    public int BatCount { get; private set; }
+    public int BallCount { get; private set; }
+    public int SkillCount { get; private set; }
+    public int ChallengeCount { get; private set; }
+
+    public async void Init()
     {
         _path = Application.persistentDataPath + "/SaveData.json";
         _settingPath = Application.persistentDataPath + "/SettingData.json";
@@ -148,9 +157,19 @@ public class GameManager
 
             EquipBallId = _gameData.playerInfo.equipBallId;
             EquipBatId = _gameData.playerInfo.equipBatId;
+
+            LoadItemCount();
         }
 
         GameScore = 0;
+    }
+
+    public async void LoadItemCount()
+    {
+        BatCount = await Managers.Resource.ObjectGetAsyncCount("Bat");
+        BallCount = await Managers.Resource.ObjectGetAsyncCount("Ball");
+        SkillCount = await Managers.Resource.ObjectGetAsyncCount("Skill");
+        ChallengeCount = await Managers.Resource.ObjectGetAsyncCount("Challenge");
     }
 
 
@@ -408,16 +427,34 @@ public class GameManager
         ChallengeGameID = csoKey;
     }
 
-    public void Getitme(string key)
+    public void GetItem(string key)
     {
 
         if (_gameData.playerInventory.Contains(key) == true)
             return;
 
+       var type =  Managers.Resource.GetScriptableObjet<ItemScriptableObject>(key).type;
+
+        switch (type)
+        {
+
+            case ItemType.BALL:
+                _gameData.playerBalls.Add(key);
+                break;
+            case ItemType.BAT:
+                _gameData.playerBats.Add(key);
+                break;
+            case ItemType.SKILL:
+                _gameData.playerSkills.Add(key);
+                break;
+        }
+
         _gameData.playerInventory.Add(key);
         SaveGame();
         Debug.Log("TODO");
         notifyItemAction();
+
+        LobbyUIEvent?.Invoke();
     }
 
     #endregion
@@ -627,6 +664,7 @@ public class GameManager
                     StartData.playerInfo.level = 1;
                     StartData.playerInfo.equipBatId = BAT_KEY.BAT_2.ToString();
                     StartData.playerInventory.Add(startItem.itemId);
+                    StartData.playerBats.Add(startItem.itemId);
                 }
 
                 if (Managers.Resource.Resources[BALL_KEY.BALL_1.ToString()] is ItemScriptableObject ball)
@@ -639,6 +677,7 @@ public class GameManager
                     StartData.playerInfo.equipBallId = BALL_KEY.BALL_1.ToString();
 
                     StartData.playerInventory.Add(startItem.itemId);
+                    StartData.playerBalls.Add(startItem.itemId);
                 }
 
                 if (Managers.Resource.Resources[HAWK_EYE_KEY.SKILL_0.ToString()] is ItemScriptableObject so2)
@@ -647,6 +686,7 @@ public class GameManager
                     PlayerItem startItem = new PlayerItem(so2.id, so2.name, so2.name, ItemType.SKILL);
                     StartData.playerInfo.equipSkillId = HAWK_EYE_KEY.SKILL_0.ToString();
                     StartData.playerInventory.Add(startItem.itemId);
+                    StartData.playerSkills.Add(startItem.itemId);
                 }
 
 
@@ -809,6 +849,17 @@ public class GameManager
     public void RemoveGameUiEvent(GameUIDelegate updateGameUI)
     {
         GameUiEvent -= updateGameUI;
+    }
+
+    public void SetLobbyUIUpdate(LobbyUIDelegate uiEvent)
+    {
+        LobbyUIEvent -= uiEvent;
+        LobbyUIEvent += uiEvent;
+    }
+
+    public void RemoveLobbyUIUpdate(LobbyUIDelegate uiEvent)
+    {
+        LobbyUIEvent -= uiEvent;
     }
     #endregion
 

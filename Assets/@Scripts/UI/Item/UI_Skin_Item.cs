@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -170,7 +171,7 @@ public class UI_Skin_Item : UI_Base
     private void BallClick()
     {
         Managers.Game.ChangeBall(_item.id);
-        Managers.Game.Getitme(_item.id);
+        Managers.Game.GetItem(_item.id);
     }
 
     private void BatClick()
@@ -179,7 +180,7 @@ public class UI_Skin_Item : UI_Base
         {
             Managers.Game.Bat.ChangeBatMat(_mats);
             Managers.Game.Bat.ChangeBatMesh(_mesh);
-            Managers.Game.Getitme(_item.id);
+            Managers.Game.GetItem(_item.id);
             Managers.Game.ChangeBat(_item.id);
             //Managers.Game.Bat.SetBetHandle();
             Debug.Log($"ChangeBat ID :  {_item.id}");
@@ -199,6 +200,7 @@ public class UI_Skin_Item : UI_Base
     private void OnDestroy()
     {
         Managers.Game.RemoveEqupUIItemAction(ChoiceUIUpdate);
+        GetButton((int)Buttons.B_Information).transform.DOKill();
     }
 
 }

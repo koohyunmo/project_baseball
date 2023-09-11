@@ -10,6 +10,9 @@ public class GameDB
 {
     //public Dictionary<string,PlayerItem> playerItem = new Dictionary<string, PlayerItem>();
     public HashSet<string> playerInventory = new HashSet<string>();
+    public HashSet<string> playerBalls = new HashSet<string>();
+    public HashSet<string> playerBats = new HashSet<string>();
+    public HashSet<string> playerSkills = new HashSet<string>();
     public PlayerInfo playerInfo = new PlayerInfo();
     public Dictionary<string, bool> challengeData = new Dictionary<string, bool>();
 }

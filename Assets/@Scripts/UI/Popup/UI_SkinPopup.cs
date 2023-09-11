@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.UI;
@@ -7,6 +8,11 @@ using static Define;
 
 public class UI_SkinPopup : UI_Popup
 {
+
+    enum TMPs
+    {
+        SliderTMP,
+    }
 
     enum Buttons
     {
@@ -36,6 +42,7 @@ public class UI_SkinPopup : UI_Popup
     public Button B_Background { get; private set; }
     public Button B_Back { get; private set; }
     public Slider Slider { get; private set; }
+    public TextMeshProUGUI SliderTMP { get; private set; }
 
     ScollViewType _type = ScollViewType.Bat;
     GameObject _grid;
@@ -45,7 +52,7 @@ public class UI_SkinPopup : UI_Popup
             return false;
 
 
-
+        Bind<TextMeshProUGUI>((typeof(TMPs)));
         BindButton(typeof(Buttons));
         Bind<Slider>(typeof(Sliders));
         BindObject(typeof(Grids));
@@ -58,15 +65,18 @@ public class UI_SkinPopup : UI_Popup
         B_Back = GetButton((int)Buttons.B_Back);
 
         Slider = Get<Slider>((int)Sliders.Slider);
+        SliderTMP = Get<TextMeshProUGUI>((int)TMPs.SliderTMP);
 
-        B_Ball.gameObject.BindEvent(() => { OnClickBallCategory(); });
-        B_Background.gameObject.BindEvent(() => { OnClickSkillCategory(); });
-        B_Bat.gameObject.BindEvent(() => { OnClickBatCategory(); });
+        B_Ball.gameObject.BindEvent(() => { OnClickCategory(ScollViewType.Ball); });
+        B_Background.gameObject.BindEvent(() => { OnClickCategory(ScollViewType.Skill); });
+        B_Bat.gameObject.BindEvent(() => { OnClickCategory(ScollViewType.Bat); });
 
 
 
 
         B_Back.gameObject.BindEvent(() => { Managers.UI.ClosePopupUI(this); });
+
+        Managers.Game.SetLobbyUIUpdate(UpdateSlider);
 
 
         _type = ScollViewType.Skill;
@@ -103,51 +113,70 @@ public class UI_SkinPopup : UI_Popup
                 break;
 
         }
+        UpdateSlider();
         MakeItem();
     }
 
-    private void OnClickBallCategory()
+    private void OnClickCategory(ScollViewType type)
     {
         if (_grid == null)
             return;
 
-        if (_type == ScollViewType.Ball)
+        if (_type == type)
             return;
 
-        _type = ScollViewType.Ball;
+        _type = type;
+
+        UpdateSlider();
         Clear();
-        ChangeButtonColor(B_Ball);
         MakeItem();
 
+
+        switch (_type)
+        {
+            case ScollViewType.Ball:
+                ChangeButtonColor(B_Ball);
+                break;
+            case ScollViewType.Bat:
+                ChangeButtonColor(B_Bat);
+                break;
+            case ScollViewType.Skill:
+                ChangeButtonColor(B_Background);
+                break;
+
+        }
     }
 
-    private void OnClickSkillCategory()
+    private void UpdateSlider()
     {
-        if (_grid == null)
+        int skinCount = -1;
+        int hasItemCount = -1;
+
+        switch (_type)
+        {
+            case ScollViewType.Ball:
+                skinCount = Managers.Game.BallCount;
+                hasItemCount = Managers.Game.GameDB.playerBalls.Count;
+                break;
+            case ScollViewType.Bat:
+                skinCount = Managers.Game.BatCount;
+                hasItemCount = Managers.Game.GameDB.playerBats.Count;
+                break;
+            case ScollViewType.Skill:
+                skinCount = Managers.Game.SkillCount;
+                hasItemCount = Managers.Game.GameDB.playerSkills.Count;
+                break;
+        }
+
+        if (skinCount == 0)
+        {
+            Debug.LogWarning("Skin Count is Zero");
             return;
+        }
+            
 
-        if (_type == ScollViewType.Skill)
-            return;
-
-        _type = ScollViewType.Skill;
-        Clear();
-        ChangeButtonColor(B_Background);
-        MakeItem();
-
-    }
-
-    private void OnClickBatCategory()
-    {
-        if (_grid == null)
-            return;
-
-        if (_type == ScollViewType.Bat)
-            return;
-
-        _type = ScollViewType.Bat;
-        Clear();
-        ChangeButtonColor(B_Bat);
-        MakeItem();
+        Slider.value = (hasItemCount / (float)skinCount);
+        SliderTMP.text = $"{_type} {hasItemCount} / {skinCount}";
     }
 
     private void MakeItem()
@@ -206,5 +235,10 @@ public class UI_SkinPopup : UI_Popup
         // Clear
         foreach (Transform child in _grid.transform)
             Managers.Resource.Destroy(child.gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        Managers.Game.RemoveLobbyUIUpdate(UpdateSlider);
     }
 }

@@ -16,6 +16,6 @@ MonoBehaviour:
   model: {fileID: 181712, guid: b037487c6731461439ce44f656ff4f99, type: 3}
   icon: {fileID: 21300000, guid: 6055f58798786964292ae410a210ec99, type: 3}
   name: decal08
-  type: 0
+  type: 2
   grade: 0
-  power: 0
+  power: 5

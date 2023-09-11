@@ -53,6 +53,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6a576216f6693a04c9e9f2a87fc35443, type: 2}
   - {fileID: 11400000, guid: 278a135597e4df94db1a143b01eaeaba, type: 2}
   - {fileID: 11400000, guid: 24fb5b1dcfae9fb47831da8a2f4654a1, type: 2}
+  - {fileID: 11400000, guid: 6e2f981786894534c80817b70b8dca96, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -98,6 +99,10 @@ MonoBehaviour:
     - Prefabs
     - Material
     - Data
+    - Bat
+    - Challenge
+    - Skill
+    - Ball
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 60a05e047d2c5ef4094c6f534b5cdd0a, type: 2}

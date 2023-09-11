@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -189,6 +190,33 @@ public class ResourceManager
             return null;
         }
     }
+
+    public int ObjectGetCount(string label)
+    {
+        int count = 0;
+        var opHandle = Addressables.LoadResourceLocationsAsync(label, typeof(Object));
+        opHandle.Completed += (op) =>
+        {
+            Debug.Log($"{label} : {count}");
+            count = op.Result.Count;
+        };
+
+        return count;
+    }
+
+    public Task<int> ObjectGetAsyncCount(string label)
+    {
+        var tcs = new TaskCompletionSource<int>();
+        var opHandle = Addressables.LoadResourceLocationsAsync(label, typeof(Object));
+        opHandle.Completed += (op) =>
+        {
+            Debug.Log($"{label} : {op.Result.Count}");
+            tcs.SetResult(op.Result.Count);
+        };
+
+        return tcs.Task;
+    }
+
     #endregion
 
     public void Clear()

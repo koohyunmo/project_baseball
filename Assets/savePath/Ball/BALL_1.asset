@@ -16,4 +16,5 @@ MonoBehaviour:
   model: {fileID: 7204397214589976521, guid: 8f6c9181139265c48ab696e8669074ee, type: 3}
   icon: {fileID: 21300000, guid: 2e1af1bba03a649469ffcdf2ace51ceb, type: 3}
   name: Ball_1
+  type: 1
   grade: 0

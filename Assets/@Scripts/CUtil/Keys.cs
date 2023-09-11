@@ -59,4 +59,9 @@ public static class Keys
     {
         SKILL_0, SKILL_1, SKILL_2, SKILL_3
     }
+
+    public enum GameEffect
+    {
+        ChallengeCompleteEffect
+    }
 }

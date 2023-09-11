@@ -78,7 +78,7 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
 
     private void GetItem()
     {
-        Managers.Game.Getitme(_itemSO.id);
+        Managers.Game.GetItem(_itemSO.id);
         _lockUIAction?.Invoke();
         ClosePopupUI();
         Debug.Log("TODO ±¤°í or µ·");
