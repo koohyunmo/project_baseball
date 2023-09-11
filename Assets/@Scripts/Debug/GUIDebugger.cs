@@ -44,6 +44,7 @@ public class GUIDebugger : MonoBehaviour
     private bool showChallenge = false; // PlayerInventory 섹션 표시 여부
     private bool showOptions = false; // 옵션 섹션 표시 여부
     private bool showGUIWindow = true; // GUI 창 표시 여부
+    private bool showManagerState = false; // GUI 창 표시 여부
     private bool isResizing = false;
     private Vector2 lastMousePosition = Vector2.zero;
     void OnGUI()
@@ -80,6 +81,23 @@ public class GUIDebugger : MonoBehaviour
         
 
         scrollPosition = GUILayout.BeginScrollView(scrollPosition);
+
+
+        GUI.contentColor = Color.green;
+        showManagerState = GUILayout.Toggle(showManagerState, "ManagerData");
+        if(showManagerState)
+        {
+            GUI.contentColor = Color.magenta;
+            GUILayout.Label("GameState : " + Managers.Game.GameState);
+            GUILayout.Label("GameMode: " + Managers.Game.GameMode);
+            GUILayout.Label("SwingCount : " + Managers.Game.SwingCount);
+            GUILayout.Label("HomeRunCount : " + Managers.Game.HomeRunCount);
+            GUILayout.Label("isRecord : " + Managers.Game.isRecord);
+            GUILayout.Label("isReplay : " + Managers.Game.isReplay);
+            GUILayout.Label("ChallengeGameID : " + Managers.Game.ChallengeGameID);
+            GUILayout.Label("ChallengeScore : " + Managers.Game.ChallengeScore);
+            GUI.contentColor = Color.white;
+        }
 
         // Player Inventory 출력
         GUI.contentColor = Color.green;

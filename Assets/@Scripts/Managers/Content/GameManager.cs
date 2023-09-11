@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using static Define;
 using static Keys;
@@ -54,10 +55,6 @@ public class GameManager
             return screenPosition;
         }
     }
-    #region 게임 UI
-    private UI_DragPopup dragPopup = null;
-    private UI_GameInfoPopup gameInfoPopup = null;
-    #endregion
 
     public GameState GameState { get { return _gameState; } private set { _gameState = value; } }
 
@@ -208,6 +205,7 @@ public class GameManager
         StateChangeEvent();
     }
 
+
     public void GoHome(Action callBack = null)
     {
         if (GameState != GameState.End)
@@ -220,8 +218,9 @@ public class GameManager
         GameScore = 0;
         Debug.Log($"{GameScore} 게임 리셋");
 
-        callBack?.Invoke();
+        
         StateChangeEvent();
+        callBack?.Invoke();
     }
     private void StateChangeEvent()
     {
@@ -233,6 +232,10 @@ public class GameManager
                     batMoveReplayData.Clear();
                     MainCam.MoveOriginaPos();
                     Managers.UI.ShowPopupUI<UI_Main>();
+
+                    if(isChallengeClear == true)
+                        Managers.UI.ShowPopupUI<UI_ChallengePopup>();
+
                     _gameMode = GameMode.None;
                     ScoreAndCountClear();
 
@@ -253,23 +256,35 @@ public class GameManager
                             HawkEyes = false;
                         else
                             HawkEyes = true;
-
                     }
                 }
                 break;
             case GameState.InGround:
                 {
-                    gameInfoPopup = Managers.UI.ShowPopupUI<UI_GameInfoPopup>();
-                    dragPopup = Managers.UI.ShowPopupUI<UI_DragPopup>();
+                    Managers.UI.ShowPopupUI<UI_GameInfoPopup>();
+                    Managers.UI.ShowPopupUI<UI_DragPopup>();
                 }
                 break;
             case GameState.End:
                 {
-                    Managers.UI.ClosePopupUI(dragPopup);
-                    Managers.UI.ClosePopupUI(gameInfoPopup);
-                    //Managers.UI.ShowPopupUI<UI_EndPopup>();
-                    Managers.UI.ShowPopupUI<UI_ReplayPopupTimer>();
-                    isRecord = false;
+                    Managers.UI.CloseAllPopupUIAndCall(() =>
+                    {
+                        if (isChallengeClear == false)
+                            Managers.UI.ShowPopupUI<UI_ReplayPopupTimer>();
+                        else
+                        {
+                            _gameData.challengeData[ChallengeGameID] = true;
+                            SaveGame();
+                            _gameMode = GameMode.None;
+                            Managers.UI.ShowPopupUI<UI_ChallengeClearPopup>();
+                        }
+                           
+
+                        isRecord = false;
+
+                    });
+
+
                 }
                 break;
         }
@@ -284,6 +299,7 @@ public class GameManager
         HomeRunCount = 0;
         ChallengeScore = 0;
         ChallengeGameID = "";
+        isChallengeClear = false;
     }
 
 
@@ -304,55 +320,14 @@ public class GameManager
         ChallengeModeCheck();
     }
 
-    // 게임 시간을 멈추기 위한 함수
-    public void PauseGame()
-    {
-        Time.timeScale = 0f; // 게임 시간을 멈춥니다.
-    }
-
-    // 일시적으로 멈췄던 게임 시간을 다시 시작하기 위한 함수
-    public void ResumeGame()
-    {
-        Time.timeScale = 1f; // 게임 시간을 다시 시작합니다.
-    }
-
     #region 챌린지
-    private bool isPaused = false; // 게임 일시 정지 상태를 저장하기 위한 변수
-    public void ChallengeClearEvent(string csoKey)
+
+    private async void ManagerAsyncFunction(Action action, float timer)
     {
-        if (_gameData.challengeData.ContainsKey(csoKey))
-        {
-            _gameData.challengeData[csoKey] = true;
-            if (!isPaused)
-            {
-                // 게임 시간을 일시적으로 멈춥니다.
-                Time.timeScale = 0;
-                isPaused = true;
+        timer *= 1000;
 
-                // 1초 후에 ResumeChallengeGame 함수를 호출합니다.
-                DelayedResumeGame();
-            }
-        }
-        else
-        {
-            Debug.LogError($"{csoKey} is not exist");
-        }
-
-        SaveGame();
-        Debug.Log("TODO 첼린지 완수 이펙트");
-    }
-
-    private async void DelayedResumeGame()
-    {
-        await Task.Delay(10000);  // 10초 대기
-        ResumeChallengeGame();
-    }
-
-    private void ResumeChallengeGame()
-    {
-        // 게임 시간을 다시 시작합니다.
-        Time.timeScale = 1f;
-        isPaused = false;
+        await Task.Delay((int)timer);  // 0.5초 대기
+        action?.Invoke();
     }
     #endregion
 
@@ -411,7 +386,7 @@ public class GameManager
         GameScore += HitScore;
         GameUiEvent?.Invoke();
 
-        ChallengeModeCheck();
+        //ChallengeModeCheck();
     }
 
     public void SetBatPosition(BatPosition batPosition)
@@ -433,7 +408,7 @@ public class GameManager
         if (_gameData.playerInventory.Contains(key) == true)
             return;
 
-       var type =  Managers.Resource.GetScriptableObjet<ItemScriptableObject>(key).type;
+        var type = Managers.Resource.GetScriptableObjet<ItemScriptableObject>(key).type;
 
         switch (type)
         {
@@ -467,7 +442,7 @@ public class GameManager
 
     public void SetDragPopup(UI_DragPopup popup)
     {
-        dragPopup = popup;
+        //dragPopup = popup;
     }
 
     public void SetLeague(League lg)
@@ -571,34 +546,38 @@ public class GameManager
 
 
     #region 첼린지 모드 체크
+    private bool isChallengeClear = false;
     private void ChallengeModeCheck()
     {
+
         if (GameMode != GameMode.Challenge)
             return;
 
         switch (ChallengeMode)
         {
-            case ChallengeType.None:
-                break;
             case ChallengeType.Score:
                 if (GameScore == ChallengeScore)
                 {
-                    ChallengeClearEvent(ChallengeGameID);
+                    isChallengeClear = true;
+                    GameEnd();
                 }
-                break;
+                return;
             case ChallengeType.HomeRun:
                 if (HomeRunCount > ChallengeScore)
                 {
-                    ChallengeClearEvent(ChallengeGameID);
+                    isChallengeClear = true;
+                    GameEnd();
                 }
-                break;
+                return;
             case ChallengeType.RealMode:
                 if (SwingCount > ChallengeScore)
                 {
-                    ChallengeClearEvent(ChallengeGameID);
+                    isChallengeClear = true;
+                    GameEnd();
                 }
-                break;
+                return;
         }
+
     }
     #endregion
 
@@ -838,7 +817,7 @@ public class GameManager
                 break;
         }
 
-        Camera.main.backgroundColor = color; 
+        Camera.main.backgroundColor = color;
     }
 
     public void RemoveThrowBallEvent(UIDelegate updateUI)

@@ -373,7 +373,6 @@ public class Bat : MonoBehaviour
             _hitPoint = Vector3.zero;
             _hitPoint = hitPoint;
 
-
             Managers.Game.HitEvent();
         }
 

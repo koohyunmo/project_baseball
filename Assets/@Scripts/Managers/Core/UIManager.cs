@@ -161,6 +161,14 @@ public class UIManager
             ClosePopupUI();
     }
 
+    public void CloseAllPopupUIAndCall(Action action)
+    {
+        while (_popupStack.Count > 0)
+            ClosePopupUI();
+
+        action?.Invoke();
+    }
+
     public int GetPopupCount()
     {
         return _popupStack.Count;

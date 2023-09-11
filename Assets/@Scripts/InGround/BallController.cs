@@ -161,6 +161,15 @@ public class BallController : InGameObjectController
 
     public void MoveAlongPath()
     {
+        if(Managers.Game.GameState == Define.GameState.End)
+        {
+            if(gameObject.activeSelf == true)
+            {
+                gameObject.SetActive(false);
+            }
+            return;
+        }
+
         if(_strike)
         {
             Debug.Log("스트라이크");
@@ -187,6 +196,7 @@ public class BallController : InGameObjectController
             }
 
         }
+
     }
 
     public void SetHit()

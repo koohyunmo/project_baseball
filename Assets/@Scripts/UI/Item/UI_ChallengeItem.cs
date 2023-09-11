@@ -64,7 +64,10 @@ public class UI_ChallengeItem : UI_Base
             return;
         }
 
-        Get<TextMeshProUGUI>((int)(TMPs.IDTMP)).text = _cso.orderID.ToString();
+        if(Managers.Game.GameDB.challengeData[_cso.key] == false)
+            Get<TextMeshProUGUI>((int)(TMPs.IDTMP)).text = _cso.orderID.ToString();
+        else
+            Get<TextMeshProUGUI>((int)(TMPs.IDTMP)).text = "CLEAR";
         desc = _cso.desc;
     }
 

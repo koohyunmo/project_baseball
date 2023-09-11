@@ -37,6 +37,13 @@ public class BatCollider : MonoBehaviour
         Managers.Game.SetBatCollider(this);
     }
 
+    private void OnEnable()
+    {
+        Debug.Log("베트콜리얻 초기화");
+        isHit = false;
+        _hitPos = HitPos.NONE;
+    }
+
     public Vector3 BatMid()
     {
         return _mid.position;
@@ -333,6 +340,9 @@ public class BatCollider : MonoBehaviour
             float t = bottomDist / (bottomDist + midRowDist);
             score = Mathf.Lerp(1 + batPower, 50 + batPower, t);
         }
+
+
+        Debug.Log(score);
 
         return score;
 

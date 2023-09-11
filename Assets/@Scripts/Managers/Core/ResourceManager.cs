@@ -191,6 +191,23 @@ public class ResourceManager
         }
     }
 
+    public ChallengeScriptableObject GetChallengeScriptableObjet (string key)
+    {
+        if (Resources.ContainsKey(key) == false)
+            Debug.Log($"{key} is not exist");
+
+        if (Resources.TryGetValue(key, out Object obj) && obj is ChallengeScriptableObject cso)
+        {
+            Debug.Log(key);
+            return cso;
+        }
+        else
+        {
+            Debug.LogError(key);
+            return null;
+        }
+    }
+
     public int ObjectGetCount(string label)
     {
         int count = 0;
