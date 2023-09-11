@@ -1,6 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using static Define;
 
 public class UI_ChallengePopup : UI_Popup
@@ -16,7 +20,18 @@ public class UI_ChallengePopup : UI_Popup
         Content,
     }
 
+    enum Sliders
+    {
+        Slider
+    }
+
+    enum TMPs
+    {
+        SliderTMP
+    }
     Transform _grid;
+
+    private ChallengeProc _challengeProc = ChallengeProc.None;
 
     public override bool Init()
     {
@@ -25,18 +40,32 @@ public class UI_ChallengePopup : UI_Popup
 
         BindButton(typeof(Buttons));
         BindObject(typeof(GameObejcts));
+        Bind<Slider>(typeof(Sliders));
+        Bind<TextMeshProUGUI>(typeof(TMPs));
 
         GetButton((int)Buttons.B_Back).gameObject.BindEvent(B_BackClick);
         _grid = GetObject((int)GameObejcts.Content).transform;
 
+        Managers.Game.SetLobbyUIUpdate(UpdateUI);
+
+
         Clear();
         MakeItme();
+        UpdateUI();
+
         return true;
     }
 
     private void B_BackClick()
     {
         Managers.UI.ClosePopupUI(this);
+    }
+
+    private void UpdateUI()
+    {
+        Get<Slider>((int)Sliders.Slider).value = Managers.Game.GameDB.challengeClearCount / (float)Managers.Game.ChallengeCount;
+        Get<TextMeshProUGUI>((int)TMPs.SliderTMP).text = $"Challenges {Managers.Game.GameDB.challengeClearCount} / {Managers.Game.ChallengeCount}";
+
     }
 
     private void Clear()
@@ -66,4 +95,14 @@ public class UI_ChallengePopup : UI_Popup
         }
     }
 
+    private void OnDestroy()
+    {
+        Managers.Game.RemoveLobbyUIUpdate(UpdateUI);
+    }
+
+
+    internal void InitData(ChallengeProc fail)
+    {
+        _challengeProc = fail;
+    }
 }

@@ -59,7 +59,7 @@ public class UI_InfoPopup : UI_Popup
         return true;
     }
 
-    private void ClickCloseButton()
+    protected virtual void ClickCloseButton()
     {
         Managers.UI.ClosePopupUI(this);
     }

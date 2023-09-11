@@ -15,6 +15,7 @@ public class GameDB
     public HashSet<string> playerSkills = new HashSet<string>();
     public PlayerInfo playerInfo = new PlayerInfo();
     public Dictionary<string, bool> challengeData = new Dictionary<string, bool>();
+    public int challengeClearCount = 0;
 }
 
 [Serializable]

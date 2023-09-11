@@ -18,6 +18,8 @@ public class UI_GameInfoPopup : UI_Popup
         Managers.Game.SetThrowBallEvent(UpdateUI);
         Managers.Game.SetGameUiEvent(UpdateGameUI);
 
+        UpdateGameUI();
+
         thorwBallTypeTMP.gameObject.SetActive(false);
     }
 
@@ -25,6 +27,7 @@ public class UI_GameInfoPopup : UI_Popup
     {
         if (Managers.Game.GameState != Define.GameState.InGround)
             return;
+
 
         ballSpeedTMP.text = Managers.Game.Speed.ToString("F2")+" Km/h";
 
@@ -39,7 +42,24 @@ public class UI_GameInfoPopup : UI_Popup
             return;
         }
 
-        gameScoreTMP.text = Managers.Game.GameScore.ToString();
+        if (Managers.Game.GameMode != Define.GameMode.Challenge)
+            gameScoreTMP.text = Managers.Game.GameScore.ToString();
+        else
+        {
+            switch (Managers.Game.ChallengeMode)
+            {
+                case Define.ChallengeType.Score:
+                    gameScoreTMP.text = $"{Managers.Game.GameScore} / {Managers.Game.ChallengeScore}";
+                    break;
+                case Define.ChallengeType.HomeRun:
+                    gameScoreTMP.text = $"{Managers.Game.HomeRunCount} / {Managers.Game.ChallengeScore}";
+                    break;
+                case Define.ChallengeType.RealMode:
+                    gameScoreTMP.text = $"{Managers.Game.SwingCount} / {Managers.Game.ChallengeScore}";
+                    break;
+ 
+            }
+        }
 
         gameScoreTMP.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.4f);
         gameScoreTMP.DOFade(0, 0.4f).SetEase(Ease.InOutQuad).OnComplete(() =>

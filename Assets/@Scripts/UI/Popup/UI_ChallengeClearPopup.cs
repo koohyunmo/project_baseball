@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,19 +7,10 @@ public class UI_ChallengeClearPopup : UI_InfoPopup
 {
 
     ChallengeScriptableObject _cso;
-
+    bool _isFailed = false;
     private void Start()
     {
         Init();
-    }
-
-    public void InitData(ChallengeScriptableObject challengeInfo)
-    {
-        _cso = challengeInfo;
-    }
-    public void InitData(string key)
-    {
-        _cso = Managers.Resource.GetChallengeScriptableObjet(key);
     }
 
     public override bool Init()
@@ -28,9 +20,19 @@ public class UI_ChallengeClearPopup : UI_InfoPopup
             return false;
         }
 
-        popupInfoText.text = "CLEAR CHALLENGE";
-        popupButtonText.text = "OK";
-        popupButton.gameObject.BindEvent(ClearButton);
+        if (_isFailed == false)
+        {
+            popupInfoText.text = "<color=green>COMPLETE</color>";
+            popupButtonText.text = "OK";
+            popupButton.gameObject.BindEvent(ClearButton);
+        }
+        else
+        {
+            popupIcon.color = Color.red;
+            popupInfoText.text = "<color=red>FAIL</color>";
+            popupButtonText.text = "OK";
+            popupButton.gameObject.BindEvent(ClearButton);
+        }
 
 
         return true;
@@ -42,4 +44,24 @@ public class UI_ChallengeClearPopup : UI_InfoPopup
         Managers.Game.GoHome();
     }
 
+    public void Failed()
+    {
+        _isFailed = true;
+
+        if(Init())
+        {
+            return;
+        }
+    }
+
+    protected override void ClickCloseButton()
+    {
+        Managers.UI.ClosePopupUI(this);
+        Managers.Game.GoHome();
+    }
+
+    private void OnEnable()
+    {
+        _isFailed = false;
+    }
 }

@@ -194,7 +194,7 @@ public class GameManager
         StateChangeEvent();
     }
 
-    public void GameEnd(Action callBack = null)
+    public void GameEndCallback(Action callBack = null)
     {
         if (GameState != GameState.InGround)
             return;
@@ -204,6 +204,17 @@ public class GameManager
         callBack?.Invoke();
         StateChangeEvent();
     }
+
+    public void GameEnd()
+    {
+        if (GameState != GameState.InGround)
+            return;
+
+        GameState = GameState.End;
+        StateChangeEvent();
+    }
+
+    
 
 
     public void GoHome(Action callBack = null)
@@ -233,8 +244,9 @@ public class GameManager
                     MainCam.MoveOriginaPos();
                     Managers.UI.ShowPopupUI<UI_Main>();
 
-                    if(isChallengeClear == true)
+                    if (isChallengeClear == ChallengeProc.Complete || isChallengeClear == ChallengeProc.Fail)
                         Managers.UI.ShowPopupUI<UI_ChallengePopup>();
+
 
                     _gameMode = GameMode.None;
                     ScoreAndCountClear();
@@ -269,14 +281,22 @@ public class GameManager
                 {
                     Managers.UI.CloseAllPopupUIAndCall(() =>
                     {
-                        if (isChallengeClear == false)
+                        if (isChallengeClear == ChallengeProc.None)
                             Managers.UI.ShowPopupUI<UI_ReplayPopupTimer>();
                         else
                         {
-                            _gameData.challengeData[ChallengeGameID] = true;
-                            SaveGame();
+                            if (_gameData.challengeData[ChallengeGameID] == false)
+                            {
+                                _gameData.challengeData[ChallengeGameID] = true;
+                                _gameData.challengeClearCount += 1;
+                                SaveGame();
+                            }
+
                             _gameMode = GameMode.None;
-                            Managers.UI.ShowPopupUI<UI_ChallengeClearPopup>();
+                            if(isChallengeClear == ChallengeProc.Complete)
+                                Managers.UI.ShowPopupUI<UI_ChallengeClearPopup>();
+                            else if(isChallengeClear == ChallengeProc.Fail)
+                                Managers.UI.ShowPopupUI<UI_ChallengeClearPopup>().Failed();
                         }
                            
 
@@ -299,7 +319,7 @@ public class GameManager
         HomeRunCount = 0;
         ChallengeScore = 0;
         ChallengeGameID = "";
-        isChallengeClear = false;
+        isChallengeClear = ChallengeProc.None;
     }
 
 
@@ -546,7 +566,7 @@ public class GameManager
 
 
     #region 첼린지 모드 체크
-    private bool isChallengeClear = false;
+    private ChallengeProc isChallengeClear = ChallengeProc.None;
     private void ChallengeModeCheck()
     {
 
@@ -558,22 +578,27 @@ public class GameManager
             case ChallengeType.Score:
                 if (GameScore == ChallengeScore)
                 {
-                    isChallengeClear = true;
-                    GameEnd();
+                    isChallengeClear = ChallengeProc.Complete;
+                    ManagerAsyncFunction(GameEnd, 0.5f);
+                }
+                else if (GameScore > ChallengeScore)
+                {
+                    isChallengeClear = ChallengeProc.Fail;
+                    ManagerAsyncFunction(GameEnd, 0.5f);
                 }
                 return;
             case ChallengeType.HomeRun:
-                if (HomeRunCount > ChallengeScore)
+                if (HomeRunCount >= ChallengeScore)
                 {
-                    isChallengeClear = true;
-                    GameEnd();
+                    isChallengeClear = ChallengeProc.Complete; 
+                    ManagerAsyncFunction(GameEnd, 0.5f);
                 }
                 return;
             case ChallengeType.RealMode:
-                if (SwingCount > ChallengeScore)
+                if (SwingCount >= ChallengeScore)
                 {
-                    isChallengeClear = true;
-                    GameEnd();
+                    isChallengeClear = ChallengeProc.Complete; 
+                    ManagerAsyncFunction(GameEnd, 0.5f);
                 }
                 return;
         }

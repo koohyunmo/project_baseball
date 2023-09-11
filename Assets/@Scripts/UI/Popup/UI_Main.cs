@@ -36,7 +36,7 @@ public class UI_Main : UI_Popup
     private Button soundButton;
 
     private bool _isDrag = true;
-
+    private bool _isAnim = false;
     Image NotifyItem;
     Image NotifyReward;
 
@@ -153,6 +153,7 @@ public class UI_Main : UI_Popup
 
     private void B_OptionsClick()
     {
+
         if (vibrationButton.gameObject.activeInHierarchy == false)
         {
 
@@ -163,8 +164,8 @@ public class UI_Main : UI_Popup
             vibrationButton.gameObject.SetActive(true);
             soundButton.gameObject.SetActive(true);
 
-            vibrationButton.transform.DOScale(1, 0.5f);
-            soundButton.transform.DOScale(1, 0.5f).SetDelay(0.25f);
+            vibrationButton.transform.DOScale(Vector3.one, 0.5f).SetDelay(0.25f); 
+            soundButton.transform.DOScale(Vector3.one, 0.5f);
         }
         else
         {
@@ -173,15 +174,15 @@ public class UI_Main : UI_Popup
             DOTween.Kill(vibrationButton.transform);
             DOTween.Kill(soundButton.transform);
 
-            vibrationButton.transform.DOScale(0, 0.5f).OnComplete(() =>
+            vibrationButton.transform.DOScale(Vector3.zero, 0.5f).OnComplete(() =>
             {
                 vibrationButton.gameObject.SetActive(false);
-            }).SetDelay(0.25f);
+            });
 
-            soundButton.transform.DOScale(0, 0.5f).OnComplete(() =>
+            soundButton.transform.DOScale(Vector3.zero, 0.5f).OnComplete(() =>
             {
                 soundButton.gameObject.SetActive(false);
-            });
+            }).SetDelay(0.25f);
         }
 
     }

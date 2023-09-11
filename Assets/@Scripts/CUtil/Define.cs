@@ -154,6 +154,13 @@ public static class Define
         Skill
     }
 
+	public enum ChallengeProc
+	{
+		None,
+		Fail,
+		Complete
+	}
+
     public static readonly Color Bronze = new Color(205f / 255f, 127f / 255f, 50f / 255f, (155f/255f));
     public static readonly Color Silver = new Color(192f / 255f, 192f / 255f, 192f / 255f, (155f / 255f));
     public static readonly Color Gold = new Color(255f / 255f, 223f / 255f, 86f / 255f, 1f);
