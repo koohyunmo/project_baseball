@@ -161,7 +161,7 @@ public class BallController : InGameObjectController
 
     public void MoveAlongPath()
     {
-        if(Managers.Game.GameState == Define.GameState.End)
+        if( Managers.Game.GameMode == Define.GameMode.Challenge &&Managers.Game.GameState == Define.GameState.End)
         {
             if(gameObject.activeSelf == true)
             {

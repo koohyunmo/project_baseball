@@ -1,0 +1,10 @@
+{
+    "items": {
+        "equip": "Equip",
+        "welcome": "Welcome",
+        "goodbye": "Goodbye"
+    },
+    "skills":{
+        "hawkeye" : "Hawk-Eye is a batter's ability to see the pitcher's throw clearly, making it easier to hit the ball by understanding its path."
+    }
+}

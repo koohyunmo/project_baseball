@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 1190531880613369797}
   - component: {fileID: 8336434329587338108}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: TimeTMP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -442,10 +442,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 110
+  m_fontSize: 54
   m_fontSizeBase: 110
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -2597,7 +2597,7 @@ PrefabInstance:
     - target: {fileID: 2900103148582300395, guid: b2454bbe0674d164894b4b8ff726d3fd,
         type: 3}
       propertyPath: m_Name
-      value: Roulette
+      value: RouletteController
       objectReference: {fileID: 0}
     - target: {fileID: 6696143650808456580, guid: b2454bbe0674d164894b4b8ff726d3fd,
         type: 3}

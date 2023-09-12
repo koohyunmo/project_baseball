@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class UI_GameInfoPopup : UI_Popup
@@ -13,6 +14,9 @@ public class UI_GameInfoPopup : UI_Popup
     public TextMeshProUGUI gameScoreTMP;
 
 
+    public Image IconBG;
+    public Image Bilboard;
+
     private void Start()
     {
         Managers.Game.SetThrowBallEvent(UpdateUI);
@@ -20,7 +24,15 @@ public class UI_GameInfoPopup : UI_Popup
 
         UpdateGameUI();
 
-        thorwBallTypeTMP.gameObject.SetActive(false);
+
+        var color = Utils.GetColor(Managers.Game.League);
+        IconBG.color = color;
+        Bilboard.color = color;
+
+        ballSpeedTMP.text = "";
+        thorwBallTypeTMP.text = "";
+
+        //thorwBallTypeTMP.gameObject.SetActive(false);
     }
 
     private void UpdateUI()
@@ -29,7 +41,10 @@ public class UI_GameInfoPopup : UI_Popup
             return;
 
 
-        ballSpeedTMP.text = Managers.Game.Speed.ToString("F2")+" Km/h";
+        thorwBallTypeTMP.text = Managers.Game.ThrowType.ToString();
+
+        string colorCode = Managers.Game.GetSpeedColorString();
+        ballSpeedTMP.text = $"<color=#{colorCode}> {Managers.Game.Speed.ToString("F2")}Km/s </color>";
 
     }
 

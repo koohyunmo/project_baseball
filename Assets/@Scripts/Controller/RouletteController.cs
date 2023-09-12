@@ -49,7 +49,7 @@ public class RouletteController : MonoBehaviour
 
     private void Init()
     {
-        roullet.gameObject.BindEvent(StartSpin);
+        //roullet.gameObject.BindEvent(StartSpin);
         SetUI();
     }
 
@@ -142,7 +142,7 @@ public class RouletteController : MonoBehaviour
         Vector3 position = roullet.position; // ·ê·¿ÀÇ Áß½É À§Ä¡
         float angleStep = 360.0f / numberOfPrizes; // °¢ »óÇ° ¼½¼ÇÀÇ °¢µµ
         float currentAngle = rotationOffset;
-        float radius2 = 25.0f; // ·ê·¿ÀÇ ¹ÝÁö¸§
+        float radius2 = 25; // ·ê·¿ÀÇ ¹ÝÁö¸§
 
         for (int i = 0; i < images.Length; i++)
         {

@@ -33,6 +33,7 @@ public class UI_ChallengeInfoPopup : UI_InfoPopup
 
             popupInfoText.text = _cso.desc;
             popupButtonText.text = "PLAY";
+            popupIcon.color = Utils.GetColor(_cso.league);
             popupButton.gameObject.BindEvent(ChallengeButtonClick);
         }
 

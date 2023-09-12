@@ -18,6 +18,7 @@ public class Managers : MonoBehaviour
     public static GameManager Game { get { return Instance?._game; } }
     public static ObjectManager Obj { get { return Instance?._object; } }
     public static EffectManager Effect { get { return Instance?._effect; } }
+    public static LocalizationManager Localization { get { return Instance?._local; } }
 
     [SerializeField] UIManager _ui = new UIManager();
     [SerializeField] PoolManager _pool = new PoolManager();
@@ -26,6 +27,7 @@ public class Managers : MonoBehaviour
     [SerializeField] DataManager _db = new DataManager();
     [SerializeField] ObjectManager _object = new ObjectManager();
     [SerializeField] EffectManager _effect = new EffectManager();
+    [SerializeField] LocalizationManager _local = new LocalizationManager();
 
 
     public static Managers Instance { get { Init();  return s_instance; } } 
@@ -45,7 +47,7 @@ public class Managers : MonoBehaviour
             DontDestroyOnLoad(go);
             s_instance = go.GetComponent<Managers>();
             Application.targetFrameRate = 60;
-
+            Localization.Init();
         }
     }
 

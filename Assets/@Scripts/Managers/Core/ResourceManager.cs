@@ -109,7 +109,7 @@ public class ResourceManager
 
             float afterLoad = System.GC.GetTotalMemory(false); // 메모리 사용량 측정 종료
             float sizeInBytes = afterLoad - beforeLoad;
-            Debug.Log($"Resource {key} size: {sizeInBytes / 1024f} KB");
+            //Debug.Log($"Resource {key} size: {sizeInBytes / 1024f} KB");
 
             LoadBytes += sizeInBytes / 1024f;
 

@@ -1,13 +1,10 @@
-using DG.Tweening.Plugins.Core.PathCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Playables;
 using static Define;
 using static Keys;
 
@@ -159,6 +156,7 @@ public class GameManager
         }
 
         GameScore = 0;
+        Managers.Localization.LoadLocalizedText();
         StateUpdate();
     }
 
@@ -238,10 +236,10 @@ public class GameManager
 
     private void SaveBestScore()
     {
-        if ( GameMode != GameMode.Challenge && _gameData.playerInfo.bestScore < GameScore)
+        if ( GameMode != GameMode.Challenge && _gameData.playerInfo.playerBestScore[_league] < GameScore)
         {
             Debug.Log("최고 점수 갱신");
-            _gameData.playerInfo.bestScore = GameScore;
+            _gameData.playerInfo.playerBestScore[_league] = GameScore;
             SaveGame();
         }
         
@@ -254,6 +252,7 @@ public class GameManager
             case GameState.Home:
                 {
 
+
                     Managers.Obj.DespawnAll();
                     batMoveReplayData.Clear();
                     MainCam.MoveOriginaPos();
@@ -262,8 +261,13 @@ public class GameManager
                     if (challengeProc == ChallengeProc.Complete || challengeProc == ChallengeProc.Fail)
                         Managers.UI.ShowPopupUI<UI_ChallengePopup>();
 
+                    if (_gameMode == GameMode.Challenge)
+                    {
+                        SetLeague(challengePrevLeague);
+                        _gameMode = GameMode.None;
+                    }
 
-                    _gameMode = GameMode.None;
+
                     ScoreAndCountClear();
 
                     if (_bat)
@@ -312,7 +316,6 @@ public class GameManager
                         {
 
                             SaveChallengeData();
-                            _gameMode = GameMode.None;
                             if(challengeProc == ChallengeProc.Complete)
                                 Managers.UI.ShowPopupUI<UI_ChallengeClearPopup>();
                             else
@@ -325,7 +328,6 @@ public class GameManager
                         isRecord = false;
 
                     });
-
 
                 }
                 break;
@@ -459,12 +461,14 @@ public class GameManager
     }
 
 
+    private League challengePrevLeague;
     public void SetChallengeMode(ChallengeScriptableObject cso)
     {
         ChallengeScore = cso.score;
         ChallengeMode = cso.mode;
         ChallengeGameID = cso.key;
         challengeProc = ChallengeProc.Fail;
+        challengePrevLeague = _league;
         SetLeague(cso.league);
     }
 
@@ -514,6 +518,7 @@ public class GameManager
     public void SetLeague(League lg)
     {
         _league = lg;
+        ChageBackgroundColor();
     }
     public void SetBallInfo(float speed, ThrowType throwType)
     {
@@ -608,6 +613,25 @@ public class GameManager
     {
         _batCollider = batCollider;
     }
+
+    public string GetSpeedColorString()
+    {
+        float minValue = 41.67f * 0.8f; // 초록색
+        float maxValue = 62f; // 빨간색
+
+        // 값의 위치 계산 (0에서 1 사이)
+        float t = Mathf.InverseLerp(minValue, maxValue, _speed);
+
+        // 두 색상 사이를 선형 보간
+        Color interpolatedColor = Color.Lerp(Color.green, Color.red, t);
+
+        string colorCode = Utils.ColorToHex_1(interpolatedColor);
+
+        string speedKM = ((_speed * 3600) *0.001f).ToString("F2")+"km/h";
+
+        return colorCode;
+    }
+
     #endregion
 
 
@@ -755,7 +779,23 @@ public class GameManager
 
 
             _gameData = StartData;
-            _gameData.playerInfo.bestScore = 0;
+
+            {
+                _gameData.playerInfo.playerBestScore[League.Bronze] = 0;
+                _gameData.playerInfo.playerBestScore[League.Silver] = 0;
+                _gameData.playerInfo.playerBestScore[League.Gold] = 0;
+                _gameData.playerInfo.playerBestScore[League.Platinum] = 0;
+                _gameData.playerInfo.playerBestScore[League.Diamond] = 0;
+                _gameData.playerInfo.playerBestScore[League.Master] = 0;
+
+                _gameData.playerInfo.playerClearLeague[League.Bronze] = true;
+                _gameData.playerInfo.playerClearLeague[League.Silver] = false;
+                _gameData.playerInfo.playerClearLeague[League.Gold] = false;
+                _gameData.playerInfo.playerClearLeague[League.Platinum] = false;
+                _gameData.playerInfo.playerClearLeague[League.Diamond] = false;
+                _gameData.playerInfo.playerClearLeague[League.Master] = false;
+            }
+            
             _gameData.challengeData = challengeData;
 
 
@@ -915,14 +955,14 @@ public class GameManager
 
     public long GetBestScore()
     {
-        if (Managers.Game.GameScore > _gameData.playerInfo.bestScore)
+        if (Managers.Game.GameScore > _gameData.playerInfo.playerBestScore[_league])
         {
             SaveBestScore();
             Debug.Log("최고 점수 갱신 이벤트");
             return GameScore;
         }
         else
-            return _gameData.playerInfo.bestScore;
+            return _gameData.playerInfo.playerBestScore[_league];
     }
     #endregion
 

@@ -66,7 +66,8 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
     {
         if (Managers.Game.GameDB.playerInventory.Contains(_itemSO.id))
         {
-            popupButtonText.text = "EQUIP";
+            //popupButtonText.text = "EQUIP";
+            popupButtonText.text = Managers.Localization.GetLocalizedValue("equip");
             popupButton.gameObject.BindEvent(EquipItem);
         }
         else

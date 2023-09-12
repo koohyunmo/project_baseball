@@ -53,7 +53,8 @@ public class PlayerInfo
     public string equipBackgroundID;
     public int playerPower;
     public string equipSkillId;
-    public long bestScore;
+    public Dictionary<Define.League, long> playerBestScore = new Dictionary<Define.League, long>();
+    public Dictionary<Define.League, bool> playerClearLeague = new Dictionary<Define.League, bool>();
 }
 
 

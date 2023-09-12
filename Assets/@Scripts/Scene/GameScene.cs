@@ -18,10 +18,11 @@ public class GameScene : MonoBehaviour
     {
         Managers.Resource.LoadAllAsync<Object>("PreLoad", Define.Prefabs.None, (System.Action<string, int, int>)((key, count, totalCount) =>
         {
-            Debug.Log($"{key} {count}/{totalCount}");
+           
 
             if (count == totalCount)
             {
+                Debug.Log($"로드 완료 {count}/{totalCount}");
                 Object obj = GameObject.FindObjectOfType(typeof(EventSystem));
                 if (obj == null)
                     Managers.Resource.Instantiate("EventSystem").name = "@EventSystem";

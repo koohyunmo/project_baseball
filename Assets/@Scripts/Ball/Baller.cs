@@ -579,6 +579,7 @@ public class Baller : MonoBehaviour
 
                     replayBall.transform.position = Vector3.Lerp(startPoint, endPoint, fractionOfJourney);
 
+
                     camManager.CameraMove(replayBall.transform.position);
 
                     yield return new FixedUpdate();
@@ -606,83 +607,6 @@ public class Baller : MonoBehaviour
         //yield break;
     }
 
-
-
-    private void RelplayFollowBall()
-    {
-        var cam = Camera.main;
-        var camManager = Camera.main.gameObject.GetComponent<CameraManager>();
-
-
-        // widthCurve를 설정하는 부분
-        AnimationCurve curve = new AnimationCurve();
-        curve.AddKey(0, 1f);
-        curve.AddKey(1, 1f);
-
-        pathRenderer.widthCurve = curve;
-
-        // 절대적인 너비 설정
-        pathRenderer.widthMultiplier = 0.01f;
-
-        if (_prevId != Managers.Game.EquipBallId)
-        {
-            var ballId = Managers.Game.EquipBallId;
-            ballPrefab = Managers.Resource.GetScriptableObjet<BallScriptableObject>(ballId).model;
-        }
-        var replayBall = Managers.Obj.Spawn<BallController>(ballPrefab, pathRenderer.GetPosition(0));
-
-        camManager.OnReplay(replayBall.transform, transform.position);
-
-        float replaySpeed = speed;
-
-
-
-        for (int i = 0; i < pathRenderer.positionCount - 1; i++)
-        {
-            Vector3 startPoint = replayBall.transform.position;
-            Vector3 endPoint = pathRenderer.GetPosition(i + 1);
-
-
-
-            float journeyLength = Vector3.Distance(startPoint, endPoint);
-            float journeyProgress = 0;
-
-            while (journeyProgress < journeyLength)
-            {
-
-                if (GameState == GameState.Home)
-                {
-                    Managers.Game.isReplay = false;
-                }
-
-                float distanceToMove = replaySpeed * Time.deltaTime;
-                journeyProgress += distanceToMove;
-
-                float fractionOfJourney = journeyProgress / journeyLength;
-
-                replayBall.transform.position = Vector3.Lerp(startPoint, endPoint, fractionOfJourney);
-
-                camManager.CameraMove(replayBall.transform.position);
-
-            }
-
-            if (i == pathRenderer.positionCount - 2)
-            {
-                replaySpeed = replaySpeed * Managers.Game.ReplaySlowMode;
-                Managers.Game.StrikeEvent();
-            }
-
-
-        }
-
-
-        Managers.Game.isReplay = false;
-
-
-        if (Managers.Game.GameState == GameState.End)
-            camManager.ReplayBack(replayBall.transform, transform.position);
-
-    }
 
 
 }
