@@ -168,4 +168,7 @@ public static class Define
     public static readonly Color Diamond = new Color(185f / 255f, 242f / 255f, 255f / 255f, (155f / 255f));
     public static readonly Color Master = new Color(123f / 255f, 31f / 255f, 162f / 255f, 1f);
 
+
+
+
 }

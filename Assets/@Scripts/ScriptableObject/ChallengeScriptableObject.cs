@@ -8,6 +8,7 @@ public class ChallengeScriptableObject : ScriptableObject
     public int orderID;
     public string key;
     public ChallengeType mode;
+    public League league;
     public int score;
     public float speed;
     [TextArea]
@@ -15,16 +16,18 @@ public class ChallengeScriptableObject : ScriptableObject
 
     public void GenerateDescription()
     {
+        string colorCode = Utils.ColorToHex(Utils.GetColor(league));
+
         switch (mode)
         {
             case ChallengeType.Score:
-                desc = $"Achieve exactly {score} points.";
+                desc = $"Achieve exactly {score} points.\n<color=#{colorCode}>{league} League</color> ";
                 break;
             case ChallengeType.HomeRun:
-                desc = $"Hit {score} home runs to succeed.";
+                desc = $"Hit {score} home runs to succeed. \n <color=#{colorCode}>{league} League</color>";
                 break;
             case ChallengeType.RealMode:
-                desc = $"Hit consecutively {score} times.";
+                desc = $"Hit consecutively {score} times. \n <color=#{colorCode}>{league} League</color>";
                 break;
         }
     }

@@ -15,6 +15,7 @@ MonoBehaviour:
   orderID: 2
   key: CSO_2
   mode: 3
+  league: 2
   score: 5
   speed: 0
-  desc: Hit consecutively 5 times.
+  desc: "Hit consecutively 5 times. \n <color=#868686FF>Silver League</color>"

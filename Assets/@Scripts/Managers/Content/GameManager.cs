@@ -223,12 +223,8 @@ public class GameManager
         if (GameState != GameState.End)
             return;
 
-        if(_gameData.playerInfo.bestScore < GameScore)
-        {
-            Debug.Log("최고 점수 갱신");
-            _gameData.playerInfo.bestScore = GameScore;
-        }
-        SaveGame();
+        SaveBestScore();
+
 
         GameState = GameState.Home;
 
@@ -239,6 +235,18 @@ public class GameManager
         StateUpdate();
         callBack?.Invoke();
     }
+
+    private void SaveBestScore()
+    {
+        if ( GameMode != GameMode.Challenge && _gameData.playerInfo.bestScore < GameScore)
+        {
+            Debug.Log("최고 점수 갱신");
+            _gameData.playerInfo.bestScore = GameScore;
+            SaveGame();
+        }
+        
+    }
+
     private void StateUpdate()
     {
         switch (GameState)
@@ -251,7 +259,7 @@ public class GameManager
                     MainCam.MoveOriginaPos();
                     Managers.UI.ShowPopupUI<UI_Main>();
 
-                    if (isChallengeClear == ChallengeProc.Complete || isChallengeClear == ChallengeProc.Fail)
+                    if (challengeProc == ChallengeProc.Complete || challengeProc == ChallengeProc.Fail)
                         Managers.UI.ShowPopupUI<UI_ChallengePopup>();
 
 
@@ -298,22 +306,19 @@ public class GameManager
 
                     Managers.UI.CloseAllPopupUIAndCall(() =>
                     {
-                        if (isChallengeClear == ChallengeProc.None)
+                        if (challengeProc == ChallengeProc.None)
                             Managers.UI.ShowPopupUI<UI_ReplayPopupTimer>();
                         else
                         {
-                            if (_gameData.challengeData[ChallengeGameID] == false)
-                            {
-                                _gameData.challengeData[ChallengeGameID] = true;
-                                _gameData.challengeClearCount += 1;
-                                SaveGame();
-                            }
 
+                            SaveChallengeData();
                             _gameMode = GameMode.None;
-                            if(isChallengeClear == ChallengeProc.Complete)
+                            if(challengeProc == ChallengeProc.Complete)
                                 Managers.UI.ShowPopupUI<UI_ChallengeClearPopup>();
-                            else if(isChallengeClear == ChallengeProc.Fail)
+                            else
+                            {
                                 Managers.UI.ShowPopupUI<UI_ChallengeClearPopup>().Failed();
+                            }
                         }
                            
 
@@ -328,6 +333,16 @@ public class GameManager
 
     }
 
+    private void SaveChallengeData()
+    {
+        if (challengeProc == ChallengeProc.Complete && _gameData.challengeData[ChallengeGameID] == false)
+        {
+            _gameData.challengeData[ChallengeGameID] = true;
+            _gameData.challengeClearCount += 1;
+            SaveGame();
+        }
+    }
+
     private void ScoreAndCountClear()
     {
         HitScore = 0;
@@ -336,7 +351,7 @@ public class GameManager
         HomeRunCount = 0;
         ChallengeScore = 0;
         ChallengeGameID = "";
-        isChallengeClear = ChallengeProc.None;
+        challengeProc = ChallengeProc.None;
     }
 
 
@@ -444,11 +459,13 @@ public class GameManager
     }
 
 
-    public void SetChallengeMode(int score, ChallengeType mode, string csoKey)
+    public void SetChallengeMode(ChallengeScriptableObject cso)
     {
-        ChallengeScore = score;
-        ChallengeMode = mode;
-        ChallengeGameID = csoKey;
+        ChallengeScore = cso.score;
+        ChallengeMode = cso.mode;
+        ChallengeGameID = cso.key;
+        challengeProc = ChallengeProc.Fail;
+        SetLeague(cso.league);
     }
 
     public void GetItem(string key)
@@ -595,7 +612,7 @@ public class GameManager
 
 
     #region 첼린지 모드 체크
-    private ChallengeProc isChallengeClear = ChallengeProc.None;
+    public ChallengeProc challengeProc { get; private set; } = ChallengeProc.None;
     private void ChallengeModeCheck()
     {
 
@@ -607,26 +624,26 @@ public class GameManager
             case ChallengeType.Score:
                 if (GameScore == ChallengeScore)
                 {
-                    isChallengeClear = ChallengeProc.Complete;
+                    challengeProc = ChallengeProc.Complete;
                     ManagerAsyncFunction(GameEnd, 0.5f);
                 }
                 else if (GameScore > ChallengeScore)
                 {
-                    isChallengeClear = ChallengeProc.Fail;
+                    challengeProc = ChallengeProc.Fail;
                     ManagerAsyncFunction(GameEnd, 0.5f);
                 }
                 return;
             case ChallengeType.HomeRun:
                 if (HomeRunCount >= ChallengeScore)
                 {
-                    isChallengeClear = ChallengeProc.Complete; 
+                    challengeProc = ChallengeProc.Complete; 
                     ManagerAsyncFunction(GameEnd, 0.5f);
                 }
                 return;
             case ChallengeType.RealMode:
                 if (SwingCount >= ChallengeScore)
                 {
-                    isChallengeClear = ChallengeProc.Complete; 
+                    challengeProc = ChallengeProc.Complete; 
                     ManagerAsyncFunction(GameEnd, 0.5f);
                 }
                 return;
@@ -900,8 +917,7 @@ public class GameManager
     {
         if (Managers.Game.GameScore > _gameData.playerInfo.bestScore)
         {
-            _gameData.playerInfo.bestScore = GameScore;
-            SaveGame();
+            SaveBestScore();
             Debug.Log("최고 점수 갱신 이벤트");
             return GameScore;
         }

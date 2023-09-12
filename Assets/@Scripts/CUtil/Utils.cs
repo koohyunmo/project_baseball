@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
 public class Utils
 {
@@ -83,5 +84,54 @@ public class Utils
 
         // 스크린 좌표를 튜플로 반환
         return (screenCenter, screenTopLeft, screenTopRight, screenBottomLeft, screenBottomRight);
+    }
+
+    public static Color GetColor(League league)
+	{
+        switch (league)
+        {
+            case League.Bronze:
+                return Define.Bronze;
+            case League.Silver:
+                return Define.Silver;
+            case League.Gold:
+                return Define.Gold; 
+            case League.Platinum:
+                return Define.Platinum; 
+            case League.Diamond:
+                return Define.Diamond; 
+            case League.Master:
+                return Define.Master; 
+
+        }
+
+		return Color.white;
+    }
+
+    public static string ColorToHex(Color color)
+    {
+
+        // 알파값을 1로 설정
+        color.a = 1f;
+
+        // 색상의 밝기 계산
+        float brightness = 0.3f * color.r + 0.59f * color.g + 0.11f * color.b;
+
+        if (brightness > 0.5f)
+        {
+            // 밝기가 높으면 글자의 색상을 어둡게 만들기
+            color.r *= 0.7f;
+            color.g *= 0.7f;
+            color.b *= 0.7f;
+        }
+        else
+        {
+            // 밝기가 낮으면 글자의 색상을 밝게 만들기
+            color.r = Mathf.Clamp(color.r * 1.5f, 0f, 1f);
+            color.g = Mathf.Clamp(color.g * 1.5f, 0f, 1f);
+            color.b = Mathf.Clamp(color.b * 1.5f, 0f, 1f);
+        }
+
+        return $"{Mathf.RoundToInt(color.r * 255):X2}{Mathf.RoundToInt(color.g * 255):X2}{Mathf.RoundToInt(color.b * 255):X2}{Mathf.RoundToInt(color.a * 255):X2}";
     }
 }

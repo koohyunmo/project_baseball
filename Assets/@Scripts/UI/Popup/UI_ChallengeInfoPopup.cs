@@ -44,7 +44,7 @@ public class UI_ChallengeInfoPopup : UI_InfoPopup
     {
         Managers.UI.CloseAllPopupUI();
         Managers.Game.GameReady(Define.GameMode.Challenge);
-        Managers.Game.SetChallengeMode(_cso.score, _cso.mode,_cso.key);
+        Managers.Game.SetChallengeMode(_cso);
     }
 
 }

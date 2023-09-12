@@ -95,6 +95,7 @@ public class GUIDebugger : MonoBehaviour
             GUILayout.Label("isRecord : " + Managers.Game.isRecord);
             GUILayout.Label("isReplay : " + Managers.Game.isReplay);
             GUILayout.Label("ChallengeGameID : " + Managers.Game.ChallengeGameID);
+            GUILayout.Label("ChallenGeModeProc : " + Managers.Game.challengeProc);
             GUILayout.Label("ChallengeScore : " + Managers.Game.ChallengeScore);
             GUI.contentColor = Color.white;
         }

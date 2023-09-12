@@ -8,6 +8,11 @@ using UnityEngine.UI;
 public class UI_ChallengeItem : UI_Base
 {
 
+    enum Images
+    {
+        UI_ChallengeItem,
+    }
+
     enum TMPs
     {
         IDTMP,
@@ -27,7 +32,9 @@ public class UI_ChallengeItem : UI_Base
     private void itemInit()
     {
         Bind<TextMeshProUGUI>(typeof(TMPs));
+        Bind<Image>(typeof(Images));
         gameObject.BindEvent(ShowPopup);
+        GetImage((int)Images.UI_ChallengeItem).color = Utils.GetColor(_cso.league);
         UpdateUI();
     }
 
