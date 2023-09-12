@@ -6,7 +6,7 @@ using UnityEngine.Purchasing;
 using UnityEngine.UI;
 using static Define;
 
-public class UI_SkinPopup : UI_Popup
+public class UI_SkinPopup : UI_ContentPopup
 {
 
     enum TMPs
@@ -237,8 +237,9 @@ public class UI_SkinPopup : UI_Popup
             Managers.Resource.Destroy(child.gameObject);
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
         Managers.Game.RemoveLobbyUIUpdate(UpdateSlider);
     }
 }

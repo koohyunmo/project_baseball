@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static Define;
 
-public class UI_ChallengePopup : UI_Popup
+public class UI_ChallengePopup : UI_ContentPopup
 {
 
     enum Buttons
@@ -95,8 +95,9 @@ public class UI_ChallengePopup : UI_Popup
         }
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
         Managers.Game.RemoveLobbyUIUpdate(UpdateUI);
     }
 

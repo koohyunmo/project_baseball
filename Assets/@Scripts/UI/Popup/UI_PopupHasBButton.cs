@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_PopupHasBButton : UI_Popup
+public class UI_PopupHasBButton : UI_ContentPopup
 {
 
     protected Button B_Back { get; private set; }

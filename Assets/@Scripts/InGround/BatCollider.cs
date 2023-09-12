@@ -14,6 +14,9 @@ public class BatCollider : MonoBehaviour
     [SerializeField] Transform _bottom;
     [SerializeField] HitPos _hitPos = HitPos.NONE;
 
+    private Renderer rend;
+    private Color originalColor;
+
     Vector3 originalScale;
 
     bool isHit = false;
@@ -35,6 +38,9 @@ public class BatCollider : MonoBehaviour
         originalScale = transform.localScale;
 
         Managers.Game.SetBatCollider(this);
+
+        rend = GetComponent<Renderer>();
+        originalColor = rend.material.color;
     }
 
     private void OnEnable()
@@ -62,10 +68,18 @@ public class BatCollider : MonoBehaviour
 
 
 
+
             if (bc.GetRigid() != null && bc.GetHit() == false)
             {
                 Managers.Game.StopWatch.Reset();
                 Managers.Game.StopWatch.Start();
+
+
+                // 알파값을 0으로 설정
+                SetAlpha(0f);
+
+                // 0.2초 후에 알파값을 100/255로 변경
+                StartCoroutine(ResetAlphaAfterDelay(0.2f));
 
 
                 if (Managers.Game.GameState == Define.GameState.InGround)
@@ -95,6 +109,19 @@ public class BatCollider : MonoBehaviour
             FlyTheBall(hitPoint, rb);
         }
 
+    }
+
+    private void SetAlpha(float alpha)
+    {
+        Color newColor = originalColor;
+        newColor.a = alpha;
+        rend.material.color = newColor;
+    }
+
+    private IEnumerator ResetAlphaAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SetAlpha(100f / 255f);
     }
 
     private void CalHitScore(Vector3 hitPoint)

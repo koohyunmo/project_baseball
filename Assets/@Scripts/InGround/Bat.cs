@@ -133,28 +133,7 @@ public class Bat : MonoBehaviour
         model.transform.rotation = originalBatRot;
     }
 
-
-    private void Update()
-    {
-        switch (GameState)
-        {
-            case Define.GameState.Home:
-                BatOff();
-                break;
-            case Define.GameState.Ready:
-                ColiderOn();
-                break;
-            case Define.GameState.InGround:
-                BatOn();
-                break;
-            case Define.GameState.End:
-                ColiderOff();
-                break;
-        }
-    }
-
-
-    private void BatOff()
+    public void BatOff()
     {
         if (batBoxCollider != null && batBoxCollider.gameObject.activeSelf == true)
         {
@@ -162,7 +141,7 @@ public class Bat : MonoBehaviour
         }
     }
 
-    private void BatOn()
+    public void BatOn()
     {
         if (batBoxCollider != null &&  batBoxCollider.gameObject.activeSelf == false)
         {
@@ -170,7 +149,7 @@ public class Bat : MonoBehaviour
         }
     }
 
-    private void ColiderOff()
+    public void ColiderOff()
     {
         if (batBoxCollider != null && batBoxCollider.enabled == true)
         {
@@ -179,7 +158,7 @@ public class Bat : MonoBehaviour
         }
     }
 
-    private void ColiderOn()
+    public void ColiderOn()
     {
         if (batBoxCollider != null && batBoxCollider.enabled == false)
         {

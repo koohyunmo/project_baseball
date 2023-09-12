@@ -147,7 +147,6 @@ public class GameManager
         {
             _gameState = GameState.Home;
             //Managers.UI.ShowPopupUI<UI_Main>();
-            StateChangeEvent();
             var go = Managers.Resource.Instantiate(IN_GAME_OBJ_KEY.InGround.ToString());
             go.transform.position = Vector3.zero;
             go.transform.rotation = Quaternion.identity;
@@ -159,6 +158,7 @@ public class GameManager
         }
 
         GameScore = 0;
+        StateChangeEvent();
     }
 
     public async void LoadItemCount()
@@ -239,6 +239,9 @@ public class GameManager
         {
             case GameState.Home:
                 {
+                    if(_bat)
+                        _bat.BatOff();
+
                     Managers.Obj.DespawnAll();
                     batMoveReplayData.Clear();
                     MainCam.MoveOriginaPos();
@@ -251,10 +254,14 @@ public class GameManager
                     _gameMode = GameMode.None;
                     ScoreAndCountClear();
 
+
                 }
                 break;
             case GameState.Ready:
                 {
+                    if (_bat)
+                        _bat.ColiderOn();
+
                     MainCam.MoveOriginaPos();
                     HitScore = 0;
                     batPositionSetting?.Invoke();
@@ -273,12 +280,17 @@ public class GameManager
                 break;
             case GameState.InGround:
                 {
+                    if (_bat)
+                        _bat.BatOn();
                     Managers.UI.ShowPopupUI<UI_GameInfoPopup>();
                     Managers.UI.ShowPopupUI<UI_DragPopup>();
                 }
                 break;
             case GameState.End:
                 {
+
+                    if (_bat)
+                        _bat.ColiderOff();
                     Managers.UI.CloseAllPopupUIAndCall(() =>
                     {
                         if (isChallengeClear == ChallengeProc.None)
@@ -412,6 +424,18 @@ public class GameManager
     public void SetBatPosition(BatPosition batPosition)
     {
         BatPosition = batPosition;
+    }
+
+    public void MainBatOff()
+    {
+        if (_bat)
+            _bat.gameObject.SetActive(false);
+    }
+
+    public void MainBatOn()
+    {
+        if(_bat)
+            _bat.gameObject.SetActive(true);
     }
 
 
