@@ -48,7 +48,6 @@ public class UI_ReplayPopupTimer : UI_Popup
         }
 
 
-        adImage.transform.DOKill();
         Managers.UI.ClosePopupUI(this);
 
         Managers.Game.GameRetry();
@@ -62,9 +61,8 @@ public class UI_ReplayPopupTimer : UI_Popup
 
         // 색상을 초록색으로 초기화
         timeSlider.color = startColor;
-        if (adTweenAnim != null)
-            adTweenAnim.Kill();
-        adTweenAnim = adImage.transform.DOScale(0.8f, 1).SetLoops(-1,LoopType.Yoyo);
+
+        adImage.transform.DOScale(0.7f, 0.4f).SetLoops(-1,LoopType.Yoyo);
 
         while (currentTime > 0)
         {
@@ -93,11 +91,6 @@ public class UI_ReplayPopupTimer : UI_Popup
     // UI 초기화
     public void ClearDisplay()
     {
-        adTweenAnim.Kill();
-        adTweenAnim = null;
-
-        adImage.transform.DOScale(1, 0);
-
         if (Co_timer != null)
         {
             StopCoroutine(Co_timer);
@@ -106,10 +99,14 @@ public class UI_ReplayPopupTimer : UI_Popup
 
         TimeSpan time = TimeSpan.FromSeconds(maxTime);
 
-        adImage.transform.DOKill();
-
         // 코드 작성
         Managers.UI.ClosePopupUI(this);
         Managers.UI.ShowPopupUI<UI_EndPopup>();
+    }
+
+
+    public void OnDestroy()
+    {
+        adImage.transform.DOKill();
     }
 }

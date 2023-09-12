@@ -83,6 +83,9 @@ public class Bat : MonoBehaviour
         Managers.Game.SetBatPositionSetting(ClampToCameraViewSetting);
         Managers.Game.batPositionSetting?.Invoke();
 
+
+        HitColiderTransform.gameObject.SetActive(false);
+
         SetBetHandle();
 
     }
@@ -135,7 +138,6 @@ public class Bat : MonoBehaviour
 
     public void BatOff()
     {
-        if (batBoxCollider != null && batBoxCollider.gameObject.activeSelf == true)
         {
             batBoxCollider.gameObject.SetActive(false);
         }
@@ -143,15 +145,14 @@ public class Bat : MonoBehaviour
 
     public void BatOn()
     {
-        if (batBoxCollider != null &&  batBoxCollider.gameObject.activeSelf == false)
         {
+
             batBoxCollider.gameObject.SetActive(true);
         }
     }
 
     public void ColiderOff()
     {
-        if (batBoxCollider != null && batBoxCollider.enabled == true)
         {
             //batMeshCollider.enabled = false;
             batBoxCollider.enabled = false;
@@ -160,11 +161,16 @@ public class Bat : MonoBehaviour
 
     public void ColiderOn()
     {
-        if (batBoxCollider != null && batBoxCollider.enabled == false)
         {
-            //batMeshCollider.enabled = true;
+
+            HitColiderTransform.gameObject.SetActive(true);
             batBoxCollider.enabled = true;
         }
+    }
+
+    public void ColiderObjOff()
+    {
+        HitColiderTransform.gameObject.SetActive(false);
     }
 
     private void FixedUpdate()

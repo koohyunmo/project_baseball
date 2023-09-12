@@ -94,7 +94,7 @@ public class UI_Main : UI_Popup
         if (NotifyItem.gameObject.activeSelf == false)
             NotifyItem.gameObject.SetActive(true);
 
-        NotifyItem.transform.DOScale(0.5f, 1f).OnComplete(() =>
+        NotifyItem.transform.DOScale(0.7f, 1f).OnComplete(() =>
         {
             NotifyItem.transform.DOScale(1f, 1f);
         }).SetLoops(-1, LoopType.Yoyo);
@@ -105,7 +105,7 @@ public class UI_Main : UI_Popup
         if (NotifyReward.gameObject.activeSelf == false)
             NotifyReward.gameObject.SetActive(true);
 
-        NotifyReward.transform.DOScale(0.5f, 1f).OnComplete(() =>
+        NotifyReward.transform.DOScale(0.7f, 1f).OnComplete(() =>
         {
             NotifyReward.transform.DOScale(1f, 1f);
         }).SetLoops(-1, LoopType.Yoyo);

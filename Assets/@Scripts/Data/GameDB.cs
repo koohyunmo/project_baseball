@@ -53,6 +53,7 @@ public class PlayerInfo
     public string equipBackgroundID;
     public int playerPower;
     public string equipSkillId;
+    public long bestScore;
 }
 
 

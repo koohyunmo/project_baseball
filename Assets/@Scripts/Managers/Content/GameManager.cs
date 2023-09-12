@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
 using static Define;
 using static Keys;
 
@@ -67,9 +68,9 @@ public class GameManager
     public ThrowType ThrowType { get; private set; }
     public LineRenderer StrikePath { get; private set; }
 
-    public float HitScore { get; private set; }
+    public long HitScore { get; private set; }
     public Vector3 HitPos { get; private set; } = Vector3.zero;
-    public float GameScore { get; private set; }
+    public long GameScore { get; private set; }
 
     public delegate void UIDelegate();
     public UIDelegate UiEvents;
@@ -158,7 +159,7 @@ public class GameManager
         }
 
         GameScore = 0;
-        StateChangeEvent();
+        StateUpdate();
     }
 
     public async void LoadItemCount()
@@ -179,7 +180,7 @@ public class GameManager
         GameState = GameState.Ready;
 
         callBack?.Invoke();
-        StateChangeEvent();
+        StateUpdate();
     }
 
 
@@ -191,7 +192,7 @@ public class GameManager
         GameState = GameState.InGround;
 
         callBack?.Invoke();
-        StateChangeEvent();
+        StateUpdate();
     }
 
     public void GameEndCallback(Action callBack = null)
@@ -202,7 +203,7 @@ public class GameManager
         GameState = GameState.End;
 
         callBack?.Invoke();
-        StateChangeEvent();
+        StateUpdate();
     }
 
     public void GameEnd()
@@ -211,7 +212,7 @@ public class GameManager
             return;
 
         GameState = GameState.End;
-        StateChangeEvent();
+        StateUpdate();
     }
 
     
@@ -222,7 +223,12 @@ public class GameManager
         if (GameState != GameState.End)
             return;
 
-        Debug.Log($"{GameScore} 게임 저장");
+        if(_gameData.playerInfo.bestScore < GameScore)
+        {
+            Debug.Log("최고 점수 갱신");
+            _gameData.playerInfo.bestScore = GameScore;
+        }
+        SaveGame();
 
         GameState = GameState.Home;
 
@@ -230,17 +236,15 @@ public class GameManager
         Debug.Log($"{GameScore} 게임 리셋");
 
         
-        StateChangeEvent();
+        StateUpdate();
         callBack?.Invoke();
     }
-    private void StateChangeEvent()
+    private void StateUpdate()
     {
         switch (GameState)
         {
             case GameState.Home:
                 {
-                    if(_bat)
-                        _bat.BatOff();
 
                     Managers.Obj.DespawnAll();
                     batMoveReplayData.Clear();
@@ -253,6 +257,9 @@ public class GameManager
 
                     _gameMode = GameMode.None;
                     ScoreAndCountClear();
+
+                    if (_bat)
+                        _bat.ColiderObjOff();
 
 
                 }
@@ -280,17 +287,15 @@ public class GameManager
                 break;
             case GameState.InGround:
                 {
-                    if (_bat)
-                        _bat.BatOn();
                     Managers.UI.ShowPopupUI<UI_GameInfoPopup>();
                     Managers.UI.ShowPopupUI<UI_DragPopup>();
                 }
                 break;
             case GameState.End:
                 {
-
                     if (_bat)
                         _bat.ColiderOff();
+
                     Managers.UI.CloseAllPopupUIAndCall(() =>
                     {
                         if (isChallengeClear == ChallengeProc.None)
@@ -379,7 +384,7 @@ public class GameManager
         GameState = GameState.Ready;
         callBack?.Invoke();
         MainCam.OffRePlay();
-        StateChangeEvent();
+        StateUpdate();
     }
 
     #region 게터세터
@@ -733,6 +738,7 @@ public class GameManager
 
 
             _gameData = StartData;
+            _gameData.playerInfo.bestScore = 0;
             _gameData.challengeData = challengeData;
 
 
@@ -888,6 +894,19 @@ public class GameManager
     public void RemoveLobbyUIUpdate(LobbyUIDelegate uiEvent)
     {
         LobbyUIEvent -= uiEvent;
+    }
+
+    public long GetBestScore()
+    {
+        if (Managers.Game.GameScore > _gameData.playerInfo.bestScore)
+        {
+            _gameData.playerInfo.bestScore = GameScore;
+            SaveGame();
+            Debug.Log("최고 점수 갱신 이벤트");
+            return GameScore;
+        }
+        else
+            return _gameData.playerInfo.bestScore;
     }
     #endregion
 
