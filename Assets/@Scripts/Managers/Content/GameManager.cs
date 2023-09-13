@@ -17,6 +17,7 @@ public class GameManager
 
     public Stopwatch StopWatch { get; set; } = new Stopwatch();
 
+    public BatType BatType { get; private set; } = BatType.NONE;
     public Bat Bat { get { return _bat; } private set { _bat = value; } }
     private Bat _bat = null;
 
@@ -34,6 +35,8 @@ public class GameManager
 
     public Vector3 AimPoint;
 
+    public HitType HitType { get { return _hitType; } private set { _hitType = value; } }
+    HitType _hitType = HitType.A;
     public Vector2 AimPointScreen
     {
         get
@@ -157,15 +160,29 @@ public class GameManager
 
         GameScore = 0;
         Managers.Localization.LoadLocalizedText();
+
+        PlayerDataSettings();
+        Managers.Resource.DoCache();
         StateUpdate();
+    }
+
+    private void PlayerDataSettings()
+    {
+        ChangeBall(_gameData.playerInfo.equipBallId);
+        ChangeBat(_gameData.playerInfo.equipBatId);
+        ChangeSkill(_gameData.playerInfo.equipSkillId);
     }
 
     public async void LoadItemCount()
     {
-        BatCount = await Managers.Resource.ObjectGetAsyncCount("Bat");
-        BallCount = await Managers.Resource.ObjectGetAsyncCount("Ball");
-        SkillCount = await Managers.Resource.ObjectGetAsyncCount("Skill");
+        //BatCount = await Managers.Resource.ObjectGetAsyncCount("Bat");
+        //Debug.Log(BatCount);
+        //BallCount = await Managers.Resource.ObjectGetAsyncCount("Ball");
+        //Debug.Log(BallCount);
+        //SkillCount = await Managers.Resource.ObjectGetAsyncCount("Skill");
+        //Debug.Log(SkillCount);
         ChallengeCount = await Managers.Resource.ObjectGetAsyncCount("Challenge");
+        Debug.Log(ChallengeCount);
     }
 
 
@@ -287,7 +304,7 @@ public class GameManager
                     Managers.UI.ShowPopupUI<UI_Timer>();
                     Managers.Obj.DespawnAll();
                     {
-                        var skillSo = Managers.Resource.GetScriptableObjet<SkillScriptableObject>(Managers.Game.EquipSkillId);
+                        var skillSo = Managers.Resource.GetItemScriptableObjet<SkillScriptableObject>(Managers.Game.EquipSkillId);
                         hawkeyeLevel = skillSo.HawkeyeLevel;
 
                         if (hawkeyeLevel == HawkeyeLevel.ZERO)
@@ -411,27 +428,32 @@ public class GameManager
 
         if (score < 50 && score > 0)
         {
+            _hitType = HitType.A;
             HitScore = 1;
             SwingCount++;
         }
-        else if (score >= 51 && score < 85)
+        else if (score >= 51 && score < 80)
         {
+            _hitType = HitType.A;
             HitScore += 1;
             SwingCount++;
         }
-        else if (score >= 85 && score < 95)
+        else if (score >= 80 && score < 95)
         {
+            _hitType = HitType.B;
             HitScore += 2;
             SwingCount++;
         }
         else if (score >= 95 && score < 100)
         {
+            _hitType = HitType.D;
             HitScore += 4;
             SwingCount++;
             HomeRunCount++;
         }
         else if (score >= 100 && score <= float.MaxValue)
         {
+            _hitType = HitType.D;
             HitScore += 10;
             SwingCount++;
             HomeRunCount++;
@@ -478,7 +500,7 @@ public class GameManager
         if (_gameData.playerInventory.Contains(key) == true)
             return;
 
-        var type = Managers.Resource.GetScriptableObjet<ItemScriptableObject>(key).type;
+        var type = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(key).type;
 
         switch (type)
         {
@@ -863,8 +885,18 @@ public class GameManager
 
     public void ChangeBat(string key)
     {
+        if(BatType == BatType.NONE)
+        {
+            var batSO = Managers.Resource.GetItemScriptableObjet<BatScriptableObject>(key);
+            BatType = batSO.batType;
+        }
+
         if (EquipBatId.Equals(key) == false)
+        {
             EquipBatId = key;
+            var batSO = Managers.Resource.GetItemScriptableObjet<BatScriptableObject>(key);
+            BatType = batSO.batType;
+        }
         else
             return;
 

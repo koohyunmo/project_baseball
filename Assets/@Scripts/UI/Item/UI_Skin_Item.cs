@@ -47,7 +47,7 @@ public class UI_Skin_Item : UI_Base
 
         UpdateUI();
         ChoiceUIUpdate();
-        
+
     }
 
     public void InitData(string key, ScollViewType type)
@@ -77,8 +77,31 @@ public class UI_Skin_Item : UI_Base
 
     private void ShowInfoPopup()
     {
-        var infoPopup = Managers.UI.ShowPopupUI<UI_SkinItemInfoPopup>();
-        infoPopup.InitData<ItemScriptableObject>(_item, UpdateLockUI, ChoiceUIUpdate);
+        switch (_type)
+        {
+            case ScollViewType.Ball:
+                {
+                    var infoPopup = Managers.UI.ShowPopupUI_Generic<UI_SkinItemInfoPopup>();
+                    infoPopup.InitData<BallScriptableObject>(_item.id, UpdateLockUI, ChoiceUIUpdate);
+                }
+                return;
+            case ScollViewType.Bat:
+                {
+                    var infoPopup = Managers.UI.ShowPopupUI_Generic<UI_SkinItemInfoPopup>();
+                    infoPopup.InitData<BatScriptableObject>(_item.id, UpdateLockUI, ChoiceUIUpdate);
+                }
+                return;
+            case ScollViewType.Skill:
+                {
+                    var infoPopup = Managers.UI.ShowPopupUI_Generic<UI_SkinItemInfoPopup>();
+                    infoPopup.InitData<SkillScriptableObject>(_item.id, UpdateLockUI, ChoiceUIUpdate);
+                }
+                return;
+        }
+
+        var infoPopup2 = Managers.UI.ShowPopupUI_Generic<UI_SkinItemInfoPopup>();
+        infoPopup2.InitData<ItemScriptableObject>(_item.id, UpdateLockUI, ChoiceUIUpdate);
+
     }
     private void BatSetting()
     {
@@ -96,13 +119,13 @@ public class UI_Skin_Item : UI_Base
 
     private void UpdateUI()
     {
-        if(_item == null)
+        if (_item == null)
         {
             Debug.LogError("Item is Null");
             return;
         }
 
-        if(Managers.Game.GameDB.playerInventory.Contains(_item.id) == true)
+        if (Managers.Game.GameDB.playerInventory.Contains(_item.id) == true)
         {
             GetImage((int)Images.LockImage).gameObject.SetActive(false);
         }
@@ -139,10 +162,31 @@ public class UI_Skin_Item : UI_Base
     private void OnClick()
     {
 
-        if(Managers.Game.GameDB.playerInventory.Contains(_key) == false)
+        if (Managers.Game.GameDB.playerInventory.Contains(_key) == false)
         {
-            var infoPopup = Managers.UI.ShowPopupUI<UI_SkinItemInfoPopup>();
-            infoPopup.InitData<ItemScriptableObject>(_item, UpdateLockUI, ChoiceUIUpdate);
+            var infoPopup = Managers.UI.ShowPopupUI_Generic<UI_SkinItemInfoPopup>();
+
+            switch (_type)
+            {
+                case ScollViewType.Ball:
+                    {
+                        infoPopup.InitData<BallScriptableObject>(_item.id, UpdateLockUI, ChoiceUIUpdate);
+                    }
+                    return;
+                case ScollViewType.Bat:
+                    {
+                        infoPopup.InitData<BatScriptableObject>(_item.id, UpdateLockUI, ChoiceUIUpdate);
+                    }
+                    return;
+                case ScollViewType.Skill:
+                    {
+                        infoPopup.InitData<SkillScriptableObject>(_item.id, UpdateLockUI, ChoiceUIUpdate);
+                    }
+                    return;
+            }
+
+
+            infoPopup.InitData(_item, UpdateLockUI, ChoiceUIUpdate);
             return;
         }
         else

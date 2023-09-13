@@ -16,6 +16,7 @@ MonoBehaviour:
   model: {fileID: 141460, guid: 83672b1bddebd6d4a93fbf0832da39b3, type: 3}
   icon: {fileID: 21300000, guid: 460ebaa98684e2d438dc4b00728b4e5d, type: 3}
   name: purple_bat
-  type: 0
+  type: 2
   grade: 0
-  power: 0
+  power: 5
+  batType: 1

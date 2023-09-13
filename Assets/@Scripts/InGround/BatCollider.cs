@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
 public class BatCollider : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class BatCollider : MonoBehaviour
     Vector3 originalScale;
 
     bool isHit = false;
+    
+
 
     enum HitPos
     {
@@ -90,7 +93,7 @@ public class BatCollider : MonoBehaviour
                     // 람다로 공날리는 함수 보내기
                     bat.SwingCollision(hitPoint, HitAction, bc.GetRigid());
 
-                    Managers.Effect.PlayEffect(Keys.BAT_EFFECT_KEY.HitA.ToString(), hitPoint);
+                    Managers.Effect.PlayBatEffect(hitPoint);
                     transform.DOShakeScale(0.3f, 0.7f).OnComplete(() => transform.DOScale(originalScale, 0));
 
                 }
@@ -329,7 +332,7 @@ public class BatCollider : MonoBehaviour
         float midRowDist = midRow;
 
         //TODO
-        var batPower = Managers.Resource.GetScriptableObjet<BatScriptableObject>(Managers.Game.PlayerInfo.equipBatId).power;
+        var batPower = Managers.Resource.GetItemScriptableObjet<BatScriptableObject>(Managers.Game.PlayerInfo.equipBatId).power;
 
         if (topDist < midDist && topDist < midRowDist && topDist < bottomDist) // Top에 가장 가까울 때
         {

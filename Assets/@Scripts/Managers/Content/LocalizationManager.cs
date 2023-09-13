@@ -37,63 +37,63 @@ public class LocalizationManager
         //LoadLocalizedText(currentLanguage);
     }
 
-    public void LoadLocalizedText(Language language)
+    public void LoadLocalizedText(Language language = Language.English)
     {
         localizedText = new Dictionary<string, string>();
-        string filePath = $"LocalizedText_{language.ToString()}"; // 예: "LocalizedText_English"
-        //TextAsset targetFile = Resources.Load<TextAsset>(filePath);
+        string filePath = $"LocalizedText_{language.ToString()}";
+        filePath = "LocalizedText";
         TextAsset targetFile = Managers.Resource.Load<TextAsset>(filePath);
 
-        Debug.Log(targetFile);
-
-        if(targetFile == null)
-        {
-            Debug.LogError($"key : LocalizedText_{language.ToString()}의 언어 파일을 읽을수 없습니다");
-            return;
-            
-        }
-
-        LocalizationData localizationData = JsonUtility.FromJson<LocalizationData>(targetFile.text);
-        localizedText = localizationData.items;
-    }
-    public void LoadLocalizedText()
-    {
-        localizedText = new Dictionary<string, string>();
-        string filePath = $"LocalizedText_{currentLanguage.ToString()}";
-        TextAsset targetFile = Managers.Resource.Load<TextAsset>(filePath);
+        Debug.Log(targetFile.text);
 
         if (targetFile == null)
         {
-            Debug.LogError($"key : LocalizedText_{currentLanguage.ToString()}의 언어 파일을 읽을수 없습니다");
+            Debug.LogError($"key : LocalizedText_{language.ToString()}의 언어 파일을 읽을수 없습니다");
             return;
         }
 
         LocalizationData localizationData = JsonConvert.DeserializeObject<LocalizationData>(targetFile.text);
-        localizedText = localizationData.items;
+        foreach (var item in localizationData.items)
+        {
+            localizedText[item.Key] = GetTranslation(item.Value);
+        }
 
-        // skills 딕셔너리도 localizedText에 합치기
         foreach (var skill in localizationData.skills)
         {
-            localizedText[skill.Key] = skill.Value;
+            localizedText[skill.Key] = GetTranslation(skill.Value);
         }
 
-        if (localizedText != null)
+        // bats 딕셔너리도 localizedText에 합치기
+        foreach (var bat in localizationData.bats)
         {
-            foreach (var item in localizedText.Keys)
-            {
-                Debug.Log($"{item} : {localizedText[item]}");
-            }
+            localizedText[bat.Key] = GetTranslation(bat.Value);
         }
-        else
+
+        foreach (var bat in localizationData.types)
         {
-            Debug.LogError("localizedText is null!");
+            localizedText[bat.Key] = GetTranslation(bat.Value);
+        }
+    }
+
+    private string GetTranslation(LocalizedItem item)
+    {
+        switch (currentLanguage)
+        {
+            case Language.English:
+                return item.en;
+            case Language.Korean:
+                return item.en;
+            // ... 기타 언어에 대한 처리 추가
+            default:
+                return item.en; // 기본값으로 영어 반환
         }
     }
 
 
     public string GetLocalizedValue(string key)
     {
-        string result = localizedText.ContainsKey(key) ? localizedText[key] : key;
+        key = key.ToLower();
+        string result = localizedText.ContainsKey(key) ? localizedText[key] : $"{key} Find Failed";
         return result;
     }
 }

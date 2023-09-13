@@ -1,0 +1,220 @@
+{
+    "items": {
+        "equip": {
+            "en": "Equip",
+            "ko": "장착하기"
+        },
+        "get":{
+            "en":"GET",
+            "ko":"획득하기"
+        },
+        "welcome": {
+            "en": "Welcome",
+            "ko": "환영합니다"
+        },
+        "goodbye": {
+            "en": "Goodbye",
+            "ko": "안녕히 가세요"
+        },
+        "material": {
+            "en": "Material",
+            "ko": "재질"
+        }
+    },
+    "skills": {
+        "hawkeye": {
+            "en": "Hawk-Eye is a batter's ability to see the pitcher's throw clearly, making it easier to hit the ball by understanding its path.",
+            "ko": "Hawk-Eye는 타자가 투수의 던진 공을 명확하게 볼 수 있는 능력으로, 공의 경로를 이해함으로써 공을 치기 쉬워집니다."
+        }
+    },
+    "bats" : {
+
+        "baseball_bat_regular": {
+            "en": "Classic Baseball Bat",
+            "ko": "클래식 야구 방망이"
+        },
+        "baseball-bat-nails": {
+            "en": "Spiked Baseball Bat",
+            "ko": "스파이크 야구 방망이"
+        },
+        "baseball-bat": {
+            "en": "Standard Baseball Bat",
+            "ko": "표준 야구 방망이"
+        },
+        "black_bat": {
+            "en": "Blackened Bat",
+            "ko": "검은색 방망이"
+        },
+        "black_stripe": {
+            "en": "Black Striped Bat",
+            "ko": "검은 줄무늬 방망이"
+        },
+        "blue_bat": {
+            "en": "Azure Bat",
+            "ko": "하늘색 방망이"
+        },
+        "blue_stripe": {
+            "en": "Blue Striped Bat",
+            "ko": "파란 줄무늬 방망이"
+        },
+        "decal01": {
+            "en": "Decal Bat - Design 1",
+            "ko": "데칼 방망이 - 디자인 1"
+        },
+        "decal02": {
+            "en": "Decal Bat - Design 2",
+            "ko": "데칼 방망이 - 디자인 2"
+        },
+        "decal03": {
+            "en": "Decal Bat - Design 3",
+            "ko": "데칼 방망이 - 디자인 3"
+        },
+        "decal04": {
+            "en": "Decal Bat - Design 4",
+            "ko": "데칼 방망이 - 디자인 4"
+        },
+        "decal05": {
+            "en": "Decal Bat - Design 5",
+            "ko": "데칼 방망이 - 디자인 5"
+        },
+        "decal06": {
+            "en": "Decal Bat - Design 6",
+            "ko": "데칼 방망이 - 디자인 6"
+        },
+        "decal07": {
+            "en": "Decal Bat - Design 7",
+            "ko": "데칼 방망이 - 디자인 7"
+        },
+        "decal08": {
+            "en": "Decal Bat - Design 8",
+            "ko": "데칼 방망이 - 디자인 8"
+        },
+        "decal09": {
+            "en": "Decal Bat - Design 9",
+            "ko": "데칼 방망이 - 디자인 9"
+        },
+        "decal10": {
+            "en": "Decal Bat - Design 10",
+            "ko": "데칼 방망이 - 디자인 10"
+        },
+        "decal11": {
+            "en": "Decal Bat - Design 11",
+            "ko": "데칼 방망이 - 디자인 11"
+        },
+        "flaming_bat": {
+            "en": "Flaming Bat",
+            "ko": "불타는 방망이"
+        },
+        "future_blue": {
+            "en": "Futuristic Blue Bat",
+            "ko": "미래적인 파란 방망이"
+        },
+        "future_full_blue": {
+            "en": "Full Blue Futuristic Bat",
+            "ko": "풀 블루 미래적인 방망이"
+        },
+        "future_full_purple": {
+            "en": "Full Purple Futuristic Bat",
+            "ko": "풀 퍼플 미래적인 방망이"
+        },
+        "future_full_red": {
+            "en": "Full Red Futuristic Bat",
+            "ko": "풀 레드 미래적인 방망이"
+        },
+        "future_full_white": {
+            "en": "Full White Futuristic Bat",
+            "ko": "풀 화이트 미래적인 방망이"
+        },
+        "future_purple": {
+            "en": "Futuristic Purple Bat",
+            "ko": "미래적인 보라색 방망이"
+        },
+        "future_red": {
+            "en": "Futuristic Red Bat",
+            "ko": "미래적인 빨간색 방망이"
+        },
+        "future_white": {
+            "en": "Futuristic White Bat",
+            "ko": "미래적인 하얀색 방망이"
+        },
+        "Hammer_03 (1)": {
+            "en": "Hammer Design 03",
+            "ko": "해머 디자인 03"
+        },
+        "industrial_bat": {
+            "en": "Industrial Bat",
+            "ko": "산업용 방망이"
+        },
+        "industrial_Batworn": {
+            "en": "Worn Industrial Bat",
+            "ko": "낡은 산업용 방망이"
+        },
+        "orange_bat": {
+            "en": "Tangerine Bat",
+            "ko": "귤색 방망이"
+        },
+        "orange_stripe": {
+            "en": "Orange Striped Bat",
+            "ko": "주황 줄무늬 방망이"
+        },
+        "purple_bat": {
+            "en": "Lavender Bat",
+            "ko": "라벤더색 방망이"
+        },
+        "purple_flaming_bat": {
+            "en": "Flaming Lavender Bat",
+            "ko": "불타는 라벤더색 방망이"
+        },
+        "purple_stripe": {
+            "en": "Purple Striped Bat",
+            "ko": "보라 줄무늬 방망이"
+        },
+        "red_bat": {
+            "en": "Crimson Bat",
+            "ko": "진홍색 방망이"
+        },
+        "red_stripe": {
+            "en": "Red Striped Bat",
+            "ko": "빨간 줄무늬 방망이"
+        },
+        "white_stripe": {
+            "en": "White Striped Bat",
+            "ko": "하얀 줄무늬 방망이"
+        },
+        "yellow_bat": {
+            "en": "Goldenrod Bat",
+            "ko": "황금색 방망이"
+        },
+        "yellow_stripe": {
+            "en": "Yellow Striped Bat",
+            "ko": "노란 줄무늬 방망이"
+        }
+    },
+    "types" :{
+        "tree": {
+            "en": "Wood",
+            "ko": "나무"
+        },
+        "alu": {
+            "en": "Aluminum",
+            "ko": "알루미늄"
+        },
+        "sp1": {
+            "en": "sp1_Composite",
+            "ko": "sp1_복합재질"
+        },
+        "sp2": {
+            "en": "sp2_Composite",
+            "ko": "sp2_복합재질"
+        },
+        "sp3": {
+            "en": "sp3_Composite",
+            "ko": "sp3_복합재질"
+        },
+        "sp4": {
+            "en": "sp4_Composite",
+            "ko": "sp4_복합재질"
+        }
+        
+    }
+}

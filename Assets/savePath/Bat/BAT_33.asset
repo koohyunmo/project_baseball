@@ -16,6 +16,7 @@ MonoBehaviour:
   model: {fileID: 195260, guid: b0540b9d12e5df74da93d9dcdd13a349, type: 3}
   icon: {fileID: 21300000, guid: a752a1f0fa7f62c4da7164a7ff0a257a, type: 3}
   name: purple_flaming_bat
-  type: 0
+  type: 2
   grade: 0
-  power: 0
+  power: 5
+  batType: 6

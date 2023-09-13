@@ -63,7 +63,7 @@ public class Baller : MonoBehaviour
 
 
         var ballId = Managers.Game.EquipBallId;
-        ballSO = Managers.Resource.GetScriptableObjet<BallScriptableObject>(ballId);
+        ballSO = Managers.Resource.GetItemScriptableObjet<BallScriptableObject>(ballId);
 
         _prevId = ballId;
 
@@ -321,7 +321,7 @@ public class Baller : MonoBehaviour
         if (_prevId != Managers.Game.EquipBallId)
         {
             var ballId = Managers.Game.EquipBallId;
-            ballPrefab = Managers.Resource.GetScriptableObjet<BallScriptableObject>(ballId).model;
+            ballPrefab = Managers.Resource.GetItemScriptableObjet<BallScriptableObject>(ballId).model;
         }
 
 
@@ -541,7 +541,7 @@ public class Baller : MonoBehaviour
         if (_prevId != Managers.Game.EquipBallId)
         {
             var ballId = Managers.Game.EquipBallId;
-            ballPrefab = Managers.Resource.GetScriptableObjet<BallScriptableObject>(ballId).model;
+            ballPrefab = Managers.Resource.GetItemScriptableObjet<BallScriptableObject>(ballId).model;
         }
         var replayBall = Managers.Obj.Spawn<BallController>(ballPrefab, pathRenderer.GetPosition(0));
 

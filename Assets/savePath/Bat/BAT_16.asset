@@ -16,6 +16,7 @@ MonoBehaviour:
   model: {fileID: 134476, guid: 535e9ef493cb3a44890eb849d0789040, type: 3}
   icon: {fileID: 21300000, guid: 2d9ce7b597faa614baaf476eff5d9e37, type: 3}
   name: decal09
-  type: 0
+  type: 2
   grade: 0
-  power: 0
+  power: 5
+  batType: 2

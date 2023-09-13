@@ -16,6 +16,7 @@ MonoBehaviour:
   model: {fileID: 104508, guid: 3e60594dfa4aa4843a96cb864e5aca84, type: 3}
   icon: {fileID: 21300000, guid: 28392b8edd9518d4aa056545b36d1bf1, type: 3}
   name: orange_bat
-  type: 0
+  type: 2
   grade: 0
-  power: 0
+  power: 5
+  batType: 1

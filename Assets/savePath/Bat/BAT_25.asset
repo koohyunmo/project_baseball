@@ -16,6 +16,7 @@ MonoBehaviour:
   model: {fileID: 119838, guid: e6f52267b03ab9d41b4cf9d5758a000c, type: 3}
   icon: {fileID: 21300000, guid: bb61dab44174a104a97d45ba1c5dc347, type: 3}
   name: future_purple
-  type: 0
+  type: 2
   grade: 0
-  power: 0
+  power: 5
+  batType: 4

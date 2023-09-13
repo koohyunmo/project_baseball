@@ -14,33 +14,57 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
     protected ItemScriptableObject _itemSO;
     private Action _lockUIAction = null;
     private Action _equipUIAction = null;
+    private string _itemInfo;
+
+    enum Type
+    {
+        Item,
+        Ball,
+        Bat,
+        Skill
+    }
+
+    Type _type = Type.Item;
 
     public void InitData<T>(T itemInfo, Action updateLockUI, Action updateEquipUI) where T : ItemScriptableObject
+    {
+        _lockUIAction = updateLockUI;
+        _equipUIAction = updateEquipUI;
+        _itemSO = itemInfo;
+
+        _type = Type.Item;
+    }
+
+    public void InitData<T>(string itemID, Action updateLockUI, Action updateEquipUI) where T : ItemScriptableObject
     {
         var type = typeof(T);
 
 
         if (type == typeof(BallScriptableObject))
         {
-
+            _type = Type.Ball;
+            _itemSO = Managers.Resource.GetItemScriptableObjet<BallScriptableObject>(itemID);
         }
         else if (type == typeof(BatScriptableObject))
         {
-
+            _type = Type.Bat;
+            _itemSO = Managers.Resource.GetItemScriptableObjet<BatScriptableObject>(itemID);
         }
         else if (type == typeof(SkillScriptableObject))
         {
-
+            _type = Type.Skill;
+            _itemSO = Managers.Resource.GetItemScriptableObjet<SkillScriptableObject>(itemID);
         }
         else if (type == typeof(ItemScriptableObject))
         {
-
+            _type = Type.Item;
+            _itemSO = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(itemID);
         }
 
         _lockUIAction = updateLockUI;
         _equipUIAction = updateEquipUI;
-        _itemSO = itemInfo;
     }
+
 
     public override bool Init()
     {
@@ -51,16 +75,52 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
 
         if (_itemSO != null)
         {
-            popupIcon.sprite = _itemSO.icon;
-            popupInfoText.text = _itemSO.name;
-            popupButtonIcon.sprite = _itemSO.icon;
-
+            SetUIData();
             ButtonUpdate();
         }
 
 
         return true;
     }
+
+    private void SetUIData()
+    {
+
+        popupIcon.sprite = _itemSO.icon;
+        popupInfoText.text = Managers.Localization.GetLocalizedValue(_itemSO.name);
+        popupButtonIcon.sprite = _itemSO.icon;
+
+        switch (_type)
+        {
+            case Type.Item:
+                return;
+            case Type.Ball:
+                {
+                    if (_itemSO is BallScriptableObject childItem)
+                    {
+                        //TODO
+                    }
+                }
+                return;
+            case Type.Bat:
+                {
+                    if (_itemSO is BatScriptableObject childItem)
+                    {
+                        popupInfoText.text += '\n' + Managers.Localization.GetLocalizedValue(childItem.batType.ToString()) + '\n' + "Power : " + childItem.power.ToString() + '\n';
+                    }
+                }
+                return;
+            case Type.Skill:
+                {
+                    if (_itemSO is SkillScriptableObject childItem)
+                    {
+                        //TODO
+                    }
+                }
+                return;
+        }
+    }
+
 
     private void ButtonUpdate()
     {

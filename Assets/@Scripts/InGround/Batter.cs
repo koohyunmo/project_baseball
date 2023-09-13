@@ -47,7 +47,7 @@ public class Batter : MonoBehaviour
     {
         string batId = Managers.Game.GameDB.playerInfo.equipBatId;
 
-       var so =  Managers.Resource.GetScriptableObjet<BatScriptableObject>(batId);
+       var so =  Managers.Resource.GetItemScriptableObjet<BatScriptableObject>(batId);
 
         {
             List<Material> mats = new List<Material>();

@@ -86,8 +86,13 @@ public static class Define
 
     public enum BatType
 	{
-        Normal,
-        Strong,
+        NONE,
+        Tree,
+		Alu,
+		Sp1,
+		Sp2,
+		Sp3,
+		Sp4,
         Count
     }
 
@@ -167,6 +172,15 @@ public static class Define
     public static readonly Color Platinum = new Color(8f / 255f, 232f / 255f, 222f / 255f, 1f);
     public static readonly Color Diamond = new Color(185f / 255f, 242f / 255f, 255f / 255f, (155f / 255f));
     public static readonly Color Master = new Color(123f / 255f, 31f / 255f, 162f / 255f, 1f);
+
+	public enum HitType
+	{
+		A,
+		B,
+		C,
+		D
+	}
+
 
 
 

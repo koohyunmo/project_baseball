@@ -97,6 +97,8 @@ public class GUIDebugger : MonoBehaviour
             GUILayout.Label("ChallengeGameID : " + Managers.Game.ChallengeGameID);
             GUILayout.Label("ChallenGeModeProc : " + Managers.Game.challengeProc);
             GUILayout.Label("ChallengeScore : " + Managers.Game.ChallengeScore);
+            GUILayout.Label("BatType: " + Managers.Game.BatType);
+            GUILayout.Label("HitType: " + Managers.Game.HitType);
             GUI.contentColor = Color.white;
         }
 
@@ -155,7 +157,6 @@ public class GUIDebugger : MonoBehaviour
             GUILayout.Label("Equipped Bat ID: " + playerInfo.equipBatId);
             GUILayout.Label("Equipped Ball ID: " + playerInfo.equipBallId);
             GUILayout.Label("Equipped Skill ID: " + playerInfo.equipSkillId);
-
         }
 
         GUI.contentColor = Color.red;

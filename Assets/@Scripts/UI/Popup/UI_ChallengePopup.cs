@@ -78,12 +78,8 @@ public class UI_ChallengePopup : UI_ContentPopup
     private void MakeItme()
     {
 
-        foreach (var itemID in Managers.Resource.Resources.Keys)
+        foreach (var itemID in Managers.Resource.challengeOrderList)
         {
-            // "BAT_" 문자열을 포함하지 않는 경우, 다음 반복으로 건너뜁니다.
-            if (!itemID.Contains("CSO_"))
-                continue;
-
             var item = Managers.Resource.Instantiate("UI_ChallengeItem", _grid.transform);
             if (item == null)
             {

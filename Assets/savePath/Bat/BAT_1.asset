@@ -19,3 +19,4 @@ MonoBehaviour:
   type: 2
   grade: 4
   power: 25
+  batType: 1

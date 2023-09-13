@@ -16,6 +16,7 @@ MonoBehaviour:
   model: {fileID: 138794, guid: 7ca68ccfd55e111409db7cf8756f75e4, type: 3}
   icon: {fileID: 21300000, guid: 45bd086c0d64e57478994a87838d4125, type: 3}
   name: flaming_bat
-  type: 0
+  type: 2
   grade: 0
-  power: 0
+  power: 5
+  batType: 3

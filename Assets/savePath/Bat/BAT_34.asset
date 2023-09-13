@@ -16,6 +16,7 @@ MonoBehaviour:
   model: {fileID: 151336, guid: bd7e65845683aa0488cf6f2a6604c435, type: 3}
   icon: {fileID: 21300000, guid: 2ea82ead1579265418d9bb2aac645cc3, type: 3}
   name: purple_stripe
-  type: 0
+  type: 2
   grade: 0
-  power: 0
+  power: 5
+  batType: 1

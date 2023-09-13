@@ -52,7 +52,12 @@ class Pool
 
     void OnGet(GameObject go)
     {
-        go.SetActive(true);
+        if(go)
+            go.SetActive(true);
+        else
+        {
+            Debug.LogError(Root.name + "is Null");
+        }
     }
 
     void OnRelease(GameObject go)

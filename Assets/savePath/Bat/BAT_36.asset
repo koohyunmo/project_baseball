@@ -16,6 +16,7 @@ MonoBehaviour:
   model: {fileID: 113470, guid: e2f6e243f3907d54fa7559f80e1ce842, type: 3}
   icon: {fileID: 21300000, guid: bf887f3e3dc729348ae05b0232931935, type: 3}
   name: red_stripe
-  type: 0
+  type: 2
   grade: 0
-  power: 0
+  power: 5
+  batType: 1

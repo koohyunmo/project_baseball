@@ -16,6 +16,7 @@ MonoBehaviour:
   model: {fileID: 141284, guid: eb80d1c3f250c364898f4c58a8a58cbc, type: 3}
   icon: {fileID: 21300000, guid: 2e7388ac4ca92bb4eab80e920f650ed4, type: 3}
   name: white_bat
-  type: 0
+  type: 2
   grade: 0
-  power: 0
+  power: 5
+  batType: 1

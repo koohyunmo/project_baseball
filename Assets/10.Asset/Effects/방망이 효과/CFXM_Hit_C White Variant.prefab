@@ -59,5 +59,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11400000, guid: 3d84922c38d7c444782fb1a791d97b21, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3d84922c38d7c444782fb1a791d97b21, type: 3}

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using static Define;
 using Object = UnityEngine.Object;
 
 public class ResourceManager
@@ -13,7 +14,18 @@ public class ResourceManager
     // 실제 로드한 리소스.
     Dictionary<string, UnityEngine.Object> _resources = new Dictionary<string, UnityEngine.Object>();
 
-   public Dictionary<string, UnityEngine.Object> Resources {get { return _resources; } private set { _resources = value; } }
+    public Dictionary<string, UnityEngine.Object> Resources { get { return _resources; } private set { _resources = value; } }
+
+    public List<string> batOrderList = new List<string>();
+    public List<string> batOrderList_1 = new List<string>();
+    public List<string> batOrderList_2 = new List<string>();
+    public List<string> batOrderList_3 = new List<string>();
+    public List<string> batOrderList_4 = new List<string>();
+    public List<string> batOrderList_5 = new List<string>();
+    public List<string> batOrderList_6 = new List<string>();
+    public List<string> ballOrderList = new List<string>();
+    public List<string> skillOrderList = new List<string>();
+    public List<string> challengeOrderList = new List<string>();
 
     public float LoadBytes { get; private set; }
 
@@ -132,7 +144,7 @@ public class ResourceManager
                     _resources.Add(key, op.Result);
                     break;
             }
-            
+
             callback?.Invoke(op.Result);
         };
     }
@@ -151,7 +163,7 @@ public class ResourceManager
             {
                 if (result.PrimaryKey.Contains(".sprite"))
                 {
-                    LoadAsync<Sprite>(result.PrimaryKey, type ,(obj) =>
+                    LoadAsync<Sprite>(result.PrimaryKey, type, (obj) =>
                     {
                         loadCount++;
                         callback?.Invoke(result.PrimaryKey, loadCount, totalCount);
@@ -159,7 +171,7 @@ public class ResourceManager
                 }
                 else
                 {
-                    LoadAsync<T>(result.PrimaryKey,type, (obj) =>
+                    LoadAsync<T>(result.PrimaryKey, type, (obj) =>
                     {
                         loadCount++;
                         callback?.Invoke(result.PrimaryKey, loadCount, totalCount);
@@ -172,9 +184,9 @@ public class ResourceManager
 
     #endregion
 
-    #region 
+    #region  유틸
 
-    public T GetScriptableObjet<T>(string key) where T : ItemScriptableObject
+    public T GetItemScriptableObjet<T>(string key) where T : ItemScriptableObject
     {
         if (Resources.ContainsKey(key) == false)
             Debug.Log($"{key} is not exist");
@@ -191,7 +203,7 @@ public class ResourceManager
         }
     }
 
-    public ChallengeScriptableObject GetChallengeScriptableObjet (string key)
+    public ChallengeScriptableObject GetChallengeScriptableObjet(string key)
     {
         if (Resources.ContainsKey(key) == false)
             Debug.Log($"{key} is not exist");
@@ -228,11 +240,81 @@ public class ResourceManager
         opHandle.Completed += (op) =>
         {
             Debug.Log($"{label} : {op.Result.Count}");
-            tcs.SetResult(op.Result.Count);
         };
 
         return tcs.Task;
     }
+
+    public void DoCache()
+    {
+        FilterAndSortResources();
+    }
+
+    public void FilterAndSortResources()
+    {
+
+        batOrderList = Resources.Keys.Where(key => key.StartsWith("BAT_")).ToList();
+        ballOrderList = Resources.Keys.Where(key => key.StartsWith("BALL_")).ToList();
+        skillOrderList = Resources.Keys.Where(key => key.StartsWith("SKILL_")).ToList();
+        challengeOrderList = Resources.Keys.Where(key => key.StartsWith("CSO_")).ToList();
+
+        //Debug.Log("캐싱+소트 전: " + string.Join(", ", batOrderList));
+
+        batOrderList = batOrderList
+            .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade)
+            .ToList();
+
+
+        ballOrderList = ballOrderList
+            .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade)
+            .ToList();
+
+        skillOrderList = skillOrderList
+            .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade)
+            .ToList();
+
+        challengeOrderList = challengeOrderList
+            .OrderBy(key => GetChallengeScriptableObjet(key).orderID)
+            .ToList();
+
+        //Debug.Log("캐싱+소트 후: " + string.Join(", ", batOrderList));
+
+
+        // 타입별 캐싱
+
+        {
+            batOrderList_1 = batOrderList
+                .Where(key => GetItemScriptableObjet<BatScriptableObject>(key).batType == BatType.Tree)
+                .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade)
+                .ToList();
+
+            batOrderList_2 = batOrderList
+                .Where(key => GetItemScriptableObjet<BatScriptableObject>(key).batType == BatType.Alu)
+                .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade)
+                .ToList();
+            batOrderList_3 = batOrderList
+            .Where(key => GetItemScriptableObjet<BatScriptableObject>(key).batType == BatType.Sp1)
+            .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade)
+            .ToList();
+
+            batOrderList_4 = batOrderList
+                .Where(key => GetItemScriptableObjet<BatScriptableObject>(key).batType == BatType.Sp2)
+                .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade)
+                .ToList();
+            batOrderList_5 = batOrderList
+    .Where(key => GetItemScriptableObjet<BatScriptableObject>(key).batType == BatType.Sp3)
+    .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade)
+    .ToList();
+
+            batOrderList_6 = batOrderList
+                .Where(key => GetItemScriptableObjet<BatScriptableObject>(key).batType == BatType.Sp4)
+                .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade)
+                .ToList();
+
+        }
+
+    }
+
 
     #endregion
 

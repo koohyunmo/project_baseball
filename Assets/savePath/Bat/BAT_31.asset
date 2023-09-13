@@ -16,6 +16,7 @@ MonoBehaviour:
   model: {fileID: 194742, guid: 92922b43796ad7944b776fed135fb814, type: 3}
   icon: {fileID: 21300000, guid: 30a343fe5de04834683ae82cfc794f92, type: 3}
   name: orange_stripe
-  type: 0
+  type: 2
   grade: 0
-  power: 0
+  power: 5
+  batType: 1

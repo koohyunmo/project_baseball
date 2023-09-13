@@ -16,6 +16,7 @@ MonoBehaviour:
   model: {fileID: 100248, guid: 7ef39b3ba1bd5d7408d5ac28143b4723, type: 3}
   icon: {fileID: 21300000, guid: 7a57f5dd6a27ab84797f29fbc0e5ce66, type: 3}
   name: white_stripe
-  type: 0
+  type: 2
   grade: 0
-  power: 0
+  power: 5
+  batType: 1

@@ -16,6 +16,7 @@ MonoBehaviour:
   model: {fileID: 162298, guid: f7c02009691f8134a896f07a2ba6884b, type: 3}
   icon: {fileID: 21300000, guid: d88531f192f3ed940ba381bb06bbbfbc, type: 3}
   name: yellow_bat
-  type: 0
+  type: 2
   grade: 0
-  power: 0
+  power: 5
+  batType: 1

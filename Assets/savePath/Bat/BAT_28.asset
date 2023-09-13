@@ -16,6 +16,7 @@ MonoBehaviour:
   model: {fileID: 133576, guid: 6fa4af28f352cc84b931f433e6cee310, type: 3}
   icon: {fileID: 21300000, guid: 475c0fe773940b14a8495b976d6a7566, type: 3}
   name: industrial_bat
-  type: 0
+  type: 2
   grade: 0
-  power: 0
+  power: 5
+  batType: 1

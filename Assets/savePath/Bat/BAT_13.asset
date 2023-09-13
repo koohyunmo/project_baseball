@@ -17,5 +17,6 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 88332a01629e4cb4f94b54e6e2dac37b, type: 3}
   name: decal06
   type: 2
-  grade: 0
-  power: 5
+  grade: 4
+  power: 25
+  batType: 2

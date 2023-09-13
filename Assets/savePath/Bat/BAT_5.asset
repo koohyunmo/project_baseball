@@ -17,5 +17,6 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: e7600e00993ed354ebf0c18993969cdc, type: 3}
   name: black_stripe
   type: 2
-  grade: 0
-  power: 5
+  grade: 4
+  power: 25
+  batType: 1

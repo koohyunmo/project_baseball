@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -131,6 +132,26 @@ public class UIManager
 
         return popup;
     }
+
+    public T ShowPopupUI_Generic<T>(string name = null) where T : UI_Popup
+    {
+        if (string.IsNullOrEmpty(name))
+        {
+            // 제네릭 타입의 이름에서 `와 숫자 제거
+            name = Regex.Replace(typeof(T).Name, @"`\d+", "");
+        }
+
+        GameObject go = Managers.Resource.Instantiate($"{name}");
+        T popup = Util.GetOrAddComponent<T>(go);
+        _popupStack.Push(popup);
+
+        go.transform.SetParent(Root.transform);
+
+        RefreshTimeScale();
+
+        return popup;
+    }
+
 
     public void ClosePopupUI(UI_Popup popup)
     {

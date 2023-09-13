@@ -47,7 +47,7 @@ public static class Keys
 
     public enum BAT_EFFECT_KEY
     {
-        HitB, HitA, HitD
+        Alu_Hit_D, Tree_Hit_B, Tree_Hit_A, Tree_Hit_D, Alu_Hit_C, Alu_Hit_B, Sp1_Hit_D, Alu_Hit_A, Sp1_Hit_C, Sp1_Hit_A, Sp1_Hit_B, Sp2_Hit_A, Sp2_Hit_B, Sp2_Hit_C, Sp2_Hit_D, Sp3_Hit_A, Sp3_Hit_B, Sp3_Hit_C, Sp3_Hit_D
     }
 
     public enum BALL_EFFECT_KEY

@@ -16,6 +16,7 @@ MonoBehaviour:
   model: {fileID: 147966, guid: 57dd8708bb3d5a645860cad559ef010b, type: 3}
   icon: {fileID: 21300000, guid: 7443b7b23a42677418c011038472e261, type: 3}
   name: red_bat
-  type: 0
+  type: 2
   grade: 0
-  power: 0
+  power: 5
+  batType: 1

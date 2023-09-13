@@ -16,6 +16,7 @@ MonoBehaviour:
   model: {fileID: 144736, guid: 636a3f4838e8217488444cf2bff1c117, type: 3}
   icon: {fileID: 21300000, guid: f5417f8cec0dfa943b10dca2b31b39e3, type: 3}
   name: future_white
-  type: 0
+  type: 2
   grade: 0
-  power: 0
+  power: 5
+  batType: 4
