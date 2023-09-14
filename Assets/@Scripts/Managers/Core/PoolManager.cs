@@ -81,7 +81,7 @@ public class PoolManager
         if (_pools.ContainsKey(prefab.name) == false)
         {
             CreatePool(prefab);
-            Debug.Log(prefab.name);
+            //Debug.Log(prefab.name);
         }
             
 

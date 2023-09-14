@@ -724,6 +724,9 @@ public class GameManager
     }
 
     public Baller Baller { get; private set; }
+    public float BatSpeed { get { return Mathf.Clamp(_batSpeed,0.1f,10.0f); } private set { _batSpeed = value; } }
+    private float _batSpeed = 5.0f;
+        
 
     public void SaveGame()
     {
@@ -995,6 +998,11 @@ public class GameManager
         }
         else
             return _gameData.playerInfo.playerBestScore[_league];
+    }
+
+    public void SetBatSpeed(float setSpeed)
+    {
+        _batSpeed = setSpeed;
     }
     #endregion
 

@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,7 +27,7 @@ public class LocalizationManager
         switch (userLanguage)
         {
             case SystemLanguage.Korean:
-                currentLanguage = Language.Korean;
+                //currentLanguage = Language.Korean;
                 break;
             case SystemLanguage.English:
                 currentLanguage = Language.English;
@@ -39,6 +40,8 @@ public class LocalizationManager
 
     public void LoadLocalizedText(Language language = Language.English)
     {
+        Debug.Log("언어 변경");
+
         localizedText = new Dictionary<string, string>();
         string filePath = $"LocalizedText_{language.ToString()}";
         filePath = "LocalizedText";
@@ -82,7 +85,7 @@ public class LocalizationManager
             case Language.English:
                 return item.en;
             case Language.Korean:
-                return item.en;
+                return item.ko;
             // ... 기타 언어에 대한 처리 추가
             default:
                 return item.en; // 기본값으로 영어 반환
@@ -95,5 +98,16 @@ public class LocalizationManager
         key = key.ToLower();
         string result = localizedText.ContainsKey(key) ? localizedText[key] : $"{key} Find Failed";
         return result;
+    }
+
+    public void ChangeLanguage(Language lang)
+    {
+        if (currentLanguage == lang)
+            return;
+        currentLanguage = lang;
+        //localizedText.Clear();
+
+        LoadLocalizedText(lang);
+        Debug.Log(lang);
     }
 }

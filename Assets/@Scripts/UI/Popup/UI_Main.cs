@@ -1,6 +1,8 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,7 +19,9 @@ public class UI_Main : UI_Popup
         B_Challenge,
         B_Store,
         B_NextLeague,
-        B_PrevLeague
+        B_PrevLeague,
+        B_Language,
+        B_BatOption,
     }
 
     enum Images
@@ -52,7 +56,7 @@ public class UI_Main : UI_Popup
         GetButton((int)Buttons.B_Challenge).gameObject.BindEvent(B_ChanllengeClick);
         GetButton((int)Buttons.B_Store).gameObject.BindEvent(B_StoreClick);
         GetButton((int)Buttons.B_Options).gameObject.BindEvent(B_OptionsClick);
-        GetImage((int)Images.StartDrag).gameObject.BindEvent(null,OnDrag, Define.UIEvent.Drag);
+        GetImage((int)Images.StartDrag).gameObject.BindEvent(null, OnDrag, Define.UIEvent.Drag);
 
         leagueTMP.text = Managers.Game.League.ToString();
 
@@ -67,9 +71,14 @@ public class UI_Main : UI_Popup
 
         vibrationButton.gameObject.SetActive(false);
         soundButton.gameObject.SetActive(false);
+        GetButton((int)Buttons.B_BatOption).gameObject.SetActive(false);
+        GetButton((int)Buttons.B_Language).gameObject.SetActive(false);
+
 
         vibrationButton.transform.DOScale(0, 0);
         soundButton.transform.DOScale(0, 0);
+        GetButton((int)Buttons.B_BatOption).transform.DOScale(0, 0);
+        GetButton((int)Buttons.B_Language).transform.DOScale(0, 0);
 
 
 
@@ -84,6 +93,9 @@ public class UI_Main : UI_Popup
         Managers.Game.SetNotifyItemAction(NotifyItemAnim);
         Managers.Game.SetNotifyRewardAction(NotifyItemAnim);
         Managers.Game.ChageBackgroundColor();
+
+        GetButton((int)Buttons.B_Language).gameObject.BindEvent(() => Managers.UI.ShowPopupUI<UI_LanguageOptionPopup>());
+        GetButton((int)Buttons.B_BatOption).gameObject.BindEvent(() => Managers.UI.ShowPopupUI<UI_BatOptionPopup>());
 
         return true;
 
@@ -151,38 +163,68 @@ public class UI_Main : UI_Popup
         Managers.UI.ShowPopupUI<UI_StorePopup>();
     }
 
+
+    private bool isOptionAnim = false;
+    private bool isOn = false;
     private void B_OptionsClick()
     {
 
-        if (vibrationButton.gameObject.activeInHierarchy == false)
-        {
 
+        if (isOptionAnim == false && isOn == false)
+        {
+            isOptionAnim = true;
+            isOn = true;
             // 이미 실행 중인 애니메이션 중지
             DOTween.Kill(vibrationButton.transform);
             DOTween.Kill(soundButton.transform);
+            DOTween.Kill(GetButton((int)Buttons.B_Language).transform);
+            DOTween.Kill(GetButton((int)Buttons.B_BatOption).transform);
 
             vibrationButton.gameObject.SetActive(true);
             soundButton.gameObject.SetActive(true);
+            GetButton((int)Buttons.B_Language).gameObject.SetActive(true);
+            GetButton((int)Buttons.B_BatOption).gameObject.SetActive(true);
 
-            vibrationButton.transform.DOScale(Vector3.one, 0.5f).SetDelay(0.25f); 
-            soundButton.transform.DOScale(Vector3.one, 0.5f);
+
+            vibrationButton.transform.DOScale(Vector3.one, 0.5f);
+            soundButton.transform.DOScale(Vector3.one, 0.5f).SetDelay(0.25f);
+            GetButton((int)Buttons.B_Language).transform.DOScale(Vector3.one, 0.5f).SetDelay(0.5f);
+            GetButton((int)Buttons.B_BatOption).transform.DOScale(Vector3.one, 0.5f).SetDelay(0.75f).OnComplete(()=> isOptionAnim = false);
         }
-        else
+        if(isOptionAnim == false && isOn == true)
         {
+            isOptionAnim = true;
+            isOn = false;
 
             // 이미 실행 중인 애니메이션 중지
             DOTween.Kill(vibrationButton.transform);
             DOTween.Kill(soundButton.transform);
+            DOTween.Kill(GetButton((int)Buttons.B_Language).transform);
+            DOTween.Kill(GetButton((int)Buttons.B_BatOption).transform);
 
             vibrationButton.transform.DOScale(Vector3.zero, 0.5f).OnComplete(() =>
             {
-                vibrationButton.gameObject.SetActive(false);
+                
             });
 
-            soundButton.transform.DOScale(Vector3.zero, 0.5f).OnComplete(() =>
+            soundButton.transform.DOScale(Vector3.zero, 0.5f).SetDelay(0.25f).OnComplete(() =>
             {
+                
+            });
+
+            GetButton((int)Buttons.B_Language).transform.DOScale(Vector3.zero, 0.5f).SetDelay(0.5f).OnComplete(() =>
+            {
+                
+            });
+
+            GetButton((int)Buttons.B_BatOption).transform.DOScale(Vector3.zero, 0.5f).SetDelay(0.75f).OnComplete(() =>
+            {
+                vibrationButton.gameObject.SetActive(false);
                 soundButton.gameObject.SetActive(false);
-            }).SetDelay(0.25f);
+                GetButton((int)Buttons.B_Language).gameObject.SetActive(false);
+                GetButton((int)Buttons.B_BatOption).gameObject.SetActive(false);
+                isOptionAnim = false;
+            });
         }
 
     }
@@ -235,9 +277,11 @@ public class UI_Main : UI_Popup
         yield break;
     }
 
-
     private void OnDestroy()
     {
-        transform.DOKill();
+        foreach (Transform child in transform)
+        {
+            child.DOKill();
+        }
     }
 }

@@ -303,7 +303,6 @@ public class UI_SkinPopup : UI_ContentPopup
 
             UI_Skin_Item skinItem = item.GetOrAddComponent<UI_Skin_Item>();
             skinItem.InitData(list[i], _type);
-            Debug.Log(i);
             yield return null;
         }
 

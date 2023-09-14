@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: db884a937282c9249871509a4f2d1e05
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Yeongdeok Snow Crab
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 903d3637c8d92064c84213967bf3cbfd, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -31,8 +31,6 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
     Vector2 _touchPosition;
     Vector2 _moveDir;
     float _joystickRadius = 0.0f;
-    //float _speed = 2.5f;
-    float _speed = 5f;
 
 
     RectTransform zoneRt;
@@ -71,7 +69,6 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
 
         Managers.Game.SetHitCallBack(MovePosReset);
         Managers.Game.SetStrikeCallBack(SaveMovePos);
-
 
 
         _batReplayData.Clear();
@@ -166,7 +163,7 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
 
         Vector3 newDir = new Vector3(_moveDir.x, _moveDir.y, 0);
 
-        Vector3 dir = newDir * _speed * Time.deltaTime;
+        Vector3 dir = newDir * Managers.Game.BatSpeed * Time.deltaTime;
 
 
         if (Managers.Game.BatPosition == Define.BatPosition.Right) // 우타인 경우

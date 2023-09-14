@@ -280,7 +280,7 @@ public class ResourceManager
             .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade)
             .ToList();
 
-        Debug.Log(batOrderList.Count);
+        //Debug.Log(batOrderList.Count);
 
 
         for (int i = 0; i < batOrderList.Count; i++)

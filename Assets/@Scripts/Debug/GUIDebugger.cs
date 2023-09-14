@@ -99,6 +99,7 @@ public class GUIDebugger : MonoBehaviour
             GUILayout.Label("ChallengeScore : " + Managers.Game.ChallengeScore);
             GUILayout.Label("BatType: " + Managers.Game.BatType);
             GUILayout.Label("HitType: " + Managers.Game.HitType);
+            GUILayout.Label("BatSpeed: " + Managers.Game.BatSpeed);
             GUI.contentColor = Color.white;
         }
 
