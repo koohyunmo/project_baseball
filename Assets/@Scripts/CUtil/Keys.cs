@@ -3,6 +3,7 @@ public static class Keys
 {
     public enum BAT_KEY
     {
+        BAT_0,
         BAT_1, BAT_2, BAT_3, BAT_4, BAT_5, BAT_6, BAT_7, BAT_8, BAT_9, BAT_10,
         BAT_11, BAT_12, BAT_13, BAT_14, BAT_15, BAT_16, BAT_17, BAT_18, BAT_19,
         BAT_20, BAT_21, BAT_22, BAT_23, BAT_24, BAT_25, BAT_26, BAT_27, BAT_28,

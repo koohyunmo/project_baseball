@@ -15,6 +15,8 @@ public class UI_Skin_Item : UI_Base
     public string _key;
     public ScollViewType _type;
 
+    private Image _skinItem;
+
     enum Images
     {
         Icon,
@@ -40,6 +42,7 @@ public class UI_Skin_Item : UI_Base
 
         _icon = Get<Image>((int)Images.Icon);
         gameObject.gameObject.BindEvent(OnClick);
+        _skinItem = GetComponent<Image>();
 
         GetImage((int)Images.Background).gameObject.SetActive(false);
         GetButton((int)Buttons.B_Information).gameObject.BindEvent(ShowInfoPopup);
@@ -105,16 +108,29 @@ public class UI_Skin_Item : UI_Base
     }
     private void BatSetting()
     {
-        MeshRenderer renderer = _item.model.GetComponent<MeshRenderer>();
-        var meshfilter = _item.model.GetComponent<MeshFilter>();
-        if (renderer != null && meshfilter != null)
+        if (_item.model)
         {
-            _mats = new List<Material>();
+            MeshRenderer renderer = _item.model.GetComponent<MeshRenderer>();
 
-            var modelMats = renderer.sharedMaterials;
-            _mats.AddRange(modelMats);
-            _mesh = meshfilter.sharedMesh;
+            if (renderer)
+            {
+                var meshfilter = _item.model.GetComponent<MeshFilter>();
+
+                if (meshfilter)
+                {
+                    _mats = new List<Material>();
+
+                    var modelMats = renderer.sharedMaterials;
+                    _mats.AddRange(modelMats);
+                    _mesh = meshfilter.sharedMesh;
+                }
+            }
         }
+
+
+
+
+
     }
 
     private void UpdateUI()
@@ -131,6 +147,27 @@ public class UI_Skin_Item : UI_Base
         }
 
         _icon.sprite = _item.icon;
+
+        switch (_item.grade)
+        {
+            case Grade.Common:
+                _skinItem.color = Color.green;
+                break;
+            case Grade.Uncommon:
+                _skinItem.color = Color.gray;
+                break;
+            case Grade.Rare:
+                _skinItem.color = Color.blue;
+                break;
+            case Grade.Epic:
+                _skinItem.color = Color.magenta;
+                break;
+            case Grade.Legendary:
+                _skinItem.color = Color.red;
+                break;
+        }
+
+        _skinItem.color = new Color(_skinItem.color.r, _skinItem.color.g, _skinItem.color.b, 0.5f);
     }
 
     private void UpdateLockUI()

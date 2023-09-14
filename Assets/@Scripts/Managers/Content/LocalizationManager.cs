@@ -44,7 +44,7 @@ public class LocalizationManager
         filePath = "LocalizedText";
         TextAsset targetFile = Managers.Resource.Load<TextAsset>(filePath);
 
-        Debug.Log(targetFile.text);
+        //Debug.Log(targetFile.text);
 
         if (targetFile == null)
         {

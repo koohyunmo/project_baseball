@@ -48,7 +48,7 @@ public class BatCollider : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("베트콜리얻 초기화");
+        //Debug.Log("베트콜리얻 초기화");
         isHit = false;
         _hitPos = HitPos.NONE;
     }
@@ -89,7 +89,7 @@ public class BatCollider : MonoBehaviour
                 {
                     bc.SetHit();
                     CalHitScore(hitPoint);
-                    Debug.Log("Hit");
+                    //Debug.Log("Hit");
                     // 람다로 공날리는 함수 보내기
                     bat.SwingCollision(hitPoint, HitAction, bc.GetRigid());
 
@@ -372,7 +372,7 @@ public class BatCollider : MonoBehaviour
         }
 
 
-        Debug.Log(score);
+        //Debug.Log(score);
 
         return score;
 

@@ -227,9 +227,10 @@ public class UI_SkinPopup : UI_ContentPopup
 
             foreach (var itemID in makeList)
             {
-
-                if (count > 14)
+                if (count == 14)
                     break;
+
+                Debug.Log(count);
 
                 var item = Managers.Resource.Instantiate(Keys.UI_KEY.UI_Skin_Item.ToString(), _grids[0].transform);
 
@@ -247,7 +248,7 @@ public class UI_SkinPopup : UI_ContentPopup
 
             if (makeList.Count > 14)
             {
-                StartCoroutine(co_MakeItem(15, makeList));
+                StartCoroutine(co_MakeItem(14, makeList));
             }
             else
             {
@@ -289,9 +290,9 @@ public class UI_SkinPopup : UI_ContentPopup
 
     IEnumerator co_MakeItem(int index, List<string> list)
     {
-        for (int i = 15; i < list.Count-1; i++)
+        for (int i = index; i < list.Count; i++)
         {
-            yield return null;
+           
             var item = Managers.Resource.Instantiate(Keys.UI_KEY.UI_Skin_Item.ToString(), _grids[0].transform);
 
             if (item == null)
@@ -302,9 +303,10 @@ public class UI_SkinPopup : UI_ContentPopup
 
             UI_Skin_Item skinItem = item.GetOrAddComponent<UI_Skin_Item>();
             skinItem.InitData(list[i], _type);
+            Debug.Log(i);
+            yield return null;
         }
 
-        yield return null;
         _isDelay = false;
         isLoadingImage.transform.DOKill();
         isLoadingImage.gameObject.SetActive(false);

@@ -116,7 +116,7 @@ public class GUIDebugger : MonoBehaviour
             GUI.contentColor = Color.white;
             foreach (var item in playerInventory)
             {
-                GUILayout.Label($"{num++}" + item + ",");
+                GUILayout.Label($" " + item + ",");
             }
             GUI.contentColor = Color.cyan;
             GUILayout.Label($"Player Bats");
@@ -124,21 +124,21 @@ public class GUIDebugger : MonoBehaviour
 
             foreach (var item in playerBats)
             {
-                GUILayout.Label($"{num++}" + item + ",");
+                GUILayout.Label($" " + item + ",");
             }
             GUI.contentColor = Color.cyan;
             GUILayout.Label($"Player Balls");
             GUI.contentColor = Color.white;
             foreach (var item in playerBalls)
             {
-                GUILayout.Label($"{num++}" + item + ",");
+                GUILayout.Label($" " + item + ",");
             }
             GUI.contentColor = Color.cyan;
             GUILayout.Label($"Player Skills");
             GUI.contentColor = Color.white;
             foreach (var item in playerSkills)
             {
-                GUILayout.Label($"{num++}" + item + ",");
+                GUILayout.Label($" " + item + ",");
             }
             GUI.skin.label.fontSize = fontSize;
             GUILayout.EndVertical();

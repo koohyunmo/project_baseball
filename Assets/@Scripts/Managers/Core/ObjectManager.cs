@@ -291,7 +291,7 @@ public class ObjectManager
         List<int> ballKeysToRemove = new List<int>(_ballDict.Keys);
         foreach (var item in ballKeysToRemove)
         {
-            Debug.Log(item);
+            //Debug.Log(item);
             Despawn<BallController>(item);
         }
     }

@@ -342,10 +342,10 @@ public class Bat : MonoBehaviour
 
     public void SwingCollision(Vector3 hitPoint, Action<Vector3,Rigidbody> flyTheBallAction, Rigidbody ballRigid)
     {
-        Debug.Log("공 타격");
+        //Debug.Log("공 타격");
         if (batState == BatState.Swing) //
         {
-            Debug.Log("SwingCollision");
+            //Debug.Log("SwingCollision");
             var go = Managers.Obj.Spawn<TextController>("HitScoreText", hitPoint);
             go.transform.position = hitPoint;
 

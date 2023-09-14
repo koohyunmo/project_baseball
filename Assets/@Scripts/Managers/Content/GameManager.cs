@@ -255,7 +255,7 @@ public class GameManager
     {
         if ( GameMode != GameMode.Challenge && _gameData.playerInfo.playerBestScore[_league] < GameScore)
         {
-            Debug.Log("최고 점수 갱신");
+            //Debug.Log("최고 점수 갱신");
             _gameData.playerInfo.playerBestScore[_league] = GameScore;
             SaveGame();
         }
@@ -749,7 +749,7 @@ public class GameManager
             {
 
 
-                if (Managers.Resource.Resources[BAT_KEY.BAT_2.ToString()] is ItemScriptableObject so)
+                if (Managers.Resource.Resources[BAT_KEY.BAT_0.ToString()] is ItemScriptableObject so)
                 {
                     // Test Data
                     PlayerItem startItem = new PlayerItem(so.id, so.name, so.name, ItemType.BAT);
@@ -758,7 +758,7 @@ public class GameManager
                     StartData.playerInfo.money = 100000;
 #endif
                     StartData.playerInfo.level = 1;
-                    StartData.playerInfo.equipBatId = BAT_KEY.BAT_2.ToString();
+                    StartData.playerInfo.equipBatId = BAT_KEY.BAT_0.ToString();
                     StartData.playerInventory.Add(startItem.itemId);
                     StartData.playerBats.Add(startItem.itemId);
                 }
@@ -990,7 +990,7 @@ public class GameManager
         if (Managers.Game.GameScore > _gameData.playerInfo.playerBestScore[_league])
         {
             SaveBestScore();
-            Debug.Log("최고 점수 갱신 이벤트");
+            //Debug.Log("최고 점수 갱신 이벤트");
             return GameScore;
         }
         else

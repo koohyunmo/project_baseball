@@ -362,11 +362,11 @@ public class Baller : MonoBehaviour
         if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("StrikeZone"))
         {
             Debug.DrawRay(ray.origin, ray.direction);
-            Debug.Log("스트라이크 존안 ");
+            //Debug.Log("스트라이크 존안 ");
         }
         else
         {
-            Debug.Log("Ball");
+            //Debug.Log("Ball");
         }
     }
 

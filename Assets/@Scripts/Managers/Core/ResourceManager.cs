@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -189,11 +190,15 @@ public class ResourceManager
     public T GetItemScriptableObjet<T>(string key) where T : ItemScriptableObject
     {
         if (Resources.ContainsKey(key) == false)
+        {
             Debug.Log($"{key} is not exist");
+            return null;
+        }
+            
 
         if (Resources.TryGetValue(key, out Object obj) && obj is T so)
         {
-            Debug.Log(key);
+            //Debug.Log(key);
             return so;
         }
         else
@@ -206,11 +211,15 @@ public class ResourceManager
     public ChallengeScriptableObject GetChallengeScriptableObjet(string key)
     {
         if (Resources.ContainsKey(key) == false)
+        {
             Debug.Log($"{key} is not exist");
+            return null;
+        }
+           
 
         if (Resources.TryGetValue(key, out Object obj) && obj is ChallengeScriptableObject cso)
         {
-            Debug.Log(key);
+            ///Debug.Log(key);
             return cso;
         }
         else
@@ -253,6 +262,7 @@ public class ResourceManager
     public void FilterAndSortResources()
     {
 
+
         batOrderList = Resources.Keys.Where(key => key.StartsWith("BAT_")).ToList();
         ballOrderList = Resources.Keys.Where(key => key.StartsWith("BALL_")).ToList();
         skillOrderList = Resources.Keys.Where(key => key.StartsWith("SKILL_")).ToList();
@@ -260,9 +270,38 @@ public class ResourceManager
 
         //Debug.Log("캐싱+소트 전: " + string.Join(", ", batOrderList));
 
+
+        bool isFirst = false;
+        string temp = "";
+
+
+
         batOrderList = batOrderList
             .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade)
             .ToList();
+
+        Debug.Log(batOrderList.Count);
+
+
+        for (int i = 0; i < batOrderList.Count; i++)
+        {
+            if (isFirst == false)
+            {
+                isFirst = true;
+                temp = batOrderList[0];
+                batOrderList[0] = "BAT_0";
+            }
+            else
+            {
+                if (batOrderList[i].Equals("BAT_0"))
+                {
+                    batOrderList[i] = temp;
+                    break;
+                }
+            }
+        }
+
+        Debug.Log(batOrderList.Count);
 
 
         ballOrderList = ballOrderList
