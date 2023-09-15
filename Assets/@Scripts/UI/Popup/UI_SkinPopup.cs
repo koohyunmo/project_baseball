@@ -230,7 +230,6 @@ public class UI_SkinPopup : UI_ContentPopup
                 if (count == 14)
                     break;
 
-                Debug.Log(count);
 
                 var item = Managers.Resource.Instantiate(Keys.UI_KEY.UI_Skin_Item.ToString(), _grids[0].transform);
 

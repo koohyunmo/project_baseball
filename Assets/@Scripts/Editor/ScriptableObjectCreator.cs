@@ -228,6 +228,13 @@ public class ScriptableObjectCreator : EditorWindow
         return data;
     }
 
+
+
+    /// <summary>
+    /// 0 이름 1 등급 3 타입 4 더미 5 더미 6 더미
+    /// </summary>
+    /// <param name="itemType"></param>
+    /// <exception cref="ArgumentException"></exception>
     private static  void CSVBaseCreate(ItemType itemType = ItemType.NONE)
     {
         // CSV 파일 읽기 로직을 추가하십시오.
@@ -248,8 +255,6 @@ public class ScriptableObjectCreator : EditorWindow
             }
 
             string[] lineData = line.Split(',');
-
-            Debug.Log(count + " : "+ lineData[0] + " : " + lineData[1] + " : " + lineData[2]);
 
             string spriteName = Path.GetFileNameWithoutExtension(lineData[0].ToLower())  + ".png";
             string modelName = Path.GetFileNameWithoutExtension(lineData[0].ToLower())  + ".prefab";
@@ -291,11 +296,6 @@ public class ScriptableObjectCreator : EditorWindow
                         item.batType = ParseBatType(lineData[2]);
 
                         item.id = firstWord + "_" + count++;
-
-                        if(model == null)
-                        {
-                            throw new Exception($"{modelFullPath} : {modelName} : {item.name} ");
-                        }
                         item.model = model;
                         item.icon = icon;
 
@@ -314,11 +314,15 @@ public class ScriptableObjectCreator : EditorWindow
                     {
                         BallScriptableObject item = ScriptableObject.CreateInstance<BallScriptableObject>();
                         item.name = Path.GetFileNameWithoutExtension(lineData[0]).Split(' ')[0];
+                        item.name = item.name.ToLower();
+                        item.grade = ParseGrade(lineData[1]);
+
                         item.id = firstWord + "_" + count++;
                         item.model = model;
                         item.icon = icon;
 
                         // Save the scriptable object
+                        item.Settings();
                         string newSavePath = Path.Combine(savePath + "/" + firstWord, item.id + ".asset");
                         AssetDatabase.CreateAsset(item, newSavePath);
 
