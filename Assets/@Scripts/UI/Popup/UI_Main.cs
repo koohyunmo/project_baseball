@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static Define;
 
 public class UI_Main : UI_Popup
 {
@@ -33,6 +34,7 @@ public class UI_Main : UI_Popup
 
     private List<Image> images = new List<Image>();
     public TextMeshProUGUI leagueTMP;
+    public TextMeshProUGUI dragTMP;
     Button nextLeague;
     Button prevLeague;
 
@@ -97,8 +99,22 @@ public class UI_Main : UI_Popup
         GetButton((int)Buttons.B_Language).gameObject.BindEvent(() => Managers.UI.ShowPopupUI<UI_LanguageOptionPopup>());
         GetButton((int)Buttons.B_BatOption).gameObject.BindEvent(() => Managers.UI.ShowPopupUI<UI_BatOptionPopup>());
 
+
+        MainTMPUpdate();
+
+        Managers.Localization.SetLocalChangeUpdateTMP(MainTMPUpdate);
+
+
+
         return true;
 
+    }
+
+    private void MainTMPUpdate()
+    {
+        leagueTMP.text = Managers.Localization.GetLocalizedValue((Managers.Game.League).ToString().ToLower());
+        dragTMP.text = Managers.Localization.GetLocalizedValue(LanguageKey.startdrag.ToString());
+        Debug.Log("TODO 드래그 텍스트");
     }
 
     public void NotifyItemAnim()
@@ -129,7 +145,7 @@ public class UI_Main : UI_Popup
         league = Mathf.Clamp(league, 0, (int)Define.League.COUNT - 1);
 
         Managers.Game.SetLeague((Define.League)league);
-        leagueTMP.text = Managers.Game.League.ToString();
+        leagueTMP.text = Managers.Localization.GetLocalizedValue(((Define.League)league).ToString().ToLower());
 
 
         Managers.Game.ChageBackgroundColor();
@@ -145,7 +161,7 @@ public class UI_Main : UI_Popup
         league = Mathf.Clamp(league, 0, (int)Define.League.COUNT - 1);
 
         Managers.Game.SetLeague((Define.League)league);
-        leagueTMP.text = Managers.Game.League.ToString();
+        leagueTMP.text = Managers.Localization.GetLocalizedValue(((Define.League)league).ToString().ToLower());
 
         Managers.Game.ChageBackgroundColor();
     }

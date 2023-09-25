@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,10 +10,6 @@ public class UI_LanguageOptionPopup : UI_OptionPopup
 
 
 
-    private void Start()
-    {
-        Init();
-    }
 
     public Image US;
     public Image KR;
@@ -22,13 +19,21 @@ public class UI_LanguageOptionPopup : UI_OptionPopup
     public Image KrOK;
     public Image JpOK;
 
+
+
+    private void Start()
+    {
+        Init();
+    }
+
+
     public override bool Init()
     {
          if(base.Init() == false)
             return false;
 
 
-        titleTMP.text = "Language";
+        
 
         
 
@@ -82,6 +87,8 @@ public class UI_LanguageOptionPopup : UI_OptionPopup
                 break;
 
         }
+
+        titleTMP.text = Managers.Localization.GetLocalizedValue(LanguageKey.language.ToString());
     }
 
 }

@@ -24,10 +24,12 @@ public class UI_BatOptionPopup : UI_OptionPopup
     {
         if (base.Init() == false)
             return false;
-        titleTMP.text = "BatSpeed";
+        titleTMP.text = Managers.Localization.GetLocalizedValue(LanguageKey.dragsensitivity.ToString());
 
         UpdateSlider();
         speedSlider.onValueChanged.AddListener(ChageBVolume);
+
+
 
         return true;
     }
@@ -57,5 +59,11 @@ public class UI_BatOptionPopup : UI_OptionPopup
         speedTMP.text = Managers.Game.BatSpeed.ToString("F2");
     }
 
+
+    protected override void ClickOkButton()
+    {
+        base.ClickOkButton();
+        ES3.Save<float>("Gamdo", float.Parse(speedTMP.text));
+    }
 
 }

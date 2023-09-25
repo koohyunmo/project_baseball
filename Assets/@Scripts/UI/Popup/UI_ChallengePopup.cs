@@ -33,6 +33,12 @@ public class UI_ChallengePopup : UI_ContentPopup
 
     private ChallengeProc _challengeProc = ChallengeProc.None;
 
+    private void Start()
+    {
+        Init();
+    }
+
+
     public override bool Init()
     {
         if (base.Init() == false)
@@ -63,8 +69,8 @@ public class UI_ChallengePopup : UI_ContentPopup
 
     private void UpdateUI()
     {
-        Get<Slider>((int)Sliders.Slider).value = Managers.Game.GameDB.challengeClearCount / (float)Managers.Game.ChallengeCount;
-        Get<TextMeshProUGUI>((int)TMPs.SliderTMP).text = $"Challenges {Managers.Game.GameDB.challengeClearCount} / {Managers.Game.ChallengeCount}";
+        Get<Slider>((int)Sliders.Slider).value = Managers.Game.GameDB.challengeClearCount / (float)Managers.Game.GameDB.challengeData.Count;
+        Get<TextMeshProUGUI>((int)TMPs.SliderTMP).text = $"{Managers.Localization.GetLocalizedValue(LanguageKey.challenges.ToString())} {Managers.Game.GameDB.challengeClearCount} / {Managers.Game.GameDB.challengeData.Count}";
 
     }
 

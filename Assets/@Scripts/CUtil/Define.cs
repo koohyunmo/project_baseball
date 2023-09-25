@@ -146,8 +146,8 @@ public static class Define
 	public enum ChallengeType
 	{
 		None,
-        Score,
-        HomeRun,
+        ScoreMode,
+        HomeRunMode,
         RealMode
     }
 

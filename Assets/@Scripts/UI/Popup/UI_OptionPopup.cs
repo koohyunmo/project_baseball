@@ -15,6 +15,7 @@ public class UI_OptionPopup : UI_Popup
     private enum TMPS
     {
         Title,
+        ButtonText
     }
 
     private enum Buttons
@@ -51,11 +52,13 @@ public class UI_OptionPopup : UI_Popup
         GetImage((int)Images.BG).gameObject.BindEvent(ClosePopopButton);
         GetImage((int)Images.Close).gameObject.BindEvent(ClosePopopButton);
         applyButton.gameObject.BindEvent(ClickOkButton);
+
+        Get<TextMeshProUGUI>((int)(TMPS.ButtonText)).text = Managers.Localization.GetLocalizedValue(LanguageKey.apply.ToString());
     }
 
     protected virtual void ClickOkButton()
     {
-
+       
     }
 
     protected virtual void ClosePopopButton()

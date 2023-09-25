@@ -63,10 +63,10 @@ public class UI_GameInfoPopup : UI_Popup
         {
             switch (Managers.Game.ChallengeMode)
             {
-                case Define.ChallengeType.Score:
+                case Define.ChallengeType.ScoreMode:
                     gameScoreTMP.text = $"{Managers.Game.GameScore} / {Managers.Game.ChallengeScore}";
                     break;
-                case Define.ChallengeType.HomeRun:
+                case Define.ChallengeType.HomeRunMode:
                     gameScoreTMP.text = $"{Managers.Game.HomeRunCount} / {Managers.Game.ChallengeScore}";
                     break;
                 case Define.ChallengeType.RealMode:

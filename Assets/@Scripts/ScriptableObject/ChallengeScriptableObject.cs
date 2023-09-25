@@ -20,10 +20,10 @@ public class ChallengeScriptableObject : ScriptableObject
 
         switch (mode)
         {
-            case ChallengeType.Score:
+            case ChallengeType.ScoreMode:
                 desc = $"Achieve exactly {score} points.\n<color=#{colorCode}>{league} League</color> ";
                 break;
-            case ChallengeType.HomeRun:
+            case ChallengeType.HomeRunMode:
                 desc = $"Hit {score} home runs to succeed. \n <color=#{colorCode}>{league} League</color>";
                 break;
             case ChallengeType.RealMode:

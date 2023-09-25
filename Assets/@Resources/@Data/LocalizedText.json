@@ -4,9 +4,9 @@
             "en": "Equip",
             "ko": "장착하기"
         },
-        "get":{
-            "en":"GET",
-            "ko":"획득하기"
+        "get": {
+            "en": "Get",
+            "ko": "획득하기"
         },
         "welcome": {
             "en": "Welcome",
@@ -14,11 +14,91 @@
         },
         "goodbye": {
             "en": "Goodbye",
-            "ko": "안녕히 가세요"
+            "ko": "안녕히가세요"
         },
         "material": {
             "en": "Material",
             "ko": "재질"
+        },
+        "bat": {
+            "en": "Bat",
+            "ko": "방망이"
+        },
+        "ball": {
+            "en": "Ball",
+            "ko": "공"
+        },
+        "skill": {
+            "en": "Skill",
+            "ko": "스킬"
+        },
+        "language": {
+            "en": "Language",
+            "ko": "언어"
+        },
+        "sensitivity": {
+            "en": "Sensitivity",
+            "ko": "감도"
+        },
+        "dragsensitivity": {
+            "en": "Drag Sensitivity",
+            "ko": "드래그 감도"
+        },
+        "challenges": {
+            "en": "Challenges",
+            "ko": "도전"
+        },
+        "bronze": {
+            "en": "Bronze League",
+            "ko": "브론즈 리그"
+        },
+        "silver": {
+            "en": "Silver League",
+            "ko": "실버 리그"
+        },
+        "gold": {
+            "en": "Gold League",
+            "ko": "골드 리그"
+        },
+        "platinum": {
+            "en": "Platinum League",
+            "ko": "플래티넘 리그"
+        },
+        "diamond": {
+            "en": "Diamond League",
+            "ko": "다이아몬드 리그"
+        },
+        "master": {
+            "en": "Master League",
+            "ko": "마스터 리그"
+        },
+        "clear": {
+            "en": "Clear",
+            "ko": "클리어"
+        },
+        "play": {
+            "en": "Play",
+            "ko": "플레이"
+        },
+        "scoremode": {
+            "en": "Achieve exactly {0} points.",
+            "ko": "{0} 포인트를 정확하게 달성하세요."
+        },
+        "homerunmode": {
+            "en": "Hit {0} home runs to succeed.",
+            "ko": "{0}번의 홈런을 성공하세요."
+        },
+        "realmode": {
+            "en": "Hit consecutively {0} times.",
+            "ko": "연속으로 {0}번 치세요."
+        },
+        "startdrag": {
+            "en": "Drag to Start",
+            "ko": "시작하려면 드래그하세요"
+        },
+        "apply": {
+            "en": "Apply",
+            "ko": "적용"
         }
     },
     "skills": {

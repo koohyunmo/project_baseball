@@ -18,6 +18,8 @@ public class LocalizationManager
     private Dictionary<string, string> localizedText;
     public Language currentLanguage = Language.English;
 
+    private Action mainTMPUpdate;
+
     public void Init()
     {
         SystemLanguage userLanguage = Application.systemLanguage;
@@ -27,7 +29,7 @@ public class LocalizationManager
         switch (userLanguage)
         {
             case SystemLanguage.Korean:
-                //currentLanguage = Language.Korean;
+                currentLanguage = Language.Korean;
                 break;
             case SystemLanguage.English:
                 currentLanguage = Language.English;
@@ -35,10 +37,12 @@ public class LocalizationManager
                 // ... 기타 언어에 대한 처리 추가
         }
 
+        currentLanguage = ES3.Load<Language>("Lang",Language.English);
+
         //LoadLocalizedText(currentLanguage);
     }
 
-    public void LoadLocalizedText(Language language = Language.English)
+    public void ChangeLocalizedText(Language language)
     {
         Debug.Log("언어 변경");
 
@@ -78,6 +82,48 @@ public class LocalizationManager
         }
     }
 
+    public void LoadLocalizedText()
+    {
+        Debug.Log("저장된 언어 읽기");
+
+
+        localizedText = new Dictionary<string, string>();
+        string filePath = $"LocalizedText_{currentLanguage.ToString()}";
+        filePath = "LocalizedText";
+        TextAsset targetFile = Managers.Resource.Load<TextAsset>(filePath);
+
+        //Debug.Log(targetFile.text);
+
+        if (targetFile == null)
+        {
+            Debug.LogError($"key : LocalizedText_{currentLanguage.ToString()}의 언어 파일을 읽을수 없습니다");
+            return;
+        }
+
+        LocalizationData localizationData = JsonConvert.DeserializeObject<LocalizationData>(targetFile.text);
+        foreach (var item in localizationData.items)
+        {
+            localizedText[item.Key] = GetTranslation(item.Value);
+        }
+
+        foreach (var skill in localizationData.skills)
+        {
+            localizedText[skill.Key] = GetTranslation(skill.Value);
+        }
+
+        // bats 딕셔너리도 localizedText에 합치기
+        foreach (var bat in localizationData.bats)
+        {
+            localizedText[bat.Key] = GetTranslation(bat.Value);
+        }
+
+        foreach (var bat in localizationData.types)
+        {
+            localizedText[bat.Key] = GetTranslation(bat.Value);
+        }
+    }
+
+
     private string GetTranslation(LocalizedItem item)
     {
         switch (currentLanguage)
@@ -107,7 +153,13 @@ public class LocalizationManager
         currentLanguage = lang;
         //localizedText.Clear();
 
-        LoadLocalizedText(lang);
-        Debug.Log(lang);
+        ChangeLocalizedText(lang);
+        ES3.Save<Language>("Lang", currentLanguage);
+        mainTMPUpdate?.Invoke();
+    }
+
+    public void SetLocalChangeUpdateTMP(Action mainTMPUpdate)
+    {
+        this.mainTMPUpdate = mainTMPUpdate;
     }
 }

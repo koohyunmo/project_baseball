@@ -160,6 +160,7 @@ public class GameManager
 
         GameScore = 0;
         Managers.Localization.LoadLocalizedText();
+        _batSpeed = ES3.Load <float>("Gamdo");
 
         PlayerDataSettings();
         Managers.Resource.DoCache();
@@ -181,8 +182,8 @@ public class GameManager
         //Debug.Log(BallCount);
         //SkillCount = await Managers.Resource.ObjectGetAsyncCount("Skill");
         //Debug.Log(SkillCount);
-        ChallengeCount = await Managers.Resource.ObjectGetAsyncCount("Challenge");
-        Debug.Log(ChallengeCount);
+        //ChallengeCount = await Managers.Resource.ObjectGetAsyncCount("Challenge");
+        //Debug.Log(ChallengeCount);
     }
 
 
@@ -667,7 +668,7 @@ public class GameManager
 
         switch (ChallengeMode)
         {
-            case ChallengeType.Score:
+            case ChallengeType.ScoreMode:
                 if (GameScore == ChallengeScore)
                 {
                     challengeProc = ChallengeProc.Complete;
@@ -679,7 +680,7 @@ public class GameManager
                     ManagerAsyncFunction(GameEnd, 0.5f);
                 }
                 return;
-            case ChallengeType.HomeRun:
+            case ChallengeType.HomeRunMode:
                 if (HomeRunCount >= ChallengeScore)
                 {
                     challengeProc = ChallengeProc.Complete; 
@@ -751,7 +752,7 @@ public class GameManager
 
             {
 
-
+                // 플레이어 데이터 설정
                 if (Managers.Resource.Resources[BAT_KEY.BAT_0.ToString()] is ItemScriptableObject so)
                 {
                     // Test Data
@@ -823,8 +824,14 @@ public class GameManager
             
             _gameData.challengeData = challengeData;
 
+            // 옵션설정
+            ES3.Save<float>("Gamdo", 0.5f);
+            ES3.Save<Language>("Lang", Language.English);
+
 
             SaveGame();
+
+
 
             Debug.LogWarning("SaveFile is not Existed");
             return false;

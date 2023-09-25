@@ -1,0 +1,25 @@
+public enum LanguageKey
+{
+    equip,
+    get,
+    welcome,
+    goodbye,
+    material,
+    bat,
+    ball,
+    skill,
+    language,
+    sensitivity,
+    dragsensitivity,
+    challenges,
+    bronze,
+    silver,
+    gold,
+    platinum,
+    diamond,
+    master,
+    clear,
+    play,
+    startdrag,
+    apply
+}

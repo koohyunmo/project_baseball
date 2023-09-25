@@ -201,7 +201,7 @@ public class UI_SkinPopup : UI_ContentPopup
         }
 
         Slider.value = (hasItemCount / (float)skinCount);
-        SliderTMP.text = $"{_type} {hasItemCount} / {skinCount}";
+        SliderTMP.text = $"{Managers.Localization.GetLocalizedValue(_type.ToString().ToLower())} {hasItemCount} / {skinCount}";
     }
 
     private void MakeItem()

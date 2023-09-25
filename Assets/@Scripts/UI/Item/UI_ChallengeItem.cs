@@ -74,7 +74,7 @@ public class UI_ChallengeItem : UI_Base
         if(Managers.Game.GameDB.challengeData[_cso.key] == false)
             Get<TextMeshProUGUI>((int)(TMPs.IDTMP)).text = _cso.orderID.ToString();
         else
-            Get<TextMeshProUGUI>((int)(TMPs.IDTMP)).text = "CLEAR";
+            Get<TextMeshProUGUI>((int)(TMPs.IDTMP)).text = Managers.Localization.GetLocalizedValue(LanguageKey.clear.ToString());
         desc = _cso.desc;
     }
 
