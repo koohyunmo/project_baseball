@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,7 +29,7 @@ public class RouletteController : MonoBehaviour
 
     [Header("상품 목록")]
     [SerializeField]private string[] prizes = { "Product 1", "Product 2", "Product 3", "Product 4", "Product 5", "Product 6", "Product7", "Product 8" }; // 상품 배열
-
+    private int itemCount;
     [SerializeField]
     [Header("색상 목록")]
     private Color[] colors = {
@@ -41,16 +43,22 @@ public class RouletteController : MonoBehaviour
         Color.cyan
     };
 
+    List<Image> icons = new List<Image>();
+
+    bool first = true;
 
     private void Start()
     {
+
         Init();
     }
 
     private void Init()
     {
         //roullet.gameObject.BindEvent(StartSpin);
+        icons.Clear();
         SetUI();
+        SetData();
     }
 
     void Update()
@@ -74,11 +82,73 @@ public class RouletteController : MonoBehaviour
     {
         if (!isSpinning)
         {
+            if(first == false)
+            {
+                SetData();
+            }
+                
             currentSpeed = Random.Range(spinSpeed, spinSpeed * 1.5f);
             isSpinning = true;
+
+            first = false;
         }
     }
 
+    private async void SetData()
+    {
+        prizes = await makeList();
+
+        for (int i = 0; i < icons.Count; i++)
+        {
+            icons[i].sprite = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(prizes[i]).icon;
+        }
+
+    }
+
+    private async Task<string[]> makeList()
+    {
+        itemCount = prizes.Length;
+
+        string[] list = new string[itemCount];
+
+        for (int i = 0; i < itemCount; i++)
+        {
+            int index = Random.Range(0, 100);
+            Define.Grade itemGrade = Define.Grade.Common;
+            Color color = Color.green;
+            List<string> itemList = Managers.Resource.CommonList;
+
+            if (index > 98)
+            {
+                itemGrade = Define.Grade.Legendary;
+                color = Color.red;
+                itemList = Managers.Resource.LegendaryList;
+            }
+            else if (index > 96)
+            {
+                itemGrade = Define.Grade.Epic;
+                color = new Color(100f / 255f, 64.7f / 255f, 0, 1);
+                itemList = Managers.Resource.EpicList;
+            }
+            else if (index > 85)
+            {
+                itemGrade = Define.Grade.Rare;
+                color = Color.magenta;
+                itemList = Managers.Resource.RareList;
+            }
+            else if (index > 70)
+            {
+                itemGrade = Define.Grade.Uncommon;
+                color = Color.blue;
+                itemList = Managers.Resource.UncommonList;
+            }
+
+            int randomIndex = UnityEngine.Random.Range(0, itemList.Count);
+
+            list[i] = itemList[randomIndex % itemList.Count];
+        }
+        return list;
+    }
     /// <summary>
     /// 실시간 UI 업데이트
     /// </summary>
@@ -151,11 +221,17 @@ public class RouletteController : MonoBehaviour
             // 선과 원점 중간에 큐브 그리기
             Vector3 middlePosition = (position + endAnglePosition) * 0.5f; // Vector3로 변경
             images[i].transform.position = middlePosition;
-            images[i].GetComponent<Image>().color = colors[i];
+            var img = images[i].GetComponent<Image>();
+            img.color = colors[i];
+            // 아이콘 변경
+            //images[i].GetComponent<Image>().sprite = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(prizes[i]).icon;
+            //images[i].SetParent(roullet);
 
+            icons.Add(img);
             currentAngle += angleStep;
         }
 
+        
         resultText.text = null;
     }
 

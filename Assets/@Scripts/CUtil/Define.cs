@@ -101,8 +101,8 @@ public static class Define
 		None,
 		BALL,
 		BAT,
-		Background,
-		SKILL
+		SKILL,
+		MAX
 	}
 
 

@@ -1,6 +1,9 @@
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq; // ToArray() 사용을 위한 namespace
+using System.Collections.Generic;
 
 public class Roullett_Controller : MonoBehaviour
 {
@@ -29,6 +32,7 @@ public class Roullett_Controller : MonoBehaviour
 
     [Header("상품 목록")]
     [SerializeField] private string[] prizes = { "Product 1", "Product 2", "Product 3", "Product 4", "Product 5", "Product 6", "Product7", "Product 8" }; // 상품 배열
+    private int itemCount;
 
     [SerializeField]
     [Header("색상 목록")]
@@ -44,6 +48,14 @@ public class Roullett_Controller : MonoBehaviour
     };
 
 
+    struct RandomItemData
+    {
+        public string id;
+        public Color color;
+        public Define.Grade grade;
+
+    }
+
     private void Start()
     {
         Init();
@@ -54,6 +66,67 @@ public class Roullett_Controller : MonoBehaviour
     {
         //roullet.gameObject.BindEvent(StartSpin);
         SetUI();
+        
+    }
+
+    private async void SetData()
+    {
+        prizes = await makeList();
+        SetUI();
+        currentSpeed = Random.Range(spinSpeed, spinSpeed * 1.5f);
+        isSpinning = true;
+    }
+
+    private async Task<string[]> makeList()
+    {
+        itemCount = prizes.Length;
+
+        string[] list = new string[itemCount];
+        List<string> itemList = new List<string>();
+
+        for (int i = 0; i < itemCount; i++)
+        {
+            int index = Random.Range(0, 100);
+            Define.Grade itemGrade = Define.Grade.Common;
+            Color color = Color.green;
+            itemList.Clear();
+          
+
+
+            if (index > 98)
+            {
+                itemGrade = Define.Grade.Legendary;
+                color = Color.red;
+                itemList = Managers.Resource.LegendaryList;
+            }
+            else if (index > 96)
+            {
+                itemGrade = Define.Grade.Epic;
+                color = new Color(100f / 255f, 64.7f / 255f, 0, 1);
+                itemList = Managers.Resource.EpicList;
+            }
+            else if (index > 85)
+            {
+                itemGrade = Define.Grade.Rare;
+                color = Color.magenta;
+                itemList = Managers.Resource.RareList;
+            }
+            else if (index > 70)
+            {
+                itemGrade = Define.Grade.Uncommon;
+                color = Color.blue;
+                itemList = Managers.Resource.UncommonList;
+            }
+            else
+            {
+                itemList = Managers.Resource.CommonList;
+            }
+
+            int randomIndex = UnityEngine.Random.Range(0, itemList.Count);
+
+            list[i] = itemList[randomIndex];
+        }
+        return list;
     }
 
     void Update()
@@ -77,8 +150,7 @@ public class Roullett_Controller : MonoBehaviour
     {
         if (!isSpinning)
         {
-            currentSpeed = Random.Range(spinSpeed, spinSpeed *1.5f);
-            isSpinning = true;
+            SetData();
         }
     }
 
@@ -154,6 +226,8 @@ public class Roullett_Controller : MonoBehaviour
             Vector3 middlePosition = (position + endAnglePosition) * 0.5f; // Vector3로 변경
             images[i].transform.position = middlePosition;
             images[i].GetComponent<Image>().color = colors[i];
+            // 아이콘 변경
+            images[i].GetComponent<Image>().sprite = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(prizes[i]).icon;
 
             currentAngle += angleStep;
         }
