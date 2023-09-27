@@ -13,6 +13,7 @@ public class UI_SkinPopup : UI_ContentPopup
     enum TMPs
     {
         SliderTMP,
+        ItemLoadingText
     }
 
     enum Buttons
@@ -38,10 +39,6 @@ public class UI_SkinPopup : UI_ContentPopup
         Slider
     }
 
-    enum Images
-    {
-        ItemLoadingImage
-    }
 
 
     private Color defaultColor = new Color(0.98f, 0.64f, 0.42f, 0.5f);
@@ -59,14 +56,13 @@ public class UI_SkinPopup : UI_ContentPopup
 
 
     private bool _isDelay = false;
-    private Image isLoadingImage;
+    private TextMeshProUGUI ItemLoadingText;
     public override bool Init()
     {
         if (base.Init() == false)
             return false;
 
 
-        BindImage((typeof(Images)));
         Bind<TextMeshProUGUI>((typeof(TMPs)));
         BindButton(typeof(Buttons));
         Bind<Slider>(typeof(Sliders));
@@ -92,8 +88,8 @@ public class UI_SkinPopup : UI_ContentPopup
         B_Background.gameObject.BindEvent(() => { OnClickCategory(ScollViewType.Skill); });
         B_Bat.gameObject.BindEvent(() => { OnClickCategory(ScollViewType.Bat); });
 
-        isLoadingImage = GetImage((int)Images.ItemLoadingImage);
-        isLoadingImage.gameObject.SetActive(false);
+        ItemLoadingText = Get<TextMeshProUGUI>((int)TMPs.ItemLoadingText);
+        ItemLoadingText.gameObject.SetActive(false);
 
 
 
@@ -153,9 +149,10 @@ public class UI_SkinPopup : UI_ContentPopup
             return;
 
         _isDelay = true;
-        isLoadingImage.transform.rotation = Quaternion.identity;
-        isLoadingImage.gameObject.SetActive(true);
-        isLoadingImage.transform.DORotate(new Vector3(0,0,-360),0.5f).SetLoops(2);
+        ItemLoadingText.gameObject.SetActive(true);
+        ItemLoadingText.transform.DOScale(1.25f, 0.25f)
+            .OnComplete(()=> ItemLoadingText.transform.DOScale(0.75f, 0.25f))
+            .SetLoops(-1, LoopType.Yoyo);
 
         _type = type;
 
@@ -253,8 +250,8 @@ public class UI_SkinPopup : UI_ContentPopup
             {
 
                 _isDelay = false;
-                isLoadingImage.transform.DOKill();
-                isLoadingImage.gameObject.SetActive(false);
+                ItemLoadingText.transform.DOKill();
+                ItemLoadingText.gameObject.SetActive(false);
             }
         }
 
@@ -280,8 +277,8 @@ public class UI_SkinPopup : UI_ContentPopup
         }
 
         _isDelay = false;
-        isLoadingImage.transform.DOKill();
-        isLoadingImage.gameObject.SetActive(false);
+        ItemLoadingText.transform.DOKill();
+        ItemLoadingText.gameObject.SetActive(false);
         
 
     }

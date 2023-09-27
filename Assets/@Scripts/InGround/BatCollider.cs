@@ -68,7 +68,7 @@ public class BatCollider : MonoBehaviour
 
             // 날려 보내기
             var bc = other.gameObject.GetComponent<BallController>();
-
+            Managers.Vibration.Vibrate(300);
 
 
 
@@ -95,6 +95,8 @@ public class BatCollider : MonoBehaviour
 
                     Managers.Effect.PlayBatEffect(hitPoint);
                     transform.DOShakeScale(0.3f, 0.7f).OnComplete(() => transform.DOScale(originalScale, 0));
+
+                    
 
                 }
 

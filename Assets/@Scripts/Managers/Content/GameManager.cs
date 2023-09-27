@@ -61,6 +61,7 @@ public class GameManager
 
     public float ReplaySlowMode { get { return 0.25f; } private set { } }
 
+    public DateTime roulletTime;
 
     public float Speed { get { return (_speed * 3600) * 0.001f; } private set { _speed = value; } }
     public float _speed = 0;
@@ -160,11 +161,13 @@ public class GameManager
 
         GameScore = 0;
         Managers.Localization.LoadLocalizedText();
-        _batSpeed = ES3.Load <float>("Gamdo");
+        _batSpeed = ES3.Load<float>("Gamdo");
 
         PlayerDataSettings();
         Managers.Resource.DoCache();
         StateUpdate();
+
+        roulletTime = ES3.Load<DateTime>("RTime");
     }
 
     private void PlayerDataSettings()
@@ -231,7 +234,7 @@ public class GameManager
         StateUpdate();
     }
 
-    
+
 
 
     public void GoHome(Action callBack = null)
@@ -247,20 +250,20 @@ public class GameManager
         GameScore = 0;
         Debug.Log($"{GameScore} 게임 리셋");
 
-        
+
         StateUpdate();
         callBack?.Invoke();
     }
 
     private void SaveBestScore()
     {
-        if ( GameMode != GameMode.Challenge && _gameData.playerInfo.playerBestScore[_league] < GameScore)
+        if (GameMode != GameMode.Challenge && _gameData.playerInfo.playerBestScore[_league] < GameScore)
         {
             //Debug.Log("최고 점수 갱신");
             _gameData.playerInfo.playerBestScore[_league] = GameScore;
             SaveGame();
         }
-        
+
     }
 
     private void StateUpdate()
@@ -334,14 +337,14 @@ public class GameManager
                         {
 
                             SaveChallengeData();
-                            if(challengeProc == ChallengeProc.Complete)
+                            if (challengeProc == ChallengeProc.Complete)
                                 Managers.UI.ShowPopupUI<UI_ChallengeClearPopup>();
                             else
                             {
                                 Managers.UI.ShowPopupUI<UI_ChallengeClearPopup>().Failed();
                             }
                         }
-                           
+
 
                         isRecord = false;
 
@@ -390,6 +393,37 @@ public class GameManager
     {
         hitCallBack?.Invoke();
         ChallengeModeCheck();
+    }
+
+    public bool RollRoullet()
+    {
+        if (DateTime.Now >= roulletTime)
+        {
+            roulletTime = DateTime.Now.AddMinutes(1);
+            ES3.Save<DateTime>("RTime", roulletTime);
+            return true;
+        }
+
+        return false;
+    }
+
+    public string RTimeDisplay()
+    {
+        TimeSpan timeRemaining; // 남은 시간
+
+        timeRemaining = roulletTime - DateTime.Now; // 남은 시간 계산
+
+        string remainTimeText = "";
+
+        // 남은 시간을 문자열로 변환하여 화면에 표시
+        // 남은 시간이 없거나 지난 경우
+        if (timeRemaining.TotalSeconds <= 0)
+        {
+            return remainTimeText = "00:00:00";
+        }
+
+        // 남은 시간을 문자열로 변환하여 화면에 표시
+        return remainTimeText = string.Format("{0:D2}:{1:D2}:{2:D2}", timeRemaining.Hours, timeRemaining.Minutes, timeRemaining.Seconds);
     }
 
     #region 챌린지
@@ -479,7 +513,7 @@ public class GameManager
 
     public void MainBatOn()
     {
-        if(_bat)
+        if (_bat)
             _bat.gameObject.SetActive(true);
     }
 
@@ -650,7 +684,7 @@ public class GameManager
 
         string colorCode = Utils.ColorToHex_1(interpolatedColor);
 
-        string speedKM = ((_speed * 3600) *0.001f).ToString("F2")+"km/h";
+        string speedKM = ((_speed * 3600) * 0.001f).ToString("F2") + "km/h";
 
         return colorCode;
     }
@@ -683,14 +717,14 @@ public class GameManager
             case ChallengeType.HomeRunMode:
                 if (HomeRunCount >= ChallengeScore)
                 {
-                    challengeProc = ChallengeProc.Complete; 
+                    challengeProc = ChallengeProc.Complete;
                     ManagerAsyncFunction(GameEnd, 0.5f);
                 }
                 return;
             case ChallengeType.RealMode:
                 if (SwingCount >= ChallengeScore)
                 {
-                    challengeProc = ChallengeProc.Complete; 
+                    challengeProc = ChallengeProc.Complete;
                     ManagerAsyncFunction(GameEnd, 0.5f);
                 }
                 return;
@@ -725,9 +759,9 @@ public class GameManager
     }
 
     public Baller Baller { get; private set; }
-    public float BatSpeed { get { return Mathf.Clamp(_batSpeed,0.1f,10.0f); } private set { _batSpeed = value; } }
+    public float BatSpeed { get { return Mathf.Clamp(_batSpeed, 0.1f, 10.0f); } private set { _batSpeed = value; } }
     private float _batSpeed = 5.0f;
-        
+
 
     public void SaveGame()
     {
@@ -821,12 +855,13 @@ public class GameManager
                 _gameData.playerInfo.playerClearLeague[League.Diamond] = false;
                 _gameData.playerInfo.playerClearLeague[League.Master] = false;
             }
-            
+
             _gameData.challengeData = challengeData;
 
             // 옵션설정
             ES3.Save<float>("Gamdo", 0.5f);
             ES3.Save<Language>("Lang", Language.English);
+            ES3.Save<DateTime>("RTime", DateTime.Now);
 
 
             SaveGame();
@@ -895,7 +930,7 @@ public class GameManager
 
     public void ChangeBat(string key)
     {
-        if(BatType == BatType.NONE)
+        if (BatType == BatType.NONE)
         {
             var batSO = Managers.Resource.GetItemScriptableObjet<BatScriptableObject>(key);
             BatType = batSO.batType;

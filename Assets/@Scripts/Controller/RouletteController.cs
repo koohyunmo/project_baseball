@@ -28,7 +28,7 @@ public class RouletteController : MonoBehaviour
 
 
     [Header("상품 목록")]
-    [SerializeField]private string[] prizes = { "Product 1", "Product 2", "Product 3", "Product 4", "Product 5", "Product 6", "Product7", "Product 8" }; // 상품 배열
+    [SerializeField] private RandomItemData[] prizes = new RandomItemData[8];
     private int itemCount;
     [SerializeField]
     [Header("색상 목록")]
@@ -46,6 +46,16 @@ public class RouletteController : MonoBehaviour
     List<Image> icons = new List<Image>();
 
     bool first = true;
+
+    struct RandomItemData
+    {
+        public string id;
+        public Color color;
+        public Define.Grade grade;
+        public string name;
+        public Sprite icon;
+
+    }
 
     private void Start()
     {
@@ -80,7 +90,7 @@ public class RouletteController : MonoBehaviour
 
     public void StartSpin()
     {
-        if (!isSpinning)
+        if (!isSpinning && Managers.Game.RollRoullet())
         {
             if(first == false)
             {
@@ -100,52 +110,59 @@ public class RouletteController : MonoBehaviour
 
         for (int i = 0; i < icons.Count; i++)
         {
-            icons[i].sprite = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(prizes[i]).icon;
+            icons[i].sprite = prizes[i].icon;
         }
 
     }
 
-    private async Task<string[]> makeList()
+    private async Task<RandomItemData[]> makeList()
     {
         itemCount = prizes.Length;
 
-        string[] list = new string[itemCount];
+        RandomItemData[] list = new RandomItemData[itemCount];
 
         for (int i = 0; i < itemCount; i++)
         {
             int index = Random.Range(0, 100);
-            Define.Grade itemGrade = Define.Grade.Common;
+            //Define.Grade itemGrade = Define.Grade.Common;
             Color color = Color.green;
             List<string> itemList = Managers.Resource.CommonList;
 
             if (index > 98)
             {
-                itemGrade = Define.Grade.Legendary;
+                //itemGrade = Define.Grade.Legendary;
                 color = Color.red;
                 itemList = Managers.Resource.LegendaryList;
             }
             else if (index > 96)
             {
-                itemGrade = Define.Grade.Epic;
+                //itemGrade = Define.Grade.Epic;
                 color = new Color(100f / 255f, 64.7f / 255f, 0, 1);
                 itemList = Managers.Resource.EpicList;
             }
             else if (index > 85)
             {
-                itemGrade = Define.Grade.Rare;
+                //itemGrade = Define.Grade.Rare;
                 color = Color.magenta;
                 itemList = Managers.Resource.RareList;
             }
             else if (index > 70)
             {
-                itemGrade = Define.Grade.Uncommon;
+                //itemGrade = Define.Grade.Uncommon;
                 color = Color.blue;
                 itemList = Managers.Resource.UncommonList;
             }
 
             int randomIndex = UnityEngine.Random.Range(0, itemList.Count);
 
-            list[i] = itemList[randomIndex % itemList.Count];
+            var itemData = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(itemList[randomIndex % itemList.Count]);
+
+            list[i].id = itemData.id;
+            list[i].grade = itemData.grade;
+            list[i].color = color;
+            list[i].name = itemData.name;
+            list[i].icon = itemData.icon;
+
         }
         return list;
     }
@@ -172,8 +189,8 @@ public class RouletteController : MonoBehaviour
 
         Color prizeColor = colors[minIndex % colors.Length];
         string colorHex = ColorUtility.ToHtmlStringRGB(prizeColor);
-
-        resultText.text = $"<color=#{colorHex}> Prize: {prizes[minIndex % prizes.Length]}</color>";
+        RandomItemData data = prizes[minIndex % prizes.Length];
+        resultText.text = $"<color=#{colorHex}> Prize: {Managers.Localization.GetLocalizedValue(data.name)}</color>";
 
     }
 
@@ -199,7 +216,10 @@ public class RouletteController : MonoBehaviour
         Color prizeColor = colors[minIndex % colors.Length];
         string colorHex = ColorUtility.ToHtmlStringRGB(prizeColor);
 
-        resultText.text = $"<color=#{colorHex}> Winning Prize: {prizes[minIndex % prizes.Length]}</color>";
+        RandomItemData data = prizes[minIndex % prizes.Length];
+        resultText.text = $"<color=#{colorHex}> Prize: {Managers.Localization.GetLocalizedValue(data.name)}</color>";
+
+        Managers.Game.GetItem(data.id);
 
     }
 

@@ -37,8 +37,23 @@ public class UI_StorePopup : UI_PopupHasBButton
 
         rc = GetObject((int)GameObjects.RouletteController).GetComponent<RouletteController>();
         GetButton((int)Buttons.Button_Ad).gameObject.BindEvent(rc.StartSpin);
-        Get<TextMeshProUGUI>((int)TMPs.TimeTMP).text = System.DateTime.Now.ToString();
-
+        Get<TextMeshProUGUI>((int)TMPs.TimeTMP).text = Managers.Game.RTimeDisplay();
+        StartCoroutine(co_UpdateUI());
         return true;
     }
+
+    IEnumerator co_UpdateUI()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            Get<TextMeshProUGUI>((int)TMPs.TimeTMP).text = Managers.Game.RTimeDisplay();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+
 }

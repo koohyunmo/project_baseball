@@ -19,6 +19,7 @@ public class Managers : MonoBehaviour
     public static ObjectManager Obj { get { return Instance?._object; } }
     public static EffectManager Effect { get { return Instance?._effect; } }
     public static LocalizationManager Localization { get { return Instance?._local; } }
+    public static VibrationManager Vibration { get { return Instance?._vibration; } }
 
     [SerializeField] UIManager _ui = new UIManager();
     [SerializeField] PoolManager _pool = new PoolManager();
@@ -28,6 +29,7 @@ public class Managers : MonoBehaviour
     [SerializeField] ObjectManager _object = new ObjectManager();
     [SerializeField] EffectManager _effect = new EffectManager();
     [SerializeField] LocalizationManager _local = new LocalizationManager();
+    [SerializeField] VibrationManager _vibration = new VibrationManager();
 
 
     public static Managers Instance { get { Init();  return s_instance; } } 
