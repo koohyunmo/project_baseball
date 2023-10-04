@@ -416,8 +416,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 5:59:21
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9fe018fe5f9f045c7811bf5459e2e4d6, type: 2}
-  m_sharedMaterial: {fileID: 6447333859754382329, guid: 9fe018fe5f9f045c7811bf5459e2e4d6,
+  m_fontAsset: {fileID: 11400000, guid: 03ce1abc29a384548afbd91c04962278, type: 2}
+  m_sharedMaterial: {fileID: -7717033157091463751, guid: 03ce1abc29a384548afbd91c04962278,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -442,7 +442,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 54
+  m_fontSize: 72
   m_fontSizeBase: 110
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1798,8 +1798,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: FREE SPIN TIME
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9fe018fe5f9f045c7811bf5459e2e4d6, type: 2}
-  m_sharedMaterial: {fileID: 6447333859754382329, guid: 9fe018fe5f9f045c7811bf5459e2e4d6,
+  m_fontAsset: {fileID: 11400000, guid: 03ce1abc29a384548afbd91c04962278, type: 2}
+  m_sharedMaterial: {fileID: -7717033157091463751, guid: 03ce1abc29a384548afbd91c04962278,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1824,10 +1824,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 90
+  m_fontSize: 72
   m_fontSizeBase: 90
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -2609,6 +2609,18 @@ PrefabInstance:
       propertyPath: spinSpeed
       value: 1000
       objectReference: {fileID: 0}
+    - target: {fileID: 8061781010961600655, guid: b2454bbe0674d164894b4b8ff726d3fd,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 03ce1abc29a384548afbd91c04962278,
+        type: 2}
+    - target: {fileID: 8061781010961600655, guid: b2454bbe0674d164894b4b8ff726d3fd,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7717033157091463751, guid: 03ce1abc29a384548afbd91c04962278,
+        type: 2}
     - target: {fileID: 8744529916540836377, guid: b2454bbe0674d164894b4b8ff726d3fd,
         type: 3}
       propertyPath: m_Pivot.x

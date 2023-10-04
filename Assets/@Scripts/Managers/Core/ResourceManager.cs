@@ -18,12 +18,14 @@ public class ResourceManager
     public Dictionary<string, UnityEngine.Object> Resources { get { return _resources; } private set { _resources = value; } }
 
     public List<string> batOrderList = new List<string>();
-    public List<string> batOrderList_1 = new List<string>();
-    public List<string> batOrderList_2 = new List<string>();
-    public List<string> batOrderList_3 = new List<string>();
-    public List<string> batOrderList_4 = new List<string>();
-    public List<string> batOrderList_5 = new List<string>();
-    public List<string> batOrderList_6 = new List<string>();
+    public List<string> CommonList = new List<string>();
+    public List<string> UncommonList = new List<string>();
+    public List<string> RareList = new List<string>();
+    public List<string> EpicList = new List<string>();
+    public List<string> LegendaryList = new List<string>();
+
+
+    public List<string> itemOrderList = new List<string>();
     public List<string> ballOrderList = new List<string>();
     public List<string> skillOrderList = new List<string>();
     public List<string> challengeOrderList = new List<string>();
@@ -262,7 +264,6 @@ public class ResourceManager
     public void FilterAndSortResources()
     {
 
-
         batOrderList = Resources.Keys.Where(key => key.StartsWith("BAT_")).ToList();
         ballOrderList = Resources.Keys.Where(key => key.StartsWith("BALL_")).ToList();
         skillOrderList = Resources.Keys.Where(key => key.StartsWith("SKILL_")).ToList();
@@ -316,39 +317,40 @@ public class ResourceManager
             .OrderBy(key => GetChallengeScriptableObjet(key).orderID)
             .ToList();
 
-        //Debug.Log("캐싱+소트 후: " + string.Join(", ", batOrderList));
+        itemOrderList.AddRange(batOrderList);
+        itemOrderList.AddRange(ballOrderList);
+        itemOrderList.AddRange(skillOrderList);
+
+        Debug.Log("캐싱+소트 후: " + string.Join(", ", itemOrderList));
 
 
         // 타입별 캐싱
 
         {
-            batOrderList_1 = batOrderList
-                .Where(key => GetItemScriptableObjet<BatScriptableObject>(key).batType == BatType.Tree)
-                .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade)
+            CommonList = itemOrderList
+                .Where(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade == Grade.Common)
+                .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).name)
+                .ToList();
+            Debug.Log("CommonList: " + string.Join(", ", CommonList));
+
+            UncommonList = itemOrderList
+                .Where(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade == Grade.Uncommon)
+                .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).name)
+                .ToList();
+            RareList = itemOrderList
+                .Where(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade == Grade.Rare)
+                .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).name)
                 .ToList();
 
-            batOrderList_2 = batOrderList
-                .Where(key => GetItemScriptableObjet<BatScriptableObject>(key).batType == BatType.Alu)
-                .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade)
+            EpicList = itemOrderList
+                .Where(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade == Grade.Epic)
+                .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).name)
                 .ToList();
-            batOrderList_3 = batOrderList
-            .Where(key => GetItemScriptableObjet<BatScriptableObject>(key).batType == BatType.Sp1)
-            .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade)
-            .ToList();
+            LegendaryList = itemOrderList
+                .Where(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade == Grade.Legendary)
+                .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).name)
+                .ToList();
 
-            batOrderList_4 = batOrderList
-                .Where(key => GetItemScriptableObjet<BatScriptableObject>(key).batType == BatType.Sp2)
-                .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade)
-                .ToList();
-            batOrderList_5 = batOrderList
-    .Where(key => GetItemScriptableObjet<BatScriptableObject>(key).batType == BatType.Sp3)
-    .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade)
-    .ToList();
-
-            batOrderList_6 = batOrderList
-                .Where(key => GetItemScriptableObjet<BatScriptableObject>(key).batType == BatType.Sp4)
-                .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade)
-                .ToList();
 
         }
 
