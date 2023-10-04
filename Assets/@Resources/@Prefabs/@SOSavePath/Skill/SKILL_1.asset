@@ -15,7 +15,8 @@ MonoBehaviour:
   id: SKILL_1
   model: {fileID: 0}
   icon: {fileID: 21300000, guid: e92527f6d0fe45342ab542b47346d45f, type: 3}
-  name: 
+  name: Bonus
   type: 4
   grade: 0
   HawkeyeLevel: 10
+  SkillType: 3

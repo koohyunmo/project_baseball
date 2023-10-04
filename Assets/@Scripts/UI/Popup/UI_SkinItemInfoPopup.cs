@@ -128,12 +128,20 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
         {
             //popupButtonText.text = "EQUIP";
             popupButtonText.text = Managers.Localization.GetLocalizedValue(LanguageKey.equip.ToString());
+            popupButton.interactable = true;
             popupButton.gameObject.BindEvent(EquipItem);
         }
         else
         {
             popupButtonText.text = Managers.Localization.GetLocalizedValue(LanguageKey.get.ToString());
+            popupButton.interactable = true;
             popupButton.gameObject.BindEvent(GetItem);
+        }
+
+        if(Managers.Game.EquipBallId.Equals(_itemSO.id) || Managers.Game.EquipBatId.Equals(_itemSO.id) || Managers.Game.EquipSkillId.Equals(_itemSO.id))
+        {
+            popupButtonText.text = Managers.Localization.GetLocalizedValue(LanguageKey.equipping.ToString());
+            popupButton.interactable = false;
         }
     }
 

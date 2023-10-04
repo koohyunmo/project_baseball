@@ -44,6 +44,9 @@ public class Bat : MonoBehaviour
     private float returnLerpTime = 0; // 원래 위치로 돌아갈 때 사용하는 lerp 타이머
     private float returnLerpSpeed = 1f; // 원래 위치로 돌아갈 때의 lerp 속도
 
+    public GameObject modelParent;
+    public GameObject colliderParent;
+
     private Action<Vector3, Rigidbody> _flyTheBall; 
     public enum BatState
     {
@@ -83,10 +86,12 @@ public class Bat : MonoBehaviour
         Managers.Game.SetBatPositionSetting(ClampToCameraViewSetting);
         Managers.Game.batPositionSetting?.Invoke();
 
-
         HitColiderTransform.gameObject.SetActive(false);
 
         SetBetHandle();
+
+        Managers.Skill.SetModelLocalScale(model.transform.localScale);
+        Managers.Skill.SetColliderLocalScale(HitColiderTransform.lossyScale);
 
     }
 
@@ -162,7 +167,6 @@ public class Bat : MonoBehaviour
     public void ColiderOn()
     {
         {
-
             HitColiderTransform.gameObject.SetActive(true);
             batBoxCollider.enabled = true;
         }

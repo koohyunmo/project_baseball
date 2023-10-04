@@ -15,7 +15,8 @@ MonoBehaviour:
   id: SKILL_2
   model: {fileID: 0}
   icon: {fileID: 21300000, guid: 3042b019b052942a1baf7aa49d7ca6bb, type: 3}
-  name: 
+  name: Hwak Eye 1
   type: 4
   grade: 0
   HawkeyeLevel: 50
+  SkillType: 0

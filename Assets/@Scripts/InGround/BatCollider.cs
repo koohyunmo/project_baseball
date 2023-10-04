@@ -94,7 +94,11 @@ public class BatCollider : MonoBehaviour
                     bat.SwingCollision(hitPoint, HitAction, bc.GetRigid());
 
                     Managers.Effect.PlayBatEffect(hitPoint);
-                    transform.DOShakeScale(0.3f, 0.7f).OnComplete(() => transform.DOScale(originalScale, 0));
+                    transform.DOShakeScale(0.3f, 0.7f).OnComplete(() =>
+                    {
+                        transform.DOScale(bat.HitColiderTransform.localScale, 0);
+
+                    });
 
                     
 

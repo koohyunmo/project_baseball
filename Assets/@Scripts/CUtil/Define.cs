@@ -135,6 +135,15 @@ public static class Define
 		TEN = 95
 	}
 
+	public enum SkillType
+	{
+		HwakEye,
+		Strong,
+		Collider,
+		Bonus,
+		None
+	}
+
 	public enum Grade
 	{
 		Common,
@@ -142,6 +151,7 @@ public static class Define
 		Rare,
 		Epic,
 		Legendary,
+		NONE
 	}
 	public enum ChallengeType
 	{

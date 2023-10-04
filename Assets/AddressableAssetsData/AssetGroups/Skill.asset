@@ -35,6 +35,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     - Skill
+  - m_GUID: 7b1f8a0d05e8a214b8eae31bbe127b93
+    m_Address: SKILL_4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Skill
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9c2d91b0a86c0bb4b9bbf0d47449c95f, type: 2}
   m_SchemaSet:

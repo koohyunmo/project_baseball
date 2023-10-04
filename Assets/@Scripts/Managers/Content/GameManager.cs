@@ -113,6 +113,9 @@ public class GameManager
     // 호크아이
     public bool HawkEyes { get; private set; }
     HawkeyeLevel hawkeyeLevel = HawkeyeLevel.ZERO;
+
+    public float skillBonus = 0.0f;
+    public long hitBonus = 0;
     public HawkeyeLevel HawkeyeLevel { get { return hawkeyeLevel; } private set { hawkeyeLevel = value; } }
 
     public float HawkEyesAmount
@@ -168,6 +171,7 @@ public class GameManager
         StateUpdate();
 
         roulletTime = ES3.Load<DateTime>("RTime");
+
     }
 
     private void PlayerDataSettings()
@@ -273,7 +277,7 @@ public class GameManager
             case GameState.Home:
                 {
 
-
+                    
                     Managers.Obj.DespawnAll();
                     batMoveReplayData.Clear();
                     MainCam.MoveOriginaPos();
@@ -295,12 +299,16 @@ public class GameManager
                         _bat.ColiderObjOff();
 
 
+                  
+
+
                 }
                 break;
             case GameState.Ready:
                 {
                     if (_bat)
                         _bat.ColiderOn();
+
 
                     MainCam.MoveOriginaPos();
                     HitScore = 0;
@@ -315,6 +323,8 @@ public class GameManager
                             HawkEyes = false;
                         else
                             HawkEyes = true;
+
+                        Managers.Skill.SkillInjection(skillSo);
                     }
                 }
                 break;
@@ -350,6 +360,7 @@ public class GameManager
 
                     });
 
+                   
                 }
                 break;
         }
@@ -461,35 +472,38 @@ public class GameManager
     {
         HitPos = hitPos;
 
+        score += skillBonus;
+
+
         if (score < 50 && score > 0)
         {
             _hitType = HitType.A;
-            HitScore = 1;
+            HitScore = 1 + hitBonus;
             SwingCount++;
         }
         else if (score >= 51 && score < 80)
         {
             _hitType = HitType.A;
-            HitScore += 1;
+            HitScore += 1 + hitBonus;
             SwingCount++;
         }
         else if (score >= 80 && score < 95)
         {
             _hitType = HitType.B;
-            HitScore += 2;
+            HitScore += 2 + hitBonus;
             SwingCount++;
         }
         else if (score >= 95 && score < 100)
         {
             _hitType = HitType.D;
-            HitScore += 4;
+            HitScore += 4 + hitBonus;
             SwingCount++;
             HomeRunCount++;
         }
         else if (score >= 100 && score <= float.MaxValue)
         {
             _hitType = HitType.D;
-            HitScore += 10;
+            HitScore += 10 + hitBonus;
             SwingCount++;
             HomeRunCount++;
         }
@@ -859,7 +873,7 @@ public class GameManager
             _gameData.challengeData = challengeData;
 
             // 옵션설정
-            ES3.Save<float>("Gamdo", 0.5f);
+            ES3.Save<float>("Gamdo", 5f);
             ES3.Save<Language>("Lang", Language.English);
             ES3.Save<DateTime>("RTime", DateTime.Now);
 

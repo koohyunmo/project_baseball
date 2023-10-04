@@ -15,7 +15,8 @@ MonoBehaviour:
   id: SKILL_0
   model: {fileID: 0}
   icon: {fileID: 21300000, guid: 13527793884104b46b7446fd7464c3ed, type: 3}
-  name: 
+  name: NONE
   type: 4
-  grade: 0
+  grade: 5
   HawkeyeLevel: 0
+  SkillType: 0

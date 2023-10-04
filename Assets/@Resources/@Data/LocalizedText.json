@@ -115,6 +115,14 @@
         "start": {
             "en": "Start",
             "ko": "시작"
+        },
+        "equipping": {
+            "en": "Equipping",
+            "ko": "장착중"
+        },
+        "confirm": {
+            "en": "Confirm",
+            "ko": "확인"
         }
         
     },

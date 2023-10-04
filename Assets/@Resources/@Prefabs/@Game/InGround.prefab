@@ -513,6 +513,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  modelParent: {fileID: 0}
+  colliderParent: {fileID: 0}
 --- !u!1 &4943062828623431084
 GameObject:
   m_ObjectHideFlags: 0
@@ -2127,6 +2129,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  modelParent: {fileID: 6709317978893180619}
+  colliderParent: {fileID: 4943062829658489819}
 --- !u!1 &4943062829884976602
 GameObject:
   m_ObjectHideFlags: 0

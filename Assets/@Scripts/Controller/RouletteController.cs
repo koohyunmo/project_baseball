@@ -1,51 +1,57 @@
+ï»¿using Actopolus.FakeLeaderboard.Src.UI;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+using Random = UnityEngine.Random;
+
 public class RouletteController : MonoBehaviour
 {
-    [Header("µ¹¸²ÆÇ")]
+    [Header("ëŒë¦¼íŒ")]
     [SerializeField] Transform roullet;
-    [Header("µ¹¸²ÆÇ ¾ÆÀÌÅÛ ÀÌ¹ÌÁö")]
+    [Header("ëŒë¦¼íŒ ì•„ì´í…œ ì´ë¯¸ì§€")]
     [SerializeField] Transform[] images;
-    [Header("µ¹¸²ÆÇ ÇÚµå")]
+    [Header("ëŒë¦¼íŒ í•¸ë“œ")]
     [SerializeField] Transform hand;
-    [Header("°á°ú ÅØ½ºÆ®(TMP)")]
-    public TextMeshProUGUI resultText;           // °á°ú¸¦ Ç¥½ÃÇÒ Text UI
+    [Header("ê²°ê³¼ í…ìŠ¤íŠ¸(TMP)")]
+    public TextMeshProUGUI resultText;           // ê²°ê³¼ë¥¼ í‘œì‹œí•  Text UI
 
-    [Header("µ¹¸²ÆÇ ¼ÂÆÃ")]
-    public float spinSpeed = 3000.0f; // ÃÊ´ç È¸Àü ¼Óµµ
-    private bool isSpinning = false;  // ·ê·¿ÀÌ È¸Àü ÁßÀÎÁö È®ÀÎÇÏ´Â ÇÃ·¡±×
-    private float currentSpeed;       // ÇöÀç È¸Àü ¼Óµµ
-    public float deceleration = 100.0f; // °¨¼Ó·ü
+    [Header("ëŒë¦¼íŒ ì…‹íŒ…")]
+    public float spinSpeed = 3000.0f; // ì´ˆë‹¹ íšŒì „ ì†ë„
+    private bool isSpinning = false;  // ë£°ë ›ì´ íšŒì „ ì¤‘ì¸ì§€ í™•ì¸í•˜ëŠ” í”Œë˜ê·¸
+    private float currentSpeed;       // í˜„ì¬ íšŒì „ ì†ë„
+    public float deceleration = 100.0f; // ê°ì†ë¥ 
 
-    private int numberOfPrizes = 0; // »óÇ°ÀÇ ¼ö
-    [Header("±âÁî¸ğ µğ¹ö±×¿ë")]
-    public float radius = 1.0f; // ·ê·¿ÀÇ ¹İÁö¸§
-    public float rotationOffset = 0f; // ±âÁî¸ğÀÇ È¸Àü ¿ÀÇÁ¼Â
+    private int numberOfPrizes = 0; // ìƒí’ˆì˜ ìˆ˜
+    [Header("ê¸°ì¦ˆëª¨ ë””ë²„ê·¸ìš©")]
+    public float radius = 1.0f; // ë£°ë ›ì˜ ë°˜ì§€ë¦„
+    public float rotationOffset = 0f; // ê¸°ì¦ˆëª¨ì˜ íšŒì „ ì˜¤í”„ì…‹
 
 
-    [Header("»óÇ° ¸ñ·Ï")]
-    [SerializeField] private RandomItemData[] prizes = new RandomItemData[8];
+    [Header("ìƒí’ˆ ëª©ë¡")]
+    //[SerializeField] private RandomItemData[] prizes = new RandomItemData[8];
+    private Define.Grade[] prizes = { Define.Grade.Common, Define.Grade.Common, Define.Grade.Uncommon, Define.Grade.Uncommon, Define.Grade.Rare, Define.Grade.Rare, Define.Grade.Epic, Define.Grade.Legendary };
     private int itemCount;
-    [SerializeField]
-    [Header("»ö»ó ¸ñ·Ï")]
+    [Header("ìƒ‰ìƒ ëª©ë¡")]
     private Color[] colors = {
-        Color.red,
-        Color.yellow,
         Color.green,
+        Color.green,
+        Color.gray,
+        Color.gray,
+        Color.blue,
         Color.blue,
         Color.magenta,
-        Color.black,
-        Color.white,
-        Color.cyan
+        Color.red
     };
 
     List<Image> icons = new List<Image>();
 
     bool first = true;
+
+    private readonly string ITEMLIST = "ITEMLIST";
 
     struct RandomItemData
     {
@@ -54,6 +60,16 @@ public class RouletteController : MonoBehaviour
         public Define.Grade grade;
         public string name;
         public Sprite icon;
+
+        public bool IsNull()
+        {
+            if(string.IsNullOrEmpty(id))
+            {
+                return true;
+            }
+
+            return false;
+        }
 
     }
 
@@ -65,10 +81,8 @@ public class RouletteController : MonoBehaviour
 
     private void Init()
     {
-        //roullet.gameObject.BindEvent(StartSpin);
         icons.Clear();
         SetUI();
-        SetData();
     }
 
     void Update()
@@ -76,8 +90,8 @@ public class RouletteController : MonoBehaviour
 
         if (isSpinning)
         {
-            roullet.Rotate(0, 0, -currentSpeed * Time.deltaTime); // ZÃàÀ» Áß½ÉÀ¸·Î È¸Àü
-            currentSpeed -= deceleration * Time.deltaTime; // ¼Óµµ °¨¼Ò
+            roullet.Rotate(0, 0, -currentSpeed * Time.deltaTime); // Zì¶•ì„ ì¤‘ì‹¬ìœ¼ë¡œ íšŒì „
+            currentSpeed -= deceleration * Time.deltaTime; // ì†ë„ ê°ì†Œ
             UpdateUI();
 
             if (currentSpeed <= 0)
@@ -92,11 +106,6 @@ public class RouletteController : MonoBehaviour
     {
         if (!isSpinning && Managers.Game.RollRoullet())
         {
-            if(first == false)
-            {
-                SetData();
-            }
-                
             currentSpeed = Random.Range(spinSpeed, spinSpeed * 1.5f);
             isSpinning = true;
 
@@ -104,70 +113,19 @@ public class RouletteController : MonoBehaviour
         }
     }
 
-    private async void SetData()
-    {
-        prizes = await makeList();
+    //private async void SetData()
+    //{
+    //    prizes = await makeList();
 
-        for (int i = 0; i < icons.Count; i++)
-        {
-            icons[i].sprite = prizes[i].icon;
-        }
+    //    for (int i = 0; i < icons.Count; i++)
+    //    {
+    //        icons[i].sprite = prizes[i].icon;
+    //    }
 
-    }
+    //}
 
-    private async Task<RandomItemData[]> makeList()
-    {
-        itemCount = prizes.Length;
-
-        RandomItemData[] list = new RandomItemData[itemCount];
-
-        for (int i = 0; i < itemCount; i++)
-        {
-            int index = Random.Range(0, 100);
-            //Define.Grade itemGrade = Define.Grade.Common;
-            Color color = Color.green;
-            List<string> itemList = Managers.Resource.CommonList;
-
-            if (index > 98)
-            {
-                //itemGrade = Define.Grade.Legendary;
-                color = Color.red;
-                itemList = Managers.Resource.LegendaryList;
-            }
-            else if (index > 96)
-            {
-                //itemGrade = Define.Grade.Epic;
-                color = new Color(100f / 255f, 64.7f / 255f, 0, 1);
-                itemList = Managers.Resource.EpicList;
-            }
-            else if (index > 85)
-            {
-                //itemGrade = Define.Grade.Rare;
-                color = Color.magenta;
-                itemList = Managers.Resource.RareList;
-            }
-            else if (index > 70)
-            {
-                //itemGrade = Define.Grade.Uncommon;
-                color = Color.blue;
-                itemList = Managers.Resource.UncommonList;
-            }
-
-            int randomIndex = UnityEngine.Random.Range(0, itemList.Count);
-
-            var itemData = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(itemList[randomIndex % itemList.Count]);
-
-            list[i].id = itemData.id;
-            list[i].grade = itemData.grade;
-            list[i].color = color;
-            list[i].name = itemData.name;
-            list[i].icon = itemData.icon;
-
-        }
-        return list;
-    }
     /// <summary>
-    /// ½Ç½Ã°£ UI ¾÷µ¥ÀÌÆ®
+    /// ì‹¤ì‹œê°„ UI ì—…ë°ì´íŠ¸
     /// </summary>
     private void UpdateUI()
     {
@@ -189,13 +147,13 @@ public class RouletteController : MonoBehaviour
 
         Color prizeColor = colors[minIndex % colors.Length];
         string colorHex = ColorUtility.ToHtmlStringRGB(prizeColor);
-        RandomItemData data = prizes[minIndex % prizes.Length];
-        resultText.text = $"<color=#{colorHex}> Prize: {Managers.Localization.GetLocalizedValue(data.name)}</color>";
+        Define.Grade data = prizes[minIndex % prizes.Length];
+        resultText.text = $"<color=#{colorHex}> Prize: {data.ToString()}</color>";
 
     }
 
     /// <summary>
-    /// ÇÚµå¿Í ÀÌ¹ÌÁö °Å¸®¸¦ ±â¹İÀ¸·Î ´çÃ·»óÇ°À» Á¤ÇØÁÖ´Â ÇÔ¼ö
+    /// í•¸ë“œì™€ ì´ë¯¸ì§€ ê±°ë¦¬ë¥¼ ê¸°ë°˜ìœ¼ë¡œ ë‹¹ì²¨ìƒí’ˆì„ ì •í•´ì£¼ëŠ” í•¨ìˆ˜
     /// </summary>
     private void DeterminePrize2()
     {
@@ -216,34 +174,61 @@ public class RouletteController : MonoBehaviour
         Color prizeColor = colors[minIndex % colors.Length];
         string colorHex = ColorUtility.ToHtmlStringRGB(prizeColor);
 
-        RandomItemData data = prizes[minIndex % prizes.Length];
-        resultText.text = $"<color=#{colorHex}> Prize: {Managers.Localization.GetLocalizedValue(data.name)}</color>";
+        Define.Grade data = prizes[minIndex % prizes.Length];
+        string id = "";
 
-        Managers.Game.GetItem(data.id);
+        switch (data)
+        {
+            case Define.Grade.Common:
+                id = Managers.Resource.CommonList[0];
+                break;
+            case Define.Grade.Uncommon:
+                id = Managers.Resource.UncommonList[0];
+                break;
+            case Define.Grade.Rare:
+                id = Managers.Resource.RareList[0];
+                break;
+            case Define.Grade.Epic:
+                id = Managers.Resource.EpicList[0];
+                break;
+            case Define.Grade.Legendary:
+                id = Managers.Resource.LegendaryList[0];
+                break;
+        }
+
+
+        //resultText.text = $"<color=#{colorHex}> Prize: {Managers.Localization.GetLocalizedValue(id)}</color>";
+        resultText.text = $"<color=#{colorHex}> Get Prize: {data.ToString()}</color>";
+
+        Managers.Game.GetItem(id);
+
+       var popup =  Managers.UI.ShowPopupUI<UI_RoulletItemInfoPopup>();
+        popup.InitData(id);
+        //SetItemList();
 
     }
 
     /// <summary>
-    /// ·ê·¿¾ÆÀÌÅÛÀÇ À§Ä¡ ¼³Á¤
+    /// ë£°ë ›ì•„ì´í…œì˜ ìœ„ì¹˜ ì„¤ì •
     /// </summary>
     private void SetUI()
     {
-        numberOfPrizes = prizes.Length; // ÀÌ ºÎºĞÀ» Ãß°¡
-        Vector3 position = roullet.position; // ·ê·¿ÀÇ Áß½É À§Ä¡
-        float angleStep = 360.0f / numberOfPrizes; // °¢ »óÇ° ¼½¼ÇÀÇ °¢µµ
+        numberOfPrizes = prizes.Length; // ì´ ë¶€ë¶„ì„ ì¶”ê°€
+        Vector3 position = roullet.position; // ë£°ë ›ì˜ ì¤‘ì‹¬ ìœ„ì¹˜
+        float angleStep = 360.0f / numberOfPrizes; // ê° ìƒí’ˆ ì„¹ì…˜ì˜ ê°ë„
         float currentAngle = rotationOffset;
-        float radius2 = 25; // ·ê·¿ÀÇ ¹İÁö¸§
+        float radius2 = 25; // ë£°ë ›ì˜ ë°˜ì§€ë¦„
 
         for (int i = 0; i < images.Length; i++)
         {
             Vector3 endAnglePosition = position + Quaternion.Euler(0, 0, currentAngle) * Vector3.right * radius2;
 
-            // ¼±°ú ¿øÁ¡ Áß°£¿¡ Å¥ºê ±×¸®±â
-            Vector3 middlePosition = (position + endAnglePosition) * 0.5f; // Vector3·Î º¯°æ
+            // ì„ ê³¼ ì›ì  ì¤‘ê°„ì— íë¸Œ ê·¸ë¦¬ê¸°
+            Vector3 middlePosition = (position + endAnglePosition) * 0.5f; // Vector3ë¡œ ë³€ê²½
             images[i].transform.position = middlePosition;
             var img = images[i].GetComponent<Image>();
             img.color = colors[i];
-            // ¾ÆÀÌÄÜ º¯°æ
+            // ì•„ì´ì½˜ ë³€ê²½
             //images[i].GetComponent<Image>().sprite = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(prizes[i]).icon;
             //images[i].SetParent(roullet);
 
@@ -251,6 +236,12 @@ public class RouletteController : MonoBehaviour
             currentAngle += angleStep;
         }
 
+
+        foreach (var item in prizes)
+        {
+            Debug.Log(item);
+
+        }
         
         resultText.text = null;
     }
@@ -272,21 +263,21 @@ public class RouletteController : MonoBehaviour
 
     void DrawRouletteGizmo()
     {
-        Vector3 position = roullet.position; // ·ê·¿ÀÇ Áß½É À§Ä¡
-        float angleStep = 360.0f / numberOfPrizes; // °¢ »óÇ° ¼½¼ÇÀÇ °¢µµ
+        Vector3 position = roullet.position; // ë£°ë ›ì˜ ì¤‘ì‹¬ ìœ„ì¹˜
+        float angleStep = 360.0f / numberOfPrizes; // ê° ìƒí’ˆ ì„¹ì…˜ì˜ ê°ë„
         float currentAngle = rotationOffset;
 
         for (int i = 0; i < numberOfPrizes; i++)
         {
             Vector3 endAnglePosition = position + Quaternion.Euler(0, 0, currentAngle) * Vector3.right * radius;
 
-            // ¼± ±×¸®±â
+            // ì„  ê·¸ë¦¬ê¸°
             Gizmos.color = colors[i % colors.Length];
             Gizmos.DrawLine(position, endAnglePosition);
 
-            // ¼±°ú ¿øÁ¡ Áß°£¿¡ Å¥ºê ±×¸®±â
+            // ì„ ê³¼ ì›ì  ì¤‘ê°„ì— íë¸Œ ê·¸ë¦¬ê¸°
             Vector3 middlePosition = (position + endAnglePosition) * 0.5f;
-            float cubeSize = 0.05f; // Å¥ºê Å©±â
+            float cubeSize = 0.05f; // íë¸Œ í¬ê¸°
             Gizmos.DrawCube(middlePosition, new Vector3(cubeSize, cubeSize, cubeSize));
 
             currentAngle += angleStep;

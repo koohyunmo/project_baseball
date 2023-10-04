@@ -25,5 +25,7 @@ public enum LanguageKey
     highscore,
     currentscore,
     strike,
-    start
+    start,
+    equipping,
+    confirm
 }
