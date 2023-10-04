@@ -99,7 +99,24 @@
         "apply": {
             "en": "Apply",
             "ko": "적용"
+        },
+        "highscore": {
+            "en": "High Score",
+            "ko": "최고점수"
+        },
+        "currentscore": {
+            "en": "Current Score",
+            "ko": "현재점수"
+        },
+        "strike": {
+            "en": "Strike",
+            "ko": "스트라이크"
+        },
+        "start": {
+            "en": "Start",
+            "ko": "시작"
         }
+        
     },
     "skills": {
         "hawkeye": {

@@ -21,5 +21,9 @@ public enum LanguageKey
     clear,
     play,
     startdrag,
-    apply
+    apply,
+    highscore,
+    currentscore,
+    strike,
+    start
 }

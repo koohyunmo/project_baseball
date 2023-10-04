@@ -71,7 +71,10 @@ public class UI_EndPopup : UI_Popup
 
     IEnumerator c_Delay()
     {
-        gameScorTMP.text = $" Best Score : {Managers.Game.GetBestScore()}\nScore : {Managers.Game.GameScore}";
+        strikeTMP.text = Managers.Localization.GetLocalizedValue(LanguageKey.strike.ToString());
+        string hightScore = Managers.Localization.GetLocalizedValue(LanguageKey.highscore.ToString());
+        string currentScore = Managers.Localization.GetLocalizedValue(LanguageKey.currentscore.ToString());
+        gameScorTMP.text = $" {hightScore} : {Managers.Game.GetBestScore()}\n{currentScore} : {Managers.Game.GameScore}";
         yield return new WaitForSeconds(0.7f);
         strikeTMP.gameObject.SetActive(false);
         gameScorTMP.gameObject.SetActive(true);
