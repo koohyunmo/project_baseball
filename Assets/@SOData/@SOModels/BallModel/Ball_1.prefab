@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2050418651679399649}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,13 +45,13 @@ GameObject:
   - component: {fileID: 5673735361354492413}
   - component: {fileID: 2440042280764535478}
   - component: {fileID: 5001542033496293420}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: BaseBallNormal (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6842661754967986834
 Transform:
   m_ObjectHideFlags: 0
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 6602898285867282348}
   - component: {fileID: 6418511546531114978}
   - component: {fileID: 6442581997915087674}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: FX_Trail_Exhaust_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4924,7 +4924,7 @@ GameObject:
   - component: {fileID: 8443626847645865532}
   - component: {fileID: 7136420938645071767}
   - component: {fileID: 4240659743003201959}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Ball_1
   m_TagString: Ball
   m_Icon: {fileID: 0}
@@ -5014,7 +5014,7 @@ MonoBehaviour:
   drawingMode: 1
   outlineLayer: 0
   outlineTargets:
-  - IsVisible: 0
+  - IsVisible: 1
     CutoutMask: 8
     edgeDilateAmount: 5
     frontEdgeDilateAmount: 5
@@ -5070,12 +5070,12 @@ PrefabInstance:
     - target: {fileID: 4688040159020767084, guid: 7c6d19f9a3b08ea48a4720ca29c92db5,
         type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4688040159020767084, guid: 7c6d19f9a3b08ea48a4720ca29c92db5,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5351563899013598678, guid: 7c6d19f9a3b08ea48a4720ca29c92db5,
         type: 3}

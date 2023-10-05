@@ -60,10 +60,7 @@ Shader "Custom/XrayShader"
         ENDCG
 
         //Xray
-        //ZTEST GREATER
-    ZWrite Off
-    ZTest Always
-
+        ZTEST GREATER
 
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
@@ -89,10 +86,11 @@ Shader "Custom/XrayShader"
         {
             // Albedo comes from a texture tinted by color
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex);
-            o.Albedo = c.rgb;
-            o.Alpha = c.a;
+            //o.Albedo = c.rgb;
+            //o.Alpha = c.a;
             float rim = saturate(dot(o.Normal, IN.viewDir));
-            o.Emission = pow(1-rim, _RimPower) * _Color.rgb;
+            o.Emission = pow(1-rim, _RimPower) * _XColor.rgb;
+            o.Alpha = 1;
         }
         ENDCG
         

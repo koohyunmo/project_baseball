@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4142289055698093228}
   - component: {fileID: -8692970849477433445}
   - component: {fileID: 4712570934161764008}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 2428634630505575165}
   - component: {fileID: 2356058625252305224}
   - component: {fileID: 3814116808353862589}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: FX_Trail_Exhaust_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4946,7 +4946,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7732664497525027397}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4981,7 +4981,7 @@ GameObject:
   - component: {fileID: 1063486439359342841}
   - component: {fileID: 6426165901674415242}
   - component: {fileID: 129720796768914944}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Ball_7
   m_TagString: Ball
   m_Icon: {fileID: 0}

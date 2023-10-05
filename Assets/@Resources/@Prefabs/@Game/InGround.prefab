@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3960791042588223904}
   - component: {fileID: 3930299093186249081}
   - component: {fileID: 625740611657977233}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SwingCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 4914428714971316234}
   - component: {fileID: 2388752901583845521}
   - component: {fileID: 4830780881087345126}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HiterColider (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -320,7 +320,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6471229678394559756}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -351,7 +351,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5949288158807423851}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -382,7 +382,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 862279729745277166}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EffectPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -414,7 +414,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7377232187504972598}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mid
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -446,7 +446,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4943062828603517904}
   - component: {fileID: 4943062828603517905}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HitterRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -524,7 +524,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062828623431085}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -672,7 +672,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062828776566060}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ColliderParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -709,7 +709,7 @@ GameObject:
   - component: {fileID: 4943062828784027271}
   - component: {fileID: 4943062828784027270}
   - component: {fileID: 4943062828784027269}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LowPolyBatModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -816,7 +816,7 @@ GameObject:
   - component: {fileID: 4943062828815921671}
   - component: {fileID: 4943062828815921670}
   - component: {fileID: 4943062828815921669}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HiterColider (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -968,7 +968,7 @@ GameObject:
   - component: {fileID: 4943062828837093210}
   - component: {fileID: 2097618264198605574}
   - component: {fileID: 2148663323020142614}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HiterColider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1175,7 +1175,7 @@ GameObject:
   - component: {fileID: 4943062828878122852}
   - component: {fileID: 4943062828878122851}
   - component: {fileID: 4943062828878122850}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HiterColider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1322,7 +1322,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062828992945333}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MidRow
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
@@ -1518,7 +1518,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062829102168845}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mid
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -1555,7 +1555,7 @@ GameObject:
   - component: {fileID: 4943062829108064252}
   - component: {fileID: 4943062829108064251}
   - component: {fileID: 4943062829108064250}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HiterColider (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1700,7 +1700,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062829181467878}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -1731,7 +1731,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062829244087527}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -1861,7 +1861,7 @@ GameObject:
   - component: {fileID: 4943062829392890255}
   - component: {fileID: 4943062829392890254}
   - component: {fileID: 4943062829392890253}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1962,7 +1962,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062829455412455}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ModelParent
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
@@ -1996,7 +1996,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062829572162415}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mid
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -2027,7 +2027,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062829658489820}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ColliderParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2062,7 +2062,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4943062829667281685}
   - component: {fileID: 4943062829667281686}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HitterLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2140,7 +2140,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062829884976603}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mid
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -2280,7 +2280,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062829967396443}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MidRow
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
@@ -2311,7 +2311,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062829977763717}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -2501,7 +2501,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062830007341453}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -2535,7 +2535,7 @@ GameObject:
   - component: {fileID: 4943062830021781192}
   - component: {fileID: 4943062830021781239}
   - component: {fileID: 4943062830021781238}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LowPolyBatModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2687,7 +2687,7 @@ GameObject:
   - component: {fileID: 4943062830181966366}
   - component: {fileID: 4943062830181966365}
   - component: {fileID: 4943062830181966364}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BatModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2788,7 +2788,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062830215621419}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -2819,7 +2819,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062830266998323}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -2853,7 +2853,7 @@ GameObject:
   - component: {fileID: 4943062830333573513}
   - component: {fileID: 4943062830333573512}
   - component: {fileID: 4943062830333573559}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2954,7 +2954,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062830373488230}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EffectPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2986,7 +2986,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062830521493542}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MidRow
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
@@ -3017,7 +3017,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062830617639197}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ModelParent
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
@@ -3051,7 +3051,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062830709260739}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MidRow
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
@@ -3082,7 +3082,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062830713082298}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mid
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -3113,7 +3113,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943062830717676312}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -3149,7 +3149,7 @@ GameObject:
   - component: {fileID: 6709317978893180620}
   - component: {fileID: 3224148119804318999}
   - component: {fileID: 8513131051792638388}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BatModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3257,7 +3257,7 @@ MonoBehaviour:
   drawingMode: 1
   outlineLayer: 0
   outlineTargets:
-  - IsVisible: 1
+  - IsVisible: 0
     CutoutMask: 8
     edgeDilateAmount: 5
     frontEdgeDilateAmount: 5
@@ -3319,7 +3319,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3323769559749081946}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3350,7 +3350,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4185053120795634101}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3381,7 +3381,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5718662640921683923}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -3412,7 +3412,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3110710054884103776}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MidRow
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
@@ -3444,6 +3444,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: e440eafe29eb02049af7a5cf71320854, type: 3}
       propertyPath: m_Name
       value: StartHit
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: e440eafe29eb02049af7a5cf71320854, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: e440eafe29eb02049af7a5cf71320854, type: 3}
       propertyPath: m_IsActive
@@ -3534,6 +3538,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: e440eafe29eb02049af7a5cf71320854, type: 3}
       propertyPath: m_Name
       value: StartHit
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: e440eafe29eb02049af7a5cf71320854, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: e440eafe29eb02049af7a5cf71320854, type: 3}
       propertyPath: m_IsActive

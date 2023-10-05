@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5703189622447253573}
   - component: {fileID: 5590334388332455947}
   - component: {fileID: 5615812324171457747}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FX_Trail_Exhaust_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4786,7 +4786,7 @@ GameObject:
   - component: {fileID: 8209320602010886417}
   - component: {fileID: -2127765966606303410}
   - component: {fileID: 5375579774869443217}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ball_9
   m_TagString: Ball
   m_Icon: {fileID: 0}
@@ -4990,7 +4990,7 @@ GameObject:
   - component: {fileID: 7696742967930107226}
   - component: {fileID: 7502988106366163626}
   - component: {fileID: 7501815242413529940}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FX_Fire_Small_01 Variant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9554,7 +9554,7 @@ GameObject:
   - component: {fileID: 7696651655295415274}
   - component: {fileID: 7502405978938891392}
   - component: {fileID: 7501374138937744692}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FX_Fire_Embers_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14117,7 +14117,7 @@ GameObject:
   - component: {fileID: 8274001313938556524}
   - component: {fileID: 8071152716584853058}
   - component: {fileID: 8070494952709599644}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FX_PowerBeam_Flash_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
