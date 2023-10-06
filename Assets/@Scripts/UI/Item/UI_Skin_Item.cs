@@ -133,10 +133,6 @@ public class UI_Skin_Item : UI_Base
             }
         }
 
-
-
-
-
     }
 
     private void UpdateUI()
@@ -266,8 +262,8 @@ public class UI_Skin_Item : UI_Base
     {
         if (_mats != null && _mesh != null)
         {
-            Managers.Game.Bat.ChangeBatMat(_mats);
-            Managers.Game.Bat.ChangeBatMesh(_mesh);
+            //Managers.Game.Bat.ChangeBatMat(_mats);
+            //Managers.Game.Bat.ChangeBatMesh(_mesh);
             Managers.Game.GetItem(_item.id);
             Managers.Game.ChangeBat(_item.id);
             //Managers.Game.Bat.SetBetHandle();

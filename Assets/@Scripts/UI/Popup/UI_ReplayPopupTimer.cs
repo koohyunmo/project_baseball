@@ -24,6 +24,12 @@ public class UI_ReplayPopupTimer : UI_Popup
     private void Start()
     {
         Init();
+
+        if(Managers.Ad.CanShowIntAd() == false)
+        {
+            Managers.UI.ClosePopupUI(this);
+            Managers.UI.ShowPopupUI<UI_EndPopup>();
+        }
     }
 
 
@@ -35,23 +41,26 @@ public class UI_ReplayPopupTimer : UI_Popup
         Co_timer = StartCoroutine(CountdownTimer());
 
         adImage.gameObject.BindEvent(Replay);
+        adImage.gameObject.SetActive(Managers.Ad.CanShowIntAd());
 
         return true;
     }
 
     private void Replay()
     {
-        if(Co_timer != null)
+        Managers.UI.ClosePopupUI(this);
+
+        Managers.Ad.ShowInterstitialAd();
+
+        if (Co_timer != null)
         {
             StopCoroutine(Co_timer);
             Co_timer = null;
         }
 
 
-        Managers.UI.ClosePopupUI(this);
 
-        Managers.Game.GameRetry();
-        Debug.Log("TODO 광고");
+        //Managers.Game.GameRetry();
     }
 
     // 타이머 코루틴 시작

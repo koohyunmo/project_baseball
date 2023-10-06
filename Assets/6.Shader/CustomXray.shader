@@ -36,6 +36,7 @@ Shader "Custom/XrayShader"
             float2 uv_MainTex;
             float2 uv_BumpMap;
             float4 screenPos;
+            float3 viewDir;
            
         };
 
@@ -53,8 +54,8 @@ Shader "Custom/XrayShader"
             
             o.Metallic = _Metallic;
 
-            //float rim = 1.0 - saturate(dot(normalize(IN.screenPos.xyz), o.Normal));
-            //o.Emission = _RimColor.rgb * pow(rim, _RimPower);
+            float rim = saturate(dot(o.Normal, IN.viewDir));
+            o.Emission = pow(1-rim, 3) * (float3(1.0,1.0,1.0) - _Color.rgb);
             o.Alpha = c.a;
         }
         ENDCG

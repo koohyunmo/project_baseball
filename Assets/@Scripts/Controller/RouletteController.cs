@@ -200,10 +200,56 @@ public class RouletteController : MonoBehaviour
         //resultText.text = $"<color=#{colorHex}> Prize: {Managers.Localization.GetLocalizedValue(id)}</color>";
         resultText.text = $"<color=#{colorHex}> Get Prize: {data.ToString()}</color>";
 
-        Managers.Game.GetItem(id);
 
-       var popup =  Managers.UI.ShowPopupUI<UI_RoulletItemInfoPopup>();
-        popup.InitData(id);
+        Define.GetType get = Managers.Game.GetItem(id);
+        long gold = 0;
+
+
+        if (get == Define.GetType.duplicate)
+        {
+
+
+            switch (data)
+            {
+                case Define.Grade.Common:
+                    gold = 10;
+                    break;
+                case Define.Grade.Uncommon:
+                    gold = 30;
+                    break;
+                case Define.Grade.Rare:
+                    gold = 100;
+                    break;
+                case Define.Grade.Epic:
+                    gold = 300;
+                    break;
+                case Define.Grade.Legendary:
+                    gold = 500;
+                    break;
+            }
+
+            Debug.Log($"Get Gold {gold}");
+        }
+
+
+        var popup = Managers.UI.ShowPopupUI<UI_RoulletItemInfoPopup>();
+
+        switch (get)
+        {
+            case Define.GetType.Failed:
+                throw new Exception("아이템 없음?");
+                break;
+            case Define.GetType.Success:
+                popup.InitData(id);
+                break;
+            case Define.GetType.duplicate:
+                popup.InitData(data,gold);
+                break;
+
+        }
+
+
+
         //SetItemList();
 
     }

@@ -43,7 +43,7 @@ public class UIManager
         }
 
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
-        canvas.worldCamera = Camera.main;
+        canvas.worldCamera = Camera.main.transform.GetChild(2).GetComponent<Camera>();
 
         CanvasScaler cs = go.GetOrAddComponent<CanvasScaler>();
         if (cs != null)

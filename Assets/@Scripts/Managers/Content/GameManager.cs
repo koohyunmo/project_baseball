@@ -172,6 +172,8 @@ public class GameManager
 
         roulletTime = ES3.Load<DateTime>("RTime");
 
+        Managers.Ad.Init();
+
     }
 
     private void PlayerDataSettings()
@@ -326,6 +328,7 @@ public class GameManager
 
                         Managers.Skill.SkillInjection(skillSo);
                     }
+                    Time.timeScale = 1f;
                 }
                 break;
             case GameState.InGround:
@@ -543,11 +546,25 @@ public class GameManager
         SetLeague(cso.league);
     }
 
-    public void GetItem(string key)
+    // -1 실패 0 성공  1이미 있는 아이템
+    public Define.GetType GetItem(string key)
     {
 
+        var itemSO = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(key);
+
+        if(!itemSO)
+        {
+            Debug.LogError("없는 아이템");
+            return Define.GetType.Failed;
+        }
+
+
         if (_gameData.playerInventory.Contains(key) == true)
-            return;
+        {
+            Debug.Log("이미 있는 아이템");
+            return Define.GetType.duplicate;
+        }
+            
 
         var type = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(key).type;
 
@@ -571,6 +588,7 @@ public class GameManager
         notifyItemAction();
 
         LobbyUIEvent?.Invoke();
+        return Define.GetType.Success;
     }
 
     #endregion
@@ -955,12 +973,44 @@ public class GameManager
             EquipBatId = key;
             var batSO = Managers.Resource.GetItemScriptableObjet<BatScriptableObject>(key);
             BatType = batSO.batType;
+           
+            BatSetting(batSO);
         }
         else
             return;
 
         SaveGame();
     }
+
+    private void BatSetting(BatScriptableObject _item)
+    {
+        List<Material> _mats;
+        Mesh _mesh;
+
+        if (_item.model)
+        {
+            MeshRenderer renderer = _item.model.GetComponent<MeshRenderer>();
+
+            if (renderer)
+            {
+                var meshfilter = _item.model.GetComponent<MeshFilter>();
+
+                if (meshfilter)
+                {
+                    _mats = new List<Material>();
+
+                    var modelMats = renderer.sharedMaterials;
+                    _mats.AddRange(modelMats);
+                    _mesh = meshfilter.sharedMesh;
+
+                    Managers.Game.Bat.ChangeBatMat(_mats);
+                    Managers.Game.Bat.ChangeBatMesh(_mesh);
+                }
+            }
+        }
+
+    }
+
 
     public void ChangeSkill(string key)
     {

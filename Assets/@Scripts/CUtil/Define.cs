@@ -192,6 +192,13 @@ public static class Define
 	}
 
 
+	public enum GetType
+    {
+		Failed,
+		Success,
+		duplicate,
+    }
+
 
 
 

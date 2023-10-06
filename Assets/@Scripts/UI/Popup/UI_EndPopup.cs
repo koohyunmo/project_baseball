@@ -47,6 +47,7 @@ public class UI_EndPopup : UI_Popup
         homeButton.gameObject.BindEvent(HomeButtonClick);
         replayButton.gameObject.BindEvent(ReplayButtonClick);
         retryButton.gameObject.BindEvent(RetryButtonClick);
+        retryButton.interactable = Managers.Ad.CanShowIntAd();
 
         Managers.Obj.DespawnBall();
     }
@@ -65,8 +66,16 @@ public class UI_EndPopup : UI_Popup
 
     private void RetryButtonClick()
     {
-        Managers.UI.ClosePopupUI(this);
-        Managers.Game.GameRetry();
+
+        if (Managers.Ad.CanShowIntAd())
+        {
+            Managers.UI.ClosePopupUI(this);
+            Managers.Ad.ShowInterstitialAd();
+        }
+        else
+            return;
+
+        //Managers.Game.GameRetry();
     }
 
     IEnumerator c_Delay()
