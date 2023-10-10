@@ -16,7 +16,12 @@ public class UI_ChallengeInfoPopup : UI_InfoPopup
 
     private void Bind()
     {
+        if(_title)
         _title.text = Managers.Localization.GetLocalizedValue(LanguageKey.challenges.ToString());
+        else
+        {
+            Debug.LogError("TMP is Null");
+        }
     }
 
     public void InitData(ChallengeScriptableObject challengeInfo)

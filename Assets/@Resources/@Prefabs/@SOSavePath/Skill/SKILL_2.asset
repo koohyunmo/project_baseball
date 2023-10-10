@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: SKILL_2
   model: {fileID: 0}
-  icon: {fileID: 21300000, guid: 3042b019b052942a1baf7aa49d7ca6bb, type: 3}
+  icon: {fileID: 21300000, guid: f36eccff7aed44d4082094f5835b6427, type: 3}
   name: Hwak Eye 1
   type: 4
   grade: 0

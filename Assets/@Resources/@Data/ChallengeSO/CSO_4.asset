@@ -15,9 +15,9 @@ MonoBehaviour:
   orderID: 4
   key: CSO_4
   mode: 1
-  league: 5
-  score: 1
+  league: 1
+  score: 11
   speed: 0
-  desc: 'Achieve exactly 1 points.
+  desc: 'Achieve exactly 11 points.
 
-    <color=#82A9B2FF>Diamond League</color> '
+    <color=#905923FF>Bronze League</color> '

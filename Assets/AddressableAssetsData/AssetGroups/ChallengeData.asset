@@ -23,20 +23,176 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     - Challenge
-  - m_GUID: e04875027644d894097761ce62460b9e
+  - m_GUID: b7048cba839c48e4c94668b6ec50701d
     m_Address: CSO_2
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     - Challenge
-  - m_GUID: 47f06a01fede5ae4f9e4826426e19cf9
+  - m_GUID: 4203752cf494fa34ebef682095d65ab7
     m_Address: CSO_3
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     - Challenge
-  - m_GUID: a6fb014e7c1b1aa4e92cd8cc8e40b8e0
+  - m_GUID: aafd6de4e17c2a7429837f851f308087
     m_Address: CSO_4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: b36cc18fa75cdfd479070338ef7b1fdd
+    m_Address: CSO_5
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: 052632099cd55dc4c971316c3aa90b63
+    m_Address: CSO_6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: eb91dc5bb693cb648b844e5b6ec2b4f6
+    m_Address: CSO_7
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: 1a1e2ac2d192f624b9bb4dadd0de87d8
+    m_Address: CSO_8
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: 30a1d8ae8f97b24489405a15a3ce7613
+    m_Address: CSO_9
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: 49bc77886f26359409a31b259be1e706
+    m_Address: CSO_10
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: 528f111bc45757b479478111e24a9898
+    m_Address: CSO_11
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: c1fee9924fe3d2a49a8464db335fff4e
+    m_Address: CSO_12
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: a12c36f865ab76343a90ea8550f15ca7
+    m_Address: CSO_13
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: ac2d30e0bfc775649a6cb6423d86854b
+    m_Address: CSO_14
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: d050fe29793ef7b4b9187f010c845b4d
+    m_Address: CSO_15
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: 6c6885930b90e324a935d5b50be2beb7
+    m_Address: CSO_16
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: 93c6dc98dfd41d9478abe2d3c0640b0d
+    m_Address: CSO_17
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: e7b00966e332c4a4d8a5ba4053cdbf48
+    m_Address: CSO_18
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: 3af056593e560794f8642a1ad3578117
+    m_Address: CSO_19
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: dd4e0858a5635294592acc22b06fec01
+    m_Address: CSO_20
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: d98f7051a1b59c144971acfba94b1c66
+    m_Address: CSO_21
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: aeebd4e9571acc045ae8543d39dea6cc
+    m_Address: CSO_22
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: 4d4f3660436144c4a9705e7b92e75ace
+    m_Address: CSO_23
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: f4fe94c94770de441a98cf8776c59fbe
+    m_Address: CSO_24
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: 18a8136df725def48a49a21130757895
+    m_Address: CSO_25
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: 2e2e475553bcf054f8cc0dfff47f1fc1
+    m_Address: CSO_26
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: 276b5a95ed23bbe47ae5575e1dd01653
+    m_Address: CSO_27
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: 7f462315d434dbd40a5152d73592f5b2
+    m_Address: CSO_28
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: e4c3d6cd6717b5c40ba4f945b0894f62
+    m_Address: CSO_29
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Challenge
+  - m_GUID: 268bbb290aede7844b998f8d4b68fb66
+    m_Address: CSO_30
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
