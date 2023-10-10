@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -551,6 +552,8 @@ public class Baller : MonoBehaviour
 
 
         //camManager.OnReplay(replayBall.transform, replayPos);
+
+        camManager.transform.DOMoveY(Managers.Game.AimPoint.y - 0.1f, 0.5f);
 
 
 
