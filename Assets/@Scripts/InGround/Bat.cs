@@ -269,8 +269,8 @@ public class Bat : MonoBehaviour
 
             if (GameState != Define.GameState.InGround && Managers.Game.isReplay)
             {
-                slowSpeed = 1f * Managers.Game.ReplaySlowMode;
-                anim.speed = 1f * Managers.Game.ReplaySlowMode;
+                //slowSpeed = 1f * Managers.Game.ReplaySlowMode;
+                //anim.speed = 1f * Managers.Game.ReplaySlowMode;
             }
             else
             {
@@ -401,6 +401,7 @@ public class Bat : MonoBehaviour
             float waitTime = data[i + 1].time - data[i].time;
             HitColiderTransform.localPosition = data[i].position;
             float elapsedTime = 0f;
+            Debug.Log(waitTime);
 
             while (elapsedTime < waitTime)
             {
@@ -416,8 +417,9 @@ public class Bat : MonoBehaviour
                     Vector3 interpolatedPosition = Vector3.Lerp(HitColiderTransform.localPosition, data[i].position, t);
                     HitColiderTransform.localPosition = interpolatedPosition;
                     elapsedTime += Time.deltaTime;
-                    yield return null;
+                    yield return new WaitForFixedUpdate();
                 }
+               
             }
         }
     }

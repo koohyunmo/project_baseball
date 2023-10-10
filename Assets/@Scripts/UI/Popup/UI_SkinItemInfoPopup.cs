@@ -134,7 +134,7 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
         else
         {
             popupButtonText.text = Managers.Localization.GetLocalizedValue(LanguageKey.get.ToString());
-            popupButton.interactable = true;
+            popupButton.interactable = Managers.Ad.CanShowRewardAd();
             popupButton.gameObject.BindEvent(GetItem);
         }
 
@@ -147,10 +147,22 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
 
     private void GetItem()
     {
-        Managers.Game.GetItem(_itemSO.id);
-        _lockUIAction?.Invoke();
-        ClosePopupUI();
-        Debug.Log("TODO ±¤°í or µ·");
+        if (Managers.Ad.CanShowRewardAd() == false)
+        {
+            return;
+        }
+        else
+        {
+            popupButton.interactable = Managers.Ad.CanShowRewardAd();
+            Managers.Game.GetItem(_itemSO.id);
+            _lockUIAction?.Invoke();
+            ClosePopupUI();
+            Managers.Ad.ShowRewardedAd();
+            Debug.Log("TODO ±¤°í or µ·");
+        }
+
+
+
     }
     private void EquipItem()
     {

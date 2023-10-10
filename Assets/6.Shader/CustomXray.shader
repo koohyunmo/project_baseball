@@ -18,7 +18,7 @@ Shader "Custom/XrayShader"
     }
     SubShader
     {
-        Tags { "RenderType"="Overlay" }
+        Tags { "RenderType"="Overlay"}
         LOD 200
         //NORMAL
         CGPROGRAM

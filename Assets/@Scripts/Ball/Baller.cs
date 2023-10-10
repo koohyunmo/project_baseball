@@ -545,9 +545,13 @@ public class Baller : MonoBehaviour
         }
         var replayBall = Managers.Obj.Spawn<BallController>(ballPrefab, pathRenderer.GetPosition(0));
 
-        camManager.OnReplay(replayBall.transform, transform.position);
+        //camManager.OnReplay(replayBall.transform, transform.position);
 
         float replaySpeed = speed;
+
+
+        //camManager.OnReplay(replayBall.transform, replayPos);
+
 
 
 
@@ -580,7 +584,7 @@ public class Baller : MonoBehaviour
                     replayBall.transform.position = Vector3.Lerp(startPoint, endPoint, fractionOfJourney);
 
 
-                    camManager.CameraMove(replayBall.transform.position);
+                    //camManager.CameraMove(replayBall.transform.position);
 
                     yield return new FixedUpdate();
                 }
@@ -589,7 +593,7 @@ public class Baller : MonoBehaviour
 
             if (i == pathRenderer.positionCount - 2)
             {
-                replaySpeed = replaySpeed * Managers.Game.ReplaySlowMode;
+                //replaySpeed = replaySpeed * Managers.Game.ReplaySlowMode;
                 Managers.Game.StrikeEvent();
             }
 
@@ -602,7 +606,10 @@ public class Baller : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         if (Managers.Game.GameState == GameState.End)
-            camManager.ReplayBack(replayBall.transform, transform.position);
+        {
+            //camManager.ReplayBack(replayBall.transform, transform.position);
+        }
+            
 
         //yield break;
     }

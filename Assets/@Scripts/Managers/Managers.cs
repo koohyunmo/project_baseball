@@ -21,6 +21,7 @@ public class Managers : MonoBehaviour
     public static LocalizationManager Localization { get { return Instance?._local; } }
     public static VibrationManager Vibration { get { return Instance?._vibration; } }
     public static AdManager Ad { get { return Instance?._ad; } }
+    public static ReplayManager Replay { get; private set; }
 
     public static SkillManager Skill { get{ return Instance?._skill; } }
 
@@ -55,6 +56,8 @@ public class Managers : MonoBehaviour
             s_instance = go.GetComponent<Managers>();
             Application.targetFrameRate = 60;
             Localization.Init();
+
+            Replay = go.GetOrAddComponent<ReplayManager>();
         }
     }
 

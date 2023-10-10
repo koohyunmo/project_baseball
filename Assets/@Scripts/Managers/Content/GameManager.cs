@@ -328,7 +328,6 @@ public class GameManager
 
                         Managers.Skill.SkillInjection(skillSo);
                     }
-                    Time.timeScale = 1f;
                 }
                 break;
             case GameState.InGround:

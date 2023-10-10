@@ -7,7 +7,7 @@ using UnityEngine;
 public class AdManager
 {
     private RewardedAd _rewardedAd;
-    
+
     private Action _rewardedCallback;
     private DateTime _lastAdWatchedTime;
     private const string LAST_AD_TIME_KEY = "LastAdWatchedTime";
@@ -44,11 +44,10 @@ public class AdManager
     {
 
         // Test ID
-#if UNITY_EDITOR
-        string bannerId = "ca-app-pub-3940256099942544/6300978111";
-        string interId = "ca-app-pub-3940256099942544/1033173712";
-        string rewardId = "ca-app-pub-3940256099942544/5224354917";
-#endif
+
+         bannerId = "ca-app-pub-3940256099942544/6300978111";
+         interId = "ca-app-pub-3940256099942544/1033173712";
+         rewardId = "ca-app-pub-3940256099942544/5224354917";
 
         _lastAdWatchedTime = LoadLastAdTime();
 
@@ -66,10 +65,12 @@ public class AdManager
 
         // Initialize the Google Mobile Ads SDK.
         MobileAds.RaiseAdEventsOnUnityMainThread = true;
-        MobileAds.Initialize(initStatus => { 
+        MobileAds.Initialize(initStatus =>
+        {
             Debug.Log("Ads Initialised !!");
             LoadBannerAd();
             LoadIntertitialAd();
+            LoadRewawrdedAd();
         });
     }
 
@@ -79,7 +80,7 @@ public class AdManager
         CreateBannerView();
         ListenToBannerEvents();
 
-        if(_bannerView == null)
+        if (_bannerView == null)
         {
             CreateBannerView();
         }
@@ -94,11 +95,11 @@ public class AdManager
     }
     void CreateBannerView()
     {
-        if(_bannerView != null)
+        if (_bannerView != null)
         {
             DestoryBannerAd();
         }
-        _bannerView = new BannerView(bannerId, AdSize.Banner,AdPosition.Bottom);
+        _bannerView = new BannerView(bannerId, AdSize.Banner, AdPosition.Bottom);
     }
 
     /// <summary>
@@ -149,7 +150,7 @@ public class AdManager
 
     public void DestoryBannerAd()
     {
-        if(_bannerView != null)
+        if (_bannerView != null)
         {
             Debug.Log("Destorying banner Ad");
             _bannerView.Destroy();
@@ -162,7 +163,7 @@ public class AdManager
 
     public void LoadIntertitialAd()
     {
-        if(_interstitialAd != null)
+        if (_interstitialAd != null)
         {
             _interstitialAd.Destroy();
             _interstitialAd = null;
@@ -173,7 +174,7 @@ public class AdManager
 
         InterstitialAd.Load(interId, adRequest, (InterstitialAd ad, LoadAdError error) =>
          {
-             if(error != null || ad == null)
+             if (error != null || ad == null)
              {
                  Debug.Log("Interstitail ad failed to load" + error);
              }
@@ -251,47 +252,88 @@ public class AdManager
 
 
     #region reward
-    private void HandleRewardedAdClosed(object sender, EventArgs args)
+
+    public void LoadRewawrdedAd()
     {
-        Debug.Log("Reward Ad Close");
+        if (rewardedAd != null)
+        {
+            rewardedAd.Destroy();
+            rewardedAd = null;
+        }
+
+        var adRequest = new AdRequest();
+        adRequest.Keywords.Add("unity-admob-sample");
+
+        RewardedAd.Load(rewardId, adRequest, (RewardedAd ad, LoadAdError error) =>
+         {
+             if (error != null || ad == null)
+             {
+                 Debug.Log("Reward Failed to load" + error);
+             }
+
+             Debug.Log("Reward AD Loaded !!");
+             rewardedAd = ad;
+             RewardedAdEvents(rewardedAd);
+         });
     }
 
-    public void HandleOnAdLoaded(object sender, EventArgs args)
+    public bool CanShowRewardAd()
     {
-        Debug.Log("HandleAdLoaded");
+        return rewardedAd != null && rewardedAd.CanShowAd();
     }
-
-    public void HandleOnAdFailedToLoad(object sender, EventArgs args)
+    public void ShowRewardedAd()
     {
-        Debug.Log($"HandleFailedToReceiveAd : {args}");
-    }
+        if (rewardedAd != null && rewardedAd.CanShowAd())
+        {
+            rewardedAd.Show((Reward reward) => 
+            {
+                Debug.Log("Give Reward To Player !!");
 
-    public void HandleOnAdOpened(object sender, EventArgs args)
-    {
-        Debug.Log("HandleAdOpened");
-    }
-
-    public void HandleOnAdClosed(object sender, EventArgs args)
-    {
-        Debug.Log("HandleAdClosed");
-    }
-
-    private void HandleUserEarnedReward(object sender, EventArgs args)
-    {
-        Debug.Log("get a reward");
-        _rewardedCallback?.Invoke();
-        _rewardedCallback = null;
-    }
-
-    public void ShowRewardAd(Action rewardedCallback)
-    {
-
+            });
+        }
+        else
+        {
+            Debug.Log("Rewarded Ad not Ready");
+        }
     }
 
 
-    public void GetReward(Action rewardAction)
+    public void RewardedAdEvents(RewardedAd ad) 
     {
-        ShowRewardAd(rewardAction);
+        // Raised when the ad is estimated to have earned money.
+        ad.OnAdPaid += (AdValue adValue) =>
+        {
+            Debug.Log(String.Format("Rewarded ad paid {0} {1}.",
+                adValue.Value,
+                adValue.CurrencyCode));
+        };
+        // Raised when an impression is recorded for an ad.
+        ad.OnAdImpressionRecorded += () =>
+        {
+            Debug.Log("Rewarded ad recorded an impression.");
+        };
+        // Raised when a click is recorded for an ad.
+        ad.OnAdClicked += () =>
+        {
+            Debug.Log("Rewarded ad was clicked.");
+        };
+        // Raised when an ad opened full screen content.
+        ad.OnAdFullScreenContentOpened += () =>
+        {
+            Debug.Log("Rewarded ad full screen content opened.");
+        };
+        // Raised when the ad closed full screen content.
+        ad.OnAdFullScreenContentClosed += () =>
+        {
+            Debug.Log("Rewarded ad full screen content closed.");
+            LoadRewawrdedAd();
+        };
+        // Raised when the ad failed to open full screen content.
+        ad.OnAdFullScreenContentFailed += (AdError error) =>
+        {
+            Debug.LogError("Rewarded ad failed to open full screen content " +
+                           "with error : " + error);
+        };
     }
 
     #region ≈∏¿Ã∏”
@@ -316,7 +358,7 @@ public class AdManager
     public string GetRemainingAdTime()
     {
         TimeSpan timeSinceLastAd = DateTime.UtcNow - _lastAdWatchedTime;
-        double remainingSeconds = adDelay*Sec - timeSinceLastAd.TotalSeconds;  // 300 seconds is 5 minutes
+        double remainingSeconds = adDelay * Sec - timeSinceLastAd.TotalSeconds;  // 300 seconds is 5 minutes
 
         if (remainingSeconds <= 0)
         {
@@ -350,7 +392,7 @@ public class AdManager
     #endregion
 
 
-    public void Clear ()
+    public void Clear()
     {
         DestoryBannerAd();
     }
