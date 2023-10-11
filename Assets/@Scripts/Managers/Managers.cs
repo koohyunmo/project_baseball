@@ -21,7 +21,8 @@ public class Managers : MonoBehaviour
     public static LocalizationManager Localization { get { return Instance?._local; } }
     public static VibrationManager Vibration { get { return Instance?._vibration; } }
     public static AdManager Ad { get { return Instance?._ad; } }
-    public static ReplayManager Replay { get; private set; }
+    public static SoundManager Sound { get { return Instance?._sound; } }
+
 
     public static SkillManager Skill { get{ return Instance?._skill; } }
 
@@ -36,6 +37,7 @@ public class Managers : MonoBehaviour
     [SerializeField] VibrationManager _vibration = new VibrationManager();
     [SerializeField] SkillManager _skill = new SkillManager();
     [SerializeField] AdManager _ad = new AdManager();
+    [SerializeField] SoundManager _sound = new SoundManager();
 
 
     public static Managers Instance { get { Init();  return s_instance; } } 
@@ -56,8 +58,8 @@ public class Managers : MonoBehaviour
             s_instance = go.GetComponent<Managers>();
             Application.targetFrameRate = 60;
             Localization.Init();
-
-            Replay = go.GetOrAddComponent<ReplayManager>();
+            Vibration.Init();
+            Sound.Init();
         }
     }
 

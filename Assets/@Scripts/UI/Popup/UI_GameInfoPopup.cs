@@ -13,8 +13,6 @@ public class UI_GameInfoPopup : UI_Popup
     public TextMeshProUGUI thorwBallTypeTMP;
     public TextMeshProUGUI gameScoreTMP;
 
-
-    public Image IconBG;
     public Image Bilboard;
 
     private void Start()
@@ -26,8 +24,6 @@ public class UI_GameInfoPopup : UI_Popup
 
 
         var color = Utils.GetColor(Managers.Game.League);
-        IconBG.color = color;
-        Bilboard.color = color;
 
         ballSpeedTMP.text = "";
         thorwBallTypeTMP.text = "";

@@ -82,6 +82,8 @@ public class UI_Main : UI_Popup
         GetButton((int)Buttons.B_BatOption).transform.DOScale(0, 0);
         GetButton((int)Buttons.B_Language).transform.DOScale(0, 0);
 
+        vibrationButton.gameObject.BindEvent(VibrateOnOff);
+
 
 
         NotifyItem = GetImage((int)Images.NotificationItem);
@@ -139,6 +141,17 @@ public class UI_Main : UI_Popup
         }).SetLoops(-1, LoopType.Yoyo);
     }
 
+    private void VibrateOnOff()
+    {
+        Managers.Vibration.ClickVibrateButton();
+        UpdateOptionButton();
+    }
+
+    private void UpdateOptionButton()
+    {
+        vibrationButton.interactable = Managers.Vibration.GetVibrate();
+    }
+
     private void OnClickNextLeague()
     {
         float league = (int)Managers.Game.League + 1;
@@ -185,6 +198,8 @@ public class UI_Main : UI_Popup
     private void B_OptionsClick()
     {
 
+
+        UpdateOptionButton();
 
         if (isOptionAnim == false && isOn == false)
         {
@@ -293,6 +308,18 @@ public class UI_Main : UI_Popup
         yield break;
     }
 
+
+    Color buttonColor(bool isActive)
+    {
+        if(isActive)
+        {
+            return new Color(252, 170, 75, 199);
+        }
+        else
+        {
+            return Color.gray;
+        }
+    }
     private void OnDestroy()
     {
         foreach (Transform child in transform)

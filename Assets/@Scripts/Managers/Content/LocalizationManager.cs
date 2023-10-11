@@ -19,11 +19,13 @@ public class LocalizationManager
     public Language currentLanguage = Language.English;
 
     private Action mainTMPUpdate;
+    string _settingPath = "";
 
     public void Init()
     {
         SystemLanguage userLanguage = Application.systemLanguage;
         Debug.Log("User's system language is: " + userLanguage.ToString());
+        _settingPath = Application.persistentDataPath + "/SettingData.json";
 
         // 기본 언어 설정
         switch (userLanguage)
@@ -37,7 +39,14 @@ public class LocalizationManager
                 // ... 기타 언어에 대한 처리 추가
         }
 
-        currentLanguage = ES3.Load<Language>("Lang",Language.English);
+        try
+        {
+            currentLanguage = ES3.Load<Language>("Lang", _settingPath);
+        }catch
+        {
+            currentLanguage = Language.English;
+            ES3.Save<Language>("Lang", currentLanguage,_settingPath);
+        }
 
         //LoadLocalizedText(currentLanguage);
     }
@@ -154,7 +163,7 @@ public class LocalizationManager
         //localizedText.Clear();
 
         ChangeLocalizedText(lang);
-        ES3.Save<Language>("Lang", currentLanguage);
+        ES3.Save<Language>("Lang", currentLanguage, _settingPath);
         mainTMPUpdate?.Invoke();
     }
 

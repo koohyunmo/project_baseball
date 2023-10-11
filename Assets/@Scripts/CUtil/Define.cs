@@ -34,6 +34,7 @@ public static class Define
 	{
 		Bgm,
 		Effect,
+		Max
 	}
 
 	public enum CreatureState

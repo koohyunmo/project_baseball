@@ -3,17 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Purchasing;
 using UnityEngine.UI;
 using static Define;
 
-public class UI_SkinPopup : UI_ContentPopup
+public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
 {
 
     enum TMPs
     {
         SliderTMP,
         ItemLoadingText
+    }
+
+    enum ScrollRects
+    {
+        ScrollView,
     }
 
     enum Buttons
@@ -54,6 +60,11 @@ public class UI_SkinPopup : UI_ContentPopup
     ScollViewType _type = ScollViewType.Bat;
     GameObject[] _grids = new GameObject[6];
 
+    ScrollRect scrollRect; // 스크롤 뷰의 ScrollRect 컴포넌트
+
+    public List<Image> _images;
+
+
 
     private bool _isDelay = false;
     private TextMeshProUGUI ItemLoadingText;
@@ -67,6 +78,7 @@ public class UI_SkinPopup : UI_ContentPopup
         BindButton(typeof(Buttons));
         Bind<Slider>(typeof(Sliders));
         BindObject(typeof(Grids));
+        Bind<ScrollRect>(typeof(ScrollRects));
 
         _grids[0] = GetObject((int)Grids.Content_1);
         _grids[1] = GetObject((int)Grids.Content_2);
@@ -91,6 +103,7 @@ public class UI_SkinPopup : UI_ContentPopup
         ItemLoadingText = Get<TextMeshProUGUI>((int)TMPs.ItemLoadingText);
         ItemLoadingText.gameObject.SetActive(false);
 
+        scrollRect = Get<ScrollRect>((int)ScrollRects.ScrollView);
 
 
 
@@ -309,5 +322,29 @@ public class UI_SkinPopup : UI_ContentPopup
     {
         base.OnDestroy();
         Managers.Game.RemoveLobbyUIUpdate(UpdateSlider);
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        // ScrollRect 내의 모든 Image 컴포넌트의 Raycast Target을 비활성화합니다.
+        SetRaycastTargets(false);
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        // ScrollRect 내의 모든 Image 컴포넌트의 Raycast Target을 활성화합니다.
+        SetRaycastTargets(true);
+    }
+
+
+    // ScrollRect 내의 모든 Image 컴포넌트의 Raycast Target을 설정하는 메서드입니다.
+    private void SetRaycastTargets(bool value)
+    {
+        // ScrollRect 내의 모든 Image 컴포넌트를 찾아 Raycast Target을 설정합니다.
+        foreach (var image in _grids[0].transform.GetComponentsInChildren<Image>())
+        {
+            Debug.Log(image.name);
+            image.raycastTarget = value;
+        }
     }
 }

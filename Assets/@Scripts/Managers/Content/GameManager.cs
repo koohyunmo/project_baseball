@@ -57,6 +57,8 @@ public class GameManager
         }
     }
 
+
+
     public GameState GameState { get { return _gameState; } private set { _gameState = value; } }
 
     public float ReplaySlowMode { get { return 0.25f; } private set { } }
@@ -164,7 +166,7 @@ public class GameManager
 
         GameScore = 0;
         Managers.Localization.LoadLocalizedText();
-        _batSpeed = ES3.Load<float>("Gamdo");
+        _batSpeed = ES3.Load<float>("Gamdo", _settingPath);
 
         PlayerDataSettings();
         Managers.Resource.DoCache();
@@ -390,7 +392,10 @@ public class GameManager
         challengeProc = ChallengeProc.None;
     }
 
-
+    public void SaveBatGamdo(float gamdo)
+    {
+        ES3.Save<float>("Gamdo", gamdo, _settingPath);
+    }
 
     public void ThorwBallEvent()
     {
@@ -890,8 +895,8 @@ public class GameManager
             _gameData.challengeData = challengeData;
 
             // 옵션설정
-            ES3.Save<float>("Gamdo", 5f);
-            ES3.Save<Language>("Lang", Language.English);
+            ES3.Save<float>("Gamdo", 5f,_settingPath);
+            ES3.Save<Language>("Lang", Language.English, _settingPath);
             ES3.Save<DateTime>("RTime", DateTime.Now);
 
 

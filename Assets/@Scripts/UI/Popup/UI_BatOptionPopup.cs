@@ -63,7 +63,8 @@ public class UI_BatOptionPopup : UI_OptionPopup
     protected override void ClickOkButton()
     {
         base.ClickOkButton();
-        ES3.Save<float>("Gamdo", float.Parse(speedTMP.text));
+        Managers.Game.SaveBatGamdo(float.Parse(speedTMP.text));
+
     }
 
 }
