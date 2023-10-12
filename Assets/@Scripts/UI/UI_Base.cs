@@ -77,6 +77,7 @@ public abstract class UI_Base : MonoBehaviour
 			case Define.UIEvent.Click:
 				evt.OnClickHandler -= action;
 				evt.OnClickHandler += action;
+				evt.OnClickHandler += ()=> { Managers.Sound.Play(Define.Sound.Effect, "ui_menu_button_click_21"); };
 				break;
 			case Define.UIEvent.Pressed:
 				evt.OnPressedHandler -= action;

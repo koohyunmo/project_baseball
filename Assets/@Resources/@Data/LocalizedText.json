@@ -2,129 +2,159 @@
     "items": {
         "equip": {
             "en": "Equip",
-            "ko": "장착하기"
+            "ko": "장착하기",
+            "jp": "装備"
         },
         "get": {
             "en": "Get",
-            "ko": "획득하기"
+            "ko": "획득하기",
+            "jp": "取得"
         },
         "welcome": {
             "en": "Welcome",
-            "ko": "환영합니다"
+            "ko": "환영합니다",
+            "jp": "ようこそ"
         },
         "goodbye": {
             "en": "Goodbye",
-            "ko": "안녕히가세요"
+            "ko": "안녕히가세요",
+            "jp": "さようなら"
         },
         "material": {
             "en": "Material",
-            "ko": "재질"
+            "ko": "재질",
+            "jp": "材料"
         },
         "bat": {
             "en": "Bat",
-            "ko": "방망이"
+            "ko": "방망이",
+            "jp": "バット"
         },
         "ball": {
             "en": "Ball",
-            "ko": "공"
+            "ko": "공",
+            "jp": "ボール"
         },
         "skill": {
             "en": "Skill",
-            "ko": "스킬"
+            "ko": "스킬",
+            "jp": "スキル"
         },
         "language": {
             "en": "Language",
-            "ko": "언어"
+            "ko": "언어",
+            "jp": "言語"
         },
         "sensitivity": {
             "en": "Sensitivity",
-            "ko": "감도"
+            "ko": "감도",
+            "jp": "感度"
         },
         "dragsensitivity": {
             "en": "Drag Sensitivity",
-            "ko": "드래그 감도"
+            "ko": "드래그 감도",
+            "jp": "ドラッグ感度"
         },
         "challenges": {
             "en": "Challenges",
-            "ko": "도전"
+            "ko": "도전",
+            "jp": "チャレンジ"
         },
         "bronze": {
             "en": "Bronze League",
-            "ko": "브론즈 리그"
+            "ko": "브론즈 리그",
+            "jp": "ブロンズリーグ"
         },
         "silver": {
             "en": "Silver League",
-            "ko": "실버 리그"
+            "ko": "실버 리그",
+            "jp": "シルバーリーグ"
         },
         "gold": {
             "en": "Gold League",
-            "ko": "골드 리그"
+            "ko": "골드 리그",
+            "jp": "ゴールドリーグ"
         },
         "platinum": {
             "en": "Platinum League",
-            "ko": "플래티넘 리그"
+            "ko": "플래티넘 리그",
+            "jp": "プラチナリーグ"
         },
         "diamond": {
             "en": "Diamond League",
-            "ko": "다이아몬드 리그"
+            "ko": "다이아몬드 리그",
+            "jp": "ダイアモンドリーグ"
         },
         "master": {
             "en": "Master League",
-            "ko": "마스터 리그"
+            "ko": "마스터 리그",
+            "jp": "マスターリーグ"
         },
         "clear": {
             "en": "Clear",
-            "ko": "클리어"
+            "ko": "클리어",
+            "jp": "クリア"
         },
         "play": {
             "en": "Play",
-            "ko": "플레이"
+            "ko": "플레이",
+            "jp": "プレイ"
         },
         "scoremode": {
             "en": "Achieve exactly {0} points.",
-            "ko": "{0} 포인트를 정확하게 달성하세요."
+            "ko": "{0} 포인트를 정확하게 달성하세요.",
+            "jp": "{0} ポイントを正確に達成してください。"
         },
         "homerunmode": {
             "en": "Hit {0} home runs to succeed.",
-            "ko": "{0}번의 홈런을 성공하세요."
+            "ko": "{0}번의 홈런을 성공하세요.",
+            "jp": "{0} 本のホームランを打って成功してください。"
         },
         "realmode": {
             "en": "Hit consecutively {0} times.",
-            "ko": "연속으로 {0}번 치세요."
+            "ko": "연속으로 {0}번 치세요.",
+            "jp": "連続で {0} 回ヒットしてください。"
         },
         "startdrag": {
             "en": "Drag to Start",
-            "ko": "시작하려면 드래그하세요"
+            "ko": "시작하려면 드래그하세요",
+            "jp": "ドラッグして開始"
         },
         "apply": {
             "en": "Apply",
-            "ko": "적용"
+            "ko": "적용",
+            "jp": "適用"
         },
         "highscore": {
             "en": "High Score",
-            "ko": "최고점수"
+            "ko": "최고점수",
+            "jp": "ハイスコア"
         },
         "currentscore": {
             "en": "Current Score",
-            "ko": "현재점수"
+            "ko": "현재점수",
+            "jp": "現在のスコア"
         },
         "strike": {
             "en": "Strike",
-            "ko": "스트라이크"
+            "ko": "스트라이크",
+            "jp": "ストライク"
         },
         "start": {
             "en": "Start",
-            "ko": "시작"
+            "ko": "시작",
+            "jp": "スタート"
         },
         "equipping": {
             "en": "Equipping",
-            "ko": "장착중"
+            "ko": "장착중",
+            "jp": "装備中"
         },
         "confirm": {
             "en": "Confirm",
-            "ko": "확인"
+            "ko": "확인",
+            "jp": "確認"
         }
-        
     },
     "skills": {
         "hawkeye": {
@@ -293,6 +323,44 @@
         "yellow_stripe": {
             "en": "Yellow Striped Bat",
             "ko": "노란 줄무늬 방망이"
+        }
+    },
+    "balls" :{
+        "ball_1": {
+            "en": "Baseball",
+            "ko": "야구"
+        },
+        "ball_2": {
+            "en": "Yellow Baseball",
+            "ko": "노란 야구공"
+        },
+        "ball_3": {
+            "en": "Colored Baseball",
+            "ko": "색상이 있는 야구공"
+        },
+        "ball_4": {
+            "en": "Shabby Baseball",
+            "ko": "낡은 야구공"
+        },
+        "ball_5": {
+            "en": "Black Baseball",
+            "ko": "검은 야구공"
+        },
+        "ball_7": {
+            "en": "Golden Baseball",
+            "ko": "금색 야구공"
+        },
+        "ball_8": {
+            "en": "Red Baseball",
+            "ko": "빨간 야구공"
+        },
+        "ball_9": {
+            "en": "Silver Baseball",
+            "ko": "은색 야구공"
+        },
+        "ball_10": {
+            "en": "American Flag Baseball",
+            "ko": "미국 국기 야구공"
         }
     },
     "types" :{

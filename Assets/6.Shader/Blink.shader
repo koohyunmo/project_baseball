@@ -31,10 +31,25 @@ Shader "Custom/Blink"
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex) ;
             fixed4 m = tex2D (_MaskTex, IN.uv_MaskTex) ;
 
-            float intensity = lerp(0.5, 5, (sin(_Time.y * 1) + 1) * 0.5); // lerp를 사용하여 발광 강도를 부드럽게 전환
-            fixed4 ramp = tex2D (_RampTex, float2(_Time.y,0.5)) ;
-            o.Albedo = c.rgb;
-            o.Emission = c.rgb * m.g * ramp.r * intensity;
+            float intensity = lerp(0.5, 5, (sin(_Time.y * 1) + 1) * 1.2); // lerp를 사용하여 발광 강도를 부드럽게 전환
+
+            //fixed4 ramp = tex2D (_RampTex, float2(_Time.y,0.5)) ;
+                       // Assuming white color in mask texture is the area you want to keep color unchanged
+            if (m.r > 0.1 && m.g > 0.1 && m.b > 0.1)
+            {
+                // Keep the color unchanged in the masked area
+                o.Albedo = m.rgb;
+            }
+            else
+            {
+                // Change color in non-masked area (you can modify this part to achieve desired color change)
+                o.Albedo = c.rgb;
+            }
+
+
+
+
+            o.Emission = c.rgb * m.g * intensity;
             o.Alpha = c.a;
         }
         ENDCG

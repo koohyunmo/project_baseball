@@ -80,6 +80,7 @@ public class UI_EndPopup : UI_Popup
 
     IEnumerator c_Delay()
     {
+        Managers.Sound.Play(Define.Sound.Effect, "strike");
         strikeTMP.text = Managers.Localization.GetLocalizedValue(LanguageKey.strike.ToString());
         string hightScore = Managers.Localization.GetLocalizedValue(LanguageKey.highscore.ToString());
         string currentScore = Managers.Localization.GetLocalizedValue(LanguageKey.currentscore.ToString());

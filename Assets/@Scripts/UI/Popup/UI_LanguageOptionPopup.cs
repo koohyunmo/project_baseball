@@ -52,19 +52,19 @@ public class UI_LanguageOptionPopup : UI_OptionPopup
 
     private void ChangeEN()
     {
-        Managers.Localization.ChangeLanguage(Language.English);
+        Managers.Localization.ChangeLanguage(Language.EN);
         UIUpdate();
     }
 
     private void ChangeKR()
     {
-        Managers.Localization.ChangeLanguage(Language.Korean);
+        Managers.Localization.ChangeLanguage(Language.KR);
         UIUpdate();
     }
 
     private void ChangeJP()
     {
-        Managers.Localization.ChangeLanguage(Language.Spanish);
+        Managers.Localization.ChangeLanguage(Language.JP);
         UIUpdate();
     }
 
@@ -76,13 +76,13 @@ public class UI_LanguageOptionPopup : UI_OptionPopup
 
         switch (Managers.Localization.currentLanguage)
         {
-            case Language.English:
+            case Language.EN:
                 UsOK.gameObject.SetActive(true);
                 break;
-            case Language.Korean:
+            case Language.KR:
                 KrOK.gameObject.SetActive(true);
                 break;
-            case Language.Spanish:
+            case Language.JP:
                 JpOK.gameObject.SetActive(true);
                 break;
 

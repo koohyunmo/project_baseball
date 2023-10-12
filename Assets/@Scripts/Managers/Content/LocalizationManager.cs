@@ -5,9 +5,9 @@ using UnityEngine;
 
 public enum Language
 {
-    English,
-    Korean,
-    Spanish,
+    EN,
+    KR,
+    JP,
     // ... 기타 언어 추가
 }
 
@@ -16,7 +16,7 @@ public class LocalizationManager
     public static LocalizationManager Instance;
 
     private Dictionary<string, string> localizedText;
-    public Language currentLanguage = Language.English;
+    public Language currentLanguage = Language.EN;
 
     private Action mainTMPUpdate;
     string _settingPath = "";
@@ -31,10 +31,13 @@ public class LocalizationManager
         switch (userLanguage)
         {
             case SystemLanguage.Korean:
-                currentLanguage = Language.Korean;
+                currentLanguage = Language.KR;
                 break;
             case SystemLanguage.English:
-                currentLanguage = Language.English;
+                currentLanguage = Language.EN;
+                break;
+            case SystemLanguage.Japanese:
+                currentLanguage = Language.JP;
                 break;
                 // ... 기타 언어에 대한 처리 추가
         }
@@ -44,7 +47,7 @@ public class LocalizationManager
             currentLanguage = ES3.Load<Language>("Lang", _settingPath);
         }catch
         {
-            currentLanguage = Language.English;
+            currentLanguage = Language.EN;
             ES3.Save<Language>("Lang", currentLanguage,_settingPath);
         }
 
@@ -126,6 +129,12 @@ public class LocalizationManager
             localizedText[bat.Key] = GetTranslation(bat.Value);
         }
 
+        // bats 딕셔너리도 localizedText에 합치기
+        foreach (var bat in localizationData.balls)
+        {
+            localizedText[bat.Key] = GetTranslation(bat.Value);
+        }
+
         foreach (var bat in localizationData.types)
         {
             localizedText[bat.Key] = GetTranslation(bat.Value);
@@ -137,10 +146,12 @@ public class LocalizationManager
     {
         switch (currentLanguage)
         {
-            case Language.English:
+            case Language.EN:
                 return item.en;
-            case Language.Korean:
+            case Language.KR:
                 return item.ko;
+            case Language.JP:
+                return item.jp;
             // ... 기타 언어에 대한 처리 추가
             default:
                 return item.en; // 기본값으로 영어 반환

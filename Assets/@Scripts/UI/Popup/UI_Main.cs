@@ -83,6 +83,7 @@ public class UI_Main : UI_Popup
         GetButton((int)Buttons.B_Language).transform.DOScale(0, 0);
 
         vibrationButton.gameObject.BindEvent(VibrateOnOff);
+        soundButton.gameObject.BindEvent(SoundOnOff);
 
 
 
@@ -147,9 +148,16 @@ public class UI_Main : UI_Popup
         UpdateOptionButton();
     }
 
+    private void SoundOnOff()
+    {
+        Managers.Sound.ClickSoundButton();
+        UpdateOptionButton();
+    }
+
     private void UpdateOptionButton()
     {
         vibrationButton.interactable = Managers.Vibration.GetVibrate();
+        soundButton.interactable = Managers.Sound.GetSound();
     }
 
     private void OnClickNextLeague()

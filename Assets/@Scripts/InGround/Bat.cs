@@ -349,6 +349,8 @@ public class Bat : MonoBehaviour
         //Debug.Log("∞¯ ≈∏∞›");
         if (batState == BatState.Swing) //
         {
+
+            Managers.Sound.Play(Define.Sound.Effect, "hit1");
             //Debug.Log("SwingCollision");
             var go = Managers.Obj.Spawn<TextController>("HitScoreText", hitPoint);
             go.transform.position = hitPoint;
@@ -373,6 +375,7 @@ public class Bat : MonoBehaviour
     {
         if (batState == BatState.Idle) // Ω∫¿Æ ¡ﬂ¿Ã æ∆¥“ ∂ß∏∏ Ω∫¿Æ Ω√¿€
         {
+            Managers.Sound.Play(Define.Sound.Effect, "swing1");
             batState = BatState.Swing;
             anim.Play("Bat_Swing");
             stateInfo = anim.GetCurrentAnimatorStateInfo(0);

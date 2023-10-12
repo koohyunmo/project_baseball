@@ -559,6 +559,7 @@ public class GameManager
         if(!itemSO)
         {
             Debug.LogError("없는 아이템");
+            Managers.Sound.Play(Define.Sound.Effect, "");
             return Define.GetType.Failed;
         }
 
@@ -566,6 +567,7 @@ public class GameManager
         if (_gameData.playerInventory.Contains(key) == true)
         {
             Debug.Log("이미 있는 아이템");
+            Managers.Sound.Play(Define.Sound.Effect, "Collectible01");
             return Define.GetType.duplicate;
         }
             
@@ -592,6 +594,8 @@ public class GameManager
         notifyItemAction();
 
         LobbyUIEvent?.Invoke();
+
+        Managers.Sound.Play(Define.Sound.Effect, "collect_item_02");
         return Define.GetType.Success;
     }
 
@@ -896,7 +900,7 @@ public class GameManager
 
             // 옵션설정
             ES3.Save<float>("Gamdo", 5f,_settingPath);
-            ES3.Save<Language>("Lang", Language.English, _settingPath);
+            ES3.Save<Language>("Lang", Language.EN, _settingPath);
             ES3.Save<DateTime>("RTime", DateTime.Now);
 
 

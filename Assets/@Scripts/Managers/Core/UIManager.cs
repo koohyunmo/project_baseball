@@ -117,6 +117,7 @@ public class UIManager
         return sceneUI;
     }
 
+
     public T ShowPopupUI<T>(string name = null) where T : UI_Popup
     {
         if (string.IsNullOrEmpty(name))
@@ -129,6 +130,7 @@ public class UIManager
         go.transform.SetParent(Root.transform);
 
         RefreshTimeScale();
+
 
         return popup;
     }
@@ -148,6 +150,9 @@ public class UIManager
         go.transform.SetParent(Root.transform);
 
         RefreshTimeScale();
+
+
+        Managers.Sound.Play(Define.Sound.Effect, "ui_menu_button_click_22");
 
         return popup;
     }

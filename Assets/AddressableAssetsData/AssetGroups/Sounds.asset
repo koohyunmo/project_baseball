@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Sounds
+  m_EditorClassIdentifier: 
+  m_GroupName: Sounds
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 858a8b8fe7f19bf4a97d163475078b05
+  m_SerializeEntries:
+  - m_GUID: 130c7da8c0891da4fa21830956a8493a
+    m_Address: hit3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Sound
+  - m_GUID: e2e81a9d8f5a30f4288fbab977cc1f8d
+    m_Address: hit2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Sound
+  - m_GUID: 24eed040083d3a94382b0d86636f87a4
+    m_Address: hit1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Sound
+  - m_GUID: 5f1ed4fc0255f79478aa85bdb56cefe2
+    m_Address: swing1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Sound
+  - m_GUID: 82fc9805babba8f449e5d67e2e24787f
+    m_Address: ui_menu_button_click_21
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Sound
+  - m_GUID: 1b5881000bd157c4e8a956219241ca24
+    m_Address: collect_item_02
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Sound
+  - m_GUID: 2eb3dadce8177471996f94d099823504
+    m_Address: Collectible01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Sound
+  - m_GUID: d4bc37fb8c671664fbcd5fb16e33d9e0
+    m_Address: strike
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Sound
+  - m_GUID: 8425baca9b8ae8c44b4aa734eb022d3c
+    m_Address: ui_menu_button_click_22
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Sound
+  - m_GUID: 68e0a9200ddbfc74791fc4654125265e
+    m_Address: retro_ui_menu_blip_click_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    - PreLoad
+  - m_GUID: d9381c7da00e01a4b84786973215b8ff
+    m_Address: retro_ui_menu_blip_click_02
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Sound
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 9c2d91b0a86c0bb4b9bbf0d47449c95f, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 284534444e654a943a28625578aa6a2b, type: 2}
+    - {fileID: 11400000, guid: e3727018c18feed41bd123c54391eb99, type: 2}

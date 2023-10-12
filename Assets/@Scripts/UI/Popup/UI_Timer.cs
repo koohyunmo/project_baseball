@@ -14,15 +14,17 @@ public class UI_Timer : UI_Popup
 
     IEnumerator StartCountdown()
     {
+        Managers.Sound.Play(Define.Sound.Effect, "retro_ui_menu_blip_click_01");
         timerTMP.text = "3";
         yield return new WaitForSeconds(1.0f);
-
+        Managers.Sound.Play(Define.Sound.Effect, "retro_ui_menu_blip_click_01");
         timerTMP.text = "2";
         yield return new WaitForSeconds(1.0f);
-
+        Managers.Sound.Play(Define.Sound.Effect, "retro_ui_menu_blip_click_01");
         timerTMP.text = "1";
         yield return new WaitForSeconds(1.0f);
 
+        Managers.Sound.Play(Define.Sound.Effect, "retro_ui_menu_blip_click_02");
         timerTMP.text = Managers.Localization.GetLocalizedValue(LanguageKey.start.ToString());
         yield return new WaitForSeconds(0.5f);
 
