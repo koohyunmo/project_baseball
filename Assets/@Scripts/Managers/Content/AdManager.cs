@@ -23,17 +23,25 @@ public class AdManager
     InterstitialAd _interstitialAd;
     RewardedAd rewardedAd;
 
-    string appId = "ca-app-pub-1382577074205698~5560472574";
+
 
 #if UNITY_ANDROID
+    string appId = "ca-app-pub-1382577074205698~5560472574";
     string bannerId = "ca-app-pub-1382577074205698/4051664370";
     string interId = "ca-app-pub-1382577074205698/5033573553";
     string rewardId = "ca-app-pub-1382577074205698/8046749702";
 #elif UNITY_IPHONE
-            string adUnitId = "ca-app-pub-3940256099942544/1712485313";
+    string appId = "ca-app-pub-1382577074205698~7898484008";
+    string bannerId = "ca-app-pub-3940256099942544/6300978111";
+    string interId = "ca-app-pub-3940256099942544/1033173712";
+    string rewardId = "ca-app-pub-3940256099942544/5224354917";
+    //string adUnitId = "ca-app-pub-3940256099942544/1712485313";
 
 #else
-        string adUnitId = "unexpected_platform";
+    string appId = "ca-app-pub-1382577074205698~5560472574";
+    string bannerId = "ca-app-pub-3940256099942544/6300978111";
+    string interId = "ca-app-pub-3940256099942544/1033173712";
+    string rewardId = "ca-app-pub-3940256099942544/5224354917";
 #endif
 
 
@@ -43,11 +51,14 @@ public class AdManager
     public void Init()
     {
 
-        // Test ID
 
-         bannerId = "ca-app-pub-3940256099942544/6300978111";
-         interId = "ca-app-pub-3940256099942544/1033173712";
-         rewardId = "ca-app-pub-3940256099942544/5224354917";
+
+#if UNITY_EDITOR
+        // Test ID
+        bannerId = "ca-app-pub-3940256099942544/6300978111";
+        interId = "ca-app-pub-3940256099942544/1033173712";
+        rewardId = "ca-app-pub-3940256099942544/5224354917";
+#endif
 
         _lastAdWatchedTime = LoadLastAdTime();
 
@@ -285,7 +296,7 @@ public class AdManager
     {
         if (rewardedAd != null && rewardedAd.CanShowAd())
         {
-            rewardedAd.Show((Reward reward) => 
+            rewardedAd.Show((Reward reward) =>
             {
                 Debug.Log("Give Reward To Player !!");
 
@@ -298,7 +309,7 @@ public class AdManager
     }
 
 
-    public void RewardedAdEvents(RewardedAd ad) 
+    public void RewardedAdEvents(RewardedAd ad)
     {
         // Raised when the ad is estimated to have earned money.
         ad.OnAdPaid += (AdValue adValue) =>

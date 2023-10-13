@@ -163,38 +163,45 @@
         }
     },
     "bats" : {
-
         "baseball_bat_regular": {
             "en": "Classic Baseball Bat",
-            "ko": "클래식 야구 방망이"
+            "ko": "클래식 야구 방망이",
+            "jp": "クラシックな野球バット"
         },
         "baseball-bat-nails": {
             "en": "Spiked Baseball Bat",
-            "ko": "스파이크 야구 방망이"
+            "ko": "스파이크 야구 방망이",
+            "jp": "スパイク野球バット"
         },
         "baseball-bat": {
             "en": "Standard Baseball Bat",
-            "ko": "표준 야구 방망이"
+            "ko": "표준 야구 방망이",
+            "jp": "標準野球バット"
         },
         "black_bat": {
             "en": "Blackened Bat",
-            "ko": "검은색 방망이"
+            "ko": "검은색 방망이",
+            "jp": "黒ずんだバット"
         },
         "black_stripe": {
             "en": "Black Striped Bat",
-            "ko": "검은 줄무늬 방망이"
+            "ko": "검은 줄무늬 방망이",
+            "jp": "黒いストライプのバット"
         },
         "blue_bat": {
             "en": "Azure Bat",
-            "ko": "하늘색 방망이"
+            "ko": "하늘색 방망이",
+            "jp": "空色のバット"
         },
         "blue_stripe": {
             "en": "Blue Striped Bat",
-            "ko": "파란 줄무늬 방망이"
+            "ko": "파란 줄무늬 방망이",
+            "jp": "青いストライプのバット"
         },
         "decal01": {
             "en": "Decal Bat - Design 1",
-            "ko": "데칼 방망이 - 디자인 1"
+            "ko": "데칼 방망이 - 디자인 1",
+            "jp": "デカールバット - デザイン1"
         },
         "decal02": {
             "en": "Decal Bat - Design 2",
@@ -325,69 +332,83 @@
             "ko": "노란 줄무늬 방망이"
         }
     },
-    "balls" :{
+    "balls": {
         "ball_1": {
             "en": "Baseball",
-            "ko": "야구"
+            "ko": "야구공",
+            "jp": "野球"
         },
         "ball_2": {
             "en": "Yellow Baseball",
-            "ko": "노란 야구공"
+            "ko": "노란 야구공",
+            "jp": "黄色の野球ボール"
         },
         "ball_3": {
             "en": "Colored Baseball",
-            "ko": "색상이 있는 야구공"
+            "ko": "색상이 있는 야구공",
+            "jp": "カラフルな野球ボール"
         },
         "ball_4": {
             "en": "Shabby Baseball",
-            "ko": "낡은 야구공"
+            "ko": "낡은 야구공",
+            "jp": "古びた野球ボール"
         },
         "ball_5": {
             "en": "Black Baseball",
-            "ko": "검은 야구공"
+            "ko": "검은 야구공",
+            "jp": "黒い野球ボール"
+        },
+        "ball_6": {
+            "en": "Golden Baseball",
+            "ko": "금색 야구공",
+            "jp": "金色の野球ボール"
         },
         "ball_7": {
-            "en": "Golden Baseball",
-            "ko": "금색 야구공"
+            "en": "Red Baseball",
+            "ko": "빨간 야구공",
+            "jp": "赤い野球ボール"
         },
         "ball_8": {
-            "en": "Red Baseball",
-            "ko": "빨간 야구공"
+            "en": "Silver Baseball",
+            "ko": "은색 야구공",
+            "jp": "銀色の野球ボール"
         },
         "ball_9": {
-            "en": "Silver Baseball",
-            "ko": "은색 야구공"
-        },
-        "ball_10": {
             "en": "American Flag Baseball",
-            "ko": "미국 국기 야구공"
+            "ko": "미국 국기 야구공",
+            "jp": "アメリカ国旗の野球ボール"
         }
     },
-    "types" :{
+    "types": {
         "tree": {
             "en": "Wood",
-            "ko": "나무"
+            "ko": "나무",
+            "jp": "木"
         },
         "alu": {
             "en": "Aluminum",
-            "ko": "알루미늄"
+            "ko": "알루미늄",
+            "jp": "アルミニウム"
         },
         "sp1": {
             "en": "sp1_Composite",
-            "ko": "sp1_복합재질"
+            "ko": "sp1_복합재질",
+            "jp": "sp1_複合材料"
         },
         "sp2": {
             "en": "sp2_Composite",
-            "ko": "sp2_복합재질"
+            "ko": "sp2_복합재질",
+            "jp": "sp2_複合材料"
         },
         "sp3": {
             "en": "sp3_Composite",
-            "ko": "sp3_복합재질"
+            "ko": "sp3_복합재질",
+            "jp": "sp3_複合材料"
         },
         "sp4": {
             "en": "sp4_Composite",
-            "ko": "sp4_복합재질"
+            "ko": "sp4_복합재질",
+            "jp": "sp4_複合材料"
         }
-        
     }
 }
