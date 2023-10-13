@@ -156,6 +156,8 @@ public class GameManager
     public int SkillCount { get; private set; }
     public int ChallengeCount { get; private set; }
 
+    public Action UpdateStar { get; private set; }
+
     public async void Init()
     {
         _path = Application.persistentDataPath + "/SaveFile.es3";
@@ -208,6 +210,43 @@ public class GameManager
         //Debug.Log(ChallengeCount);
     }
 
+    public bool CanPay(long star)
+    {
+        return Managers.Game.PlayerInfo.star >= star;
+    }
+
+    public void MinusStar(long star)
+    {
+
+        if (CanPay(star) == false)
+            return;
+
+        PlayerInfo.star -= star;
+        Math.Clamp(PlayerInfo.star, 0, long.MaxValue);
+        SaveGame();
+
+        UpdateStar?.Invoke();
+    }
+
+    public void GetStar(long star)
+    {
+        PlayerInfo.star += star;
+        Math.Clamp(PlayerInfo.star, 0, long.MaxValue);
+        SaveGame();
+
+        UpdateStar?.Invoke();
+    }
+
+    public void SetStarUpdate(Action updateStar)
+    {
+        UpdateStar -= updateStar;
+        UpdateStar += updateStar;
+    }
+
+    public void RemoveStarUpdate(Action updateStar)
+    {
+        UpdateStar -= updateStar;
+    }
 
     public void GameReady(GameMode gameType, Action callBack = null)
     {
@@ -847,7 +886,7 @@ public class GameManager
                     //StartData.playerItem.Add(startItem.itemId, startItem);
 #if UNITY_EDITOR
                     StartData.playerInfo.gold = 100000;
-                    StartData.playerInfo.gem = 100000;
+                    StartData.playerInfo.star = 100000;
 #endif
                     StartData.playerInfo.level = 1;
                     StartData.playerInfo.equipBatId = BAT_KEY.BAT_0.ToString();
@@ -1127,6 +1166,29 @@ public class GameManager
         }
         else
             return _gameData.playerInfo.playerBestScore[_league];
+    }
+
+    public long GetPrice(Grade grade)
+    {
+        switch (grade)
+        {
+            case Grade.Common:
+                break;
+            case Grade.Uncommon:
+                return 300;
+                break;
+            case Grade.Rare:
+                return 500;
+                break;
+            case Grade.Epic:
+                return 1000;
+                break;
+            case Grade.Legendary:
+                return 2000;
+                break;
+        }
+
+        return 100;
     }
 
     public void SetBatSpeed(float setSpeed)

@@ -15,7 +15,7 @@ MonoBehaviour:
   orderID: 22
   key: CSO_22
   mode: 1
-  league: 5
+  league: 4
   score: 480
   speed: 0
   desc: 'Achieve exactly 480 points.

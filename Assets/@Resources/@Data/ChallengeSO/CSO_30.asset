@@ -15,7 +15,7 @@ MonoBehaviour:
   orderID: 30
   key: CSO_30
   mode: 3
-  league: 6
+  league: 5
   score: 1000
   speed: 0
   desc: "Hit consecutively 1000 times. \n <color=#B82EF3FF>Master League</color>"

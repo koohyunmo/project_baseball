@@ -15,7 +15,7 @@ MonoBehaviour:
   orderID: 18
   key: CSO_18
   mode: 2
-  league: 4
+  league: 3
   score: 15
   speed: 0
   desc: "Hit 15 home runs to succeed. \n <color=#06A29BFF>Platinum League</color>"

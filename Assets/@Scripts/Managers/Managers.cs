@@ -40,7 +40,17 @@ public class Managers : MonoBehaviour
     [SerializeField] SoundManager _sound = new SoundManager();
 
 
-    public static Managers Instance { get { Init();  return s_instance; } } 
+    public static Managers Instance { get { 
+            Init();  
+            return s_instance; } }
+
+    private void Awake()
+    {
+        Application.targetFrameRate = 60;
+        Localization.Init();
+        Vibration.Init();
+        Sound.Init();
+    }
 
 
     public static void Init()
@@ -56,10 +66,6 @@ public class Managers : MonoBehaviour
 
             DontDestroyOnLoad(go);
             s_instance = go.GetComponent<Managers>();
-            Application.targetFrameRate = 60;
-            Localization.Init();
-            Vibration.Init();
-            Sound.Init();
         }
     }
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   orderID: 11
   key: CSO_11
   mode: 1
-  league: 3
+  league: 2
   score: 55
   speed: 0
   desc: 'Achieve exactly 55 points.

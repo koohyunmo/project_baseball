@@ -15,7 +15,7 @@ MonoBehaviour:
   orderID: 24
   key: CSO_24
   mode: 2
-  league: 5
+  league: 4
   score: 33
   speed: 0
   desc: "Hit 33 home runs to succeed. \n <color=#82A9B2FF>Diamond League</color>"

@@ -152,7 +152,7 @@ public class UIManager
         RefreshTimeScale();
 
 
-        Managers.Sound.Play(Define.Sound.Effect, "ui_menu_button_click_22");
+        //Managers.Sound.Play(Define.Sound.Effect, "ui_menu_button_click_22");
 
         return popup;
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class SkillManager
 {
@@ -35,8 +36,12 @@ public class SkillManager
                 break;
             case Define.SkillType.Collider:
                 Managers.Effect.PlayEffect("FX_PowerDraw_01", Managers.Game.ColliderSkillTr.position);
-                Managers.Game.Bat.HitColiderTransform.localScale = new Vector3(colliderLocalScale.x *2 , colliderLocalScale.y, colliderLocalScale.z);
-                Managers.Game.Bat.model.transform.localScale = new Vector3(modelLocalScale.x*2f, modelLocalScale.y, modelLocalScale.z);
+                //Managers.Game.Bat.HitColiderTransform.localScale = new Vector3(colliderLocalScale.x *2 , colliderLocalScale.y, colliderLocalScale.z);
+                //Managers.Game.Bat.model.transform.localScale = new Vector3(modelLocalScale.x*2f, modelLocalScale.y, modelLocalScale.z);
+
+                Managers.Game.Bat.model.layer = 0;
+                Managers.Game.Bat.HitColiderTransform.DOScale(new Vector3(colliderLocalScale.x * 2, colliderLocalScale.y, colliderLocalScale.z), 1.5f);
+                Managers.Game.Bat.model.transform.DOScale(new Vector3(modelLocalScale.x * 2f, modelLocalScale.y, modelLocalScale.z), 1.5f).OnComplete(()=> Managers.Game.Bat.model.layer = 6);
                 break;
             case Define.SkillType.Bonus:
                 Managers.Effect.PlayEffect("FX_ExperienceGain_01 Variantt", Managers.Game.BuffSkillTr.position);
@@ -45,6 +50,8 @@ public class SkillManager
             case Define.SkillType.None:
                 break;
         }
+
+        Debug.Log(so.SkillType);
 
     }
 

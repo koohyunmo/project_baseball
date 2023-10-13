@@ -250,9 +250,6 @@ public class Baller : MonoBehaviour
             case League.Silver:
                 originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.8f, 0.88f);
                 break;
-            case League.TEST:
-                originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.8f, 0.88f);
-                break;
 
         }
     }
@@ -302,13 +299,11 @@ public class Baller : MonoBehaviour
         SetLeagueSpeed();
         SetThrowTypeSpeed();
 
-        if(League == League.TEST)
-            Time.timeScale = 0.25f;
-        else
-            Time.timeScale = 1f;
+        //Time.timeScale = 1f;
 
 
         speed = speed + (speed * Managers.Game.HitScore / 500);
+        speed +=  Mathf.Clamp((Managers.Game.GameScore / 1000),0,50);
 
         Managers.Game.SetBallInfo(speed, _throwType);
 

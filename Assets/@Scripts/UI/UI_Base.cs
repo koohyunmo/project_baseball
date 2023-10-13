@@ -77,7 +77,7 @@ public abstract class UI_Base : MonoBehaviour
 			case Define.UIEvent.Click:
 				evt.OnClickHandler -= action;
 				evt.OnClickHandler += action;
-				evt.OnClickHandler += ()=> { Managers.Sound.Play(Define.Sound.Effect, "ui_menu_button_click_21"); };
+				evt.OnClickHandler += () => { Managers.Sound.Play(Define.Sound.Effect, "ui_menu_button_click_21"); };
 				break;
 			case Define.UIEvent.Pressed:
 				evt.OnPressedHandler -= action;
@@ -102,6 +102,41 @@ public abstract class UI_Base : MonoBehaviour
 			case Define.UIEvent.EndDrag:
 				evt.OnEndDragHandler -= dragAction;
 				evt.OnEndDragHandler += dragAction;
+				break;
+		}
+	}
+
+	public static void BindSound()
+    {
+		
+	}
+
+	public static void RemoveBindEvent(GameObject go, Action action = null, Action<BaseEventData> dragAction = null, Define.UIEvent type = Define.UIEvent.Click)
+	{
+		UI_EventHandler evt = Utils.GetOrAddComponent<UI_EventHandler>(go);
+
+		switch (type)
+		{
+			case Define.UIEvent.Click:
+				evt.OnClickHandler -= action;
+				break;
+			case Define.UIEvent.Pressed:
+				evt.OnPressedHandler -= action;
+				break;
+			case Define.UIEvent.PointerDown:
+				evt.OnPointerDownHandler -= action;
+				break;
+			case Define.UIEvent.PointerUp:
+				evt.OnPointerUpHandler -= action;
+				break;
+			case Define.UIEvent.Drag:
+				evt.OnDragHandler -= dragAction;
+				break;
+			case Define.UIEvent.BeginDrag:
+				evt.OnBeginDragHandler -= dragAction;
+				break;
+			case Define.UIEvent.EndDrag:
+				evt.OnEndDragHandler -= dragAction;
 				break;
 		}
 	}

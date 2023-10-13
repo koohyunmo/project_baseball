@@ -15,7 +15,7 @@ MonoBehaviour:
   orderID: 12
   key: CSO_12
   mode: 3
-  league: 3
+  league: 2
   score: 55
   speed: 0
   desc: "Hit consecutively 55 times. \n <color=#B29C3CFF>Gold League</color>"

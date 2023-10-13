@@ -258,7 +258,7 @@ public class UI_Skin_Item : UI_Base
     private void BallClick()
     {
         Managers.Game.ChangeBall(_item.id);
-        Managers.Game.GetItem(_item.id);
+        //Managers.Game.GetItem(_item.id);
     }
 
     private void BatClick()
@@ -267,7 +267,7 @@ public class UI_Skin_Item : UI_Base
         {
             //Managers.Game.Bat.ChangeBatMat(_mats);
             //Managers.Game.Bat.ChangeBatMesh(_mesh);
-            Managers.Game.GetItem(_item.id);
+            //Managers.Game.GetItem(_item.id);
             Managers.Game.ChangeBat(_item.id);
             //Managers.Game.Bat.SetBetHandle();
             Debug.Log($"ChangeBat ID :  {_item.id}");

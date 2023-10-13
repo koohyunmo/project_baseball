@@ -333,47 +333,47 @@
         }
     },
     "balls": {
-        "ball_0": {
+        "ball_1": {
             "en": "Baseball",
             "ko": "야구공",
             "jp": "野球"
         },
-        "ball_1": {
+        "ball_2": {
             "en": "Yellow Baseball",
             "ko": "노란 야구공",
             "jp": "黄色の野球ボール"
         },
-        "ball_2": {
+        "ball_3": {
             "en": "Colored Baseball",
             "ko": "색상이 있는 야구공",
             "jp": "カラフルな野球ボール"
         },
-        "ball_3": {
+        "ball_4": {
             "en": "Shabby Baseball",
             "ko": "낡은 야구공",
             "jp": "古びた野球ボール"
         },
-        "ball_4": {
+        "ball_5": {
             "en": "Black Baseball",
             "ko": "검은 야구공",
             "jp": "黒い野球ボール"
         },
-        "ball_5": {
+        "ball_6": {
             "en": "Golden Baseball",
             "ko": "금색 야구공",
             "jp": "金色の野球ボール"
         },
-        "ball_6": {
+        "ball_7": {
             "en": "Red Baseball",
             "ko": "빨간 야구공",
             "jp": "赤い野球ボール"
         },
-        "ball_7": {
+        "ball_8": {
             "en": "Silver Baseball",
             "ko": "은색 야구공",
             "jp": "銀色の野球ボール"
         },
-        "ball_8": {
+        "ball_9": {
             "en": "American Flag Baseball",
             "ko": "미국 국기 야구공",
             "jp": "アメリカ国旗の野球ボール"

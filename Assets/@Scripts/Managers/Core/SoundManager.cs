@@ -118,6 +118,7 @@ public class SoundManager
             LoadAudioClip(key, (audioClip) =>
             {
                 audioSource.pitch = pitch;
+                audioSource.clip = audioClip;
                 //if (Managers.Game.EffectSoundOn)
                 audioSource.PlayOneShot(audioClip);
             });
@@ -150,6 +151,7 @@ public class SoundManager
         {
             audioSource.pitch = pitch;
             //if (Managers.Game.EffectSoundOn)
+            audioSource.clip = audioClip;
             audioSource.PlayOneShot(audioClip);
         }
     }

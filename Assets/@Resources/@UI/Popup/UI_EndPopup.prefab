@@ -334,11 +334,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f950acc5f01404ab4c3b8650224c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strikeTMP: {fileID: 0}
-  gameScorTMP: {fileID: 0}
-  homeButton: {fileID: 0}
-  replayButton: {fileID: 0}
-  retryButton: {fileID: 0}
+  strikeTMP: {fileID: 5802553774940914349}
+  gameScorTMP: {fileID: 935244815263791905}
+  homeButton: {fileID: 5802553775322239864}
+  replayButton: {fileID: 6852397548149405882}
+  retryButton: {fileID: 8339736843396690410}
 --- !u!1 &5802553774940914351
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,7 +648,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 333.5}
+  m_AnchoredPosition: {x: 0, y: 681.75}
   m_SizeDelta: {x: 568.0151, y: 170.0054}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4950586694822445187

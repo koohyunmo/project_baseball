@@ -15,7 +15,7 @@ MonoBehaviour:
   orderID: 13
   key: CSO_13
   mode: 2
-  league: 3
+  league: 2
   score: 5
   speed: 0
   desc: "Hit 5 home runs to succeed. \n <color=#B29C3CFF>Gold League</color>"

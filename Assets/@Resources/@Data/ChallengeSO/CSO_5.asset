@@ -15,7 +15,7 @@ MonoBehaviour:
   orderID: 5
   key: CSO_5
   mode: 2
-  league: 1
+  league: 0
   score: 1
   speed: 0
   desc: "Hit 1 home runs to succeed. \n <color=#905923FF>Bronze League</color>"

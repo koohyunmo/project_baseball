@@ -15,7 +15,7 @@ MonoBehaviour:
   orderID: 27
   key: CSO_27
   mode: 3
-  league: 6
+  league: 5
   score: 450
   speed: 0
   desc: "Hit consecutively 450 times. \n <color=#B82EF3FF>Master League</color>"

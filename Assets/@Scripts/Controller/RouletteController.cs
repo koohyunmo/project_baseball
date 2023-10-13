@@ -34,6 +34,7 @@ public class RouletteController : MonoBehaviour
     [Header("상품 목록")]
     //[SerializeField] private RandomItemData[] prizes = new RandomItemData[8];
     private Define.Grade[] prizes = { Define.Grade.Common, Define.Grade.Common, Define.Grade.Uncommon, Define.Grade.Uncommon, Define.Grade.Rare, Define.Grade.Rare, Define.Grade.Epic, Define.Grade.Legendary };
+    public Sprite[] gradeImages;
     private int itemCount;
     [Header("색상 목록")]
     private Color[] colors = {
@@ -63,7 +64,7 @@ public class RouletteController : MonoBehaviour
 
         public bool IsNull()
         {
-            if(string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(id))
             {
                 return true;
             }
@@ -92,7 +93,7 @@ public class RouletteController : MonoBehaviour
         {
             roullet.Rotate(0, 0, -currentSpeed * Time.deltaTime); // Z축을 중심으로 회전
             currentSpeed -= deceleration * Time.deltaTime; // 속도 감소
-            UpdateUI();
+            //UpdateUI();
 
             if (currentSpeed <= 0)
             {
@@ -104,6 +105,16 @@ public class RouletteController : MonoBehaviour
 
     public void StartSpin()
     {
+#if UNITY_EDITOR
+        if (!isSpinning)
+        {
+            currentSpeed = Random.Range(spinSpeed, spinSpeed * 1.5f);
+            isSpinning = true;
+            first = false;
+
+            Managers.Game.RollRoullet();
+        }
+#else
         if (!isSpinning && Managers.Game.RollRoullet())
         {
             currentSpeed = Random.Range(spinSpeed, spinSpeed * 1.5f);
@@ -111,6 +122,8 @@ public class RouletteController : MonoBehaviour
 
             first = false;
         }
+#endif
+
     }
 
     //private async void SetData()
@@ -148,7 +161,7 @@ public class RouletteController : MonoBehaviour
         Color prizeColor = colors[minIndex % colors.Length];
         string colorHex = ColorUtility.ToHtmlStringRGB(prizeColor);
         Define.Grade data = prizes[minIndex % prizes.Length];
-        resultText.text = $"<color=#{colorHex}> Prize: {data.ToString()}</color>";
+        resultText.text = $"<color=#{colorHex}> Prize: {Managers.Localization.GetLocalizedValue(data.ToString())}</color>";
 
     }
 
@@ -163,7 +176,7 @@ public class RouletteController : MonoBehaviour
 
         foreach (var item in images)
         {
-            if(min > (hand.position - item.position).sqrMagnitude)
+            if (min > (hand.position - item.position).sqrMagnitude)
             {
                 min = Mathf.Min(min, (hand.position - item.position).sqrMagnitude);
                 minIndex = index;
@@ -197,12 +210,15 @@ public class RouletteController : MonoBehaviour
         }
 
 
-        //resultText.text = $"<color=#{colorHex}> Prize: {Managers.Localization.GetLocalizedValue(id)}</color>";
-        resultText.text = $"<color=#{colorHex}> Get Prize: {data.ToString()}</color>";
-
-
         Define.GetType get = Managers.Game.GetItem(id);
-        long gold = 0;
+
+
+        //resultText.text = $"<color=#{colorHex}> Prize: {Managers.Localization.GetLocalizedValue(id)}</color>";
+        string name = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(id).name;
+        resultText.text = $"<color=#{colorHex}> Get Prize: {Managers.Localization.GetLocalizedValue(name)}</color>";
+
+
+        long star = 0;
 
 
         if (get == Define.GetType.duplicate)
@@ -212,23 +228,26 @@ public class RouletteController : MonoBehaviour
             switch (data)
             {
                 case Define.Grade.Common:
-                    gold = 10;
+                    star = 10;
                     break;
                 case Define.Grade.Uncommon:
-                    gold = 30;
+                    star = 30;
                     break;
                 case Define.Grade.Rare:
-                    gold = 100;
+                    star = 100;
                     break;
                 case Define.Grade.Epic:
-                    gold = 300;
+                    star = 300;
                     break;
                 case Define.Grade.Legendary:
-                    gold = 500;
+                    star = 500;
                     break;
             }
 
-            Debug.Log($"Get Gold {gold}");
+            Managers.Game.GetStar(star);
+
+            resultText.text = $"<color=#{colorHex}> Get Prize: {star} Star</color>";
+
         }
 
 
@@ -243,7 +262,7 @@ public class RouletteController : MonoBehaviour
                 popup.InitData(id);
                 break;
             case Define.GetType.duplicate:
-                popup.InitData(data,gold);
+                popup.InitData(data, star);
                 break;
 
         }
@@ -273,7 +292,42 @@ public class RouletteController : MonoBehaviour
             Vector3 middlePosition = (position + endAnglePosition) * 0.5f; // Vector3로 변경
             images[i].transform.position = middlePosition;
             var img = images[i].GetComponent<Image>();
-            img.color = colors[i];
+
+            // 원점에서 기즈모 끝 방향으로의 방향 벡터 계산
+            Vector3 direction = (endAnglePosition - position).normalized;
+
+            // 방향 벡터를 기반으로 회전 계산
+            Quaternion rotation = Quaternion.LookRotation(Vector3.forward, direction);
+
+            // 회전 적용
+            images[i].transform.rotation = rotation;
+
+
+
+
+            Sprite icon = null;
+
+            switch (prizes[i])
+            {
+                case Define.Grade.Common:
+                    icon = gradeImages[0];
+                    break;
+                case Define.Grade.Uncommon:
+                    icon = gradeImages[1];
+                    break;
+                case Define.Grade.Rare:
+                    icon = gradeImages[2];
+                    break;
+                case Define.Grade.Epic:
+                    icon = gradeImages[3];
+                    break;
+                case Define.Grade.Legendary:
+                    icon = gradeImages[4];
+                    break;
+            }
+
+            img.sprite = icon;
+            var rect = img.GetComponent<RectTransform>();
             // 아이콘 변경
             //images[i].GetComponent<Image>().sprite = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(prizes[i]).icon;
             //images[i].SetParent(roullet);
@@ -288,7 +342,7 @@ public class RouletteController : MonoBehaviour
             Debug.Log(item);
 
         }
-        
+
         resultText.text = null;
     }
 
@@ -296,7 +350,7 @@ public class RouletteController : MonoBehaviour
 #if UNITY_EDITOR
 
 
-    
+
 
 
 

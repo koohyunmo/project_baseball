@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UI_SkinItemInfoPopup : UI_InfoPopup
@@ -15,6 +16,12 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
     private Action _lockUIAction = null;
     private Action _equipUIAction = null;
     private string _itemInfo;
+
+    public GameObject starAndAd;
+    public TextMeshProUGUI starTMP;
+
+
+    public Sprite starIcon;
 
     enum Type
     {
@@ -124,12 +131,18 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
 
     private void ButtonUpdate()
     {
+
+
+
         if (Managers.Game.GameDB.playerInventory.Contains(_itemSO.id))
         {
             //popupButtonText.text = "EQUIP";
+            popupButtonIcon.sprite = _itemSO.icon;
             popupButtonText.text = Managers.Localization.GetLocalizedValue(LanguageKey.equip.ToString());
             popupButton.interactable = true;
             popupButton.gameObject.BindEvent(EquipItem);
+            OnButton();
+            return;
         }
         else
         {
@@ -138,32 +151,105 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
             popupButton.gameObject.BindEvent(GetItem);
         }
 
-        if(Managers.Game.EquipBallId.Equals(_itemSO.id) || Managers.Game.EquipBatId.Equals(_itemSO.id) || Managers.Game.EquipSkillId.Equals(_itemSO.id))
+        if (Managers.Game.EquipBallId.Equals(_itemSO.id) || Managers.Game.EquipBatId.Equals(_itemSO.id) || Managers.Game.EquipSkillId.Equals(_itemSO.id))
         {
             popupButtonText.text = Managers.Localization.GetLocalizedValue(LanguageKey.equipping.ToString());
             popupButton.interactable = false;
         }
+
+
+        if ((int)_itemSO.grade >= (int)Define.Grade.Epic)
+        {
+            popupButton.interactable = Managers.Game.CanPay(Managers.Game.GetPrice(_itemSO.grade));
+
+            OffButton();
+            popupButton.gameObject.RemoveBindEvent(GetItem);
+            popupButton.gameObject.BindEvent(GetItemAndPaid);
+            starTMP.text = Managers.Game.GetPrice(_itemSO.grade).ToString();
+            popupButtonIcon.sprite = starIcon;
+        }
+        else
+        {
+            OnButton();
+        }
+    }
+
+    private void OffButton()
+    {
+        popupButtonText.gameObject.SetActive(false);
+        popupButtonIcon.gameObject.SetActive(false);
+
+        starAndAd.SetActive(true);
+    }
+
+    private void OnButton()
+    {
+        popupButtonText.gameObject.SetActive(true);
+        popupButtonIcon.gameObject.SetActive(true);
+
+        starAndAd.SetActive(false);
     }
 
     private void GetItem()
     {
-        if (Managers.Ad.CanShowRewardAd() == false)
+
+            if (Managers.Ad.CanShowRewardAd() == false)
+            {
+                return;
+            }
+            else
+            {
+                popupButton.interactable = Managers.Ad.CanShowRewardAd();
+
+
+                //ClosePopupUI();
+                Managers.Ad.ShowRewardedAd(GetRewardAdsItemRemoveActions);
+
+                Debug.Log("TODO ±¤°í or µ·");
+            }
+
+    }
+
+    private void GetItemAndPaid()
+    {
+
+
+        if (Managers.Ad.CanShowRewardAd() == false && Managers.Game.CanPay(Managers.Game.GetPrice(_itemSO.grade)) == false)
         {
             return;
         }
         else
         {
             popupButton.interactable = Managers.Ad.CanShowRewardAd();
-            Managers.Game.GetItem(_itemSO.id);
-            _lockUIAction?.Invoke();
-            ClosePopupUI();
-            Managers.Ad.ShowRewardedAd();
+
+
+            //ClosePopupUI();
+            Managers.Ad.ShowRewardedAd(GetRewardAdAndPaysItemRemoveActions);
+
             Debug.Log("TODO ±¤°í or µ·");
         }
 
-
-
     }
+    private void GetRewardAdsItemRemoveActions()
+    {
+        Managers.Game.GetItem(_itemSO.id);
+        popupButton.gameObject.RemoveBindEvent(GetItem);
+        ButtonUpdate();
+        _lockUIAction?.Invoke();
+    }
+
+    private void GetRewardAdAndPaysItemRemoveActions()
+    {
+        if (Managers.Game.PlayerInfo.star > Managers.Game.GetPrice(_itemSO.grade))
+        {
+            Managers.Game.GetItem(_itemSO.id);
+            Managers.Game.MinusStar(Managers.Game.GetPrice(_itemSO.grade));
+            popupButton.gameObject.RemoveBindEvent(GetItemAndPaid);
+            ButtonUpdate();
+            _lockUIAction?.Invoke();
+        }
+    }
+
     private void EquipItem()
     {
         Managers.Game.ChangeItem(_itemSO.id);

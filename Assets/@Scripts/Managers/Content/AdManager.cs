@@ -292,13 +292,19 @@ public class AdManager
     {
         return rewardedAd != null && rewardedAd.CanShowAd();
     }
-    public void ShowRewardedAd()
+    public void ShowRewardedAd(Action action)
     {
+        _rewardAction = null;
+        _rewardAction = action;
+
         if (rewardedAd != null && rewardedAd.CanShowAd())
         {
+
+
             rewardedAd.Show((Reward reward) =>
             {
                 Debug.Log("Give Reward To Player !!");
+                _rewardAction?.Invoke();
 
             });
         }
@@ -309,6 +315,7 @@ public class AdManager
     }
 
 
+    Action _rewardAction;
     public void RewardedAdEvents(RewardedAd ad)
     {
         // Raised when the ad is estimated to have earned money.

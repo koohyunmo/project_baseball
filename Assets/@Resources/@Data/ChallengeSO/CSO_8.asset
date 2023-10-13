@@ -15,7 +15,7 @@ MonoBehaviour:
   orderID: 8
   key: CSO_8
   mode: 2
-  league: 2
+  league: 1
   score: 2
   speed: 0
   desc: "Hit 2 home runs to succeed. \n <color=#868686FF>Silver League</color>"

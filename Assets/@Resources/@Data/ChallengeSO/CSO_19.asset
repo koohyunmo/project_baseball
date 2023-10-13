@@ -15,7 +15,7 @@ MonoBehaviour:
   orderID: 19
   key: CSO_19
   mode: 1
-  league: 4
+  league: 3
   score: 180
   speed: 0
   desc: 'Achieve exactly 180 points.

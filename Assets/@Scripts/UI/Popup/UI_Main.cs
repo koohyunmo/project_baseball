@@ -25,6 +25,11 @@ public class UI_Main : UI_Popup
         B_BatOption,
     }
 
+    enum TMPS
+    {
+        StarTMP
+    }
+
     enum Images
     {
         NotificationItem,
@@ -46,6 +51,8 @@ public class UI_Main : UI_Popup
     Image NotifyItem;
     Image NotifyReward;
 
+    private TextMeshProUGUI starTMP;
+
     public override bool Init()
     {
         if (base.Init() == false)
@@ -53,6 +60,7 @@ public class UI_Main : UI_Popup
 
         BindButton(typeof(Buttons));
         BindImage(typeof(Images));
+        Bind<TextMeshProUGUI>(typeof(TMPS));
 
         GetButton((int)Buttons.B_Skin).gameObject.BindEvent(B_SkinClick);
         GetButton((int)Buttons.B_Challenge).gameObject.BindEvent(B_ChanllengeClick);
@@ -85,6 +93,9 @@ public class UI_Main : UI_Popup
         vibrationButton.gameObject.BindEvent(VibrateOnOff);
         soundButton.gameObject.BindEvent(SoundOnOff);
 
+        starTMP = Get<TextMeshProUGUI>((int)TMPS.StarTMP);
+        starTMP.text = Managers.Game.PlayerInfo.star.ToString();
+
 
 
         NotifyItem = GetImage((int)Images.NotificationItem);
@@ -108,6 +119,7 @@ public class UI_Main : UI_Popup
         Managers.Localization.SetLocalChangeUpdateTMP(MainTMPUpdate);
 
 
+        Managers.Game.SetStarUpdate(() => starTMP.text = Managers.Game.PlayerInfo.star.ToString());
 
         return true;
 
@@ -115,6 +127,7 @@ public class UI_Main : UI_Popup
 
     private void MainTMPUpdate()
     {
+        starTMP.text = Managers.Game.PlayerInfo.star.ToString();
         leagueTMP.text = Managers.Localization.GetLocalizedValue((Managers.Game.League).ToString().ToLower());
         dragTMP.text = Managers.Localization.GetLocalizedValue(LanguageKey.startdrag.ToString());
         Debug.Log("TODO 드래그 텍스트");
@@ -334,5 +347,7 @@ public class UI_Main : UI_Popup
         {
             child.DOKill();
         }
+
+        Managers.Game.RemoveStarUpdate(() => starTMP.text = Managers.Game.PlayerInfo.star.ToString());
     }
 }

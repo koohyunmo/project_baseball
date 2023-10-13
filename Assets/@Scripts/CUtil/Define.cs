@@ -62,7 +62,6 @@ public static class Define
 
     public enum League
     {
-		TEST,
         Bronze,
         Silver,
         Gold,

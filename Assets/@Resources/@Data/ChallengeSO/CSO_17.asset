@@ -15,7 +15,7 @@ MonoBehaviour:
   orderID: 16
   key: CSO_16
   mode: 3
-  league: 4
+  league: 3
   score: 88
   speed: 0
   desc: "Hit consecutively 88 times. \n <color=#06A29BFF>Platinum League</color>"

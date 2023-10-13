@@ -15,7 +15,7 @@ MonoBehaviour:
   orderID: 3
   key: CSO_3
   mode: 3
-  league: 1
+  league: 0
   score: 12
   speed: 0
   desc: "Hit consecutively 12 times. \n <color=#905923FF>Bronze League</color>"

@@ -14,7 +14,8 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
     enum TMPs
     {
         SliderTMP,
-        ItemLoadingText
+        ItemLoadingText,
+        StarTMP
     }
 
     enum ScrollRects
@@ -56,6 +57,7 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
     public Button B_Back { get; private set; }
     public Slider Slider { get; private set; }
     public TextMeshProUGUI SliderTMP { get; private set; }
+    public TextMeshProUGUI StarTMP { get; private set; }
 
     ScollViewType _type = ScollViewType.Bat;
     GameObject[] _grids = new GameObject[6];
@@ -95,6 +97,7 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
 
         Slider = Get<Slider>((int)Sliders.Slider);
         SliderTMP = Get<TextMeshProUGUI>((int)TMPs.SliderTMP);
+        StarTMP = Get<TextMeshProUGUI>((int)TMPs.StarTMP);
 
         B_Ball.gameObject.BindEvent(() => { OnClickCategory(ScollViewType.Ball); });
         B_Background.gameObject.BindEvent(() => { OnClickCategory(ScollViewType.Skill); });
@@ -110,6 +113,8 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
         B_Back.gameObject.BindEvent(() => { Managers.UI.ClosePopupUI(this); });
 
         Managers.Game.SetLobbyUIUpdate(UpdateSlider);
+
+        Managers.Game.SetStarUpdate(UpdateStar);
 
 
         _type = ScollViewType.Skill;
@@ -212,6 +217,14 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
 
         Slider.value = (hasItemCount / (float)skinCount);
         SliderTMP.text = $"{Managers.Localization.GetLocalizedValue(_type.ToString().ToLower())} {hasItemCount} / {skinCount}";
+
+        UpdateStar();
+    }
+
+
+    private void UpdateStar()
+    {
+        StarTMP.text = Managers.Game.PlayerInfo.star.ToString();
     }
 
     private void MakeItem()
@@ -322,6 +335,7 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
     {
         base.OnDestroy();
         Managers.Game.RemoveLobbyUIUpdate(UpdateSlider);
+        Managers.Game.RemoveStarUpdate(UpdateStar);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -347,4 +361,5 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
             image.raycastTarget = value;
         }
     }
+
 }

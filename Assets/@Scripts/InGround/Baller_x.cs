@@ -240,10 +240,6 @@ public class Baller_X : MonoBehaviour
             case League.Silver:
                 originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.7f, 0.82f);
                 break;
-            case League.TEST:
-                originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.3f, 0.4f);
-                break;
-
         }
     }
     private void SetThrowTypeSpeed()

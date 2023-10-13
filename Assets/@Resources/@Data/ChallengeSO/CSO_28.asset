@@ -15,7 +15,7 @@ MonoBehaviour:
   orderID: 28
   key: CSO_28
   mode: 2
-  league: 6
+  league: 5
   score: 120
   speed: 0
   desc: "Hit 120 home runs to succeed. \n <color=#B82EF3FF>Master League</color>"

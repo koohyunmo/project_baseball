@@ -15,7 +15,7 @@ MonoBehaviour:
   orderID: 29
   key: CSO_29
   mode: 1
-  league: 6
+  league: 5
   score: 10000
   speed: 0
   desc: 'Achieve exactly 10000 points.
