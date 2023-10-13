@@ -23,10 +23,11 @@ public class UI_Skin_Item : UI_Base
     {
         Icon,
         Background,
-        LockImage
+        LockImage,
+        Choice
     }
 
-    enum TMPs
+    enum TMPsX
     {
         Choice
     }
@@ -45,7 +46,7 @@ public class UI_Skin_Item : UI_Base
     {
         Bind<Image>(typeof(Images));
         Bind<Button>(typeof(Buttons));
-        Bind<TextMeshProUGUI>(typeof(TMPs));
+        //Bind<TextMeshProUGUI>(typeof(TMPs));
 
         _icon = Get<Image>((int)Images.Icon);
         gameObject.gameObject.BindEvent(OnClick);
@@ -187,14 +188,15 @@ public class UI_Skin_Item : UI_Base
     {
         if (Managers.Game.EquipBallId.Equals(_item.id) || Managers.Game.EquipBatId.Equals(_item.id) || Managers.Game.EquipSkillId.Equals(_item.id))
         {
-            Get<TextMeshProUGUI>((int)TMPs.Choice).text = Managers.Localization.GetLocalizedValue(LanguageKey.equipping.ToString());
-            Get<TextMeshProUGUI>((int)TMPs.Choice).gameObject.SetActive(true);
+            //Get<TextMeshProUGUI>((int)TMPs.Choice).text = Managers.Localization.GetLocalizedValue(LanguageKey.equipping.ToString());
+            //Get<TextMeshProUGUI>((int)TMPs.Choice).gameObject.SetActive(true);
+            Get<Image>((int)Images.Choice).gameObject.SetActive(true);
             Managers.Game.SetEquipUIItemAction(ChoiceUIUpdate);
             return;
         }
         else
         {
-            Get<TextMeshProUGUI>((int)TMPs.Choice).gameObject.SetActive(false);
+            Get<Image>((int)Images.Choice).gameObject.SetActive(false);
             Managers.Game.RemoveEqupUIItemAction(ChoiceUIUpdate);
         }
 

@@ -83,6 +83,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     - Sound
+  - m_GUID: 1453f7dd357d9904aa8e6ce5fe96308e
+    m_Address: Click05
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Sound
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9c2d91b0a86c0bb4b9bbf0d47449c95f, type: 2}
   m_SchemaSet:

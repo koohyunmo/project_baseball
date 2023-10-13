@@ -5,6 +5,6 @@
   <string name="project_id" translatable="false">baseballking-7719f</string>
   <string name="google_api_key" translatable="false">AIzaSyAGMKpRBLndWJesIT4sAwUNdiWR0thDki0</string>
   <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAGMKpRBLndWJesIT4sAwUNdiWR0thDki0</string>
-  <string name="google_app_id" translatable="false">1:526372370985:android:30ef9a6546b7de76fe7a38</string>
+  <string name="google_app_id" translatable="false">1:526372370985:android:0d350189ded2315bfe7a38</string>
   <string name="default_web_client_id" translatable="false">526372370985-3t20la5ft3f8kg0cut59mbrdq2tm2uu4.apps.googleusercontent.com</string>
 </resources>

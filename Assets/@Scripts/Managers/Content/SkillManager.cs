@@ -27,15 +27,19 @@ public class SkillManager
         switch (so.SkillType)
         {
             case Define.SkillType.HwakEye:
+                Managers.Effect.PlayEffect("FX_Swirl_03 Variant", Managers.Game.BuffSkillTr.position);
                 break;
             case Define.SkillType.Strong:
+                Managers.Effect.PlayEffect("FX_MagicBlast_Ground_02", Managers.Game.BuffSkillTr.position);
                 Managers.Game.skillBonus = 5f;
                 break;
             case Define.SkillType.Collider:
+                Managers.Effect.PlayEffect("FX_PowerDraw_01", Managers.Game.ColliderSkillTr.position);
                 Managers.Game.Bat.HitColiderTransform.localScale = new Vector3(colliderLocalScale.x *2 , colliderLocalScale.y, colliderLocalScale.z);
                 Managers.Game.Bat.model.transform.localScale = new Vector3(modelLocalScale.x*2f, modelLocalScale.y, modelLocalScale.z);
                 break;
             case Define.SkillType.Bonus:
+                Managers.Effect.PlayEffect("FX_ExperienceGain_01 Variantt", Managers.Game.BuffSkillTr.position);
                 Managers.Game.hitBonus = 1;
                 break;
             case Define.SkillType.None:

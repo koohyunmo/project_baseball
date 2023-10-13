@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UI_MemoryDisplayScene : MonoBehaviour
 {
+#if UNITY_EDITOR
     public Text displayText;
 
     void Update()
@@ -14,4 +15,5 @@ public class UI_MemoryDisplayScene : MonoBehaviour
 
         displayText.text = $"Memory: {memoryInMB:F2} MB\nFPS: {fps:F2}";
     }
+#endif
 }

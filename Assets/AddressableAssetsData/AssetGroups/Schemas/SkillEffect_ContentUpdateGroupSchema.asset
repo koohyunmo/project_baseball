@@ -9,14 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b89304b9f33a5646959c5268d528f47, type: 3}
-  m_Name: SKILL_2
+  m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
+  m_Name: SkillEffect_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  id: SKILL_2
-  model: {fileID: 0}
-  icon: {fileID: 21300000, guid: c188896a524699a448fd8f6764b7be89, type: 3}
-  name: Hwak Eye 1
-  type: 4
-  grade: 0
-  HawkeyeLevel: 50
-  SkillType: 0
+  m_Group: {fileID: 11400000, guid: d021d58f7109fda478a81c221175e666, type: 2}
+  m_StaticContent: 0

@@ -157,7 +157,7 @@
         }
     },
     "skills": {
-        "hawkeye": {
+        "hawkeye1": {
             "en": "Hawk-Eye is a batter's ability to see the pitcher's throw clearly, making it easier to hit the ball by understanding its path.",
             "ko": "Hawk-Eye는 타자가 투수의 던진 공을 명확하게 볼 수 있는 능력으로, 공의 경로를 이해함으로써 공을 치기 쉬워집니다."
         }
@@ -333,47 +333,47 @@
         }
     },
     "balls": {
-        "ball_1": {
+        "ball_0": {
             "en": "Baseball",
             "ko": "야구공",
             "jp": "野球"
         },
-        "ball_2": {
+        "ball_1": {
             "en": "Yellow Baseball",
             "ko": "노란 야구공",
             "jp": "黄色の野球ボール"
         },
-        "ball_3": {
+        "ball_2": {
             "en": "Colored Baseball",
             "ko": "색상이 있는 야구공",
             "jp": "カラフルな野球ボール"
         },
-        "ball_4": {
+        "ball_3": {
             "en": "Shabby Baseball",
             "ko": "낡은 야구공",
             "jp": "古びた野球ボール"
         },
-        "ball_5": {
+        "ball_4": {
             "en": "Black Baseball",
             "ko": "검은 야구공",
             "jp": "黒い野球ボール"
         },
-        "ball_6": {
+        "ball_5": {
             "en": "Golden Baseball",
             "ko": "금색 야구공",
             "jp": "金色の野球ボール"
         },
-        "ball_7": {
+        "ball_6": {
             "en": "Red Baseball",
             "ko": "빨간 야구공",
             "jp": "赤い野球ボール"
         },
-        "ball_8": {
+        "ball_7": {
             "en": "Silver Baseball",
             "ko": "은색 야구공",
             "jp": "銀色の野球ボール"
         },
-        "ball_9": {
+        "ball_8": {
             "en": "American Flag Baseball",
             "ko": "미국 국기 야구공",
             "jp": "アメリカ国旗の野球ボール"

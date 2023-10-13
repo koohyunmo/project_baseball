@@ -45,7 +45,8 @@ public class PlayerItem
 public class PlayerInfo
 {
     public string playerId;
-    public long money;
+    public long gold;
+    public long gem;
     public int level;
     public int exp;
     public string equipBatId;

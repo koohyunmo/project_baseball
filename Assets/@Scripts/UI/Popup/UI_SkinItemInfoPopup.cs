@@ -88,7 +88,7 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
 
         popupIcon.sprite = _itemSO.icon;
         popupInfoText.text = Managers.Localization.GetLocalizedValue(_itemSO.name);
-        popupButtonIcon.sprite = _itemSO.icon;
+        //popupButtonIcon.sprite = _itemSO.icon;
 
         switch (_type)
         {

@@ -77,6 +77,17 @@ public class GameManager
 
     public delegate void UIDelegate();
     public UIDelegate UiEvents;
+    public Transform BuffSkillTr { get; private set; }
+    public Transform ColliderSkillTr { get; private set; }
+    public void SetBuffPos(Transform skillPos)
+    {
+        BuffSkillTr = skillPos;
+    }
+
+    public void SetColliderPos(Transform skillPos)
+    {
+        ColliderSkillTr = skillPos;
+    }
 
     public delegate void GameUIDelegate();
     public GameUIDelegate GameUiEvent;
@@ -147,7 +158,7 @@ public class GameManager
 
     public async void Init()
     {
-        _path = Application.persistentDataPath + "/SaveData.json";
+        _path = Application.persistentDataPath + "/SaveFile.es3";
         _settingPath = Application.persistentDataPath + "/SettingData.json";
 
         LoadGameSaveFile();
@@ -805,8 +816,10 @@ public class GameManager
 
     public void SaveGame()
     {
-        string jsonStr = JsonConvert.SerializeObject(SaveData);
-        File.WriteAllTextAsync(_path, jsonStr);
+        //string jsonStr = JsonConvert.SerializeObject(SaveData);
+        //File.WriteAllTextAsync(_path, jsonStr);
+
+        ES3.Save<GameDB>(Keys.DB.GameDB.ToString(),SaveData);
         Debug.Log($"Save Game Completed : {_path}");
     }
 
@@ -833,7 +846,8 @@ public class GameManager
                     PlayerItem startItem = new PlayerItem(so.id, so.name, so.name, ItemType.BAT);
                     //StartData.playerItem.Add(startItem.itemId, startItem);
 #if UNITY_EDITOR
-                    StartData.playerInfo.money = 100000;
+                    StartData.playerInfo.gold = 100000;
+                    StartData.playerInfo.gem = 100000;
 #endif
                     StartData.playerInfo.level = 1;
                     StartData.playerInfo.equipBatId = BAT_KEY.BAT_0.ToString();
@@ -912,8 +926,9 @@ public class GameManager
             return false;
         }
 
-        string fileStr = File.ReadAllText(_path);
-        GameDB data = JsonConvert.DeserializeObject<GameDB>(fileStr);
+        //string fileStr = File.ReadAllText(_path);
+        //GameDB data = JsonConvert.DeserializeObject<GameDB>(fileStr);
+        GameDB data = ES3.Load<GameDB>(Keys.DB.GameDB.ToString());
         if (data != null)
         {
             //_playerData = data;

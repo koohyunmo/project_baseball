@@ -47,7 +47,11 @@ public class Bat : MonoBehaviour
     public GameObject modelParent;
     public GameObject colliderParent;
 
-    private Action<Vector3, Rigidbody> _flyTheBall; 
+    private Action<Vector3, Rigidbody> _flyTheBall;
+    [SerializeField]
+    [Header("SKILL")]
+    public Transform skillPos;
+    public Transform skillPos2;
     public enum BatState
     {
         Idle,
@@ -85,6 +89,8 @@ public class Bat : MonoBehaviour
         Managers.Game.SetReplatMoveAction(() => StartCoroutine(co_BatMoveReplay()));
         Managers.Game.SetBatPositionSetting(ClampToCameraViewSetting);
         Managers.Game.batPositionSetting?.Invoke();
+        Managers.Game.SetBuffPos(skillPos);
+        Managers.Game.SetColliderPos(skillPos2);
 
         HitColiderTransform.gameObject.SetActive(false);
 

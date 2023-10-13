@@ -55,7 +55,7 @@ public class UI_InfoPopup : UI_Popup
         popupButton = Get<Button>((int)SharedIButton.InfoButton);
         popupButtonText = Get<TextMeshProUGUI>((int)SharedText.ButtonText);
 
-        Managers.Sound.Play(Define.Sound.Effect, "ui_menu_button_click_22");
+        Managers.Sound.Play(Define.Sound.Effect, "Click05");
 
         return true;
     }

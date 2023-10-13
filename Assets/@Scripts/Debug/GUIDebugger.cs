@@ -152,7 +152,8 @@ public class GUIDebugger : MonoBehaviour
         {
             GUI.contentColor = Color.white;
             GUILayout.Label("Player ID: " + playerInfo.playerId);
-            GUILayout.Label("Money: " + playerInfo.money);
+            GUILayout.Label("Gold: " + playerInfo.gold);
+            GUILayout.Label("Gem: " + playerInfo.gem);
             GUILayout.Label("Level: " + playerInfo.level);
             GUILayout.Label("Experience: " + playerInfo.exp);
             GUILayout.Label("Equipped Bat ID: " + playerInfo.equipBatId);

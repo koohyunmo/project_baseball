@@ -65,4 +65,9 @@ public static class Keys
     {
         ChallengeCompleteEffect
     }
+
+    public enum DB
+    {
+        GameDB
+    }
 }
