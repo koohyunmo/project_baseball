@@ -57,6 +57,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 20a769cf06cd4364bb83875ea6d6f06b, type: 2}
   - {fileID: 11400000, guid: 0d5715e86035afa41a7d3764619ed209, type: 2}
   - {fileID: 11400000, guid: d021d58f7109fda478a81c221175e666, type: 2}
+  - {fileID: 11400000, guid: 1c25380c1658f444aa6abd3983dac0c4, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -107,6 +108,7 @@ MonoBehaviour:
     - Skill
     - Ball
     - Sound
+    - Sprite
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 60a05e047d2c5ef4094c6f534b5cdd0a, type: 2}

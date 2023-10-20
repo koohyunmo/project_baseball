@@ -14,6 +14,7 @@ public class UI_GameInfoPopup : UI_Popup
     public TextMeshProUGUI gameScoreTMP;
 
     public Image Bilboard;
+    public Image SpeedSlider;
 
     private void Start()
     {
@@ -40,7 +41,19 @@ public class UI_GameInfoPopup : UI_Popup
         thorwBallTypeTMP.text = Managers.Game.ThrowType.ToString();
 
         string colorCode = Managers.Game.GetSpeedColorString();
-        ballSpeedTMP.text = $"<color=#{colorCode}> {Managers.Game.Speed.ToString("F2")}Km/s </color>";
+        ballSpeedTMP.text = $"<color=#{colorCode}> {Managers.Game.ThrowType.ToString()} : {Managers.Game.Speed.ToString("F2")}Km/s </color>";
+
+        // HTML 색상 문자열을 Color 객체로 변환합니다.
+        Color color;
+        if (ColorUtility.TryParseHtmlString("#" + colorCode, out color))
+        {
+            SpeedSlider.fillAmount = Managers.Game.Speed / 300.0f;
+            SpeedSlider.color = color;  // Color 객체를 사용하여 SpeedSlider.color 속성을 설정합니다.
+        }
+        else
+        {
+            Debug.LogWarning("Invalid color code: " + colorCode);
+        }
 
     }
 

@@ -164,7 +164,8 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
 
             OffButton();
             popupButton.gameObject.RemoveBindEvent(GetItem);
-            popupButton.gameObject.BindEvent(GetItemAndPaid);
+            //popupButton.gameObject.BindEvent(GetItemAndPaid);
+            popupButton.gameObject.BindEvent(Paid);
             starTMP.text = Managers.Game.GetPrice(_itemSO.grade).ToString();
             popupButtonIcon.sprite = starIcon;
         }
@@ -224,11 +225,33 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
 
 
             //ClosePopupUI();
-            Managers.Ad.ShowRewardedAd(GetRewardAdAndPaysItemRemoveActions);
+            //Managers.Ad.ShowRewardedAd(GetRewardAdAndPaysItemRemoveActions);
 
             Debug.Log("TODO ±¤°í or µ·");
         }
 
+    }
+
+    private void Paid()
+    {
+        if (Managers.Game.CanPay(Managers.Game.GetPrice(_itemSO.grade)) == false)
+        {
+            return;
+        }
+        else
+        {
+            popupButton.interactable = Managers.Ad.CanShowRewardAd();
+
+            if (Managers.Game.PlayerInfo.star > Managers.Game.GetPrice(_itemSO.grade))
+            {
+                Managers.Game.GetItem(_itemSO.id);
+                Managers.Game.MinusStar(Managers.Game.GetPrice(_itemSO.grade));
+                //popupButton.gameObject.RemoveBindEvent(GetItemAndPaid);
+                popupButton.gameObject.RemoveBindEvent(Paid);
+                ButtonUpdate();
+                _lockUIAction?.Invoke();
+            }
+        }
     }
     private void GetRewardAdsItemRemoveActions()
     {

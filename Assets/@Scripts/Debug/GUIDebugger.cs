@@ -47,6 +47,11 @@ public class GUIDebugger : MonoBehaviour
     private bool showManagerState = false; // GUI 창 표시 여부
     private bool isResizing = false;
     private Vector2 lastMousePosition = Vector2.zero;
+
+    private bool testBatButton = false;
+    private bool testBallButton1 = false;
+    private bool testSkillButton1 = false;
+    private bool testCSOButton1 = false;
     void OnGUI()
     {
         if (isManagerLoading == false)
@@ -196,6 +201,30 @@ public class GUIDebugger : MonoBehaviour
             //fontColor.b = GUILayout.HorizontalSlider(fontColor.b, 0, 1, GUILayout.Width(400), GUILayout.Height(50));
             //fontColor.a = GUILayout.HorizontalSlider(fontColor.a, 0, 1, GUILayout.Width(400), GUILayout.Height(50));
         }
+
+        // 여기에 버튼 4개 추가
+        GUILayout.BeginHorizontal();  // 수평 레이아웃 시작
+        if (GUILayout.Button("BatTest", GUILayout.Width(200), GUILayout.Height(50)))
+        {
+            Managers.Game.GetAllBat();
+        }
+        if (GUILayout.Button("BallTest", GUILayout.Width(200), GUILayout.Height(50)))
+        {
+            Managers.Game.GetAllBall();
+        }
+        GUILayout.EndHorizontal();  // 수평 레이아웃 끝
+
+        GUILayout.BeginHorizontal();  // 수평 레이아웃 시작
+        if (GUILayout.Button("SkillTest", GUILayout.Width(200), GUILayout.Height(50)))
+        {
+            Managers.Game.GetAllSkill();
+        }
+        if (GUILayout.Button("CSOTest", GUILayout.Width(200), GUILayout.Height(50)))
+        {
+            Managers.Game.GetAllCSO();
+        }
+        GUILayout.EndHorizontal();  // 수평 레이아웃 끝
+
 
         GUILayout.EndScrollView();
 

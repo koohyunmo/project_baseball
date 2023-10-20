@@ -400,7 +400,7 @@ public class Bat : MonoBehaviour
     IEnumerator co_BatMoveReplay()
     {
 
-        Debug.Log("TODO : 内风凭 包府");
+        //Debug.Log("TODO : 内风凭 包府");
 
         var data = Managers.Game.batMoveReplayData;
 
@@ -410,7 +410,7 @@ public class Bat : MonoBehaviour
             float waitTime = data[i + 1].time - data[i].time;
             HitColiderTransform.localPosition = data[i].position;
             float elapsedTime = 0f;
-            Debug.Log(waitTime);
+            //Debug.Log(waitTime);
 
             while (elapsedTime < waitTime)
             {

@@ -303,7 +303,7 @@ public class Baller : MonoBehaviour
 
 
         speed = speed + (speed * Managers.Game.HitScore / 500);
-        speed +=  Mathf.Clamp((Managers.Game.GameScore / 1000),0,50);
+        //speed +=  Mathf.Clamp((Managers.Game.GameScore / 1000),0,50);
 
         Managers.Game.SetBallInfo(speed, _throwType);
 

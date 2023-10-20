@@ -21,7 +21,7 @@ public class RouletteController : MonoBehaviour
 
     [Header("돌림판 셋팅")]
     public float spinSpeed = 3000.0f; // 초당 회전 속도
-    private bool isSpinning = false;  // 룰렛이 회전 중인지 확인하는 플래그
+    public bool isSpinning { get; private set; } = false;  // 룰렛이 회전 중인지 확인하는 플래그
     private float currentSpeed;       // 현재 회전 속도
     public float deceleration = 100.0f; // 감속률
 
@@ -212,6 +212,11 @@ public class RouletteController : MonoBehaviour
 
         Define.GetType get = Managers.Game.GetItem(id);
 
+        if(data == Define.Grade.Legendary)
+        {
+            get = Define.GetType.duplicate;
+        }
+
 
         //resultText.text = $"<color=#{colorHex}> Prize: {Managers.Localization.GetLocalizedValue(id)}</color>";
         string name = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(id).name;
@@ -234,13 +239,13 @@ public class RouletteController : MonoBehaviour
                     star = 30;
                     break;
                 case Define.Grade.Rare:
-                    star = 100;
+                    star = 50;
                     break;
                 case Define.Grade.Epic:
-                    star = 300;
+                    star = 100;
                     break;
                 case Define.Grade.Legendary:
-                    star = 500;
+                    star = 300;
                     break;
             }
 
@@ -264,7 +269,6 @@ public class RouletteController : MonoBehaviour
             case Define.GetType.duplicate:
                 popup.InitData(data, star);
                 break;
-
         }
 
 

@@ -32,7 +32,7 @@ public class UI_StorePopup : UI_PopupHasBButton
         Bind<TextMeshProUGUI>(typeof(TMPs));
         BindObject((typeof(GameObjects)));
         BindButton(typeof(Buttons));
-        GetButton((int)Buttons.B_Back).gameObject.BindEvent(()=>Managers.UI.ClosePopupUI(this));
+        GetButton((int)Buttons.B_Back).gameObject.BindEvent(ClosePopup);
         
 
         rc = GetObject((int)GameObjects.RouletteController).GetComponent<RouletteController>();
@@ -42,12 +42,24 @@ public class UI_StorePopup : UI_PopupHasBButton
         return true;
     }
 
+    private void ClosePopup()
+    {
+        if(rc.isSpinning)
+        {
+            return;
+        }
+
+        ClosePopupUI();
+
+    }
+
     IEnumerator co_UpdateUI()
     {
         while (true)
         {
             yield return new WaitForSeconds(1f);
             Get<TextMeshProUGUI>((int)TMPs.TimeTMP).text = Managers.Game.RTimeDisplay();
+           
         }
     }
 

@@ -15,6 +15,7 @@ public class UI_RoulletItemInfoPopup : UI_InfoPopup
     Define.Grade _grade;
     public bool _isduplicate = false;
     public long _gold;
+    public Sprite startIcon;
 
     private void Bind()
     {
@@ -59,15 +60,18 @@ public class UI_RoulletItemInfoPopup : UI_InfoPopup
             popupInfoText.text = Managers.Localization.GetLocalizedValue(_itemSO.name);
             popupButtonText.text = Managers.Localization.GetLocalizedValue(LanguageKey.confirm.ToString());
             popupIcon.sprite = _itemSO.icon;
+            Bind();
         }
         else
         {
-
+            Bind();
+            popupIcon.sprite = startIcon;
+            _title.text = Managers.Localization.GetLocalizedValue(LanguageKey.bronze.ToString());
             popupInfoText.text = $"duplicate !\n {_grade} : {_gold} ";
             popupButtonText.text = Managers.Localization.GetLocalizedValue(LanguageKey.confirm.ToString());
         }
 
-        Bind();
+        
         return true;
     }
 

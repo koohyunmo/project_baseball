@@ -56,6 +56,9 @@ public class PlayerInfo
     public string equipSkillId;
     public Dictionary<Define.League, long> playerBestScore = new Dictionary<Define.League, long>();
     public Dictionary<Define.League, bool> playerClearLeague = new Dictionary<Define.League, bool>();
+    public bool batAllReward;
+    public bool ballAllReward;
+    public bool csoAllRewawrd;
 }
 
 

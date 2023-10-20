@@ -21,73 +21,71 @@ MonoBehaviour:
     m_Address: hit3
     m_ReadOnly: 0
     m_SerializedLabels:
-    - PreLoad
     - Sound
   - m_GUID: e2e81a9d8f5a30f4288fbab977cc1f8d
     m_Address: hit2
     m_ReadOnly: 0
     m_SerializedLabels:
-    - PreLoad
     - Sound
   - m_GUID: 24eed040083d3a94382b0d86636f87a4
     m_Address: hit1
     m_ReadOnly: 0
     m_SerializedLabels:
-    - PreLoad
     - Sound
   - m_GUID: 5f1ed4fc0255f79478aa85bdb56cefe2
     m_Address: swing1
     m_ReadOnly: 0
     m_SerializedLabels:
-    - PreLoad
     - Sound
   - m_GUID: 82fc9805babba8f449e5d67e2e24787f
     m_Address: ui_menu_button_click_21
     m_ReadOnly: 0
     m_SerializedLabels:
-    - PreLoad
     - Sound
   - m_GUID: 1b5881000bd157c4e8a956219241ca24
     m_Address: collect_item_02
     m_ReadOnly: 0
     m_SerializedLabels:
-    - PreLoad
     - Sound
   - m_GUID: 2eb3dadce8177471996f94d099823504
     m_Address: Collectible01
     m_ReadOnly: 0
     m_SerializedLabels:
-    - PreLoad
     - Sound
   - m_GUID: d4bc37fb8c671664fbcd5fb16e33d9e0
     m_Address: strike
     m_ReadOnly: 0
     m_SerializedLabels:
-    - PreLoad
     - Sound
   - m_GUID: 8425baca9b8ae8c44b4aa734eb022d3c
     m_Address: ui_menu_button_click_22
     m_ReadOnly: 0
     m_SerializedLabels:
-    - PreLoad
     - Sound
   - m_GUID: 68e0a9200ddbfc74791fc4654125265e
     m_Address: retro_ui_menu_blip_click_01
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sound
-    - PreLoad
   - m_GUID: d9381c7da00e01a4b84786973215b8ff
     m_Address: retro_ui_menu_blip_click_02
     m_ReadOnly: 0
     m_SerializedLabels:
-    - PreLoad
     - Sound
   - m_GUID: 1453f7dd357d9904aa8e6ce5fe96308e
     m_Address: Click05
     m_ReadOnly: 0
     m_SerializedLabels:
-    - PreLoad
+    - Sound
+  - m_GUID: a27a67972e48444488536e499f79c758
+    m_Address: Win05
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+  - m_GUID: 8f03019609be628409b9f16df0badfa5
+    m_Address: Lose05
+    m_ReadOnly: 0
+    m_SerializedLabels:
     - Sound
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9c2d91b0a86c0bb4b9bbf0d47449c95f, type: 2}

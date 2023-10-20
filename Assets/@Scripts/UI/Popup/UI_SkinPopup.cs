@@ -41,6 +41,11 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
         Content_6,
     }
 
+    enum Images
+    {
+        Background
+    }
+
     enum Sliders
     {
         Slider
@@ -81,6 +86,7 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
         Bind<Slider>(typeof(Sliders));
         BindObject(typeof(Grids));
         Bind<ScrollRect>(typeof(ScrollRects));
+        Bind<Image>(typeof(Images));
 
         _grids[0] = GetObject((int)Grids.Content_1);
         _grids[1] = GetObject((int)Grids.Content_2);
@@ -132,6 +138,9 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
                 break;
         }
 
+
+        GetImage((int)Images.Background).gameObject.BindEvent(GetReward);
+
         return true;
     }
 
@@ -155,6 +164,21 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
         MakeItem();
     }
 
+
+    private void GetReward()
+    {
+        switch (_type)
+        {
+            case ScollViewType.Ball:
+                Managers.Game.GetBallReward();
+                break;
+            case ScollViewType.Bat:
+                Managers.Game.GetBaatReward();
+                break;
+            case ScollViewType.Skill:
+                break;
+        }
+    }
     private void OnClickCategory(ScollViewType type)
     {
         if (_grids == null)
@@ -217,6 +241,23 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
 
         Slider.value = (hasItemCount / (float)skinCount);
         SliderTMP.text = $"{Managers.Localization.GetLocalizedValue(_type.ToString().ToLower())} {hasItemCount} / {skinCount}";
+
+        if(Slider.value >= 1.0f)
+        {
+            switch (_type)
+            {
+                case ScollViewType.Ball:
+                    SliderTMP.text = " 보상을 받으세요 ";
+                    break;
+                case ScollViewType.Bat:
+                    SliderTMP.text = " 보상을 받으세요 ";
+                    break;
+                case ScollViewType.Skill:
+                    break;
+
+            }
+          
+        }
 
         UpdateStar();
     }

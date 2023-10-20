@@ -35,6 +35,14 @@ public class SoundManager
 
                 _audioSources[(int)Define.Sound.Bgm].loop = true;
                 //_audioSources[(int)Define.Sound.SubBgm].loop = true;
+
+                Managers.Resource.LoadAllAsync<AudioClip>("Sound", Define.Prefabs.None, (System.Action<string, int, int>)((key, count, totalCount) =>
+                {
+                    if (count == totalCount)
+                    {
+                        Debug.Log($"사운드 로드 완료 {count}/{totalCount}");
+                    }
+                }));
             }
         }
 
@@ -50,6 +58,8 @@ public class SoundManager
             isSound = true;
             ES3.Save<bool>("isSound", isSound, settingPath);
         }
+
+
     }
 
     public bool GetSound()
@@ -120,7 +130,15 @@ public class SoundManager
                 audioSource.pitch = pitch;
                 audioSource.clip = audioClip;
                 //if (Managers.Game.EffectSoundOn)
-                audioSource.PlayOneShot(audioClip);
+                if (audioSource.enabled == true && audioSource.gameObject.activeSelf == true)
+                    audioSource.PlayOneShot(audioClip);
+                else
+                {
+                    audioSource.gameObject.SetActive(true);
+                    audioSource.enabled = true;
+                    audioSource.PlayOneShot(audioClip);
+                }
+                    
             });
         }
     }

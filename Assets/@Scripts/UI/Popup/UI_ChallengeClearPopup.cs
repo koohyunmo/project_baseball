@@ -22,12 +22,16 @@ public class UI_ChallengeClearPopup : UI_InfoPopup
 
         if (_isFailed == false)
         {
+            Managers.Sound.Play(Define.Sound.Effect, "Win05");
+
             popupInfoText.text = "<color=green>COMPLETE</color>";
             popupButtonText.text = "OK";
             popupButton.gameObject.BindEvent(ClearButton);
         }
         else
         {
+            Managers.Sound.Play(Define.Sound.Effect, "Lose05");
+
             popupIcon.color = Color.red;
             popupInfoText.text = "<color=red>FAIL</color>";
             popupButtonText.text = "OK";

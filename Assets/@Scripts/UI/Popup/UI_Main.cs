@@ -23,6 +23,7 @@ public class UI_Main : UI_Popup
         B_PrevLeague,
         B_Language,
         B_BatOption,
+        B_Star
     }
 
     enum TMPS
@@ -66,6 +67,7 @@ public class UI_Main : UI_Popup
         GetButton((int)Buttons.B_Challenge).gameObject.BindEvent(B_ChanllengeClick);
         GetButton((int)Buttons.B_Store).gameObject.BindEvent(B_StoreClick);
         GetButton((int)Buttons.B_Options).gameObject.BindEvent(B_OptionsClick);
+        GetButton((int)Buttons.B_Star).gameObject.BindEvent(()=>Managers.UI.ShowPopupUI<UI_StarShop>());
         GetImage((int)Images.StartDrag).gameObject.BindEvent(null, OnDrag, Define.UIEvent.Drag);
 
         leagueTMP.text = Managers.Game.League.ToString();

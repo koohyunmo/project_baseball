@@ -1141,6 +1141,7 @@ MonoBehaviour:
   _title: {fileID: 3544166367321318219}
   _isduplicate: 0
   _gold: 0
+  startIcon: {fileID: 21300000, guid: aba7d494621d98743bf208e1d20ea46a, type: 3}
 --- !u!1 &8908839772465220972
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ public class GameScene : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        Managers.Init();
+        //Managers.Init();
         LoadObj();
     }
 
@@ -19,7 +19,6 @@ public class GameScene : MonoBehaviour
         Managers.Resource.LoadAllAsync<Object>("PreLoad", Define.Prefabs.None, (System.Action<string, int, int>)((key, count, totalCount) =>
         {
            
-
             if (count == totalCount)
             {
                 Debug.Log($"로드 완료 {count}/{totalCount}");
@@ -30,6 +29,7 @@ public class GameScene : MonoBehaviour
                 Managers.Resource.GetLoadBytes();
             }
         }));
+
     }
 
     void StartLoaded()

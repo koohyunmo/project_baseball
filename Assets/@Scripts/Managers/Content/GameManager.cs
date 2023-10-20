@@ -57,13 +57,128 @@ public class GameManager
         }
     }
 
+    public void GetCSOReward()
+    {
+        bool rewarded = Managers.Game.PlayerInfo.csoAllRewawrd;
+        string rewardID = "BAT_35";
 
+#if UNITY_EDITOR
+        rewarded = false;
+#endif
+
+        if (rewarded)
+            return;
+
+        var clearCount = Mathf.Clamp(Managers.Game.GameDB.challengeClearCount, 0, Managers.Game.GameDB.challengeData.Count);
+        float ratio = clearCount / (float)Managers.Game.GameDB.challengeData.Count;
+
+        if (ratio >= 1 && rewarded == false)
+        {
+            Managers.Game.PlayerInfo.csoAllRewawrd = true;
+            var type = Managers.Game.GetItem(rewardID);
+            var popup = Managers.UI.ShowPopupUI<UI_RoulletItemInfoPopup>();
+
+            switch (type)
+            {
+                case Define.GetType.Failed:
+                    throw new Exception("아이템 없음?");
+                    break;
+                case Define.GetType.Success:
+                    popup.InitData(rewardID);
+                    break;
+                case Define.GetType.duplicate:
+                    Managers.Game.GetStar(500);
+                    popup.InitData(Define.Grade.Legendary, 500);
+                    break;
+            }
+        }
+
+    }
+
+    public void GetBallReward()
+    {
+        bool rewarded = Managers.Game.PlayerInfo.ballAllReward;
+        string rewardID = "SKILL_2";
+
+#if UNITY_EDITOR
+        rewarded = false;
+#endif
+
+        if (rewarded)
+            return;
+
+        var clearCount = Mathf.Clamp(Managers.Game.GameDB.playerBalls.Count, 0, Managers.Resource.ballOrderList.Count);
+        float ratio = clearCount / (float)Managers.Resource.ballOrderList.Count;
+
+        if (ratio >= 1 && rewarded == false)
+        {
+            Managers.Game.PlayerInfo.ballAllReward = true;
+            var type = Managers.Game.GetItem(rewardID);
+            var popup = Managers.UI.ShowPopupUI<UI_RoulletItemInfoPopup>();
+
+            switch (type)
+            {
+                case Define.GetType.Failed:
+                    throw new Exception("아이템 없음?");
+                    break;
+                case Define.GetType.Success:
+                    popup.InitData(rewardID);
+                    break;
+                case Define.GetType.duplicate:
+                    Managers.Game.GetStar(500);
+                    popup.InitData(Define.Grade.Legendary, 500);
+                    break;
+            }
+
+        }
+
+    }
+
+    public void GetBaatReward()
+    {
+        bool rewarded = Managers.Game.PlayerInfo.batAllReward;
+        string rewardID = "SKILL_3";
+
+#if UNITY_EDITOR
+        rewarded = false;
+#endif
+
+        if (rewarded)
+            return;
+
+        var clearCount = Mathf.Clamp(Managers.Game.GameDB.playerBats.Count, 0, Managers.Resource.batOrderList.Count);
+        float ratio = clearCount / (float)Managers.Resource.batOrderList.Count;
+
+        if (ratio >= 1 && rewarded == false)
+        {
+            Managers.Game.PlayerInfo.batAllReward = true;
+            var type = Managers.Game.GetItem(rewardID);
+            var popup = Managers.UI.ShowPopupUI<UI_RoulletItemInfoPopup>();
+
+            switch (type)
+            {
+                case Define.GetType.Failed:
+                    throw new Exception("아이템 없음?");
+                    break;
+                case Define.GetType.Success:
+                    popup.InitData(rewardID);
+                    break;
+                case Define.GetType.duplicate:
+                    Managers.Game.GetStar(500);
+                    popup.InitData(Define.Grade.Legendary, 500);
+                    break;
+            }
+
+        }
+
+    }
 
     public GameState GameState { get { return _gameState; } private set { _gameState = value; } }
 
     public float ReplaySlowMode { get { return 0.25f; } private set { } }
 
     public DateTime roulletTime;
+    public DateTime adBonusTime;
 
     public float Speed { get { return (_speed * 3600) * 0.001f; } private set { _speed = value; } }
     public float _speed = 0;
@@ -158,6 +273,18 @@ public class GameManager
 
     public Action UpdateStar { get; private set; }
 
+    public enum HitScoreType
+    {
+        NONE,
+        BAD,
+        COOL,
+        GOOD,
+        GREAT,  // 'E'를 제거했습니다.
+        PERFECT  // 'A'를 'E'로 변경했습니다.
+    }
+
+    public HitScoreType hitScoreType { get; private set; } = HitScoreType.NONE;
+
     public async void Init()
     {
         _path = Application.persistentDataPath + "/SaveFile.es3";
@@ -186,6 +313,7 @@ public class GameManager
         StateUpdate();
 
         roulletTime = ES3.Load<DateTime>("RTime");
+        adBonusTime = ES3.Load<DateTime>("AdBonus");
 
         Managers.Ad.Init();
 
@@ -230,9 +358,11 @@ public class GameManager
 
     public void GetStar(long star)
     {
+
         PlayerInfo.star += star;
         Math.Clamp(PlayerInfo.star, 0, long.MaxValue);
         SaveGame();
+        Managers.Sound.Play(Define.Sound.Effect, "Collectible01");
 
         UpdateStar?.Invoke();
     }
@@ -331,7 +461,7 @@ public class GameManager
             case GameState.Home:
                 {
 
-                    
+
                     Managers.Obj.DespawnAll();
                     batMoveReplayData.Clear();
                     MainCam.MoveOriginaPos();
@@ -353,7 +483,7 @@ public class GameManager
                         _bat.ColiderObjOff();
 
 
-                  
+
 
 
                 }
@@ -414,7 +544,7 @@ public class GameManager
 
                     });
 
-                   
+
                 }
                 break;
         }
@@ -467,7 +597,7 @@ public class GameManager
     {
         if (DateTime.Now >= roulletTime)
         {
-            roulletTime = DateTime.Now.AddMinutes(1);
+            roulletTime = DateTime.Now.AddHours(2);
             ES3.Save<DateTime>("RTime", roulletTime);
             return true;
         }
@@ -475,6 +605,63 @@ public class GameManager
         return false;
     }
 
+    public bool ClickAdButton()
+    {
+        if (DateTime.Now >= adBonusTime)
+        {
+
+            Managers.Ad.ShowRewardedAd(GetAdBonus);
+            adBonusTime = DateTime.Now.AddMinutes(1);
+            ES3.Save<DateTime>("AdBonus", adBonusTime);
+            return true;
+        }
+
+        return false;
+    }
+
+    
+    private void GetAdBonus()
+    {
+
+        Managers.Game.GetStar(300);
+
+        var popup = Managers.UI.ShowPopupUI<UI_RoulletItemInfoPopup>();
+        popup.InitData(Define.Grade.Epic, 300);
+
+        SaveGame();
+
+    }
+
+    public bool CanCllickAdButton()
+    {
+        if (DateTime.Now >= adBonusTime)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public string ADBounusTimeDisplay()
+    {
+        TimeSpan timeRemaining; // 남은 시간
+
+        timeRemaining = adBonusTime - DateTime.Now; // 남은 시간 계산
+
+        string remainTimeText = "";
+
+        // 남은 시간을 문자열로 변환하여 화면에 표시
+        // 남은 시간이 없거나 지난 경우
+        if (timeRemaining.TotalSeconds <= 0)
+        {
+            return remainTimeText = "AD";
+        }
+
+        // 남은 시간을 문자열로 변환하여 화면에 표시
+        return remainTimeText = string.Format("{0:D2}:{1:D2}:{2:D2}", timeRemaining.Hours, timeRemaining.Minutes, timeRemaining.Seconds);
+
+    }
     public string RTimeDisplay()
     {
         TimeSpan timeRemaining; // 남은 시간
@@ -534,24 +721,28 @@ public class GameManager
 
         if (score < 50 && score > 0)
         {
+            hitScoreType = HitScoreType.BAD;
             _hitType = HitType.A;
             HitScore = 1 + hitBonus;
             SwingCount++;
         }
         else if (score >= 51 && score < 80)
         {
+            hitScoreType = HitScoreType.COOL;
             _hitType = HitType.A;
             HitScore += 1 + hitBonus;
             SwingCount++;
         }
         else if (score >= 80 && score < 95)
         {
+            hitScoreType = HitScoreType.GOOD;
             _hitType = HitType.B;
             HitScore += 2 + hitBonus;
             SwingCount++;
         }
         else if (score >= 95 && score < 100)
         {
+            hitScoreType = HitScoreType.GREAT;
             _hitType = HitType.D;
             HitScore += 4 + hitBonus;
             SwingCount++;
@@ -559,6 +750,7 @@ public class GameManager
         }
         else if (score >= 100 && score <= float.MaxValue)
         {
+            hitScoreType = HitScoreType.PERFECT;
             _hitType = HitType.D;
             HitScore += 10 + hitBonus;
             SwingCount++;
@@ -606,7 +798,7 @@ public class GameManager
 
         var itemSO = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(key);
 
-        if(!itemSO)
+        if (!itemSO)
         {
             Debug.LogError("없는 아이템");
             Managers.Sound.Play(Define.Sound.Effect, "");
@@ -620,7 +812,7 @@ public class GameManager
             Managers.Sound.Play(Define.Sound.Effect, "Collectible01");
             return Define.GetType.duplicate;
         }
-            
+
 
         var type = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(key).type;
 
@@ -858,7 +1050,7 @@ public class GameManager
         //string jsonStr = JsonConvert.SerializeObject(SaveData);
         //File.WriteAllTextAsync(_path, jsonStr);
 
-        ES3.Save<GameDB>(Keys.DB.GameDB.ToString(),SaveData);
+        ES3.Save<GameDB>(Keys.DB.GameDB.ToString(), SaveData);
         Debug.Log($"Save Game Completed : {_path}");
     }
 
@@ -952,9 +1144,10 @@ public class GameManager
             _gameData.challengeData = challengeData;
 
             // 옵션설정
-            ES3.Save<float>("Gamdo", 5f,_settingPath);
+            ES3.Save<float>("Gamdo", 5f, _settingPath);
             ES3.Save<Language>("Lang", Language.EN, _settingPath);
             ES3.Save<DateTime>("RTime", DateTime.Now);
+            ES3.Save<DateTime>("AdBonus", DateTime.Now);
 
 
             SaveGame();
@@ -1035,7 +1228,7 @@ public class GameManager
             EquipBatId = key;
             var batSO = Managers.Resource.GetItemScriptableObjet<BatScriptableObject>(key);
             BatType = batSO.batType;
-           
+
             BatSetting(batSO);
         }
         else
@@ -1196,5 +1389,47 @@ public class GameManager
         _batSpeed = setSpeed;
     }
     #endregion
+
+#if UNITY_EDITOR
+    #region 테스트 코드
+
+    public void GetAllBat()
+    {
+        foreach(string key in Managers.Resource.batOrderList)
+        {
+            GetItem(key);
+        }
+    }
+
+    public void GetAllBall()
+    {
+        foreach (string key in Managers.Resource.ballOrderList)
+        {
+            GetItem(key);
+        }
+    }
+
+    public void GetAllSkill()
+    {
+        foreach (string key in Managers.Resource.skillOrderList)
+        {
+            GetItem(key);
+        }
+    }
+
+    public void GetAllCSO()
+    {
+        foreach (string key in Managers.Resource.challengeOrderList)
+        {
+            _gameData.challengeData[key] = true;
+            _gameData.challengeClearCount += 1;
+            SaveGame();
+        }
+    }
+
+
+    #endregion
+
+#endif
 
 }

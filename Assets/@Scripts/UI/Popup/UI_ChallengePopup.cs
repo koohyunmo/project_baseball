@@ -53,7 +53,8 @@ public class UI_ChallengePopup : UI_ContentPopup
         _grid = GetObject((int)GameObejcts.Content).transform;
 
         Managers.Game.SetLobbyUIUpdate(UpdateUI);
-
+        // 챌린지 보상
+        Get<Slider>((int)Sliders.Slider).gameObject.BindEvent(Managers.Game.GetCSOReward);
 
         Clear();
         MakeItme();
@@ -64,13 +65,21 @@ public class UI_ChallengePopup : UI_ContentPopup
 
     private void B_BackClick()
     {
-        Managers.UI.ClosePopupUI(this);
+        ClosePopupUI();
     }
 
     private void UpdateUI()
     {
-        Get<Slider>((int)Sliders.Slider).value = Managers.Game.GameDB.challengeClearCount / (float)Managers.Game.GameDB.challengeData.Count;
-        Get<TextMeshProUGUI>((int)TMPs.SliderTMP).text = $"{Managers.Localization.GetLocalizedValue(LanguageKey.challenges.ToString())} {Managers.Game.GameDB.challengeClearCount} / {Managers.Game.GameDB.challengeData.Count}";
+        var clearCount = Mathf.Clamp(Managers.Game.GameDB.challengeClearCount, 0, Managers.Game.GameDB.challengeData.Count);
+
+        Get<Slider>((int)Sliders.Slider).value = clearCount / (float)Managers.Game.GameDB.challengeData.Count;
+        Get<TextMeshProUGUI>((int)TMPs.SliderTMP).text = $"{Managers.Localization.GetLocalizedValue(LanguageKey.challenges.ToString())} {clearCount} / {Managers.Game.GameDB.challengeData.Count}";
+
+
+        if(Get<Slider>((int)Sliders.Slider).value >= 1 && Managers.Game.PlayerInfo.csoAllRewawrd == false)
+        {
+            Get<TextMeshProUGUI>((int)TMPs.SliderTMP).text = " 보상을 받으세요 ";          
+        }
 
     }
 
