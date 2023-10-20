@@ -234,7 +234,7 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
                 hasItemCount = Managers.Game.GameDB.playerBats.Count;
                 break;
             case ScollViewType.Skill:
-                skinCount = Managers.Resource.skillOrderList.Count;
+                skinCount = Managers.Resource.skillOrderList.Count-1;
                 hasItemCount = Managers.Game.GameDB.playerSkills.Count;
                 break;
         }
@@ -247,10 +247,10 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
             switch (_type)
             {
                 case ScollViewType.Ball:
-                    SliderTMP.text = " 보상을 받으세요 ";
+                    SliderTMP.text = Managers.Localization.GetLocalizedValue(LanguageKey.receivereward.ToString());
                     break;
                 case ScollViewType.Bat:
-                    SliderTMP.text = " 보상을 받으세요 ";
+                    SliderTMP.text = Managers.Localization.GetLocalizedValue(LanguageKey.receivereward.ToString());
                     break;
                 case ScollViewType.Skill:
                     break;

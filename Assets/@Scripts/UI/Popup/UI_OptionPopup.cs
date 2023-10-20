@@ -15,12 +15,12 @@ public class UI_OptionPopup : UI_Popup
     private enum TMPS
     {
         Title,
-        ButtonText
+        //ButtonText
     }
 
     private enum Buttons
     {
-        OkButton
+        //OkButton
     }
 
     protected TextMeshProUGUI titleTMP;
@@ -46,14 +46,14 @@ public class UI_OptionPopup : UI_Popup
         BindButton(typeof(Buttons));
 
         titleTMP = Get<TextMeshProUGUI>((int)TMPS.Title);
-        applyButton = GetButton((int)Buttons.OkButton);
+        //applyButton = GetButton((int)Buttons.OkButton);
 
 
         GetImage((int)Images.BG).gameObject.BindEvent(ClosePopopButton);
         GetImage((int)Images.Close).gameObject.BindEvent(ClosePopopButton);
-        applyButton.gameObject.BindEvent(ClickOkButton);
+        //applyButton.gameObject.BindEvent(ClickOkButton);
 
-        Get<TextMeshProUGUI>((int)(TMPS.ButtonText)).text = Managers.Localization.GetLocalizedValue(LanguageKey.apply.ToString());
+        //Get<TextMeshProUGUI>((int)(TMPS.ButtonText)).text = Managers.Localization.GetLocalizedValue(LanguageKey.apply.ToString());
     }
 
     protected virtual void ClickOkButton()

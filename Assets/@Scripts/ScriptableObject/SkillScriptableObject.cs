@@ -9,6 +9,10 @@ public class SkillScriptableObject : ItemScriptableObject
 
     public Define.HawkeyeLevel HawkeyeLevel;
     public Define.SkillType SkillType;
+    public float titanNum = 0;
+    public int bonusNum = 0;
+    public float powerNum = 0;
+
 
     public override void Settings()
     {

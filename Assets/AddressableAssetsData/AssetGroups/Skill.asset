@@ -17,8 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: a278fe498aa6c5743a37bf6e76dc6789
   m_SerializeEntries:
-  - m_GUID: ae81e0df665acf344ab15f728db0e759
-    m_Address: SKILL_0
+  - m_GUID: 7b1f8a0d05e8a214b8eae31bbe127b93
+    m_Address: SKILL_4
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
@@ -29,14 +29,56 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     - Skill
-  - m_GUID: b85b35001b309e847a15e95b814a4ebe
-    m_Address: SKILL_3
+  - m_GUID: b5108b53dc73e6140812165fba87440b
+    m_Address: SKILL_5
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     - Skill
-  - m_GUID: 7b1f8a0d05e8a214b8eae31bbe127b93
-    m_Address: SKILL_4
+  - m_GUID: ae81e0df665acf344ab15f728db0e759
+    m_Address: SKILL_0
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Skill
+  - m_GUID: e4b9a9b80606ea348b7c0170b614f4dd
+    m_Address: SKILL_6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Skill
+  - m_GUID: bb0e4a7bf56031a4e99118486ac60d56
+    m_Address: SKILL_7
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Skill
+  - m_GUID: aaa454eb1ff32764b9f0863b81244154
+    m_Address: SKILL_8
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Skill
+  - m_GUID: fff332e80528a8f4bb1892aa2e622659
+    m_Address: SKILL_9
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Skill
+  - m_GUID: 0eb26c88eb59da74d8fdc5bf179c10a5
+    m_Address: SKILL_10
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Skill
+  - m_GUID: 93aa1b48ba0784a46b5194f2a68c96aa
+    m_Address: SKILL_11
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    - Skill
+  - m_GUID: 24aa9c53ba2780c46bf651321aeaf826
+    m_Address: SKILL_12
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad

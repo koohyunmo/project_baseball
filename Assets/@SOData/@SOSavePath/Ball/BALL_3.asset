@@ -17,4 +17,4 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 7c26c639c00c2af45b1548b749147fc7, type: 3}
   name: ball_4
   type: 1
-  grade: 0
+  grade: 2

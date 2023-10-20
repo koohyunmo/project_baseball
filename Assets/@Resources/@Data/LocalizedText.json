@@ -154,12 +154,126 @@
             "en": "Confirm",
             "ko": "확인",
             "jp": "確認"
+        },
+        "buy": {
+            "en": "Buy",
+            "ko": "구매하기",
+            "jp": "購入"
+        },
+        "star": {
+            "en": "Star",
+            "ko": "스타",
+            "jp": "スター"
+        },
+        "power": {
+            "en": "Power",
+            "ko": "파워",
+            "jp": "パワー"
+        },
+        "shop": {
+            "en": "Shop",
+            "ko": "상점",
+            "jp": "ショップ"
+        },
+        "duplicate": {
+            "en": "duplicate",
+            "ko": "중복됨",
+            "jp": "重複"
+        },
+        "common": {
+            "en": "Common",
+            "ko": "커먼",
+            "jp": "コモン"
+        },
+        "uncommon": {
+            "en": "Uncommon",
+            "ko": "언커먼",
+            "jp": "アンコモン"
+        },
+        "rare": {
+            "en": "Rare",
+            "ko": "레어",
+            "jp": "レア"
+        },
+        "epic": {
+            "en": "Epic",
+            "ko": "에픽",
+            "jp": "エピック"
+        },
+        "legendary": {
+            "en": "Legendary",
+            "ko": "레전더리",
+            "jp": "レジェンダリ"
+        },
+        "none": {
+            "en": "NONE",
+            "ko": "없음",
+            "jp": "なし"
+        },
+        "getprize": {
+            "en": "Get Prize",
+            "ko": "상품 받기",
+            "jp": "賞品を受け取る"
+        },
+        "receivereward": {
+            "en": "Receive your reward",
+            "ko": "보상을 받으세요",
+            "jp": "報酬を受け取ってください"
         }
+        
+        
+        
     },
     "skills": {
         "hawkeye1": {
             "en": "Hawk-Eye is a batter's ability to see the pitcher's throw clearly, making it easier to hit the ball by understanding its path.",
-            "ko": "Hawk-Eye는 타자가 투수의 던진 공을 명확하게 볼 수 있는 능력으로, 공의 경로를 이해함으로써 공을 치기 쉬워집니다."
+            "ko": "Hawk-Eye는 타자가 투수의 던진 공을 명확하게 볼 수 있는 능력으로, 공의 경로를 이해함으로써 공을 치기 쉬워집니다.",
+            "jp": "ホークアイはバッターが投手の投球をはっきりと見る能力で、ボールの軌道を理解することで打つことが容易になります。"
+        },
+        "titanstrike1": {
+            "en": "Titan Strike enlarges your bat, increasing its size by 2x and making it easier to hit the ball.",
+            "ko": "타이탄 스트라이크는 배트를 2배로 확대하여 공을 쳐내기 쉽게 만듭니다.",
+            "jp": "タイタンストライクはバットを2倍に拡大し、ボールを打つのが簡単になります。"
+        },
+        "titanstrike2": {
+            "en": "Titan Strike enlarges your bat, increasing its size by 1.5x and making it easier to hit the ball.",
+            "ko": "타이탄 스트라이크는 배트를 1.5배로 확대하여 공을 쳐내기 쉽게 만듭니다.",
+            "jp": "タイタンストライクはバットを1.5倍に拡大し、ボールを打つのが簡単になります。"
+        },
+        "titanstrike3": {
+            "en": "Titan Strike enlarges your bat, increasing its size by 1.2x and making it easier to hit the ball.",
+            "ko": "타이탄 스트라이크는 배트를 1.2배로 확대하여 공을 쳐내기 쉽게 만듭니다.",
+            "jp": "タイタンストライクはバットを1.2倍に拡大し、ボールを打つのが簡単になります。"
+        },
+        "powerup1": {
+            "en": "Power-up boosts your batter's strength by +(5) points, increasing the chances of hitting home runs.",
+            "ko": "파워업은 타자의 힘을 +(5)만큼 강화하여 홈런을 칠 확률을 높여줍니다.",
+            "jp": "パワーアップはバッターの力を+(5)ポイント増強し、ホームランを打つ確率を高めます。"
+        },
+        "powerup2": {
+            "en": "Power-up boosts your batter's strength by +(10) points, increasing the chances of hitting home runs.",
+            "ko": "파워업은 타자의 힘을 +(10)만큼 강화하여 홈런을 칠 확률을 높여줍니다.",
+            "jp": "パワーアップはバッターの力を+(10)ポイント増強し、ホームランを打つ確率を高めます。"
+        },
+        "powerup3": {
+            "en": "Power-up boosts your batter's strength by +(3) points, increasing the chances of hitting home runs.",
+            "ko": "파워업은 타자의 힘을 +(3)만큼 강화하여 홈런을 칠 확률을 높여줍니다.",
+            "jp": "パワーアップはバッターの力を+(3)ポイント増強し、ホームランを打つ確率を高めます。"
+        },
+        "bonus1": {
+            "en": "Bonus grants +(1) additional points to your batter every time they hit the ball.",
+            "ko": "보너스는 타자가 공을 칠 때마다 +(1)만큼 추가 점수를 부여합니다.",
+            "jp": "ボーナスはバッターがボールを打つたびに、+(1)ポイントを追加で与えます。"
+        },
+        "bonus2": {
+            "en": "Bonus grants +(3) additional points to your batter every time they hit the ball.",
+            "ko": "보너스는 타자가 공을 칠 때마다 +(3)만큼 추가 점수를 부여합니다.",
+            "jp": "ボーナスはバッターがボールを打つたびに、+(3)ポイントを追加で与えます。"
+        },
+        "bonus3": {
+            "en": "Bonus grants +(7) additional points to your batter every time they hit the ball.",
+            "ko": "보너스는 타자가 공을 칠 때마다 +(7)만큼 추가 점수를 부여합니다.",
+            "jp": "ボーナスはバッターがボールを打つたびに、+(7)ポイントを追加で与えます。"
         }
     },
     "bats" : {
@@ -205,132 +319,165 @@
         },
         "decal02": {
             "en": "Decal Bat - Design 2",
-            "ko": "데칼 방망이 - 디자인 2"
+            "ko": "데칼 방망이 - 디자인 2",
+            "jp": "デカール バット - デザイン 2"
         },
         "decal03": {
             "en": "Decal Bat - Design 3",
-            "ko": "데칼 방망이 - 디자인 3"
+            "ko": "데칼 방망이 - 디자인 3",
+            "jp": "デカール バット - デザイン 3"
         },
         "decal04": {
             "en": "Decal Bat - Design 4",
-            "ko": "데칼 방망이 - 디자인 4"
+            "ko": "데칼 방망이 - 디자인 4",
+            "jp": "デカール バット - デザイン 4"
         },
         "decal05": {
             "en": "Decal Bat - Design 5",
-            "ko": "데칼 방망이 - 디자인 5"
+            "ko": "데칼 방망이 - 디자인 5",
+            "jp": "デカール バット - デザイン 5"
         },
         "decal06": {
             "en": "Decal Bat - Design 6",
-            "ko": "데칼 방망이 - 디자인 6"
+            "ko": "데칼 방망이 - 디자인 6",
+            "jp": "デカール バット - デザイン 6"
         },
         "decal07": {
             "en": "Decal Bat - Design 7",
-            "ko": "데칼 방망이 - 디자인 7"
+            "ko": "데칼 방망이 - 디자인 7",
+            "jp": "デカール バット - デザイン 7"
         },
         "decal08": {
             "en": "Decal Bat - Design 8",
-            "ko": "데칼 방망이 - 디자인 8"
+            "ko": "데칼 방망이 - 디자인 8",
+            "jp": "デカール バット - デザイン 8"
         },
         "decal09": {
             "en": "Decal Bat - Design 9",
-            "ko": "데칼 방망이 - 디자인 9"
+            "ko": "데칼 방망이 - 디자인 9",
+            "jp": "デカール バット - デザイン 9"
         },
         "decal10": {
             "en": "Decal Bat - Design 10",
-            "ko": "데칼 방망이 - 디자인 10"
+            "ko": "데칼 방망이 - 디자인 10",
+            "jp": "デカール バット - デザイン 10"
         },
         "decal11": {
             "en": "Decal Bat - Design 11",
-            "ko": "데칼 방망이 - 디자인 11"
+            "ko": "데칼 방망이 - 디자인 11",
+            "jp": "デカール バット - デザイン 11"
         },
         "flaming_bat": {
             "en": "Flaming Bat",
-            "ko": "불타는 방망이"
+            "ko": "불타는 방망이",
+            "jp": "炎のバット"
         },
         "future_blue": {
             "en": "Futuristic Blue Bat",
-            "ko": "미래적인 파란 방망이"
+            "ko": "미래적인 파란 방망이",
+            "jp": "未来的な青いバット"
         },
         "future_full_blue": {
             "en": "Full Blue Futuristic Bat",
-            "ko": "풀 블루 미래적인 방망이"
+            "ko": "풀 블루 미래적인 방망이",
+            "jp": "フルブルーの未来的なバット"
         },
         "future_full_purple": {
             "en": "Full Purple Futuristic Bat",
-            "ko": "풀 퍼플 미래적인 방망이"
+            "ko": "풀 퍼플 미래적인 방망이",
+            "jp": "フルパープルの未来的なバット"
         },
         "future_full_red": {
             "en": "Full Red Futuristic Bat",
-            "ko": "풀 레드 미래적인 방망이"
+            "ko": "풀 레드 미래적인 방망이",
+            "jp": "フルレッドの未来的なバット"
         },
         "future_full_white": {
             "en": "Full White Futuristic Bat",
-            "ko": "풀 화이트 미래적인 방망이"
+            "ko": "풀 화이트 미래적인 방망이",
+            "jp": "フルホワイトの未来的なバット"
         },
         "future_purple": {
             "en": "Futuristic Purple Bat",
-            "ko": "미래적인 보라색 방망이"
+            "ko": "미래적인 보라색 방망이",
+            "jp": "未来的な紫のバット"
         },
         "future_red": {
             "en": "Futuristic Red Bat",
-            "ko": "미래적인 빨간색 방망이"
+            "ko": "미래적인 빨간색 방망이",
+            "jp": "未来的な赤いバット"
         },
         "future_white": {
             "en": "Futuristic White Bat",
-            "ko": "미래적인 하얀색 방망이"
+            "ko": "미래적인 하얀색 방망이",
+            "jp": "未来的な白いバット"
         },
         "Hammer_03 (1)": {
             "en": "Hammer Design 03",
-            "ko": "해머 디자인 03"
+            "ko": "해머 디자인 03",
+            "jp": "ハンマーデザイン03"
         },
         "industrial_bat": {
             "en": "Industrial Bat",
-            "ko": "산업용 방망이"
+            "ko": "산업용 방망이",
+            "jp": "工業用バット"
         },
         "industrial_batworn": {
             "en": "Worn Industrial Bat",
-            "ko": "낡은 산업용 방망이"
+            "ko": "낡은 산업용 방망이",
+            "jp": "使い古された工業用バット"
         },
         "orange_bat": {
             "en": "Tangerine Bat",
-            "ko": "귤색 방망이"
+            "ko": "귤색 방망이",
+            "jp": "みかんバット"
         },
         "orange_stripe": {
             "en": "Orange Striped Bat",
-            "ko": "주황 줄무늬 방망이"
+            "ko": "주황 줄무늬 방망이",
+            "jp": "オレンジストライプのバット"
         },
         "purple_bat": {
             "en": "Lavender Bat",
-            "ko": "라벤더색 방망이"
+            "ko": "라벤더색 방망이",
+            "jp": "ラベンダーバット"
         },
         "purple_flaming_bat": {
             "en": "Flaming Lavender Bat",
-            "ko": "불타는 라벤더색 방망이"
+            "ko": "불타는 라벤더색 방망이",
+            "jp": "炎のラベンダーバット"
         },
         "purple_stripe": {
             "en": "Purple Striped Bat",
-            "ko": "보라 줄무늬 방망이"
+            "ko": "보라 줄무늬 방망이",
+            "jp": "紫のストライプのバット"
         },
         "red_bat": {
             "en": "Crimson Bat",
-            "ko": "진홍색 방망이"
+            "ko": "진홍색 방망이",
+            "jp": "真紅のバット"
         },
         "red_stripe": {
             "en": "Red Striped Bat",
-            "ko": "빨간 줄무늬 방망이"
+            "ko": "빨간 줄무늬 방망이",
+            "jp": "赤いストライプのバット"
         },
         "white_stripe": {
             "en": "White Striped Bat",
-            "ko": "하얀 줄무늬 방망이"
+            "ko": "하얀 줄무늬 방망이",
+            "jp": "白いストライプのバット"
         },
         "yellow_bat": {
             "en": "Goldenrod Bat",
-            "ko": "황금색 방망이"
+            "ko": "황금색 방망이",
+            "jp": "黄色いバット"
         },
         "yellow_stripe": {
             "en": "Yellow Striped Bat",
-            "ko": "노란 줄무늬 방망이"
+            "ko": "노란 줄무늬 방망이",
+            "jp": "黄色いストライプのバット"
         }
+        
     },
     "balls": {
         "ball_1": {
@@ -391,24 +538,24 @@
             "jp": "アルミニウム"
         },
         "sp1": {
-            "en": "sp1_Composite",
-            "ko": "sp1_복합재질",
-            "jp": "sp1_複合材料"
+            "en": "Composite 1",
+            "ko": "복합재질 1",
+            "jp": "複合材料 1"
         },
         "sp2": {
-            "en": "sp2_Composite",
-            "ko": "sp2_복합재질",
-            "jp": "sp2_複合材料"
+            "en": "Composite 2",
+            "ko": "복합재질 2",
+            "jp": "複合材料 2"
         },
         "sp3": {
-            "en": "sp3_Composite",
-            "ko": "sp3_복합재질",
-            "jp": "sp3_複合材料"
+            "en": "Composite 3",
+            "ko": "복합재질 3",
+            "jp": "複合材料 3"
         },
         "sp4": {
-            "en": "sp4_Composite",
-            "ko": "sp4_복합재질",
-            "jp": "sp4_複合材料"
+            "en": "Composite 4",
+            "ko": "복합재질 4",
+            "jp": "複合材料 4"
         }
     }
 }

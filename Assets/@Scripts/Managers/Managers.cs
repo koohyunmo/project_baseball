@@ -22,6 +22,7 @@ public class Managers : MonoBehaviour
     public static VibrationManager Vibration { get { return Instance?._vibration; } }
     public static AdManager Ad { get { return Instance?._ad; } }
     public static SoundManager Sound { get { return Instance?._sound; } }
+    public static IAPManager IAP { get { return Instance?._iap; } }
 
 
     public static SkillManager Skill { get{ return Instance?._skill; } }
@@ -38,6 +39,7 @@ public class Managers : MonoBehaviour
     [SerializeField] SkillManager _skill = new SkillManager();
     [SerializeField] AdManager _ad = new AdManager();
     [SerializeField] SoundManager _sound = new SoundManager();
+    [SerializeField] IAPManager _iap = new IAPManager();
 
 
     public static Managers Instance { get { 
@@ -50,6 +52,7 @@ public class Managers : MonoBehaviour
         Localization.Init();
         Vibration.Init();
         Sound.Init();
+        IAP.Init();
     }
 
 

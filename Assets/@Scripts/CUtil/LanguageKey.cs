@@ -27,5 +27,12 @@ public enum LanguageKey
     strike,
     start,
     equipping,
-    confirm
+    confirm,
+    power,
+    shop,
+    star,
+    buy,
+    duplicate,
+    getprize,
+    receivereward
 }

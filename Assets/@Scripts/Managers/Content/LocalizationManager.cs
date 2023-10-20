@@ -92,6 +92,10 @@ public class LocalizationManager
         {
             localizedText[bat.Key] = GetTranslation(bat.Value);
         }
+        foreach (var ball in localizationData.balls)
+        {
+            localizedText[ball.Key] = GetTranslation(ball.Value);
+        }
     }
 
     public void LoadLocalizedText()

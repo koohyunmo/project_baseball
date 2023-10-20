@@ -193,19 +193,24 @@ public class RouletteController : MonoBehaviour
         switch (data)
         {
             case Define.Grade.Common:
-                id = Managers.Resource.CommonList[0];
+                var rnd = Random.Range(0, Managers.Resource.CommonList.Count - 1);
+                id = Managers.Resource.CommonList[rnd];
                 break;
             case Define.Grade.Uncommon:
-                id = Managers.Resource.UncommonList[0];
+                rnd = Random.Range(0, Managers.Resource.UncommonList.Count - 1);
+                id = Managers.Resource.UncommonList[rnd];
                 break;
             case Define.Grade.Rare:
-                id = Managers.Resource.RareList[0];
+                rnd = Random.Range(0, Managers.Resource.RareList.Count - 1);
+                id = Managers.Resource.RareList[rnd];
                 break;
             case Define.Grade.Epic:
-                id = Managers.Resource.EpicList[0];
+                rnd = Random.Range(0, Managers.Resource.EpicList.Count - 1);
+                id = Managers.Resource.EpicList[rnd];
                 break;
             case Define.Grade.Legendary:
-                id = Managers.Resource.LegendaryList[0];
+                rnd = Random.Range(0, Managers.Resource.LegendaryList.Count - 1);
+                id = Managers.Resource.LegendaryList[rnd];
                 break;
         }
 
@@ -251,7 +256,7 @@ public class RouletteController : MonoBehaviour
 
             Managers.Game.GetStar(star);
 
-            resultText.text = $"<color=#{colorHex}> Get Prize: {star} Star</color>";
+            resultText.text = $"<color=#{colorHex}> {Managers.Localization.GetLocalizedValue(LanguageKey.getprize.ToString())}: {star} {Managers.Localization.GetLocalizedValue(LanguageKey.star.ToString())}</color>";
 
         }
 

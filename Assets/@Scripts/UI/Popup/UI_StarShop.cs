@@ -73,15 +73,15 @@ public class UI_StarShop : UI_Popup
 
     private void Click_1_Dollar()
     {
-
+        Managers.IAP.Purchase(Managers.IAP.productId_1_id);
     }
     private void Click_2_Dollar()
     {
-
+        Managers.IAP.Purchase(Managers.IAP.productId_2_id);
     }
     private void Click_3_Dollar()
     {
-
+        Managers.IAP.Purchase(Managers.IAP.productId_3_id);
     }
 
     private void OnDestroy()

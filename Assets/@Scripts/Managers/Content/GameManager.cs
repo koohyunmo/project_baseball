@@ -60,7 +60,7 @@ public class GameManager
     public void GetCSOReward()
     {
         bool rewarded = Managers.Game.PlayerInfo.csoAllRewawrd;
-        string rewardID = "BAT_35";
+        string rewardID = "BAT_37";
 
 #if UNITY_EDITOR
         rewarded = false;
@@ -98,7 +98,7 @@ public class GameManager
     public void GetBallReward()
     {
         bool rewarded = Managers.Game.PlayerInfo.ballAllReward;
-        string rewardID = "SKILL_2";
+        string rewardID = "SKILL_12";
 
 #if UNITY_EDITOR
         rewarded = false;
@@ -137,7 +137,7 @@ public class GameManager
     public void GetBaatReward()
     {
         bool rewarded = Managers.Game.PlayerInfo.batAllReward;
-        string rewardID = "SKILL_3";
+        string rewardID = "SKILL_2";
 
 #if UNITY_EDITOR
         rewarded = false;
@@ -363,7 +363,6 @@ public class GameManager
         Math.Clamp(PlayerInfo.star, 0, long.MaxValue);
         SaveGame();
         Managers.Sound.Play(Define.Sound.Effect, "Collectible01");
-
         UpdateStar?.Invoke();
     }
 
@@ -716,7 +715,9 @@ public class GameManager
     {
         HitPos = hitPos;
 
-        score += skillBonus;
+        //score += skillBonus;
+
+        Debug.Log(hitBonus);
 
 
         if (score < 50 && score > 0)
@@ -1086,14 +1087,14 @@ public class GameManager
                     StartData.playerBats.Add(startItem.itemId);
                 }
 
-                if (Managers.Resource.Resources[BALL_KEY.BALL_1.ToString()] is ItemScriptableObject ball)
+                if (Managers.Resource.Resources[BALL_KEY.BALL_0.ToString()] is ItemScriptableObject ball)
                 {
                     // Test Data
                     PlayerItem startItem = new PlayerItem(ball.id, ball.name, ball.name, ItemType.BALL);
                     //StartData.playerItem.Add(startItem.itemId, startItem);
 
                     StartData.playerInfo.level = 1;
-                    StartData.playerInfo.equipBallId = BALL_KEY.BALL_1.ToString();
+                    StartData.playerInfo.equipBallId = BALL_KEY.BALL_0.ToString();
 
                     StartData.playerInventory.Add(startItem.itemId);
                     StartData.playerBalls.Add(startItem.itemId);

@@ -113,7 +113,7 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
                 {
                     if (_itemSO is BatScriptableObject childItem)
                     {
-                        popupInfoText.text += '\n' + Managers.Localization.GetLocalizedValue(childItem.batType.ToString()) + '\n' + "Power : " + childItem.power.ToString() + '\n';
+                        popupInfoText.text += '\n' + Managers.Localization.GetLocalizedValue(childItem.batType.ToString()) + '\n' + Managers.Localization.GetLocalizedValue(LanguageKey.power.ToString()) + " : " + childItem.power.ToString() + '\n';
                     }
                 }
                 return;

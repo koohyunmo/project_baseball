@@ -66,8 +66,8 @@ public class UI_RoulletItemInfoPopup : UI_InfoPopup
         {
             Bind();
             popupIcon.sprite = startIcon;
-            _title.text = Managers.Localization.GetLocalizedValue(LanguageKey.bronze.ToString());
-            popupInfoText.text = $"duplicate !\n {_grade} : {_gold} ";
+            _title.text = Managers.Localization.GetLocalizedValue(LanguageKey.star.ToString());
+            popupInfoText.text = $"{Managers.Localization.GetLocalizedValue(LanguageKey.duplicate.ToString())} !\n {Managers.Localization.GetLocalizedValue(_grade.ToString())} : {_gold} ";
             popupButtonText.text = Managers.Localization.GetLocalizedValue(LanguageKey.confirm.ToString());
         }
 

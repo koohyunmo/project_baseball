@@ -15,6 +15,7 @@ public static class Keys
 
     public enum BALL_KEY
     {
+        BALL_0,
         BALL_1, BALL_2, BALL_3, BALL_4, BALL_5, BALL_6, BALL_7, BALL_8, BALL_9, BALL_10,BALL_11,
         BALL_12, BALL_13, BALL_14, BALL_15, BALL_16, BALL_17, BALL_18, BALL_19,
         BALL_20, BALL_21, BALL_22, BALL_23, BALL_24, BALL_25, BALL_26, BALL_27, BALL_28,
