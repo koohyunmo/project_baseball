@@ -172,6 +172,8 @@ public class AdManager
 
     #region Interstitial Àü¸é±¤°í
 
+    Action _inteAction;
+
     public void LoadIntertitialAd()
     {
         if (_interstitialAd != null)
@@ -199,8 +201,11 @@ public class AdManager
     /// <summary>
     /// Shows the interstitial ad.
     /// </summary>
-    public void ShowInterstitialAd()
+    public void ShowInterstitialAd(Action action)
     {
+
+        _inteAction = null;
+        _inteAction = action;
 
         if (_interstitialAd != null && _interstitialAd.CanShowAd())
         {
@@ -242,7 +247,8 @@ public class AdManager
         interstitialAd.OnAdFullScreenContentClosed += () =>
         {
             Debug.Log("Interstitial ad full screen content closed.");
-            Managers.Game.GameRetry();
+            _inteAction?.Invoke();
+            Managers.Game.ADCountReset();
             LoadIntertitialAd();
             Time.timeScale = 1f;
         };

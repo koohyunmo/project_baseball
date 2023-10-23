@@ -64,13 +64,18 @@ public class UI_EndPopup : UI_Popup
         Managers.Game.ReplayReview();
     }
 
+    private void Retry()
+    {
+        Managers.Game.GameRetry();
+    }
+
     private void RetryButtonClick()
     {
 
         if (Managers.Ad.CanShowIntAd())
         {
             Managers.UI.ClosePopupUI(this);
-            Managers.Ad.ShowInterstitialAd();
+            Managers.Ad.ShowInterstitialAd(Retry);
         }
         else
             return;

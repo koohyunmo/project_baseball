@@ -46,11 +46,16 @@ public class UI_ReplayPopupTimer : UI_Popup
         return true;
     }
 
+    private void Retry()
+    {
+        Managers.Game.GameRetry();
+    }
+
     private void Replay()
     {
         Managers.UI.ClosePopupUI(this);
 
-        Managers.Ad.ShowInterstitialAd();
+        Managers.Ad.ShowInterstitialAd(Retry);
 
         if (Co_timer != null)
         {

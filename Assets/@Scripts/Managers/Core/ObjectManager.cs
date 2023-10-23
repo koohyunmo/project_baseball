@@ -281,9 +281,9 @@ public class ObjectManager
         {
             if (_inGameObjDict.TryGetValue(key, out InGameObjectController ig))
             {
-                _inGameObjDict.Remove(key);
-                if(ig.gameObject)
-                    Managers.Resource.Destroy(ig.gameObject);
+                _inGameObjDict.Remove(ig.ObjId);
+                //Managers.Resource.Destroy(ig.gameObject);
+                ig.gameObject.gameObject.SetActive(false);
 
                 ig.Clear();
             }

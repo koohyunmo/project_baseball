@@ -360,6 +360,8 @@ public class GameManager
 
     public void GetStar(long star)
     {
+        if (star == 0)
+            return;
         Debug.Log("Star :" + star);
         PlayerInfo.star += star;
         Math.Clamp(PlayerInfo.star, 0, long.MaxValue);
@@ -460,6 +462,8 @@ public class GameManager
 
     }
 
+    private static int adCount = 0;
+
     private void StateUpdate()
     {
         switch (GameState)
@@ -490,6 +494,16 @@ public class GameManager
 
 
 
+                    if (adCount > 9)
+                    {
+                        Managers.Ad.ShowInterstitialAd(null);
+                        adCount = 0;
+                    }
+
+                    adCount++;
+#if UNITY_EDITOR
+                    Debug.Log(adCount);
+#endif
 
 
                 }
@@ -555,6 +569,11 @@ public class GameManager
                 break;
         }
 
+    }
+
+    public void ADCountReset()
+    {
+        adCount = 0;
     }
 
     private void SaveChallengeData()
