@@ -4,6 +4,8 @@ using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
+using Unity.Services.Core;
+using Unity.Services.Analytics;
 
 public class GameScene : MonoBehaviour
 {
@@ -11,7 +13,13 @@ public class GameScene : MonoBehaviour
     void Awake()
     {
         //Managers.Init();
+
         LoadObj();
+    }
+
+    async void Start()
+    {
+        await UnityServices.InitializeAsync();
     }
 
     private void LoadObj()
