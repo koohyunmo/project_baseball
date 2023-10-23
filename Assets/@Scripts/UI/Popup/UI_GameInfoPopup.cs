@@ -34,14 +34,20 @@ public class UI_GameInfoPopup : UI_Popup
 
     private void UpdateUI()
     {
+        StartCoroutine(co_Update());
+    }
+
+    IEnumerator co_Update()
+    {
         if (Managers.Game.GameState != Define.GameState.InGround)
-            return;
+            yield break;
 
 
         thorwBallTypeTMP.text = Managers.Game.ThrowType.ToString();
 
         string colorCode = Managers.Game.GetSpeedColorString();
-        ballSpeedTMP.text = $"<color=#{colorCode}> {Managers.Game.ThrowType.ToString()} : {Managers.Game.Speed.ToString("F2")}Km/s </color>";
+        yield return null;
+        ballSpeedTMP.text = $"<color=#{colorCode}> {Managers.Localization.GetLocalizedValue(Managers.Game.ThrowType.ToString())} : {Managers.Game.Speed.ToString("F2")}Km/s </color>";
 
         // HTML 색상 문자열을 Color 객체로 변환합니다.
         Color color;
@@ -54,6 +60,7 @@ public class UI_GameInfoPopup : UI_Popup
         {
             Debug.LogWarning("Invalid color code: " + colorCode);
         }
+        yield return null;
 
     }
 

@@ -103,7 +103,7 @@ public class RouletteController : MonoBehaviour
         }
     }
 
-    public void StartSpin()
+    public void RollFreeRoullet()
     {
 #if UNITY_EDITOR
         if (!isSpinning)
@@ -112,10 +112,10 @@ public class RouletteController : MonoBehaviour
             isSpinning = true;
             first = false;
 
-            Managers.Game.RollRoullet();
+            Managers.Game.RollFreeRoullet();
         }
 #else
-        if (!isSpinning && Managers.Game.RollRoullet())
+        if (!isSpinning && Managers.Game.RollFreeRoullet())
         {
             currentSpeed = Random.Range(spinSpeed, spinSpeed * 1.5f);
             isSpinning = true;
@@ -123,6 +123,39 @@ public class RouletteController : MonoBehaviour
             first = false;
         }
 #endif
+
+    }
+
+    public void RollADRoullet()
+    {
+
+#if UNITY_EDITOR
+        if (!isSpinning && Managers.Ad.CanShowRewardAd())
+        {
+            Managers.Ad.ShowRewardedAd(() =>
+            {
+
+                currentSpeed = Random.Range(spinSpeed, spinSpeed * 1.5f);
+                isSpinning = true;
+                first = false;
+
+                Managers.Game.RollADRoullet();
+            });
+        }
+#else
+        if (!isSpinning && Managers.Game.RollADRoullet() && Managers.Ad.CanShowRewardAd())
+        {
+            Managers.Ad.ShowRewardedAd(() =>
+        {
+
+        currentSpeed = Random.Range(spinSpeed, spinSpeed * 1.5f);
+        isSpinning = true;
+
+        first = false;
+        });
+        }
+#endif
+
 
     }
 
@@ -217,24 +250,22 @@ public class RouletteController : MonoBehaviour
 
         Define.GetType get = Managers.Game.GetItem(id);
 
-        if(data == Define.Grade.Legendary)
+        if (data == Define.Grade.Legendary)
         {
-            get = Define.GetType.duplicate;
+            get = Define.GetType.Star;
         }
 
 
         //resultText.text = $"<color=#{colorHex}> Prize: {Managers.Localization.GetLocalizedValue(id)}</color>";
-        string name = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(id).name;
-        resultText.text = $"<color=#{colorHex}> Get Prize: {Managers.Localization.GetLocalizedValue(name)}</color>";
+        var so = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(id);
+        resultText.text = $"<color=#{colorHex}> {Managers.Localization.GetLocalizedValue(LanguageKey.getprize.ToString())} : {Managers.Localization.GetLocalizedValue(so.grade.ToString())}</color>";
 
 
         long star = 0;
 
 
-        if (get == Define.GetType.duplicate)
+        if (get == Define.GetType.Duplicate || get == Define.GetType.Star)
         {
-
-
             switch (data)
             {
                 case Define.Grade.Common:
@@ -269,10 +300,13 @@ public class RouletteController : MonoBehaviour
                 throw new Exception("아이템 없음?");
                 break;
             case Define.GetType.Success:
-                popup.InitData(id);
+                popup.InitData(get, id);
                 break;
-            case Define.GetType.duplicate:
-                popup.InitData(data, star);
+            case Define.GetType.Duplicate:
+                popup.InitData(get,data, star);
+                break;
+            case Define.GetType.Star:
+                popup.InitData(get,data, star);
                 break;
         }
 

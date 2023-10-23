@@ -173,11 +173,13 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
                 Managers.Game.GetBallReward();
                 break;
             case ScollViewType.Bat:
-                Managers.Game.GetBaatReward();
+                Managers.Game.GetBatReward();
                 break;
             case ScollViewType.Skill:
                 break;
         }
+
+        UpdateSlider();
     }
     private void OnClickCategory(ScollViewType type)
     {
@@ -242,15 +244,23 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
         Slider.value = (hasItemCount / (float)skinCount);
         SliderTMP.text = $"{Managers.Localization.GetLocalizedValue(_type.ToString().ToLower())} {hasItemCount} / {skinCount}";
 
+        Debug.Log(Slider.value + " " + Managers.Game.PlayerInfo.ballAllReward + " " + Managers.Game.PlayerInfo.batAllReward);
+
         if(Slider.value >= 1.0f)
         {
             switch (_type)
             {
                 case ScollViewType.Ball:
-                    SliderTMP.text = Managers.Localization.GetLocalizedValue(LanguageKey.receivereward.ToString());
+                    if(Managers.Game.PlayerInfo.ballAllReward == false)
+                        SliderTMP.text = Managers.Localization.GetLocalizedValue(LanguageKey.receivereward.ToString());
+                    else
+                        SliderTMP.text = Managers.Localization.GetLocalizedValue(LanguageKey.receivedreward.ToString());
                     break;
                 case ScollViewType.Bat:
-                    SliderTMP.text = Managers.Localization.GetLocalizedValue(LanguageKey.receivereward.ToString());
+                    if(Managers.Game.PlayerInfo.batAllReward == false)
+                        SliderTMP.text = Managers.Localization.GetLocalizedValue(LanguageKey.receivereward.ToString());
+                    else
+                        SliderTMP.text = Managers.Localization.GetLocalizedValue(LanguageKey.receivedreward.ToString());
                     break;
                 case ScollViewType.Skill:
                     break;

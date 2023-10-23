@@ -34,5 +34,14 @@ public enum LanguageKey
     buy,
     duplicate,
     getprize,
-    receivereward
+    receivereward,
+    receivedreward,
+    onedollar,
+    twodollar,
+    threedollar,
+    ad,
+    starshop,
+    freespin,
+    spinwithad,
+    spinforfree,
 }

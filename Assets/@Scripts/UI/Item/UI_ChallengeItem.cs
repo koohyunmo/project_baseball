@@ -42,6 +42,7 @@ public class UI_ChallengeItem : UI_Base
     {
         var challengePopup = Managers.UI.ShowPopupUI<UI_ChallengeInfoPopup>();
         challengePopup.InitData(_cso);
+        Managers.Game.SaveChallengGridPos();
     }
 
     public void InitData(string itemId, Action parentClose)

@@ -157,7 +157,7 @@
         },
         "buy": {
             "en": "Buy",
-            "ko": "구매하기",
+            "ko": "구매",
             "jp": "購入"
         },
         "star": {
@@ -219,10 +219,102 @@
             "en": "Receive your reward",
             "ko": "보상을 받으세요",
             "jp": "報酬を受け取ってください"
-        }
-        
-        
-        
+        },
+        "receivedreward": {
+            "en": "You have received your reward",
+            "ko": "보상을 받았습니다",
+            "jp": "報酬を受け取りました"
+        },
+        "fastball": {
+            "en": "Fastball",
+            "ko": "패스트볼",
+            "jp": "ファストボール"
+        },
+        "curve": {
+            "en": "Curve",
+            "ko": "커브",
+            "jp": "カーブ"
+        },
+        "slider": {
+            "en": "Slider",
+            "ko": "슬라이더",
+            "jp": "スライダー"
+        },
+        "changeup": {
+            "en": "Changeup",
+            "ko": "체인지업",
+            "jp": "チェンジアップ"
+        },
+        "sinker": {
+            "en": "Sinker",
+            "ko": "싱커",
+            "jp": "シンカー"
+        },
+        "excurve": {
+            "en": "Slow Curve",
+            "ko": "느린 커브",
+            "jp": "スローカーブ"
+        } ,
+        "normalcurve": {
+            "en": "Normal Curve",
+            "ko": "노멀 커브",
+            "jp": "ノーマル カーブ"
+        },
+        "knuckleball": {
+            "en": "Knuckleball",
+            "ko": "너클볼",
+            "jp": "ナックルボール"
+        },
+        "twoseamfastball": {
+            "en": "Two-Seam Fastball",
+            "ko": "투심 패스트볼",
+            "jp": "ツーシーム ファストボール"
+        },
+        "splitter": {
+            "en": "Splitter",
+            "ko": "스플리터",
+            "jp": "スプリッター"
+        },
+        "onedollar": {
+            "en": "$1",
+            "ko": "₩1,000",
+            "jp": "¥100"
+        },
+        "twodollar": {
+            "en": "$2",
+            "ko": "₩2,000",
+            "jp": "¥200"
+        },
+        "threedollar": {
+            "en": "$3",
+            "ko": "₩3,000",
+            "jp": "¥300"
+        },
+        "ad": {
+            "en": "Watch Ad and Get Reward",
+            "ko": "광고보고\n 보상얻기",
+            "jp": "広告を見て\n報酬をもらう"
+        },
+        "starshop": {
+            "en": "Star Shop",
+            "ko": "스타 샵",
+            "jp": "スター ショップ"
+        },
+        "freespin": {
+            "en": "Free Spin (Wheel Reward) - Available every 4 hours",
+            "ko": "무료 스핀 (돌림판 보상) - 4시간마다 사용 가능",
+            "jp": "無料スピン（ホイール報酬）- 4時間ごとに利用可能"
+        },
+        "spinforfree": {
+            "en": "Spin for Free",
+            "ko": "무료로 돌리기",
+            "jp": "無料でスピン"
+        },
+        "spinwithad": {
+            "en": "Spin with Ad",
+            "ko": "광고 보고 돌리기",
+            "jp": "広告を見てスピン"
+        }   
     },
     "skills": {
         "hawkeye1": {
@@ -275,6 +367,7 @@
             "ko": "보너스는 타자가 공을 칠 때마다 +(7)만큼 추가 점수를 부여합니다.",
             "jp": "ボーナスはバッターがボールを打つたびに、+(7)ポイントを追加で与えます。"
         }
+
     },
     "bats" : {
         "baseball_bat_regular": {

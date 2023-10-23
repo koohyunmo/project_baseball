@@ -9,12 +9,15 @@ public class UI_StorePopup : UI_PopupHasBButton
     enum Buttons
     {
         B_Back,
-        Button_Ad
+        Button_Ad,
+        Button_Free
     }
 
     enum TMPs
     {
-        TimeTMP
+        TimeTMP,
+        T_AD,
+        T_Free
     }
 
     enum GameObjects
@@ -23,6 +26,8 @@ public class UI_StorePopup : UI_PopupHasBButton
     }
 
     RouletteController rc;
+
+    public TextMeshProUGUI roullettitle;
 
     public override bool Init()
     {
@@ -36,9 +41,17 @@ public class UI_StorePopup : UI_PopupHasBButton
         
 
         rc = GetObject((int)GameObjects.RouletteController).GetComponent<RouletteController>();
-        GetButton((int)Buttons.Button_Ad).gameObject.BindEvent(rc.StartSpin);
-        Get<TextMeshProUGUI>((int)TMPs.TimeTMP).text = Managers.Game.RTimeDisplay();
+
+        GetButton((int)Buttons.Button_Ad).gameObject.BindEvent(rc.RollADRoullet);
+        GetButton((int)Buttons.Button_Free).gameObject.BindEvent(rc.RollFreeRoullet);
+
+        Get<TextMeshProUGUI>((int)TMPs.TimeTMP).text = Managers.Game.FreeRTimeDisplay();
+        Get<TextMeshProUGUI>((int)TMPs.T_AD).text = Managers.Localization.GetLocalizedValue(LanguageKey.spinwithad.ToString());
+        Get<TextMeshProUGUI>((int)TMPs.T_Free).text = Managers.Localization.GetLocalizedValue(LanguageKey.spinforfree.ToString());
         StartCoroutine(co_UpdateUI());
+
+        roullettitle.text = Managers.Localization.GetLocalizedValue(LanguageKey.freespin.ToString());
+
         return true;
     }
 
@@ -57,9 +70,26 @@ public class UI_StorePopup : UI_PopupHasBButton
     {
         while (true)
         {
-            yield return new WaitForSeconds(1f);
-            Get<TextMeshProUGUI>((int)TMPs.TimeTMP).text = Managers.Game.RTimeDisplay();
            
+            Get<TextMeshProUGUI>((int)TMPs.TimeTMP).text = Managers.Game.FreeRTimeDisplay();
+
+           
+            GetButton((int)Buttons.Button_Free).interactable = Managers.Game.GetFreeRoullet();
+
+
+            if(Managers.Ad.CanShowRewardAd() == false)
+            {
+                GetButton((int)Buttons.Button_Ad).interactable = false;
+            }
+
+            if(Managers.Game.GetADRoullet() == false)
+            {
+                GetButton((int)Buttons.Button_Ad).interactable = false;
+                Get<TextMeshProUGUI>((int)TMPs.T_AD).text = Managers.Game.ADRTimeDisplay();
+            }
+
+            yield return new WaitForSeconds(1f);
+
         }
     }
 

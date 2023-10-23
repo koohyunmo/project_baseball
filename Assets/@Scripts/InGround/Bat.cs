@@ -408,7 +408,7 @@ public class Bat : MonoBehaviour
         {
             // 현재 위치와 다음 위치 사이의 대기 시간을 계산합니다.
             float waitTime = data[i + 1].time - data[i].time;
-            HitColiderTransform.localPosition = data[i].position;
+            HitColiderTransform.localPosition = data[i].colposition;
             float elapsedTime = 0f;
             //Debug.Log(waitTime);
 
@@ -423,8 +423,10 @@ public class Bat : MonoBehaviour
                 else
                 {
                     float t = elapsedTime / waitTime;
-                    Vector3 interpolatedPosition = Vector3.Lerp(HitColiderTransform.localPosition, data[i].position, t);
+                    Vector3 interpolatedPosition = Vector3.Lerp(HitColiderTransform.localPosition, data[i].colposition, t);
+                    //Vector3 interpolatedModelPosition = Vector3.Lerp(model.transform.localPosition, data[i].modelposition, t);
                     HitColiderTransform.localPosition = interpolatedPosition;
+                    //model.transform.localPosition = interpolatedModelPosition;
                     elapsedTime += Time.deltaTime;
                     yield return new WaitForFixedUpdate();
                 }

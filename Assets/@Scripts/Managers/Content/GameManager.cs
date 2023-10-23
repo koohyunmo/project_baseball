@@ -84,11 +84,11 @@ public class GameManager
                     throw new Exception("아이템 없음?");
                     break;
                 case Define.GetType.Success:
-                    popup.InitData(rewardID);
+                    popup.InitData(Define.GetType.Success, rewardID);
                     break;
-                case Define.GetType.duplicate:
+                case Define.GetType.Duplicate:
                     Managers.Game.GetStar(500);
-                    popup.InitData(Define.Grade.Legendary, 500);
+                    popup.InitData(Define.GetType.Duplicate,Define.Grade.Legendary, 500);
                     break;
             }
         }
@@ -122,11 +122,11 @@ public class GameManager
                     throw new Exception("아이템 없음?");
                     break;
                 case Define.GetType.Success:
-                    popup.InitData(rewardID);
+                    popup.InitData(Define.GetType.Success,rewardID);
                     break;
-                case Define.GetType.duplicate:
+                case Define.GetType.Duplicate:
                     Managers.Game.GetStar(500);
-                    popup.InitData(Define.Grade.Legendary, 500);
+                    popup.InitData(Define.GetType.Duplicate,Define.Grade.Legendary, 500);
                     break;
             }
 
@@ -134,7 +134,7 @@ public class GameManager
 
     }
 
-    public void GetBaatReward()
+    public void GetBatReward()
     {
         bool rewarded = Managers.Game.PlayerInfo.batAllReward;
         string rewardID = "SKILL_2";
@@ -161,14 +161,13 @@ public class GameManager
                     throw new Exception("아이템 없음?");
                     break;
                 case Define.GetType.Success:
-                    popup.InitData(rewardID);
+                    popup.InitData(Define.GetType.Success,rewardID);
                     break;
-                case Define.GetType.duplicate:
+                case Define.GetType.Duplicate:
                     Managers.Game.GetStar(500);
-                    popup.InitData(Define.Grade.Legendary, 500);
+                    popup.InitData(Define.GetType.Duplicate,Define.Grade.Legendary, 500);
                     break;
             }
-
         }
 
     }
@@ -177,8 +176,9 @@ public class GameManager
 
     public float ReplaySlowMode { get { return 0.25f; } private set { } }
 
-    public DateTime roulletTime;
-    public DateTime adBonusTime;
+    public DateTime freeRoulletTime;
+    public DateTime adRoulletTime;
+    public DateTime starShopADBonusTime;
 
     public float Speed { get { return (_speed * 3600) * 0.001f; } private set { _speed = value; } }
     public float _speed = 0;
@@ -312,10 +312,12 @@ public class GameManager
         Managers.Resource.DoCache();
         StateUpdate();
 
-        roulletTime = ES3.Load<DateTime>("RTime");
-        adBonusTime = ES3.Load<DateTime>("AdBonus");
+        freeRoulletTime = ES3.Load<DateTime>("RTime");
+        adRoulletTime = ES3.Load<DateTime>("ADTime");
+        starShopADBonusTime = ES3.Load<DateTime>("AdBonus");
 
         Managers.Ad.Init();
+        Managers.IAP.Init();
 
     }
 
@@ -592,12 +594,44 @@ public class GameManager
         ChallengeModeCheck();
     }
 
-    public bool RollRoullet()
+    public bool RollFreeRoullet()
     {
-        if (DateTime.Now >= roulletTime)
+        if (DateTime.Now >= freeRoulletTime)
         {
-            roulletTime = DateTime.Now.AddHours(2);
-            ES3.Save<DateTime>("RTime", roulletTime);
+            freeRoulletTime = DateTime.Now.AddHours(4);
+            ES3.Save<DateTime>("RTime", freeRoulletTime);
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool GetFreeRoullet()
+    {
+        if (DateTime.Now >= freeRoulletTime)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool RollADRoullet()
+    {
+        if (DateTime.Now >= adRoulletTime)
+        {
+            adRoulletTime = DateTime.Now.AddHours(1);
+            ES3.Save<DateTime>("ADTime", adRoulletTime);
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool GetADRoullet()
+    {
+        if (DateTime.Now >= adRoulletTime)
+        {
             return true;
         }
 
@@ -606,12 +640,12 @@ public class GameManager
 
     public bool ClickAdButton()
     {
-        if (DateTime.Now >= adBonusTime)
+        if (DateTime.Now >= starShopADBonusTime)
         {
 
             Managers.Ad.ShowRewardedAd(GetAdBonus);
-            adBonusTime = DateTime.Now.AddMinutes(1);
-            ES3.Save<DateTime>("AdBonus", adBonusTime);
+            starShopADBonusTime = DateTime.Now.AddHours(6);
+            ES3.Save<DateTime>("AdBonus", starShopADBonusTime);
             return true;
         }
 
@@ -625,7 +659,7 @@ public class GameManager
         Managers.Game.GetStar(300);
 
         var popup = Managers.UI.ShowPopupUI<UI_RoulletItemInfoPopup>();
-        popup.InitData(Define.Grade.Epic, 300);
+        popup.InitData(Define.GetType.Star,Define.Grade.Epic, 300);
 
         SaveGame();
 
@@ -633,7 +667,7 @@ public class GameManager
 
     public bool CanCllickAdButton()
     {
-        if (DateTime.Now >= adBonusTime)
+        if (DateTime.Now >= starShopADBonusTime)
         {
             return true;
         }
@@ -646,7 +680,7 @@ public class GameManager
     {
         TimeSpan timeRemaining; // 남은 시간
 
-        timeRemaining = adBonusTime - DateTime.Now; // 남은 시간 계산
+        timeRemaining = starShopADBonusTime - DateTime.Now; // 남은 시간 계산
 
         string remainTimeText = "";
 
@@ -654,18 +688,18 @@ public class GameManager
         // 남은 시간이 없거나 지난 경우
         if (timeRemaining.TotalSeconds <= 0)
         {
-            return remainTimeText = "AD";
+            return remainTimeText = Managers.Localization.GetLocalizedValue(LanguageKey.ad.ToString()); ;
         }
 
         // 남은 시간을 문자열로 변환하여 화면에 표시
         return remainTimeText = string.Format("{0:D2}:{1:D2}:{2:D2}", timeRemaining.Hours, timeRemaining.Minutes, timeRemaining.Seconds);
 
     }
-    public string RTimeDisplay()
+    public string FreeRTimeDisplay()
     {
         TimeSpan timeRemaining; // 남은 시간
 
-        timeRemaining = roulletTime - DateTime.Now; // 남은 시간 계산
+        timeRemaining = freeRoulletTime - DateTime.Now; // 남은 시간 계산
 
         string remainTimeText = "";
 
@@ -679,6 +713,26 @@ public class GameManager
         // 남은 시간을 문자열로 변환하여 화면에 표시
         return remainTimeText = string.Format("{0:D2}:{1:D2}:{2:D2}", timeRemaining.Hours, timeRemaining.Minutes, timeRemaining.Seconds);
     }
+
+    public string ADRTimeDisplay()
+    {
+        TimeSpan timeRemaining; // 남은 시간
+
+        timeRemaining = adRoulletTime - DateTime.Now; // 남은 시간 계산
+
+        string remainTimeText = "";
+
+        // 남은 시간을 문자열로 변환하여 화면에 표시
+        // 남은 시간이 없거나 지난 경우
+        if (timeRemaining.TotalSeconds <= 0)
+        {
+            return remainTimeText = Managers.Localization.GetLocalizedValue(LanguageKey.spinwithad.ToString());
+        }
+
+        // 남은 시간을 문자열로 변환하여 화면에 표시
+        return remainTimeText = string.Format("{0:D2}:{1:D2}:{2:D2}", timeRemaining.Hours, timeRemaining.Minutes, timeRemaining.Seconds);
+    }
+
 
     #region 챌린지
 
@@ -811,7 +865,7 @@ public class GameManager
         {
             Debug.Log("이미 있는 아이템");
             Managers.Sound.Play(Define.Sound.Effect, "Collectible01");
-            return Define.GetType.duplicate;
+            return Define.GetType.Duplicate;
         }
 
 
@@ -977,6 +1031,17 @@ public class GameManager
 
     #region 첼린지 모드 체크
     public ChallengeProc challengeProc { get; private set; } = ChallengeProc.None;
+
+
+    public void SaveChallengGridPos()
+    {
+        ChallengeGridPos = new Vector3(0,ChallengeGrid.localPosition.y,0);
+    }
+
+    public void DeleteChallengeGridPos()
+    {
+        ChallengeGridPos = Vector3.zero;
+    }
     private void ChallengeModeCheck()
     {
 
@@ -1043,6 +1108,10 @@ public class GameManager
 
     public Baller Baller { get; private set; }
     public float BatSpeed { get { return Mathf.Clamp(_batSpeed, 0.1f, 10.0f); } private set { _batSpeed = value; } }
+
+    public Vector3 ChallengeGridPos { get; internal set; } = Vector3.zero;
+    public Transform ChallengeGrid { get; internal set; } = null;
+
     private float _batSpeed = 5.0f;
 
 
@@ -1149,6 +1218,7 @@ public class GameManager
             ES3.Save<Language>("Lang", Language.EN, _settingPath);
             ES3.Save<DateTime>("RTime", DateTime.Now);
             ES3.Save<DateTime>("AdBonus", DateTime.Now);
+            ES3.Save<DateTime>("ADTime", DateTime.Now);
 
 
             SaveGame();

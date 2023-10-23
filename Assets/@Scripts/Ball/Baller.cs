@@ -150,7 +150,7 @@ public class Baller : MonoBehaviour
             case ThrowType.Slider:
                 ThrowBall(ThrowSlider);
                 break;
-            case ThrowType.ChangUp:
+            case ThrowType.ChangeUp:
                 ThrowBall(ThrowChangeUp);
                 break;
             case ThrowType.Sinker:
@@ -267,7 +267,7 @@ public class Baller : MonoBehaviour
             case ThrowType.Slider:
                 speed = originalSpeed * (0.92f + ((int)Managers.Game.League) * 0.01f);
                 break;
-            case ThrowType.ChangUp:
+            case ThrowType.ChangeUp:
                 speed = originalSpeed * (0.87f + ((int)Managers.Game.League) * 0.01f);
                 break;
             case ThrowType.Sinker:

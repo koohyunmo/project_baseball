@@ -56,7 +56,7 @@ public class Tusoo : MonoBehaviour
             case ThrowType.Slider:
                 CreateBall(ThrowSlider);
                 break;
-            case ThrowType.ChangUp:
+            case ThrowType.ChangeUp:
                 CreateBall(ThrowChangeUp);
                 break;
             case ThrowType.Sinker:

@@ -27,6 +27,7 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
     public Image _ballAim;
 
     public Bat bat;
+    public Transform model;
 
     Vector2 _touchPosition;
     Vector2 _moveDir;
@@ -53,7 +54,9 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
 
 
 
+
         bat = Managers.Game.Bat;
+        model = bat.model.transform;
 
         _zoneImage = GetImage((int)Images.ZoneImage);
         _batAim = GetImage((int)Images.BatAim);
@@ -176,7 +179,8 @@ public class UI_DragPopup : UI_Popup, IPointerClickHandler, IPointerDownHandler,
         if ( Managers.Game.isRecord == true && Managers.Game.GameState == Define.GameState.InGround)
         {
             CustomReplayData replatData;
-            replatData.position = bat.HitColiderTransform.localPosition;
+            replatData.colposition = bat.HitColiderTransform.localPosition;
+            replatData.modelposition = model.transform.localPosition;
             replatData.time = Time.timeSinceLevelLoad;
 
             _batReplayData.Add(replatData);

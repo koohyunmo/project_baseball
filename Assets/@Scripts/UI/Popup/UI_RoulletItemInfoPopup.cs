@@ -13,32 +13,32 @@ public class UI_RoulletItemInfoPopup : UI_InfoPopup
     ItemScriptableObject _itemSO;
     public TextMeshProUGUI _title;
     Define.Grade _grade;
-    public bool _isduplicate = false;
+    public Define.GetType _getType = Define.GetType.Failed;
     public long _gold;
     public Sprite startIcon;
 
     private void Bind()
     {
         if (_itemSO)
-            _title.text = Managers.Localization.GetLocalizedValue(_itemSO.name);
+            _title.text = Managers.Localization.GetLocalizedValue(_itemSO.type.ToString());
         else
             _title.text = "TODO";
 
         popupButton.gameObject.BindEvent(ChallengeButtonClick);
     }
 
-    public void InitData(string id)
+    public void InitData(Define.GetType getType, string id)
     {
         _itemSO = Managers.Resource.GetItemScriptableObjet<ItemScriptableObject>(id);
-        _isduplicate = false;
+        _getType = getType;
     }
 
-    public void InitData(Define.Grade grade, long gold)
+    public void InitData(Define.GetType getType, Define.Grade grade, long gold)
     {
         _grade = grade;
         _gold = gold;
         _itemSO = null;
-        _isduplicate = true;
+        _getType = getType;
     }
 
 
@@ -67,7 +67,7 @@ public class UI_RoulletItemInfoPopup : UI_InfoPopup
             Bind();
             popupIcon.sprite = startIcon;
             _title.text = Managers.Localization.GetLocalizedValue(LanguageKey.star.ToString());
-            popupInfoText.text = $"{Managers.Localization.GetLocalizedValue(LanguageKey.duplicate.ToString())} !\n {Managers.Localization.GetLocalizedValue(_grade.ToString())} : {_gold} ";
+            popupInfoText.text = $"{Managers.Localization.GetLocalizedValue(_getType.ToString())} !\n {Managers.Localization.GetLocalizedValue(_grade.ToString())} : {_gold} ";
             popupButtonText.text = Managers.Localization.GetLocalizedValue(LanguageKey.confirm.ToString());
         }
 

@@ -96,6 +96,8 @@ public class LocalizationManager
         {
             localizedText[ball.Key] = GetTranslation(ball.Value);
         }
+
+        mainTMPUpdate?.Invoke();
     }
 
     public void LoadLocalizedText()

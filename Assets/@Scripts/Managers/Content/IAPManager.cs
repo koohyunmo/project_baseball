@@ -14,6 +14,7 @@ public class IAPManager :  IStoreListener
 
     public void Init()
     {
+        Debug.Log("IAP INIT");
         InitUnityIAP(); //Start 문에서 초기화 필수
     }
 

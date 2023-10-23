@@ -19,10 +19,19 @@ public class UI_StarShop : UI_Popup
         Close
     }
 
-    enum TMPs
-    {
-        ADTitle
-    }
+    public TextMeshProUGUI buy1Dollar;
+    public TextMeshProUGUI buy2Dollar;
+    public TextMeshProUGUI buy3Dollar;
+
+    public TextMeshProUGUI price1;
+    public TextMeshProUGUI price2;
+    public TextMeshProUGUI price3;
+
+    [SerializeField]
+    public TextMeshProUGUI adTmp;
+    [SerializeField]
+    public TextMeshProUGUI title;
+
 
     public override bool Init()
     {
@@ -32,7 +41,6 @@ public class UI_StarShop : UI_Popup
         }
 
         BindImage(typeof(Images));
-        Bind<TextMeshProUGUI>(typeof(TMPs));
 
         GetImage((int)Images.AdPlayButton).gameObject.BindEvent(ClickAdPlayButton);
         GetImage((int)Images.Buy1DollarButton).gameObject.BindEvent(Click_1_Dollar);
@@ -41,6 +49,18 @@ public class UI_StarShop : UI_Popup
         GetImage((int)Images.BG).gameObject.BindEvent(() => ClosePopupUI());
         GetImage((int)Images.Close).gameObject.BindEvent(() => ClosePopupUI());
 
+
+        var key = LanguageKey.buy.ToString();
+        buy1Dollar.text = Managers.Localization.GetLocalizedValue(key);
+        buy2Dollar.text = Managers.Localization.GetLocalizedValue(key);
+        buy3Dollar.text = Managers.Localization.GetLocalizedValue(key);
+
+        price1.text = Managers.Localization.GetLocalizedValue(LanguageKey.onedollar.ToString());
+        price2.text = Managers.Localization.GetLocalizedValue(LanguageKey.twodollar.ToString());
+        price3.text = Managers.Localization.GetLocalizedValue(LanguageKey.threedollar.ToString());
+
+        adTmp.text = Managers.Localization.GetLocalizedValue(LanguageKey.ad.ToString());
+        title.text = Managers.Localization.GetLocalizedValue(LanguageKey.starshop.ToString());
 
         StartCoroutine(co_UpdateUI());
 
@@ -52,7 +72,7 @@ public class UI_StarShop : UI_Popup
     {
         while (true)
         {
-            Get<TextMeshProUGUI>((int)TMPs.ADTitle).text = Managers.Game.ADBounusTimeDisplay();
+            adTmp.text = Managers.Game.ADBounusTimeDisplay();
 
             //252 170 75
             GetImage((int)Images.AdPlayButton).color = Managers.Game.CanCllickAdButton() && Managers.Ad.CanShowRewardAd() ? new Color(252/255.0f,170/255.0f,75/255.0f,255/255.0f) : Color.gray;

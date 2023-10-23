@@ -52,7 +52,7 @@ public class Managers : MonoBehaviour
         Localization.Init();
         Vibration.Init();
         Sound.Init();
-        IAP.Init();
+        //IAP.Init();
     }
 
 

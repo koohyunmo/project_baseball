@@ -60,11 +60,16 @@ public class UI_ChallengePopup : UI_ContentPopup
         MakeItme();
         UpdateUI();
 
+        // Bind And Load
+        Managers.Game.ChallengeGrid = _grid;
+        _grid.localPosition = Managers.Game.ChallengeGridPos;
+
         return true;
     }
 
     private void B_BackClick()
     {
+        Managers.Game.DeleteChallengeGridPos();
         ClosePopupUI();
     }
 
@@ -72,13 +77,22 @@ public class UI_ChallengePopup : UI_ContentPopup
     {
         var clearCount = Mathf.Clamp(Managers.Game.GameDB.challengeClearCount, 0, Managers.Game.GameDB.challengeData.Count);
 
-        Get<Slider>((int)Sliders.Slider).value = clearCount / (float)Managers.Game.GameDB.challengeData.Count;
-        Get<TextMeshProUGUI>((int)TMPs.SliderTMP).text = $"{Managers.Localization.GetLocalizedValue(LanguageKey.challenges.ToString())} {clearCount} / {Managers.Game.GameDB.challengeData.Count}";
+        float ratio = clearCount / (float)Managers.Game.GameDB.challengeData.Count;
+
+        Get<Slider>((int)Sliders.Slider).value = ratio;
 
 
-        if(Get<Slider>((int)Sliders.Slider).value >= 1 && Managers.Game.PlayerInfo.csoAllRewawrd == false)
+        if (ratio >= 1 && Managers.Game.PlayerInfo.csoAllRewawrd == false)
         {
-            Get<TextMeshProUGUI>((int)TMPs.SliderTMP).text = " 보상을 받으세요 ";          
+            Get<TextMeshProUGUI>((int)TMPs.SliderTMP).text = Managers.Localization.GetLocalizedValue(LanguageKey.receivereward.ToString());
+        }
+        else if(ratio >= 1 && Managers.Game.PlayerInfo.csoAllRewawrd == true)
+        {
+            Get<TextMeshProUGUI>((int)TMPs.SliderTMP).text = Managers.Localization.GetLocalizedValue(LanguageKey.receivedreward.ToString());
+        }
+        else
+        {
+            Get<TextMeshProUGUI>((int)TMPs.SliderTMP).text = $"{Managers.Localization.GetLocalizedValue(LanguageKey.challenges.ToString())} {clearCount} / {Managers.Game.GameDB.challengeData.Count}";
         }
 
     }
