@@ -360,7 +360,7 @@ public class GameManager
 
     public void GetStar(long star)
     {
-
+        Debug.Log("Star :" + star);
         PlayerInfo.star += star;
         Math.Clamp(PlayerInfo.star, 0, long.MaxValue);
         SaveGame();
@@ -452,6 +452,11 @@ public class GameManager
             _gameData.playerInfo.playerBestScore[_league] = GameScore;
             SaveGame();
         }
+
+        if(_league < League.Master)
+            GetStar(Math.Clamp((GameScore/Define.POINT), 0,(int)League+1));
+        else
+            GetStar(Math.Clamp((GameScore / Define.POINT), 0, (int)League + 2));
 
     }
 
@@ -770,9 +775,6 @@ public class GameManager
         HitPos = hitPos;
 
         //score += skillBonus;
-
-        Debug.Log(hitBonus);
-
 
         if (score < 50 && score > 0)
         {
@@ -1147,8 +1149,8 @@ public class GameManager
                     PlayerItem startItem = new PlayerItem(so.id, so.name, so.name, ItemType.BAT);
                     //StartData.playerItem.Add(startItem.itemId, startItem);
 #if UNITY_EDITOR
-                    StartData.playerInfo.gold = 100000;
-                    StartData.playerInfo.star = 100000;
+                    //StartData.playerInfo.gold = 100000;
+                    //StartData.playerInfo.star = 100000;
 #endif
                     StartData.playerInfo.level = 1;
                     StartData.playerInfo.equipBatId = BAT_KEY.BAT_0.ToString();

@@ -204,6 +204,7 @@ public class ObjectManager
         if (type == null)
         {
             Debug.LogWarning($"{type} has not IngameObejct Component");
+            return;
         }
         else if(type == typeof(BallController))
         {
@@ -229,13 +230,15 @@ public class ObjectManager
         if (type == null)
         {
             Debug.LogWarning($"{type} has not IngameObejct Component");
+            return;
         }
         else if (type == typeof(BallController))
         {
             if(_ballDict.TryGetValue(key, out BallController bm))
             {
                 _ballDict.Remove(key);
-                Managers.Resource.Destroy(bm.gameObject);
+                if(bm.gameObject)
+                    Managers.Resource.Destroy(bm.gameObject);
             }
         }
         else if (typeof(T) == typeof(TextController))
@@ -244,7 +247,8 @@ public class ObjectManager
             {
                 ig.Clear();
                 _inGameObjDict.Remove(key);
-                Managers.Resource.Destroy(ig.gameObject);
+                if (ig.gameObject)
+                    Managers.Resource.Destroy(ig.gameObject);
             }
         }
         else if (typeof(T) == typeof(BallAimController))
@@ -253,25 +257,35 @@ public class ObjectManager
             {
                 ig.Clear();
                 _inGameObjDict.Remove(key);
-                Managers.Resource.Destroy(ig.gameObject);
+                if (ig.gameObject)
+                    Managers.Resource.Destroy(ig.gameObject);
             }
         }
         else if (typeof(T) == typeof(EffectController))
         {
             if (_inGameObjDict.TryGetValue(key, out InGameObjectController ig))
             {
+                if (ig == null)
+                {
+                    Debug.LogWarning("Object is null.");
+                    return;
+                }
+
                 ig.Clear();
                 _inGameObjDict.Remove(key);
-                Managers.Resource.Destroy(ig.gameObject);
+                if (ig.gameObject)
+                    Managers.Resource.Destroy(ig.gameObject);
             }
         }
         else if (typeof(T) == typeof(InGameObjectController))
         {
             if (_inGameObjDict.TryGetValue(key, out InGameObjectController ig))
             {
-                ig.Clear();
                 _inGameObjDict.Remove(key);
-                Managers.Resource.Destroy(ig.gameObject);
+                if(ig.gameObject)
+                    Managers.Resource.Destroy(ig.gameObject);
+
+                ig.Clear();
             }
         }
         else

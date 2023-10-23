@@ -15,7 +15,7 @@ MonoBehaviour:
   orderID: 10
   key: CSO_10
   mode: 3
-  league: 2
+  league: 1
   score: 33
   speed: 0
   desc: "Hit consecutively 33 times. \n <color=#868686FF>Silver League</color>"

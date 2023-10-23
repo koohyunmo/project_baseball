@@ -244,11 +244,11 @@ public class Baller : MonoBehaviour
             case League.Gold:
                 originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.9f, 0.95f);
                 break;
-            case League.Bronze:
-                originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.7f, 0.82f);
-                break;
             case League.Silver:
                 originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.8f, 0.88f);
+                break;
+            case League.Bronze:
+                originalSpeed = Random.Range(41.67f, 44.44f) * Random.Range(0.7f, 0.82f);
                 break;
 
         }
@@ -303,7 +303,7 @@ public class Baller : MonoBehaviour
 
 
         speed = speed + (speed * Managers.Game.HitScore / 500);
-        //speed +=  Mathf.Clamp((Managers.Game.GameScore / 1000),0,50);
+        speed =  Mathf.Clamp(speed, (41.67f * 0.7f * 0.65f), 83.33f);
 
         Managers.Game.SetBallInfo(speed, _throwType);
 

@@ -16,10 +16,23 @@ public class UI_GameInfoPopup : UI_Popup
     public Image Bilboard;
     public Image SpeedSlider;
 
+    public Transform starGroup;
+    public GameObject starBG;
+
+    public List<Image> starFills = new List<Image>();
+
     private void Start()
+    {
+        Bind();
+
+        //thorwBallTypeTMP.gameObject.SetActive(false);
+    }
+
+    private void Bind()
     {
         Managers.Game.SetThrowBallEvent(UpdateUI);
         Managers.Game.SetGameUiEvent(UpdateGameUI);
+        Managers.Game.SetHitCallBack(StarUpdate);
 
         UpdateGameUI();
 
@@ -29,7 +42,25 @@ public class UI_GameInfoPopup : UI_Popup
         ballSpeedTMP.text = "";
         thorwBallTypeTMP.text = "";
 
-        //thorwBallTypeTMP.gameObject.SetActive(false);
+
+        starFills.Clear();
+
+        starFills.Add(starBG.transform.GetChild(0).GetComponent<Image>());
+
+        for (int i = 0; i < (int)Managers.Game.League; i++)
+        {
+            var star = Managers.Resource.Instantiate(starBG, starGroup);
+
+            starFills.Add(star.transform.GetChild(0).GetComponent<Image>());
+        }
+
+        if(Managers.Game.League == Define.League.Master)
+        {
+            var star = Managers.Resource.Instantiate(starBG, starGroup);
+            starFills.Add(star.transform.GetChild(0).GetComponent<Image>());
+        }
+
+        StarUpdate();
     }
 
     private void UpdateUI()
@@ -60,9 +91,36 @@ public class UI_GameInfoPopup : UI_Popup
         {
             Debug.LogWarning("Invalid color code: " + colorCode);
         }
-        yield return null;
+
 
     }
+
+
+
+    private void StarUpdate()
+    {
+        if (starFills == null || starFills.Count == 0)
+            return;
+
+        int maxLeague = (int)Managers.Game.League;
+        long gameScore = Managers.Game.GameScore;
+
+
+        int maxCount = starFills.Count;
+
+
+        for (int i = 0; i < maxCount; i++)
+        {
+            if (starFills[i] != null && starFills[i].fillAmount < 1)
+            {
+                starFills[i].fillAmount = (gameScore - Define.POINT * i) / (float)Define.POINT;
+            }
+        }
+    }
+
+
+
+
 
     private void UpdateGameUI()
     {

@@ -15,12 +15,14 @@ public class PosuCollider : MonoBehaviour
         if (other != null && other.CompareTag("Ball"))
         {
 
-            Debug.Log("Catch a Ball");
-            other.gameObject.SetActive(false);
-            Managers.Game.StrikeEvent();
-            gameObject.SetActive(true);
-            Managers.Game.GameEnd();
-            psController.CatchBall();
+            if (Managers.Game.GameState == Define.GameState.InGround)
+            {
+                other.gameObject.SetActive(false);
+                Managers.Game.StrikeEvent();
+                gameObject.SetActive(true);
+                Managers.Game.GameEnd();
+                psController.CatchBall();
+            }
 
         }
     }

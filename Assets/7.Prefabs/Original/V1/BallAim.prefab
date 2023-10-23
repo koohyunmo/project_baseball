@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1867865450545264915}
   - component: {fileID: 1867865450545264912}
   - component: {fileID: 1867865450545264913}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BallAim
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1867865451932511954}
   - component: {fileID: 1867865451932511983}
   - component: {fileID: 1867865451932511980}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BallAim (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

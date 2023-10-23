@@ -4,6 +4,8 @@ using UnityEngine;
 
 public static class Define 
 {
+
+	public static readonly long POINT = 100;
 	public enum UIEvent
 	{
 		Click,
