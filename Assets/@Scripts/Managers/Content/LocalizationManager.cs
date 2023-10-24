@@ -24,7 +24,9 @@ public class LocalizationManager
     public void Init()
     {
         SystemLanguage userLanguage = Application.systemLanguage;
+#if UNITY_EDITOR
         Debug.Log("User's system language is: " + userLanguage.ToString());
+#endif
         _settingPath = Application.persistentDataPath + "/SettingData.json";
 
         // 기본 언어 설정
@@ -102,7 +104,9 @@ public class LocalizationManager
 
     public void LoadLocalizedText()
     {
+#if UNITY_EDITOR
         Debug.Log("저장된 언어 읽기");
+#endif
 
 
         localizedText = new Dictionary<string, string>();

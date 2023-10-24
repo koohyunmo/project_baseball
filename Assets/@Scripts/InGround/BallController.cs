@@ -221,7 +221,9 @@ public class BallController : InGameObjectController
        
         if(transform.position.z >= 100)
         {
+#if UNITY_EDITOR
             Debug.Log("TODO ¼öÁ¤ ");
+#endif
             Managers.Obj.Despawn<BallController>(ObjId);
         }
     }

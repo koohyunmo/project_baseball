@@ -78,7 +78,9 @@ public class AdManager
         MobileAds.RaiseAdEventsOnUnityMainThread = true;
         MobileAds.Initialize(initStatus =>
         {
+#if UNITY_EDITOR
             Debug.Log("Ads Initialised !!");
+#endif
             LoadBannerAd();
             LoadIntertitialAd();
             LoadRewawrdedAd();
@@ -98,8 +100,9 @@ public class AdManager
 
         var adRequest = new AdRequest();
         adRequest.Keywords.Add("unity-admob-sample");
-
+#if UNITY_EDITOR
         Debug.Log("Loading banner Ad !!");
+#endif
         _bannerView.LoadAd(adRequest);
 
 
@@ -121,8 +124,10 @@ public class AdManager
         // Raised when an ad is loaded into the banner view.
         _bannerView.OnBannerAdLoaded += () =>
         {
+#if UNITY_EDITOR
             Debug.Log("Banner view loaded an ad with response : "
                 + _bannerView.GetResponseInfo());
+#endif
         };
         // Raised when an ad fails to load into the banner view.
         _bannerView.OnBannerAdLoadFailed += (LoadAdError error) =>
@@ -189,7 +194,9 @@ public class AdManager
          {
              if (error != null || ad == null)
              {
+#if UNITY_EDITOR
                  Debug.Log("Interstitail ad failed to load" + error);
+#endif
              }
 
              Debug.Log("Interstitail ad loaded" + ad.GetResponseInfo());
@@ -285,10 +292,13 @@ public class AdManager
          {
              if (error != null || ad == null)
              {
+#if UNITY_EDITOR
                  Debug.Log("Reward Failed to load" + error);
+#endif
              }
-
+#if UNITY_EDITOR
              Debug.Log("Reward AD Loaded !!");
+#endif
              rewardedAd = ad;
              RewardedAdEvents(rewardedAd);
          });
@@ -327,14 +337,18 @@ public class AdManager
         // Raised when the ad is estimated to have earned money.
         ad.OnAdPaid += (AdValue adValue) =>
         {
+#if UNITY_EDITOR
             Debug.Log(String.Format("Rewarded ad paid {0} {1}.",
                 adValue.Value,
                 adValue.CurrencyCode));
+#endif
         };
         // Raised when an impression is recorded for an ad.
         ad.OnAdImpressionRecorded += () =>
         {
+#if UNITY_EDITOR
             Debug.Log("Rewarded ad recorded an impression.");
+#endif
         };
         // Raised when a click is recorded for an ad.
         ad.OnAdClicked += () =>

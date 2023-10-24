@@ -14,7 +14,9 @@ public class IAPManager :  IStoreListener
 
     public void Init()
     {
+#if UNITY_EDITOR
         Debug.Log("IAP INIT");
+#endif
         InitUnityIAP(); //Start 문에서 초기화 필수
     }
 
@@ -50,7 +52,9 @@ public class IAPManager :  IStoreListener
     /* 초기화 성공 시 실행되는 함수 */
     public void OnInitialized(IStoreController controller, IExtensionProvider extension)
     {
+#if UNITY_EDITOR
         Debug.Log("초기화에 성공했습니다");
+#endif
 
         storeController = controller;
         storeExtensionProvider = extension;

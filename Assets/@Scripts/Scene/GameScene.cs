@@ -29,7 +29,9 @@ public class GameScene : MonoBehaviour
            
             if (count == totalCount)
             {
+#if UNITY_EDITOR
                 Debug.Log($"로드 완료 {count}/{totalCount}");
+#endif
                 Object obj = GameObject.FindObjectOfType(typeof(EventSystem));
                 if (obj == null)
                     Managers.Resource.Instantiate("EventSystem").name = "@EventSystem";

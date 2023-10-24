@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static Define;
 
-public class UI_Skin_Item : UI_Base
+public class UI_Skin_Item : UI_Base, IBeginDragHandler, IDragHandler,IEndDragHandler
 {
     public Image _icon;
     public List<Material> _mats;
@@ -18,6 +18,8 @@ public class UI_Skin_Item : UI_Base
     public ScollViewType _type;
 
     private Image _skinItem;
+
+    ScrollRect _scrollRect;
 
     enum Images
     {
@@ -49,11 +51,11 @@ public class UI_Skin_Item : UI_Base
         //Bind<TextMeshProUGUI>(typeof(TMPs));
 
         _icon = Get<Image>((int)Images.Icon);
-        gameObject.gameObject.BindEvent(OnClick);
+        gameObject.BindEvent(ShowInfoPopup, null, Define.UIEvent.Click);
         _skinItem = GetComponent<Image>();
 
         GetImage((int)Images.Background).gameObject.SetActive(false);
-        GetButton((int)Buttons.B_Information).gameObject.BindEvent(ShowInfoPopup);
+        GetButton((int)Buttons.B_Information).gameObject.BindEvent(ShowInfoPopup, null, Define.UIEvent.Click);
 
 
         UpdateUI();
@@ -61,10 +63,11 @@ public class UI_Skin_Item : UI_Base
 
     }
 
-    public void InitData(string key, ScollViewType type)
+    public void InitData(string key, ScollViewType type,ScrollRect sr)
     {
         _key = key;
         _type = type;
+        _scrollRect = sr;
 
         if (Managers.Resource.Resources.TryGetValue(_key, out Object obj) && obj is ItemScriptableObject so)
             _item = so;
@@ -290,4 +293,18 @@ public class UI_Skin_Item : UI_Base
         GetButton((int)Buttons.B_Information).transform.DOKill();
     }
 
+    public void OnBeginDrag(PointerEventData e)
+    {
+        _scrollRect.OnBeginDrag(e);
+    }
+
+    public void OnDrag(PointerEventData e)
+    {
+        _scrollRect.OnDrag(e);
+    }
+
+    public void OnEndDrag(PointerEventData e)
+    {
+        _scrollRect.OnEndDrag(e);
+    }
 }

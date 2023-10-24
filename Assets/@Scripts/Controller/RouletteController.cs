@@ -380,11 +380,13 @@ public class RouletteController : MonoBehaviour
         }
 
 
+#if UNITY_EDITOR
         foreach (var item in prizes)
         {
             Debug.Log(item);
 
         }
+#endif
 
         resultText.text = null;
     }

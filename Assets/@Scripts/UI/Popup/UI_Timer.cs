@@ -35,7 +35,9 @@ public class UI_Timer : UI_Popup
 
     void StartGame()
     {
+#if UNITY_EDITOR
         Debug.Log("게임 시작!");
+#endif
         Managers.UI.ClosePopupUI(this);
         Managers.Game.GameStart();
         

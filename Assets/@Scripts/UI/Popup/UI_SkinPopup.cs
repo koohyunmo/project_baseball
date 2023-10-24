@@ -75,6 +75,8 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
 
     private bool _isDelay = false;
     private TextMeshProUGUI ItemLoadingText;
+
+    ScrollRect _sr;
     public override bool Init()
     {
         if (base.Init() == false)
@@ -122,6 +124,8 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
 
         Managers.Game.SetStarUpdate(UpdateStar);
 
+
+        _sr = Get<ScrollRect>((int)ScrollRects.ScrollView);
 
         _type = ScollViewType.Skill;
 
@@ -244,7 +248,9 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
         Slider.value = (hasItemCount / (float)skinCount);
         SliderTMP.text = $"{Managers.Localization.GetLocalizedValue(_type.ToString().ToLower())} {hasItemCount} / {skinCount}";
 
+#if UNITY_EDITOR
         Debug.Log(Slider.value + " " + Managers.Game.PlayerInfo.ballAllReward + " " + Managers.Game.PlayerInfo.batAllReward);
+#endif
 
         if(Slider.value >= 1.0f)
         {
@@ -314,7 +320,7 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
                 }
 
                 UI_Skin_Item skinItem = item.GetOrAddComponent<UI_Skin_Item>();
-                skinItem.InitData(itemID, _type);
+                skinItem.InitData(itemID, _type, _sr);
 
                 count++;
             }
@@ -349,7 +355,7 @@ public class UI_SkinPopup : UI_ContentPopup, IBeginDragHandler, IEndDragHandler
             }
 
             UI_Skin_Item skinItem = item.GetOrAddComponent<UI_Skin_Item>();
-            skinItem.InitData(list[i], _type);
+            skinItem.InitData(list[i], _type, _sr);
             yield return null;
         }
 

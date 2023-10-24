@@ -205,9 +205,10 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
 
                 //ClosePopupUI();
                 Managers.Ad.ShowRewardedAd(GetRewardAdsItemRemoveActions);
-
-                Debug.Log("TODO ±¤°í or µ·");
-            }
+#if UNITY_EDITOR
+            Debug.Log("TODO ±¤°í or µ·");
+#endif
+        }
 
     }
 

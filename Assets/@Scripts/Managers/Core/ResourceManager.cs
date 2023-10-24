@@ -106,7 +106,9 @@ public class ResourceManager
 
     public void GetLoadBytes()
     {
+#if UNITY_EDITOR
         Debug.Log($"Load Bytes size: {LoadBytes} KB");
+#endif
     }
 
     public void LoadAsync<T>(string key, Define.Prefabs type = Define.Prefabs.None, Action<T> callback = null) where T : UnityEngine.Object
@@ -302,7 +304,9 @@ public class ResourceManager
             }
         }
 
+#if UNITY_EDITOR
         Debug.Log(batOrderList.Count);
+#endif
 
 
         ballOrderList = ballOrderList
@@ -321,7 +325,9 @@ public class ResourceManager
         itemOrderList.AddRange(ballOrderList);
         itemOrderList.AddRange(skillOrderList);
 
+#if UNITY_EDITOR
         Debug.Log("캐싱+소트 후: " + string.Join(", ", itemOrderList));
+#endif
 
 
         // 타입별 캐싱
@@ -331,7 +337,9 @@ public class ResourceManager
                 .Where(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade == Grade.Common)
                 .OrderBy(key => GetItemScriptableObjet<ItemScriptableObject>(key).name)
                 .ToList();
+#if UNITY_EDITOR
             Debug.Log("CommonList: " + string.Join(", ", CommonList));
+#endif
 
             UncommonList = itemOrderList
                 .Where(key => GetItemScriptableObjet<ItemScriptableObject>(key).grade == Grade.Uncommon)

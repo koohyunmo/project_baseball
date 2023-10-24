@@ -362,7 +362,9 @@ public class GameManager
     {
         if (star == 0)
             return;
+#if UNITY_EDITOR
         Debug.Log("Star :" + star);
+#endif
         PlayerInfo.star += star;
         Math.Clamp(PlayerInfo.star, 0, long.MaxValue);
         SaveGame();
@@ -439,7 +441,9 @@ public class GameManager
         GameState = GameState.Home;
 
         GameScore = 0;
+#if UNITY_EDITOR
         Debug.Log($"{GameScore} 게임 리셋");
+#endif
 
 
         StateUpdate();
@@ -793,7 +797,7 @@ public class GameManager
     {
         HitPos = hitPos;
 
-        //score += skillBonus;
+        score += skillBonus;
 
         if (score < 50 && score > 0)
         {
@@ -884,7 +888,9 @@ public class GameManager
 
         if (_gameData.playerInventory.Contains(key) == true)
         {
+#if UNITY_EDITOR
             Debug.Log("이미 있는 아이템");
+#endif
             Managers.Sound.Play(Define.Sound.Effect, "Collectible01");
             return Define.GetType.Duplicate;
         }
@@ -908,7 +914,9 @@ public class GameManager
 
         _gameData.playerInventory.Add(key);
         SaveGame();
+#if UNITY_EDITOR
         Debug.Log("TODO");
+#endif
         notifyItemAction();
 
         LobbyUIEvent?.Invoke();
@@ -1142,7 +1150,9 @@ public class GameManager
         //File.WriteAllTextAsync(_path, jsonStr);
 
         ES3.Save<GameDB>(Keys.DB.GameDB.ToString(), SaveData);
+#if UNITY_EDITOR
         Debug.Log($"Save Game Completed : {_path}");
+#endif
     }
 
     public bool LoadGameSaveFile()
@@ -1257,12 +1267,14 @@ public class GameManager
         {
             //_playerData = data;
             SaveData = data;
-
+#if UNITY_EDITOR
             Debug.Log(SaveData);
+#endif
 
         }
-
+#if UNITY_EDITOR
         Debug.Log($"Save Game Loaded : {_path}");
+#endif
         return true;
     }
 

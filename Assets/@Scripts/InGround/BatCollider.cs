@@ -166,7 +166,9 @@ public class BatCollider : MonoBehaviour
     private void FlyTheBall(Vector3 hitPoint, Rigidbody rb)
     {
 
+#if UNITY_EDITOR
         Debug.Log("TODO 볼 날라가는 효과");
+#endif
 
         if (Managers.Game.GameState != Define.GameState.InGround)
             return;

@@ -51,7 +51,9 @@ public class SkillManager
                 break;
         }
 
+#if UNITY_EDITOR
         Debug.Log(so.SkillType);
+#endif
 
     }
 
@@ -66,8 +68,10 @@ public class SkillManager
         if (colliderLocalScale.Equals(Vector3.zero) || modelLocalScale.Equals(Vector3.zero))
             return;
 
+#if UNITY_EDITOR
         Debug.Log(colliderLocalScale);
         Debug.Log(modelLocalScale);
+#endif
 
         Managers.Game.hitBonus = 0;
         Managers.Game.skillBonus = 0.0f;

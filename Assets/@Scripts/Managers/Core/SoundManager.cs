@@ -40,7 +40,9 @@ public class SoundManager
                 {
                     if (count == totalCount)
                     {
+#if UNITY_EDITOR
                         Debug.Log($"사운드 로드 완료 {count}/{totalCount}");
+#endif
                     }
                 }));
             }

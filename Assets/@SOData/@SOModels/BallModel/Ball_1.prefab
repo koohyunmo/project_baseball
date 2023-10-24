@@ -4923,7 +4923,6 @@ GameObject:
   - component: {fileID: 7007977717442547038}
   - component: {fileID: 8443626847645865532}
   - component: {fileID: 7136420938645071767}
-  - component: {fileID: 4240659743003201959}
   m_Layer: 7
   m_Name: Ball_1
   m_TagString: Ball
@@ -4998,63 +4997,6 @@ MonoBehaviour:
   baseHeight: 1
   scaleFactor: 0.5
   playMode: 0
---- !u!114 &4240659743003201959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7204397214589976521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fe91dc294731a9428c0941ea7579110, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  complexMaskingMode: 0
-  drawingMode: 1
-  outlineLayer: 0
-  outlineTargets:
-  - IsVisible: 1
-    CutoutMask: 8
-    edgeDilateAmount: 5
-    frontEdgeDilateAmount: 5
-    backEdgeDilateAmount: 5
-    renderer: {fileID: 4848101346843025931}
-    SubmeshIndex: 0
-    BoundsMode: 0
-    Bounds:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
-    CutoutThreshold: 0.5
-    CullMode: 2
-    cutoutTextureName: 
-    DilateRenderingMode: 0
-    cutoutTextureIndex: 0
-  renderStyle: 1
-  outlineParameters:
-    enabled: 1
-    color: {r: 1, g: 1, b: 1, a: 1}
-    dilateShift: 1
-    blurShift: 1
-    fillPass:
-      shader: {fileID: 0}
-      serializedProperties: []
-  backParameters:
-    enabled: 1
-    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-    dilateShift: 1
-    blurShift: 1
-    fillPass:
-      shader: {fileID: 0}
-      serializedProperties: []
-  frontParameters:
-    enabled: 1
-    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-    dilateShift: 1
-    blurShift: 1
-    fillPass:
-      shader: {fileID: 0}
-      serializedProperties: []
 --- !u!1001 &1821800205963924658
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5134,12 +5076,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c6d19f9a3b08ea48a4720ca29c92db5, type: 3}
---- !u!23 &4848101346843025931 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 6489616554804475577, guid: 7c6d19f9a3b08ea48a4720ca29c92db5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1821800205963924658}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5984376402776168804 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5351563899013598678, guid: 7c6d19f9a3b08ea48a4720ca29c92db5,

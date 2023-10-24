@@ -132,7 +132,9 @@ public class UI_Main : UI_Popup
         starTMP.text = Managers.Game.PlayerInfo.star.ToString();
         leagueTMP.text = Managers.Localization.GetLocalizedValue((Managers.Game.League).ToString().ToLower());
         dragTMP.text = Managers.Localization.GetLocalizedValue(LanguageKey.startdrag.ToString());
+#if UNITY_EDITOR
         Debug.Log("TODO 드래그 텍스트");
+#endif
     }
 
     public void NotifyItemAnim()
