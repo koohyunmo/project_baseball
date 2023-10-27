@@ -60,6 +60,11 @@ public class UI_GameInfoPopup : UI_Popup
             starFills.Add(star.transform.GetChild(0).GetComponent<Image>());
         }
 
+        if(Managers.Game.GameMode == Define.GameMode.Challenge)
+        {
+            starGroup.gameObject.SetActive(false);
+        }
+
         StarUpdate();
     }
 

@@ -16,7 +16,6 @@ public class Bat : MonoBehaviour
     public Transform HandleTransform;
 
     public BoxCollider batBoxCollider;
-    private MeshCollider batMeshCollider;
     public GameObject model;
 
     public float lerpSpeed = 2.5f;
@@ -69,7 +68,6 @@ public class Bat : MonoBehaviour
     private void First()
     {
         batBoxCollider = GetComponentInChildren<BoxCollider>();
-        batMeshCollider = GetComponentInChildren<MeshCollider>();
 
 
         originalBatPos = model.transform.position;
@@ -165,7 +163,6 @@ public class Bat : MonoBehaviour
     public void ColiderOff()
     {
         {
-            //batMeshCollider.enabled = false;
             batBoxCollider.enabled = false;
         }
     }
