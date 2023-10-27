@@ -43,6 +43,7 @@ class Pool
     #region Funcs
     GameObject OnCreate()
     {
+
         GameObject go = GameObject.Instantiate(_prefab);
         //go.transform.SetParent(Root);
         go.transform.SetParent(Root);

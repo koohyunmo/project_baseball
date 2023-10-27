@@ -279,8 +279,8 @@ public class GameManager
         BAD,
         COOL,
         GOOD,
-        GREAT,  // 'E'를 제거했습니다.
-        PERFECT  // 'A'를 'E'로 변경했습니다.
+        HOMERUN,  // 'E'를 제거했습니다.
+        GRANDSLAM  // 'A'를 'E'로 변경했습니다.
     }
 
     public HitScoreType hitScoreType { get; private set; } = HitScoreType.NONE;
@@ -457,12 +457,21 @@ public class GameManager
             //Debug.Log("최고 점수 갱신");
             _gameData.playerInfo.playerBestScore[_league] = GameScore;
             SaveGame();
+       
         }
 
-        if(_league < League.Master)
-            GetStar(Math.Clamp((GameScore/Define.POINT), 0,(int)League+1));
+        if (Managers.Game.GameMode == GameMode.Challenge)
+            return;
         else
-            GetStar(Math.Clamp((GameScore / Define.POINT), 0, (int)League + 2));
+        {
+            if (_league < League.Master)
+                GetStar(Math.Clamp((GameScore / Define.POINT), 0, (int)League + 1));
+            else
+                GetStar(Math.Clamp((GameScore / Define.POINT), 0, (int)League + 2));
+        }
+
+
+
 
     }
 
@@ -498,7 +507,7 @@ public class GameManager
 
 
 
-                    if (adCount > 9)
+                    if (adCount > 6)
                     {
                         Managers.Ad.ShowInterstitialAd(null);
                         adCount = 0;
@@ -822,7 +831,7 @@ public class GameManager
         }
         else if (score >= 95 && score < 100)
         {
-            hitScoreType = HitScoreType.GREAT;
+            hitScoreType = HitScoreType.HOMERUN;
             _hitType = HitType.D;
             HitScore += 4 + hitBonus;
             SwingCount++;
@@ -830,7 +839,7 @@ public class GameManager
         }
         else if (score >= 100 && score <= float.MaxValue)
         {
-            hitScoreType = HitScoreType.PERFECT;
+            hitScoreType = HitScoreType.GRANDSLAM;
             _hitType = HitType.D;
             HitScore += 10 + hitBonus;
             SwingCount++;
@@ -1455,6 +1464,9 @@ public class GameManager
 
     public long GetBestScore()
     {
+        if (_gameMode == GameMode.Challenge)
+            GameScore = 0;
+
         if (Managers.Game.GameScore > _gameData.playerInfo.playerBestScore[_league])
         {
             SaveBestScore();
