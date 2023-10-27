@@ -15,7 +15,7 @@ public class PosuCollider : MonoBehaviour
         if (other != null && other.CompareTag("Ball"))
         {
 
-            if (Managers.Game.GameState == Define.GameState.InGround)
+            if (Managers.Game.GameState == Define.GameState.InGround || Managers.Game.GameState == Define.GameState.End)
             {
                 other.gameObject.SetActive(false);
                 Managers.Game.StrikeEvent();
