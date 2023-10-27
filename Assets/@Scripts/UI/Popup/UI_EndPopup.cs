@@ -22,6 +22,7 @@ public class UI_EndPopup : UI_Popup
 
     public TextMeshProUGUI strikeTMP;
     public TextMeshProUGUI gameScorTMP;
+    public TextMeshProUGUI starPriceTMP;
     public Button homeButton;
     public Button replayButton;
     public Button retryButton;
@@ -47,9 +48,18 @@ public class UI_EndPopup : UI_Popup
         homeButton.gameObject.BindEvent(HomeButtonClick);
         replayButton.gameObject.BindEvent(ReplayButtonClick);
         retryButton.gameObject.BindEvent(RetryButtonClick);
-        retryButton.interactable = Managers.Ad.CanShowIntAd();
+        retryButton.interactable = (Managers.Game.CanPay(3));
 
-        Managers.Obj.DespawnBall();
+        if (Managers.Game.GameScore <= 50)
+        {
+            starPriceTMP.text = "¹«·á!";
+        }
+        else
+        {
+            starPriceTMP.text = "X3";
+        }
+
+            Managers.Obj.DespawnBall();
     }
 
     private void HomeButtonClick()
@@ -72,15 +82,21 @@ public class UI_EndPopup : UI_Popup
     private void RetryButtonClick()
     {
 
-        if (Managers.Ad.CanShowIntAd())
+        if (Managers.Game.GameScore <= 50)
         {
             Managers.UI.ClosePopupUI(this);
-            Managers.Ad.ShowInterstitialAd(Retry);
+            Retry();
+        }
+
+        if (Managers.Game.CanPay(3))
+        {
+            Managers.UI.ClosePopupUI(this);
+            Managers.Game.MinusStar(3);
+            Retry();
         }
         else
             return;
 
-        //Managers.Game.GameRetry();
     }
 
     IEnumerator c_Delay()

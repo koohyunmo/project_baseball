@@ -316,9 +316,6 @@ public class GameManager
         adRoulletTime = ES3.Load<DateTime>("ADTime");
         starShopADBonusTime = ES3.Load<DateTime>("AdBonus");
 
-        Managers.Ad.Init();
-        Managers.IAP.Init();
-
     }
 
     private void PlayerDataSettings()
@@ -475,8 +472,6 @@ public class GameManager
 
     }
 
-    private static int adCount = 0;
-
     private void StateUpdate()
     {
         switch (GameState)
@@ -504,19 +499,6 @@ public class GameManager
 
                     if (_bat)
                         _bat.ColiderObjOff();
-
-
-
-                    if (adCount > 6)
-                    {
-                        Managers.Ad.ShowInterstitialAd(null);
-                        adCount = 0;
-                    }
-
-                    adCount++;
-#if UNITY_EDITOR
-                    Debug.Log(adCount);
-#endif
 
 
                 }
@@ -584,11 +566,6 @@ public class GameManager
 
     }
 
-    public void ADCountReset()
-    {
-        adCount = 0;
-    }
-
     private void SaveChallengeData()
     {
         if (challengeProc == ChallengeProc.Complete && _gameData.challengeData[ChallengeGameID] == false)
@@ -635,7 +612,7 @@ public class GameManager
     {
         if (DateTime.Now >= freeRoulletTime)
         {
-            freeRoulletTime = DateTime.Now.AddHours(4);
+            freeRoulletTime = DateTime.Now.AddMinutes(10);
             ES3.Save<DateTime>("RTime", freeRoulletTime);
             return true;
         }
@@ -669,20 +646,6 @@ public class GameManager
     {
         if (DateTime.Now >= adRoulletTime)
         {
-            return true;
-        }
-
-        return false;
-    }
-
-    public bool ClickAdButton()
-    {
-        if (DateTime.Now >= starShopADBonusTime)
-        {
-
-            Managers.Ad.ShowRewardedAd(GetAdBonus);
-            starShopADBonusTime = DateTime.Now.AddHours(6);
-            ES3.Save<DateTime>("AdBonus", starShopADBonusTime);
             return true;
         }
 
@@ -1482,15 +1445,16 @@ public class GameManager
         switch (grade)
         {
             case Grade.Common:
+                return 50;
                 break;
             case Grade.Uncommon:
-                return 300;
+                return 150;
                 break;
             case Grade.Rare:
-                return 500;
+                return 300;
                 break;
             case Grade.Epic:
-                return 1000;
+                return 700;
                 break;
             case Grade.Legendary:
                 return 2000;

@@ -301,9 +301,9 @@
             "jp": "スター ショップ"
         },
         "freespin": {
-            "en": "Free Spin (Wheel Reward) - Available every 4 hours",
-            "ko": "무료 스핀 (돌림판 보상) - 4시간마다 사용 가능",
-            "jp": "無料スピン（ホイール報酬）- 4時間ごとに利用可能"
+            "en": "Free Spin (Wheel Reward) - Available every 10 min",
+            "ko": "무료 스핀 (돌림판 보상) - 10분마다 사용 가능",
+            "jp": "無料スピン（ホイール報酬）- 10分ごとに利用可能"
         },
         "spinforfree": {
             "en": "Spin for Free",

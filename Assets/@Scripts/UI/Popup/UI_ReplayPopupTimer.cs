@@ -13,6 +13,8 @@ public class UI_ReplayPopupTimer : UI_Popup
     Coroutine Co_timer;
     private float currentTime;
 
+    public TextMeshProUGUI reaplayInfoTMP;
+
     Tween adTweenAnim;
 
     // 시작 색상과 끝 색상을 정의
@@ -25,7 +27,19 @@ public class UI_ReplayPopupTimer : UI_Popup
     {
         Init();
 
-        if(Managers.Ad.CanShowIntAd() == false)
+        if(Managers.Game.GameScore <= 50)
+        {
+            adImage.gameObject.BindEvent(Retry);
+            reaplayInfoTMP.text = "무료";
+            return;
+        }
+
+        if(Managers.Game.CanPay(3))
+        {
+            adImage.gameObject.BindEvent(Replay);
+            reaplayInfoTMP.text = "3개 사용하고\n재도전";
+        }
+        else
         {
             Managers.UI.ClosePopupUI(this);
             Managers.UI.ShowPopupUI<UI_EndPopup>();
@@ -41,7 +55,7 @@ public class UI_ReplayPopupTimer : UI_Popup
         Co_timer = StartCoroutine(CountdownTimer());
 
         adImage.gameObject.BindEvent(Replay);
-        adImage.gameObject.SetActive(Managers.Ad.CanShowIntAd());
+        adImage.gameObject.SetActive(true);
 
         return true;
     }
@@ -53,9 +67,15 @@ public class UI_ReplayPopupTimer : UI_Popup
 
     private void Replay()
     {
+
+
         Managers.UI.ClosePopupUI(this);
 
-        Managers.Ad.ShowInterstitialAd(Retry);
+        if (Managers.Game.CanPay(3))
+        {
+            Managers.Game.MinusStar(3);
+            Retry();
+        }
 
         if (Co_timer != null)
         {

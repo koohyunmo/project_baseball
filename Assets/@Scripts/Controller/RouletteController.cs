@@ -126,38 +126,6 @@ public class RouletteController : MonoBehaviour
 
     }
 
-    public void RollADRoullet()
-    {
-
-#if UNITY_EDITOR
-        if (!isSpinning && Managers.Ad.CanShowRewardAd())
-        {
-            Managers.Ad.ShowRewardedAd(() =>
-            {
-
-                currentSpeed = Random.Range(spinSpeed, spinSpeed * 1.5f);
-                isSpinning = true;
-                first = false;
-
-                Managers.Game.RollADRoullet();
-            });
-        }
-#else
-        if (!isSpinning && Managers.Game.RollADRoullet() && Managers.Ad.CanShowRewardAd())
-        {
-            Managers.Ad.ShowRewardedAd(() =>
-        {
-
-        currentSpeed = Random.Range(spinSpeed, spinSpeed * 1.5f);
-        isSpinning = true;
-
-        first = false;
-        });
-        }
-#endif
-
-
-    }
 
     //private async void SetData()
     //{

@@ -146,9 +146,11 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
         }
         else
         {
-            popupButtonText.text = Managers.Localization.GetLocalizedValue(LanguageKey.get.ToString());
-            popupButton.interactable = Managers.Ad.CanShowRewardAd();
-            popupButton.gameObject.BindEvent(GetItem);
+
+            // TODO :ONESTORE
+            //popupButtonText.text = Managers.Localization.GetLocalizedValue(LanguageKey.get.ToString());
+            //popupButton.interactable = (Managers.Game.PlayerInfo.star >= 30);
+            //popupButton.gameObject.BindEvent(GetItem);
         }
 
         if (Managers.Game.EquipBallId.Equals(_itemSO.id) || Managers.Game.EquipBatId.Equals(_itemSO.id) || Managers.Game.EquipSkillId.Equals(_itemSO.id))
@@ -158,7 +160,7 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
         }
 
 
-        if ((int)_itemSO.grade >= (int)Define.Grade.Epic)
+        if (true)
         {
             popupButton.interactable = Managers.Game.CanPay(Managers.Game.GetPrice(_itemSO.grade));
 
@@ -193,18 +195,18 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
 
     private void GetItem()
     {
-
-            if (Managers.Ad.CanShowRewardAd() == false)
+        // TODO ONESTORE
+            if (Managers.Game.CanPay(Managers.Game.GetPrice(_itemSO.grade)))
             {
-                return;
+            popupButton.interactable = true;
+
             }
             else
             {
-                popupButton.interactable = Managers.Ad.CanShowRewardAd();
+            popupButton.interactable = false;
 
+            //TODO GETITME;
 
-                //ClosePopupUI();
-                Managers.Ad.ShowRewardedAd(GetRewardAdsItemRemoveActions);
 #if UNITY_EDITOR
             Debug.Log("TODO ±¤°í or µ·");
 #endif
@@ -215,15 +217,18 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
     private void GetItemAndPaid()
     {
 
+        // TODO ONESTORE
 
-        if (Managers.Ad.CanShowRewardAd() == false && Managers.Game.CanPay(Managers.Game.GetPrice(_itemSO.grade)) == false)
+        if (Managers.Game.CanPay(Managers.Game.GetPrice(_itemSO.grade)) == false)
         {
             return;
         }
         else
         {
-            popupButton.interactable = Managers.Ad.CanShowRewardAd();
+            popupButton.interactable = Managers.Game.CanPay(Managers.Game.GetPrice(_itemSO.grade));
 
+            Managers.Game.GetItem(_itemSO.id);
+            Managers.Game.MinusStar(Managers.Game.GetPrice(_itemSO.grade));
 
             //ClosePopupUI();
             //Managers.Ad.ShowRewardedAd(GetRewardAdAndPaysItemRemoveActions);
@@ -233,6 +238,7 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
 
     }
 
+
     private void Paid()
     {
         if (Managers.Game.CanPay(Managers.Game.GetPrice(_itemSO.grade)) == false)
@@ -241,13 +247,13 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
         }
         else
         {
-            popupButton.interactable = Managers.Ad.CanShowRewardAd();
+            //TODO ONESTORE;
+            popupButton.interactable = Managers.Game.CanPay(Managers.Game.GetPrice(_itemSO.grade));
 
             if (Managers.Game.PlayerInfo.star > Managers.Game.GetPrice(_itemSO.grade))
             {
                 Managers.Game.GetItem(_itemSO.id);
                 Managers.Game.MinusStar(Managers.Game.GetPrice(_itemSO.grade));
-                //popupButton.gameObject.RemoveBindEvent(GetItemAndPaid);
                 popupButton.gameObject.RemoveBindEvent(Paid);
                 ButtonUpdate();
                 _lockUIAction?.Invoke();
