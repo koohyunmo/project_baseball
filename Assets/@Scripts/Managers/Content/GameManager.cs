@@ -345,14 +345,17 @@ public class GameManager
     public void MinusStar(long star)
     {
 
-        if (CanPay(star) == false)
+        if (CanPay(star))
+        {
+            PlayerInfo.star -= star;
+            Math.Clamp(PlayerInfo.star, 0, long.MaxValue);
+            SaveGame();
+
+            UpdateStar?.Invoke();
+        }
+        else
             return;
 
-        PlayerInfo.star -= star;
-        Math.Clamp(PlayerInfo.star, 0, long.MaxValue);
-        SaveGame();
-
-        UpdateStar?.Invoke();
     }
 
     public void GetStar(long star)
@@ -1151,7 +1154,7 @@ public class GameManager
                     //StartData.playerItem.Add(startItem.itemId, startItem);
 #if UNITY_EDITOR
                     //StartData.playerInfo.gold = 100000;
-                    //StartData.playerInfo.star = 100000;
+                    StartData.playerInfo.star = 10000;
 #endif
                     StartData.playerInfo.level = 1;
                     StartData.playerInfo.equipBatId = BAT_KEY.BAT_0.ToString();
@@ -1446,22 +1449,17 @@ public class GameManager
         {
             case Grade.Common:
                 return 50;
-                break;
             case Grade.Uncommon:
                 return 150;
-                break;
             case Grade.Rare:
                 return 300;
-                break;
             case Grade.Epic:
                 return 700;
-                break;
             case Grade.Legendary:
                 return 2000;
-                break;
         }
 
-        return 100;
+        return -2323;
     }
 
     public void SetBatSpeed(float setSpeed)

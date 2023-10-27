@@ -250,7 +250,6 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
             //TODO ONESTORE;
             popupButton.interactable = Managers.Game.CanPay(Managers.Game.GetPrice(_itemSO.grade));
 
-            if (Managers.Game.PlayerInfo.star > Managers.Game.GetPrice(_itemSO.grade))
             {
                 Managers.Game.GetItem(_itemSO.id);
                 Managers.Game.MinusStar(Managers.Game.GetPrice(_itemSO.grade));
