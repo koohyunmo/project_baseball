@@ -25,7 +25,7 @@ public class LocalizationManager
     {
         SystemLanguage userLanguage = Application.systemLanguage;
 #if UNITY_EDITOR
-        Debug.Log("User's system language is: " + userLanguage.ToString());
+        Debug.Log("LocalizationManager User's system language is: " + userLanguage.ToString());
 #endif
         _settingPath = Application.persistentDataPath + "/SettingData.json";
 
@@ -34,7 +34,22 @@ public class LocalizationManager
             currentLanguage = ES3.Load<Language>("Lang", _settingPath);
         }catch
         {
-            currentLanguage = Language.EN;
+            // 기본 언어 설정
+            switch (userLanguage)
+            {
+                case SystemLanguage.Korean:
+                    currentLanguage = Language.KR;
+                    break;
+                case SystemLanguage.English:
+                    currentLanguage = Language.EN;
+                    break;
+                case SystemLanguage.Japanese:
+                    currentLanguage = Language.JP;
+                    break;
+                    // ... 기타 언어에 대한 처리 추가
+            }
+
+            currentLanguage = currentLanguage;
             ES3.Save<Language>("Lang", currentLanguage,_settingPath);
         }
 

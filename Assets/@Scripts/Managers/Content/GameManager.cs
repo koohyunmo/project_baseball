@@ -1245,6 +1245,10 @@ public class GameManager
                 }
             }
 
+#if UNITY_EDITOR
+            Debug.Log("GameManager User's system language is: " + userLanguage.ToString());
+#endif
+
             ES3.Save<Language>("Lang", currentLanguage, _settingPath);
             ES3.Save<DateTime>("RTime", DateTime.Now);
             ES3.Save<DateTime>("AdBonus", DateTime.Now);
