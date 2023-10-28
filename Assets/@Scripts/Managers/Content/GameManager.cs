@@ -1256,7 +1256,34 @@ public class GameManager
 
             // 옵션설정
             ES3.Save<float>("Gamdo", 5f, _settingPath);
-            ES3.Save<Language>("Lang", Language.EN, _settingPath);
+            //ES3.Save<Language>("Lang", Language.EN, _settingPath);
+            {
+                SystemLanguage userLanguage = Application.systemLanguage;
+
+                _settingPath = Application.persistentDataPath + "/SettingData.json";
+                Language currentLanguage;
+
+                {
+                    // 기본 언어 설정
+                    switch (userLanguage)
+                    {
+                        case SystemLanguage.Korean:
+                            currentLanguage = Language.KR;
+                            break;
+                        case SystemLanguage.Japanese:
+                            currentLanguage = Language.JP;
+                            break;
+                        default:
+                            currentLanguage = Language.EN;
+                            break;
+                    }
+                }
+
+#if UNITY_EDITOR
+                Debug.Log("GameManager User's system language is: " + userLanguage.ToString());
+#endif
+
+            }
             ES3.Save<DateTime>("RTime", DateTime.Now);
             ES3.Save<DateTime>("AdBonus", DateTime.Now);
             ES3.Save<DateTime>("ADTime", DateTime.Now);

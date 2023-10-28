@@ -23,6 +23,7 @@ public class LocalizationManager
 
     public void Init()
     {
+        /*
         SystemLanguage userLanguage = Application.systemLanguage;
 #if UNITY_EDITOR
         Debug.Log("User's system language is: " + userLanguage.ToString());
@@ -54,6 +55,42 @@ public class LocalizationManager
         }
 
         //LoadLocalizedText(currentLanguage);
+        */
+
+        // 국가별 언어 바인딩
+        {
+            SystemLanguage userLanguage = Application.systemLanguage;
+#if UNITY_EDITOR
+            Debug.Log("LocalizationManager User's system language is: " + userLanguage.ToString());
+#endif
+            _settingPath = Application.persistentDataPath + "/SettingData.json";
+
+            try
+            {
+                currentLanguage = ES3.Load<Language>("Lang", _settingPath);
+            }
+            catch
+            {
+                // 기본 언어 설정
+                switch (userLanguage)
+                {
+                    case SystemLanguage.Korean:
+                        currentLanguage = Language.KR;
+                        break;
+                    case SystemLanguage.Japanese:
+                        currentLanguage = Language.JP;
+                        break;
+                    default:
+                        currentLanguage = Language.EN;
+                        break;
+                }
+
+                currentLanguage = currentLanguage;
+                ES3.Save<Language>("Lang", currentLanguage, _settingPath);
+            }
+
+            ChangeLanguage(currentLanguage);
+        }
     }
 
     public void ChangeLocalizedText(Language language)
