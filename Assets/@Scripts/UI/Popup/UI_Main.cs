@@ -23,7 +23,6 @@ public class UI_Main : UI_Popup
         B_PrevLeague,
         B_Language,
         B_BatOption,
-        B_Star,
         B_QuitGame
     }
 

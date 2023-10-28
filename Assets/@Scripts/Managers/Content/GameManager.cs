@@ -363,7 +363,7 @@ public class GameManager
         if (star == 0)
             return;
 #if UNITY_EDITOR
-        Debug.Log("Star :" + star + log);
+        Debug.Log("Star :" + star);
 #endif
         PlayerInfo.star += star;
         Math.Clamp(PlayerInfo.star, 0, long.MaxValue);
