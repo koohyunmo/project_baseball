@@ -85,7 +85,10 @@ public class UI_StarShop : UI_Popup
         if (Managers.Game.CanCllickAdButton() && Managers.Ad.CanShowRewardAd())
         {
             Managers.Game.ClickAdButton();
+
+#if UNITY_EDITOR
             Debug.Log("±¤°í Å¬¸¯");
+#endif
         }
         else
             return;

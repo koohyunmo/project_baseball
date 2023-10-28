@@ -154,6 +154,7 @@ public static class Define
 		Rare,
 		Epic,
 		Legendary,
+		ThankYou,
 		NONE
 	}
 	public enum ChallengeType

@@ -314,7 +314,12 @@
             "en": "Spin with Ad",
             "ko": "광고 보고 돌리기",
             "jp": "広告を見てスピン"
-        }   
+        },
+            "thankyou": {
+                "en": "Thank You",
+                "ko": "감사합니다",
+                "jp": "ありがとうございます"
+            }   
     },
     "skills": {
         "hawkeye1": {

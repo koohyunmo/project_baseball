@@ -21,6 +21,7 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
     public TextMeshProUGUI starTMP;
 
 
+
     public Sprite starIcon;
 
     enum Type

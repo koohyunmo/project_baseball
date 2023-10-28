@@ -44,4 +44,5 @@ public enum LanguageKey
     freespin,
     spinwithad,
     spinforfree,
+    thankyou
 }

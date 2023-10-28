@@ -79,17 +79,37 @@ public class IAPManager :  IStoreListener
         if (args.purchasedProduct.definition.id == productId_1_id)
         {
             /* test_id 구매 처리 */
-            Managers.Game.GetStar(2000);
+            long starProduct = 2000;
+            Managers.Game.GetStar(starProduct);
+            var popup = Managers.UI.ShowPopupUI<UI_RoulletItemInfoPopup>();
+            popup.InitData(Define.GetType.Star, Define.Grade.ThankYou, starProduct);
+
+#if UNITY_EDITOR
+            Debug.Log(starProduct);
+#endif
         }
         else if (args.purchasedProduct.definition.id == productId_2_id)
         {
-            Debug.Log("4500");
-            Managers.Game.GetStar(4000);
+
+            long starProduct = 4500;
+            Managers.Game.GetStar(starProduct);
+            var popup = Managers.UI.ShowPopupUI<UI_RoulletItemInfoPopup>();
+            popup.InitData(Define.GetType.Star, Define.Grade.ThankYou, starProduct);
+
+#if UNITY_EDITOR
+            Debug.Log(starProduct);
+#endif
         }
         else if(args.purchasedProduct.definition.id ==  productId_3_id)
         {
-            Debug.Log("7000");
-            Managers.Game.GetStar(7000);
+            long starProduct = 7000;
+            Managers.Game.GetStar(starProduct);
+            var popup = Managers.UI.ShowPopupUI<UI_RoulletItemInfoPopup>();
+            popup.InitData(Define.GetType.Star, Define.Grade.ThankYou, starProduct);
+
+#if UNITY_EDITOR
+            Debug.Log(starProduct);
+#endif
         }
 
         return PurchaseProcessingResult.Complete;

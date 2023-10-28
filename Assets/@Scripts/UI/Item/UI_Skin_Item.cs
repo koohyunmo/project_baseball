@@ -21,6 +21,9 @@ public class UI_Skin_Item : UI_Base, IBeginDragHandler, IDragHandler,IEndDragHan
 
     ScrollRect _scrollRect;
 
+    private bool _isDrag = false;
+
+
     enum Images
     {
         Icon,
@@ -51,11 +54,11 @@ public class UI_Skin_Item : UI_Base, IBeginDragHandler, IDragHandler,IEndDragHan
         //Bind<TextMeshProUGUI>(typeof(TMPs));
 
         _icon = Get<Image>((int)Images.Icon);
-        gameObject.BindEvent(ShowInfoPopup, null, Define.UIEvent.Click);
+        gameObject.BindEvent(ShowInfoPopup, (BaseEventData)=> _isDrag =true, Define.UIEvent.Click);;;
         _skinItem = GetComponent<Image>();
 
         GetImage((int)Images.Background).gameObject.SetActive(false);
-        GetButton((int)Buttons.B_Information).gameObject.BindEvent(ShowInfoPopup, null, Define.UIEvent.Click);
+        GetButton((int)Buttons.B_Information).gameObject.BindEvent(ShowInfoPopup, (BaseEventData) => _isDrag = true, Define.UIEvent.Click);
 
 
         UpdateUI();
@@ -91,6 +94,9 @@ public class UI_Skin_Item : UI_Base, IBeginDragHandler, IDragHandler,IEndDragHan
 
     private void ShowInfoPopup()
     {
+        if (_isDrag)
+            return;
+
         switch (_type)
         {
             case ScollViewType.Ball:
@@ -295,6 +301,7 @@ public class UI_Skin_Item : UI_Base, IBeginDragHandler, IDragHandler,IEndDragHan
 
     public void OnBeginDrag(PointerEventData e)
     {
+        _isDrag = true;
         _scrollRect.OnBeginDrag(e);
     }
 
@@ -305,6 +312,7 @@ public class UI_Skin_Item : UI_Base, IBeginDragHandler, IDragHandler,IEndDragHan
 
     public void OnEndDrag(PointerEventData e)
     {
+        _isDrag = false;
         _scrollRect.OnEndDrag(e);
     }
 }

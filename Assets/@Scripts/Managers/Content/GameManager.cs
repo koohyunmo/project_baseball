@@ -358,12 +358,12 @@ public class GameManager
         UpdateStar?.Invoke();
     }
 
-    public void GetStar(long star)
+    public void GetStar(long star, string log = "")
     {
         if (star == 0)
             return;
 #if UNITY_EDITOR
-        Debug.Log("Star :" + star);
+        Debug.Log("Star :" + star + log);
 #endif
         PlayerInfo.star += star;
         Math.Clamp(PlayerInfo.star, 0, long.MaxValue);
@@ -465,9 +465,9 @@ public class GameManager
         else
         {
             if (_league < League.Master)
-                GetStar(Math.Clamp((GameScore / Define.POINT), 0, (int)League + 1));
+                GetStar(Math.Clamp((GameScore / Define.POINT), 0, (int)League + 1), " 노말 게임 ");
             else
-                GetStar(Math.Clamp((GameScore / Define.POINT), 0, (int)League + 2));
+                GetStar(Math.Clamp((GameScore / Define.POINT), 0, (int)League + 2), " 노말 게임2 ");
         }
 
 
@@ -680,8 +680,8 @@ public class GameManager
         if (DateTime.Now >= starShopADBonusTime)
         {
 
-            Managers.Ad.ShowRewardedAd(GetAdBonus);
-            starShopADBonusTime = DateTime.Now.AddHours(6);
+            Managers.Ad.ShowRewardedAd(GetAdStarShopBonus);
+            starShopADBonusTime = DateTime.Now.AddMinutes(10);
             ES3.Save<DateTime>("AdBonus", starShopADBonusTime);
             return true;
         }
@@ -690,13 +690,14 @@ public class GameManager
     }
 
     
-    private void GetAdBonus()
+    private void GetAdStarShopBonus()
     {
+        long starShopBonus = 50;
 
-        Managers.Game.GetStar(300);
+        Managers.Game.GetStar(starShopBonus);
 
         var popup = Managers.UI.ShowPopupUI<UI_RoulletItemInfoPopup>();
-        popup.InitData(Define.GetType.Star,Define.Grade.Epic, 300);
+        popup.InitData(Define.GetType.Star,Define.Grade.Rare, starShopBonus);
 
         SaveGame();
 
