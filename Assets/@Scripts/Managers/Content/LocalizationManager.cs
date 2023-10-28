@@ -29,21 +29,6 @@ public class LocalizationManager
 #endif
         _settingPath = Application.persistentDataPath + "/SettingData.json";
 
-        // 기본 언어 설정
-        switch (userLanguage)
-        {
-            case SystemLanguage.Korean:
-                currentLanguage = Language.KR;
-                break;
-            case SystemLanguage.English:
-                currentLanguage = Language.EN;
-                break;
-            case SystemLanguage.Japanese:
-                currentLanguage = Language.JP;
-                break;
-                // ... 기타 언어에 대한 처리 추가
-        }
-
         try
         {
             currentLanguage = ES3.Load<Language>("Lang", _settingPath);
@@ -53,7 +38,7 @@ public class LocalizationManager
             ES3.Save<Language>("Lang", currentLanguage,_settingPath);
         }
 
-        //LoadLocalizedText(currentLanguage);
+        ChangeLanguage(currentLanguage);
     }
 
     public void ChangeLocalizedText(Language language)
