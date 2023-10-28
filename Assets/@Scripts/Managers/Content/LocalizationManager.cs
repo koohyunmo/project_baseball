@@ -40,13 +40,13 @@ public class LocalizationManager
                 case SystemLanguage.Korean:
                     currentLanguage = Language.KR;
                     break;
-                case SystemLanguage.English:
-                    currentLanguage = Language.EN;
-                    break;
                 case SystemLanguage.Japanese:
                     currentLanguage = Language.JP;
                     break;
-                    // ... 기타 언어에 대한 처리 추가
+                // ... 기타 언어에 대한 처리 추가
+                default:
+                    currentLanguage = Language.EN;
+                    break;
             }
 
             currentLanguage = currentLanguage;
