@@ -363,7 +363,7 @@ public class GameManager
         if (star == 0)
             return;
 #if UNITY_EDITOR
-        Debug.Log("Star :" + star);
+        Debug.Log("Star :" + star + log);
 #endif
         PlayerInfo.star += star;
         Math.Clamp(PlayerInfo.star, 0, long.MaxValue);
@@ -658,11 +658,12 @@ public class GameManager
     
     private void GetAdBonus()
     {
+        long starShopBonus = 50;
 
-        Managers.Game.GetStar(300);
+        Managers.Game.GetStar(starShopBonus);
 
         var popup = Managers.UI.ShowPopupUI<UI_RoulletItemInfoPopup>();
-        popup.InitData(Define.GetType.Star,Define.Grade.Epic, 300);
+        popup.InitData(Define.GetType.Star,Define.Grade.Rare, starShopBonus);
 
         SaveGame();
 

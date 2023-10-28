@@ -23,6 +23,8 @@ public class UI_Main : UI_Popup
         B_PrevLeague,
         B_Language,
         B_BatOption,
+        B_Star,
+        B_QuitGame
     }
 
     enum TMPS
@@ -79,16 +81,20 @@ public class UI_Main : UI_Popup
         vibrationButton = GetButton((int)Buttons.B_Vibration);
         soundButton = GetButton((int)Buttons.B_Sound);
 
+        // 可记 局聪皋捞记
         vibrationButton.gameObject.SetActive(false);
         soundButton.gameObject.SetActive(false);
         GetButton((int)Buttons.B_BatOption).gameObject.SetActive(false);
         GetButton((int)Buttons.B_Language).gameObject.SetActive(false);
+        GetButton((int)Buttons.B_QuitGame).gameObject.SetActive(false);
 
 
         vibrationButton.transform.DOScale(0, 0);
         soundButton.transform.DOScale(0, 0);
         GetButton((int)Buttons.B_BatOption).transform.DOScale(0, 0);
         GetButton((int)Buttons.B_Language).transform.DOScale(0, 0);
+        GetButton((int)Buttons.B_QuitGame).transform.DOScale(0, 0);
+        // 场
 
         vibrationButton.gameObject.BindEvent(VibrateOnOff);
         soundButton.gameObject.BindEvent(SoundOnOff);
@@ -112,6 +118,7 @@ public class UI_Main : UI_Popup
 
         GetButton((int)Buttons.B_Language).gameObject.BindEvent(() => Managers.UI.ShowPopupUI<UI_LanguageOptionPopup>());
         GetButton((int)Buttons.B_BatOption).gameObject.BindEvent(() => Managers.UI.ShowPopupUI<UI_BatOptionPopup>());
+        GetButton((int)Buttons.B_QuitGame).gameObject.BindEvent(() => Application.Quit());
 
 
         MainTMPUpdate();
@@ -233,17 +240,20 @@ public class UI_Main : UI_Popup
             DOTween.Kill(soundButton.transform);
             DOTween.Kill(GetButton((int)Buttons.B_Language).transform);
             DOTween.Kill(GetButton((int)Buttons.B_BatOption).transform);
+            DOTween.Kill(GetButton((int)Buttons.B_QuitGame).transform);
 
             vibrationButton.gameObject.SetActive(true);
             soundButton.gameObject.SetActive(true);
             GetButton((int)Buttons.B_Language).gameObject.SetActive(true);
             GetButton((int)Buttons.B_BatOption).gameObject.SetActive(true);
+            GetButton((int)Buttons.B_QuitGame).gameObject.SetActive(true);
 
 
             vibrationButton.transform.DOScale(Vector3.one, 0.5f);
             soundButton.transform.DOScale(Vector3.one, 0.5f).SetDelay(0.25f);
             GetButton((int)Buttons.B_Language).transform.DOScale(Vector3.one, 0.5f).SetDelay(0.5f);
-            GetButton((int)Buttons.B_BatOption).transform.DOScale(Vector3.one, 0.5f).SetDelay(0.75f).OnComplete(()=> isOptionAnim = false);
+            GetButton((int)Buttons.B_BatOption).transform.DOScale(Vector3.one, 0.5f).SetDelay(0.75f);
+            GetButton((int)Buttons.B_QuitGame).transform.DOScale(Vector3.one, 0.5f).SetDelay(1f).OnComplete(()=> isOptionAnim = false);
         }
         if(isOptionAnim == false && isOn == true)
         {
@@ -273,10 +283,15 @@ public class UI_Main : UI_Popup
 
             GetButton((int)Buttons.B_BatOption).transform.DOScale(Vector3.zero, 0.5f).SetDelay(0.75f).OnComplete(() =>
             {
+
+            });
+            GetButton((int)Buttons.B_QuitGame).transform.DOScale(Vector3.zero, 0.5f).SetDelay(1f).OnComplete(() =>
+            {
                 vibrationButton.gameObject.SetActive(false);
                 soundButton.gameObject.SetActive(false);
                 GetButton((int)Buttons.B_Language).gameObject.SetActive(false);
                 GetButton((int)Buttons.B_BatOption).gameObject.SetActive(false);
+                GetButton((int)Buttons.B_QuitGame).gameObject.SetActive(false);
                 isOptionAnim = false;
             });
         }
