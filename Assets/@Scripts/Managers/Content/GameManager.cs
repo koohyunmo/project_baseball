@@ -435,6 +435,14 @@ public class GameManager
         if (GameState != GameState.End)
             return;
 
+        if (Managers.Game.GameMode != GameMode.Challenge)
+        {
+            if (_league < League.Master)
+                GetStar(Math.Clamp((GameScore / Define.POINT), 0, (int)League + 1), " 노말 게임 ");
+            else
+                GetStar(Math.Clamp((GameScore / Define.POINT), 0, (int)League + 2), " 노말 게임2 ");
+        }
+
         SaveBestScore();
 
 
@@ -457,21 +465,7 @@ public class GameManager
             //Debug.Log("최고 점수 갱신");
             _gameData.playerInfo.playerBestScore[_league] = GameScore;
             SaveGame();
-       
         }
-
-        if (Managers.Game.GameMode == GameMode.Challenge)
-            return;
-        else
-        {
-            if (_league < League.Master)
-                GetStar(Math.Clamp((GameScore / Define.POINT), 0, (int)League + 1), " 노말 게임 ");
-            else
-                GetStar(Math.Clamp((GameScore / Define.POINT), 0, (int)League + 2), " 노말 게임2 ");
-        }
-
-
-
 
     }
 
@@ -1282,6 +1276,8 @@ public class GameManager
 #if UNITY_EDITOR
                 Debug.Log("GameManager User's system language is: " + userLanguage.ToString());
 #endif
+
+                ES3.Save<Language>("Lang", currentLanguage, _settingPath);
 
             }
             ES3.Save<DateTime>("RTime", DateTime.Now);
