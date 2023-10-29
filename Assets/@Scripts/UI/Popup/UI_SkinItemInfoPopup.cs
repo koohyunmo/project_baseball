@@ -132,9 +132,6 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
 
     private void ButtonUpdate()
     {
-
-
-
         if (Managers.Game.GameDB.playerInventory.Contains(_itemSO.id))
         {
             //popupButtonText.text = "EQUIP";
@@ -147,11 +144,9 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
         }
         else
         {
-
-            // TODO :ONESTORE
-            //popupButtonText.text = Managers.Localization.GetLocalizedValue(LanguageKey.get.ToString());
-            //popupButton.interactable = (Managers.Game.PlayerInfo.star >= 30);
-            //popupButton.gameObject.BindEvent(GetItem);
+            popupButtonText.text = Managers.Localization.GetLocalizedValue(LanguageKey.get.ToString());
+            popupButton.interactable = Managers.Ad.CanShowRewardAd();
+            popupButton.gameObject.BindEvent(GetItem);
         }
 
         if (Managers.Game.EquipBallId.Equals(_itemSO.id) || Managers.Game.EquipBatId.Equals(_itemSO.id) || Managers.Game.EquipSkillId.Equals(_itemSO.id))
@@ -161,7 +156,7 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
         }
 
 
-        if (true)
+        if ((int)_itemSO.grade >= (int)Define.Grade.Epic)
         {
             popupButton.interactable = Managers.Game.CanPay(Managers.Game.GetPrice(_itemSO.grade));
 
