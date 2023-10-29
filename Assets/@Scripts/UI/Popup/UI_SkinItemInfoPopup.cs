@@ -191,21 +191,18 @@ public class UI_SkinItemInfoPopup : UI_InfoPopup
 
     private void GetItem()
     {
-        // TODO ONESTORE
-            if (Managers.Game.CanPay(Managers.Game.GetPrice(_itemSO.grade)))
-            {
-            popupButton.interactable = true;
 
-            }
-            else
-            {
-            popupButton.interactable = false;
+        if (Managers.Ad.CanShowRewardAd() == false)
+        {
+            return;
+        }
+        else
+        {
+            popupButton.interactable = Managers.Ad.CanShowRewardAd();
 
-            //TODO GETITME;
 
-#if UNITY_EDITOR
-            Debug.Log("TODO ±¤°í or µ·");
-#endif
+            //ClosePopupUI();
+            Managers.Ad.ShowRewardedAd(GetRewardAdsItemRemoveActions);
         }
 
     }
