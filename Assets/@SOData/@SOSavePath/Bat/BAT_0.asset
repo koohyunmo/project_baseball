@@ -18,5 +18,5 @@ MonoBehaviour:
   name: baseball-bat
   type: 2
   grade: 0
-  power: 5
+  power: 3
   batType: 1
